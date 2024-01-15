@@ -1,0 +1,95 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.1'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.ssafy'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-mustache'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    implementation 'commons-io:commons-io:20030203.000550'
+    implementation 'org.apache.commons:commons-collections4:4.4'
+    implementation 'org.apache.commons:commons-lang3:3.9'
+
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+    annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+    annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
+    implementation 'com.squareup.retrofit2:converter-jackson:2.7.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+
+    //STOMP 웹소캣 서버 사이드 테스트를 위한 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-mustache'
+    //STOMP 관련 프론트 라이브러리
+    implementation 'org.webjars.bower:jquery:3.3.1'
+    implementation 'org.webjars:sockjs-client:1.1.2'
+    implementation 'org.webjars:stomp-websocket:2.3.3-1'
+    implementation 'org.webjars:webjars-locator:0.30'
+    //WebRTC 클라이언트 의존성 추가
+    implementation 'org.webjars.bower:webrtc-adapter:7.4.0'
+    //Kurento (미디어서버) 관련 의존성 추가
+    implementation 'org.kurento:kurento-client:6.16.0'
+    implementation 'org.kurento:kurento-utils-js:6.15.0'
+
+    implementation 'com.google.guava:guava:32.0.0-android'
+    annotationProcessor 'com.google.guava:guava:32.0.0-android'
+
+    testImplementation 'com.jayway.jsonpath:json-path:2.4.0'
+
+    implementation 'com.auth0:java-jwt:3.10.3'
+
+//	implementation 'io.springfox:springfox-swagger2:3.0.0'
+//	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+//	implementation 'io.springfox:springfox-data-rest:3.0.0'
+//	implementation 'io.springfox:springfox-bean-validators:3.0.0'
+//	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+    implementation 'javax.annotation:javax.annotation-api:1.2'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.springframework:spring-tx:6.1.2'
+
+    // springdoc
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+    // spring-security-redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.session:spring-session-data-redis'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
