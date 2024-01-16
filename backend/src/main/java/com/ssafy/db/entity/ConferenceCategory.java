@@ -17,7 +17,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ConferenceCategory extends BaseEntity {
 
-  @Column(name = "name")
-  private String name;
+    @Column(name = "name")
+    private String name;
 
 }

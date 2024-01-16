@@ -19,21 +19,21 @@ import lombok.Setter;
 @Table(name = "user")
 public class User extends BaseEntity {
 
-  @Column(name = "position")
-  private String position;
+    @Column(name = "position")
+    private String position;
 
-  @Column(name = "department")
-  private String department;
+    @Column(name = "department")
+    private String department;
 
-  @Column(name = "name")
-  private String name;
+    @Column(name = "name")
+    private String name;
 
-  @Column(name = "user_id")
-  private String userId;
+    @Column(name = "user_id")
+    private String userId;
 
-  @JsonIgnore
-  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-  @Column(name = "password")
-  String password;
-  
+    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "password")
+    String password;
+
 }

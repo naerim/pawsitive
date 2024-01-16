@@ -14,10 +14,10 @@ import org.springframework.http.HttpStatus;
 @Schema(description = "UserDeleteRes")
 public class UserDeleteRes extends BaseResponseBody {
 
-  public static UserDeleteRes of(HttpStatus status, String message) {
-    UserDeleteRes res = new UserDeleteRes();
-    res.setStatusCode(status.value());
-    res.setMessage(message);
-    return res;
-  }
+    public static UserDeleteRes of(HttpStatus status, String message) {
+        UserDeleteRes res = new UserDeleteRes();
+        res.setStatusCode(status.value());
+        res.setMessage(message);
+        return res;
+    }
 }

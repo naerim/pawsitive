@@ -14,25 +14,25 @@ import lombok.Setter;
 @Schema(description = "UserResponse")
 public class UserRes {
 
-  @Schema(name = "ID")
-  @JsonProperty(value = "user_id")
-  String userId;
+    @Schema(name = "ID")
+    @JsonProperty(value = "user_id")
+    String userId;
 
-  @Schema(name = "부서")
-  private String department;
+    @Schema(name = "부서")
+    private String department;
 
-  @Schema(name = "직책")
-  private String position;
+    @Schema(name = "직책")
+    private String position;
 
-  @Schema(name = "이름")
-  private String name;
+    @Schema(name = "이름")
+    private String name;
 
-  public static UserRes of(User user) {
-    UserRes res = new UserRes();
-    res.setDepartment(user.getDepartment());
-    res.setPosition(user.getPosition());
-    res.setName(user.getName());
-    res.setUserId(user.getUserId());
-    return res;
-  }
+    public static UserRes of(User user) {
+        UserRes res = new UserRes();
+        res.setDepartment(user.getDepartment());
+        res.setPosition(user.getPosition());
+        res.setName(user.getName());
+        res.setUserId(user.getUserId());
+        return res;
+    }
 }

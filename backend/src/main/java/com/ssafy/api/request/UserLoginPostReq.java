@@ -15,10 +15,10 @@ import lombok.Setter;
 @Schema(description = "UserLoginPostRequest")
 public class UserLoginPostReq {
 
-  @Schema(name = "유저 ID", example = "ssafy_web")
-  String id;
+    @Schema(name = "유저 ID", example = "ssafy_web")
+    String id;
 
-  @Schema(name = "유저 Password", example = "your_password")
-  String password;
+    @Schema(name = "유저 Password", example = "your_password")
+    String password;
 
 }

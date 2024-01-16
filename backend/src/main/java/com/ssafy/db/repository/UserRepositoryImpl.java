@@ -12,17 +12,15 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 
 public class UserRepositoryImpl extends QuerydslRepositorySupport implements UserRepositoryCustom {
 
-  public UserRepositoryImpl() {
-    super(User.class);
+    public UserRepositoryImpl() {
+        super(User.class);
 
-  }
+    }
 
-  public Optional<User> findUserByUserId(String userId) {
-    QUser qUser = QUser.user;
-    JPQLQuery<User> user = from(qUser)
-        .where(qUser.userId.eq(userId))
-        .select(qUser);
+    public Optional<User> findUserByUserId(String userId) {
+        QUser qUser = QUser.user;
+        JPQLQuery<User> user = from(qUser).where(qUser.userId.eq(userId)).select(qUser);
 
-    return Optional.ofNullable(user.fetchOne());
-  }
+        return Optional.ofNullable(user.fetchOne());
+    }
 }

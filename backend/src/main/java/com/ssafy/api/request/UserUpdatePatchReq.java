@@ -15,12 +15,12 @@ import lombok.Setter;
 @Schema(description = "UserUpdatePatchReq")
 public class UserUpdatePatchReq {
 
-  @Schema(name = "부서", example = "인사팀")
-  private String department;
+    @Schema(name = "부서", example = "인사팀")
+    private String department;
 
-  @Schema(name = "직책", example = "대리")
-  private String position;
+    @Schema(name = "직책", example = "대리")
+    private String position;
 
-  @Schema(name = "이름", example = "김현지")
-  private String name;
+    @Schema(name = "이름", example = "김현지")
+    private String name;
 }

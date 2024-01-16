@@ -10,20 +10,20 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 @SpringBootApplication
 public class BackendApplication {
-  public static void main(String[] args) {
-    SpringApplication.run(BackendApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(BackendApplication.class, args);
+    }
 
-  @Bean
-  public HttpMessageConverter<String> responseBodyConverter() {
-    return new StringHttpMessageConverter(StandardCharsets.UTF_8);
-  }
+    @Bean
+    public HttpMessageConverter<String> responseBodyConverter() {
+        return new StringHttpMessageConverter(StandardCharsets.UTF_8);
+    }
 
-  @Bean
-  public CharacterEncodingFilter characterEncodingFilter() {
-    CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-    characterEncodingFilter.setEncoding("UTF-8");
-    characterEncodingFilter.setForceEncoding(true);
-    return characterEncodingFilter;
-  }
+    @Bean
+    public CharacterEncodingFilter characterEncodingFilter() {
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
+        return characterEncodingFilter;
+    }
 }

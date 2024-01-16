@@ -14,10 +14,10 @@ import org.springframework.http.HttpStatus;
 @Schema(description = "UserUpdateRes")
 public class UserUpdateRes extends BaseResponseBody {
 
-  public static UserUpdateRes of(HttpStatus status, String message) {
-    UserUpdateRes res = new UserUpdateRes();
-    res.setStatusCode(status.value());
-    res.setMessage(message);
-    return res;
-  }
+    public static UserUpdateRes of(HttpStatus status, String message) {
+        UserUpdateRes res = new UserUpdateRes();
+        res.setStatusCode(status.value());
+        res.setMessage(message);
+        return res;
+    }
 }

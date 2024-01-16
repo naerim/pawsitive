@@ -21,29 +21,29 @@ import lombok.Setter;
 @Table(name = "conference")
 public class Conference extends BaseEntity {
 
-  @Column(name = "owner_id")
-  private int ownerId;
+    @Column(name = "owner_id")
+    private int ownerId;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "conference_id")
-  private ConferenceCategory conferenceCategory;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "conference_id")
+    private ConferenceCategory conferenceCategory;
 
-  @Column(name = "call_start_time")
-  private LocalDateTime callStartTime;
+    @Column(name = "call_start_time")
+    private LocalDateTime callStartTime;
 
-  @Column(name = "call_end_time")
-  private LocalDateTime callEndTime;
+    @Column(name = "call_end_time")
+    private LocalDateTime callEndTime;
 
-  @Column(name = "thumbnail_url")
-  private String thumbnailUrl;
+    @Column(name = "thumbnail_url")
+    private String thumbnailUrl;
 
-  @Column(name = "title")
-  private String title;
+    @Column(name = "title")
+    private String title;
 
-  @Column(name = "description")
-  private String description;
+    @Column(name = "description")
+    private String description;
 
-  @Column(name = "isActive")
-  private boolean isActive;
+    @Column(name = "isActive")
+    private boolean isActive;
 
 }

@@ -19,12 +19,12 @@ import lombok.Setter;
 @Table(name = "user_conference")
 public class UserConference extends BaseEntity {
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id")
-  private User user;
- 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "conference_id")
-  private Conference conference;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "conference_id")
+    private Conference conference;
 
 }

@@ -16,29 +16,29 @@ import org.springframework.http.HttpStatus;
 @Schema(description = "BaseResponseBody")
 public class BaseResponseBody {
 
-  @Schema(name = "응답 메시지", example = "정상")
-  String message = null;
+    @Schema(name = "응답 메시지", example = "정상")
+    String message = null;
 
-  @Schema(name = "응답 코드", example = "200")
-  Integer statusCode = null;
+    @Schema(name = "응답 코드", example = "200")
+    Integer statusCode = null;
 
-  public BaseResponseBody() {
-  }
+    public BaseResponseBody() {
+    }
 
-  public BaseResponseBody(HttpStatus statusCode) {
-    this.statusCode = statusCode.value();
-  }
+    public BaseResponseBody(HttpStatus statusCode) {
+        this.statusCode = statusCode.value();
+    }
 
-  public BaseResponseBody(HttpStatus statusCode, String message) {
-    this.statusCode = statusCode.value();
-    this.message = message;
-  }
+    public BaseResponseBody(HttpStatus statusCode, String message) {
+        this.statusCode = statusCode.value();
+        this.message = message;
+    }
 
-  public static BaseResponseBody of(HttpStatus statusCode, String message) {
-    BaseResponseBody body = new BaseResponseBody();
-    body.message = message;
-    body.statusCode = statusCode.value();
-    return body;
-  }
-  
+    public static BaseResponseBody of(HttpStatus statusCode, String message) {
+        BaseResponseBody body = new BaseResponseBody();
+        body.message = message;
+        body.statusCode = statusCode.value();
+        return body;
+    }
+
 }

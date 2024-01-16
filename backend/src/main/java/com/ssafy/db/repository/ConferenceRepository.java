@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ConferenceRepository extends JpaRepository<Conference, Long> {
-  void deleteByOwnerId(long ownerId);
+    void deleteByOwnerId(long ownerId);
 }

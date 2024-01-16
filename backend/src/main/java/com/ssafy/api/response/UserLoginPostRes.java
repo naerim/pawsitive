@@ -14,15 +14,15 @@ import org.springframework.http.HttpStatus;
 @Schema(description = "UserLoginPostResponse")
 public class UserLoginPostRes extends BaseResponseBody {
 
-  @Schema(name = "JWT 인증 토큰", example = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN...")
-  private String accessToken;
+    @Schema(name = "JWT 인증 토큰", example = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN...")
+    private String accessToken;
 
-  public static UserLoginPostRes of(HttpStatus status, String message, String accessToken) {
-    UserLoginPostRes res = new UserLoginPostRes();
-    res.setStatusCode(status.value());
-    res.setMessage(message);
-    res.setAccessToken(accessToken);
-    return res;
-  }
+    public static UserLoginPostRes of(HttpStatus status, String message, String accessToken) {
+        UserLoginPostRes res = new UserLoginPostRes();
+        res.setStatusCode(status.value());
+        res.setMessage(message);
+        res.setAccessToken(accessToken);
+        return res;
+    }
 
 }

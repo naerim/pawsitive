@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ConferenceServiceImpl implements ConferenceService {
-  private final ConferenceRepository conferenceRepository;
-  private final UserRepository userRepository;
+    private final ConferenceRepository conferenceRepository;
+    private final UserRepository userRepository;
 
-  @Override
-  public void deleteConferenceByUserId(String userId) {
-    Optional<User> user = userRepository.findUserByUserId(userId);
-    Long ownerId = user.get().getId();
-    conferenceRepository.deleteByOwnerId(ownerId);
-  }
+    @Override
+    public void deleteConferenceByUserId(String userId) {
+        Optional<User> user = userRepository.findUserByUserId(userId);
+        Long ownerId = user.get().getId();
+        conferenceRepository.deleteByOwnerId(ownerId);
+    }
 }

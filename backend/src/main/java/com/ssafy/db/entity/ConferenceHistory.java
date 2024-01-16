@@ -21,18 +21,18 @@ import lombok.Setter;
 @Table(name = "conference")
 public class ConferenceHistory extends BaseEntity {
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "conference_id")
-  private Conference conference;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "conference_id")
+    private Conference conference;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id")
-  private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-  @Column(name = "action")
-  private int action;
+    @Column(name = "action")
+    private int action;
 
-  @Column(name = "inserted_time")
-  private LocalDateTime insertedTime;
+    @Column(name = "inserted_time")
+    private LocalDateTime insertedTime;
 
 }

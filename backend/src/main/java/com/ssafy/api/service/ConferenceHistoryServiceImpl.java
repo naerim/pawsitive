@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ConferenceHistoryServiceImpl implements ConferenceHistoryService {
-  private final ConferenceHistoryRepository conferenceHistoryRepository;
-  private final UserRepository userRepository;
+    private final ConferenceHistoryRepository conferenceHistoryRepository;
+    private final UserRepository userRepository;
 
-  @Override
-  public void deleteConferenceHistoryUserId(String userId) {
-    Optional<User> user = userRepository.findUserByUserId(userId);
-    Long ownerId = user.get().getId();
-    conferenceHistoryRepository.deleteByUserId(ownerId);
-  }
+    @Override
+    public void deleteConferenceHistoryUserId(String userId) {
+        Optional<User> user = userRepository.findUserByUserId(userId);
+        Long ownerId = user.get().getId();
+        conferenceHistoryRepository.deleteByUserId(ownerId);
+    }
 }

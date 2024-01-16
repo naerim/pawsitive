@@ -16,15 +16,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SsafyUserDetailService implements UserDetailsService {
 
-  private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-  @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = userRepository.findUserByUserId(username).get();
-    
-    if (user != null) {
-      return new SsafyUserDetails(user);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findUserByUserId(username).get();
+
+        if (user != null) {
+            return new SsafyUserDetails(user);
+        }
+        return null;
     }
-    return null;
-  }
 }

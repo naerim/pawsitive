@@ -14,11 +14,11 @@ import org.springframework.http.HttpStatus;
 @Schema(description = "UserCheckRes")
 public class UserCheckRes extends BaseResponseBody {
 
-  public static UserCheckRes of(HttpStatus status, String message) {
-    UserCheckRes res = new UserCheckRes();
-    res.setStatusCode(status.value());
-    res.setMessage(message);
-    return res;
-  }
-  
+    public static UserCheckRes of(HttpStatus status, String message) {
+        UserCheckRes res = new UserCheckRes();
+        res.setStatusCode(status.value());
+        res.setMessage(message);
+        return res;
+    }
+
 }
