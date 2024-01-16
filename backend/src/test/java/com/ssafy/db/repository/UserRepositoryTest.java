@@ -1,7 +1,8 @@
 package com.ssafy.db.repository;
 
-import com.ssafy.db.entity.User;
 import com.ssafy.dummy.UserDummy;
+import com.ssafy.user.entity.User;
+import com.ssafy.user.repository.UserRepository;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

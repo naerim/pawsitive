@@ -1,6 +1,6 @@
 package com.ssafy.common.auth;
 
-import com.ssafy.db.entity.User;
+import com.ssafy.user.entity.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

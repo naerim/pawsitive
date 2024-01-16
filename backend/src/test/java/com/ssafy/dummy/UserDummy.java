@@ -1,6 +1,6 @@
 package com.ssafy.dummy;
 
-import com.ssafy.db.entity.User;
+import com.ssafy.user.entity.User;
 
 public class UserDummy {
     public static User getUserSuccess() {

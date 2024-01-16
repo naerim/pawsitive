@@ -1,7 +1,7 @@
 package com.ssafy.common.auth;
 
-import com.ssafy.db.entity.User;
-import com.ssafy.db.repository.UserRepository;
+import com.ssafy.user.entity.User;
+import com.ssafy.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
