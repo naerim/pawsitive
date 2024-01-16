@@ -1,34 +1,33 @@
-import { useState } from 'react'
-import viteLogo from 'vite.svg'
-import reactLogo from './assets/react.svg'
 import './App.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import HomePage from '@src/pages/HomePage'
+import LoginPage from '@src/pages/LoginPage'
+import Header from '@src/common/Header'
+// 로그인된 경우 접근할 수 있는 url
+const AuthRoutes = () => (
+  <Routes>
+    <Route path="/" element={<HomePage />} />
+    <Route path="/login" element={<LoginPage />} />
+  </Routes>
+)
+
+// 로그인안된 경우 접근할 수 있는  url
+const HomeRoutes = () => (
+  <Routes>
+    <Route path="/" element={<HomePage />} />
+    <Route path="/login" element={<LoginPage />} />
+  </Routes>
+)
 
 const App = () => {
-  const [count, setCount] = useState(0)
+  const user = false
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button type="button" onClick={() => setCount(count => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <BrowserRouter>
+      <Header />
+      {user ? <AuthRoutes /> : <HomeRoutes />}
+      <footer>footer</footer>
+    </BrowserRouter>
   )
 }
 
