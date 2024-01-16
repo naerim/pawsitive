@@ -5,6 +5,7 @@ const SignUpContainer = () => {
   const [nameError, setNameError] = useState('')
   const [dob, setDob] = useState('')
   const [dobError, setDobError] = useState('')
+  const [gender, setGender] = useState('')
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nameInput = e.target.value
@@ -51,6 +52,11 @@ const SignUpContainer = () => {
     }
   }
 
+  const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const genderSelect = e.target.value
+
+    setGender(genderSelect)
+  }
   return (
     <>
       <h2>NEW ACCOUNT</h2>
@@ -81,6 +87,28 @@ const SignUpContainer = () => {
           />
         </label>
         <div>{dobError}</div>
+
+        <label htmlFor="gender">
+          성별
+          <div>
+            <input
+              type="radio"
+              name="gender"
+              value="male"
+              checked={gender === 'male'}
+              onChange={handleGenderChange}
+            />
+            남성
+            <input
+              type="radio"
+              name="gender"
+              value="female"
+              checked={gender === 'female'}
+              onChange={handleGenderChange}
+            />
+            여성
+          </div>
+        </label>
       </div>
     </>
   )
