@@ -6,6 +6,8 @@ const SignUpContainer = () => {
   const [dob, setDob] = useState('')
   const [dobError, setDobError] = useState('')
   const [gender, setGender] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [phoneNumberError, setPhoneNumberError] = useState('')
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nameInput = e.target.value
@@ -56,6 +58,31 @@ const SignUpContainer = () => {
     const genderSelect = e.target.value
 
     setGender(genderSelect)
+  }
+
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let phoneNumberInput = e.target.value
+
+    phoneNumberInput = phoneNumberInput.replace(/[^\d-]/g, '')
+    phoneNumberInput = phoneNumberInput.slice(0, 13)
+
+    if (phoneNumberInput.length > 3 && phoneNumberInput[3] !== '-') {
+      phoneNumberInput = `${phoneNumberInput.substring(0, 3)}-${phoneNumberInput.substring(3)}`
+    }
+    if (phoneNumberInput.length > 8 && phoneNumberInput[8] !== '-') {
+      phoneNumberInput = `${phoneNumberInput.substring(0, 8)}-${phoneNumberInput.substring(8)}`
+    }
+
+    setPhoneNumber(phoneNumberInput)
+
+    const isValidPhoneNumberInput = () =>
+      /^010-\d{4}-\d{4}$/.test(phoneNumberInput)
+
+    if (!isValidPhoneNumberInput()) {
+      setPhoneNumberError('올바른 핸드폰 번호 형식이 아닙니다.')
+    } else {
+      setPhoneNumberError('')
+    }
   }
   return (
     <>
@@ -109,6 +136,20 @@ const SignUpContainer = () => {
             여성
           </div>
         </label>
+
+        <label htmlFor="phoneNumber">
+          핸드폰 번호
+          <input
+            type="text"
+            id="phoneNumber"
+            name="phoneNumber"
+            value={phoneNumber}
+            onChange={handlePhoneNumberChange}
+            placeholder="010-1234-5678"
+            required
+          />
+        </label>
+        <div>{phoneNumberError}</div>
       </div>
     </>
   )
