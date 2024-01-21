@@ -35,6 +35,7 @@ const MeetingSession = ({ subscriber, publisher }: SessionProps) => {
         }}
       >
         <div>
+          <div>publisher</div>
           <MeetingVideo streamManager={publisher} />
         </div>
         {subscribers.map(subscriberItem => (

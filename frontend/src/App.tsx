@@ -4,6 +4,7 @@ import HomePage from '@src/pages/HomePage'
 import LoginPage from '@src/pages/LoginPage'
 import Header from '@src/common/Header'
 import MeetingPage from '@src/pages/MeetingPage'
+import BroadcastPage from '@src/pages/BroadcastPage' // 로그인된 경우 접근할 수 있는 url
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
   <Routes>
@@ -18,6 +19,7 @@ const HomeRoutes = () => (
     <Route path="/" element={<HomePage />} />
     <Route path="/login" element={<LoginPage />} />
     <Route path="/openvidu" element={<MeetingPage />} />
+    <Route path="/broadcast" element={<BroadcastPage />} />
   </Routes>
 )
 
