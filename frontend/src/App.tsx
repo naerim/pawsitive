@@ -1,5 +1,6 @@
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import HomePage from '@src/pages/HomePage'
 import LoginPage from '@src/pages/LoginPage'
 import Header from '@src/common/Header'
@@ -27,6 +28,7 @@ const App = () => {
       <Header />
       {user ? <AuthRoutes /> : <HomeRoutes />}
       <footer>footer</footer>
+      <ReactQueryDevtools initialIsOpen={false} />
     </BrowserRouter>
   )
 }
