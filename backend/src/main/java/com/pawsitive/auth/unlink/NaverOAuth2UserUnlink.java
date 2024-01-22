@@ -1,4 +1,4 @@
-package com.pawsitive.auth.userunlink;
+package com.pawsitive.auth.unlink;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

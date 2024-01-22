@@ -1,9 +1,9 @@
-package com.pawsitive.auth.userinfo;
+package com.pawsitive.auth.info;
 
 import com.pawsitive.auth.OAuth2Provider;
 import java.util.Map;
 
-public class GoogleOAuth2UserInfo implements OAuth2UserInfo {
+public class NaverOAuth2UserInfo implements OAuth2UserInfo {
 
     private final Map<String, Object> attributes;
     private final String accessToken;
@@ -15,21 +15,23 @@ public class GoogleOAuth2UserInfo implements OAuth2UserInfo {
     private final String nickName;
     private final String profileImageUrl;
 
-    public GoogleOAuth2UserInfo(String accessToken, Map<String, Object> attributes) {
+    public NaverOAuth2UserInfo(String accessToken, Map<String, Object> attributes) {
         this.accessToken = accessToken;
-        this.attributes = attributes;
-        this.id = (String) attributes.get("sub");
-        this.email = (String) attributes.get("email");
-        this.name = (String) attributes.get("name");
-        this.firstName = (String) attributes.get("given_name");
-        this.lastName = (String) attributes.get("family_name");
-        this.nickName = null;
-        this.profileImageUrl = (String) attributes.get("picture");
+        // attributes 맵의 response 키의 값에 실제 attributes 맵이 할당되어 있음
+        this.attributes = (Map<String, Object>) attributes.get("response");
+        this.id = (String) this.attributes.get("id");
+        this.email = (String) this.attributes.get("email");
+        this.name = (String) this.attributes.get("name");
+        this.firstName = null;
+        this.lastName = null;
+        this.nickName = (String) attributes.get("nickname");
+        ;
+        this.profileImageUrl = (String) attributes.get("profile_image");
     }
 
     @Override
     public OAuth2Provider getProvider() {
-        return OAuth2Provider.GOOGLE;
+        return OAuth2Provider.NAVER;
     }
 
     @Override

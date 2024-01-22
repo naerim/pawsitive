@@ -1,8 +1,8 @@
 package com.pawsitive.auth;
 
 import com.pawsitive.auth.exception.OAuth2AuthenticationProcessingException;
-import com.pawsitive.auth.userunlink.GoogleOAuth2UserUnlink;
-import com.pawsitive.auth.userunlink.KakaoOAuth2UserUnlink;
+import com.pawsitive.auth.unlink.GoogleOAuth2UserUnlink;
+import com.pawsitive.auth.unlink.KakaoOAuth2UserUnlink;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

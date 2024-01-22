@@ -1,4 +1,4 @@
-package com.pawsitive.auth.userinfo;
+package com.pawsitive.auth.info;
 
 import com.pawsitive.auth.OAuth2Provider;
 import com.pawsitive.auth.exception.OAuth2AuthenticationProcessingException;

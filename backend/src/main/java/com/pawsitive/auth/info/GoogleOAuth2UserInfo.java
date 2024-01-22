@@ -1,10 +1,9 @@
-package com.pawsitive.auth.userinfo;
-
+package com.pawsitive.auth.info;
 
 import com.pawsitive.auth.OAuth2Provider;
 import java.util.Map;
 
-public class KakaoOAuth2UserInfo implements OAuth2UserInfo {
+public class GoogleOAuth2UserInfo implements OAuth2UserInfo {
 
     private final Map<String, Object> attributes;
     private final String accessToken;
@@ -16,30 +15,21 @@ public class KakaoOAuth2UserInfo implements OAuth2UserInfo {
     private final String nickName;
     private final String profileImageUrl;
 
-    public KakaoOAuth2UserInfo(String accessToken, Map<String, Object> attributes) {
+    public GoogleOAuth2UserInfo(String accessToken, Map<String, Object> attributes) {
         this.accessToken = accessToken;
-        // attributes 맵의 kakao_account 키의 값에 실제 attributes 맵이 할당되어 있음
-        Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-        Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
-        this.attributes = kakaoProfile;
-
-        this.id = ((Long) attributes.get("id")).toString();
-        this.email = (String) kakaoAccount.get("email");
-
-        this.name = null;
-        this.firstName = null;
-        this.lastName = null;
-        this.nickName = (String) attributes.get("nickname");
-        ;
-        this.profileImageUrl = (String) attributes.get("profile_image_url");
-
-        this.attributes.put("id", id);
-        this.attributes.put("email", this.email);
+        this.attributes = attributes;
+        this.id = (String) attributes.get("sub");
+        this.email = (String) attributes.get("email");
+        this.name = (String) attributes.get("name");
+        this.firstName = (String) attributes.get("given_name");
+        this.lastName = (String) attributes.get("family_name");
+        this.nickName = null;
+        this.profileImageUrl = (String) attributes.get("picture");
     }
 
     @Override
     public OAuth2Provider getProvider() {
-        return OAuth2Provider.KAKAO;
+        return OAuth2Provider.GOOGLE;
     }
 
     @Override

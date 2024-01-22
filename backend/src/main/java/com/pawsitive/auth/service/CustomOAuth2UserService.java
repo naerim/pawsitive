@@ -2,8 +2,8 @@ package com.pawsitive.auth.service;
 
 import com.pawsitive.auth.OAuth2UserPrincipal;
 import com.pawsitive.auth.exception.OAuth2AuthenticationProcessingException;
-import com.pawsitive.auth.userinfo.OAuth2UserInfo;
-import com.pawsitive.auth.userinfo.OAuth2UserInfoFactory;
+import com.pawsitive.auth.info.OAuth2UserInfo;
+import com.pawsitive.auth.info.OAuth2UserInfoFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;

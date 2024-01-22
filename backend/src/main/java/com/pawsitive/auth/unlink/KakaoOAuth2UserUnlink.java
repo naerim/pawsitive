@@ -1,4 +1,4 @@
-package com.pawsitive.auth.userunlink;
+package com.pawsitive.auth.unlink;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;

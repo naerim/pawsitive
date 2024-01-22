@@ -1,6 +1,6 @@
 package com.pawsitive.auth;
 
-import com.pawsitive.auth.userinfo.OAuth2UserInfo;
+import com.pawsitive.auth.info.OAuth2UserInfo;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
