@@ -1,13 +1,17 @@
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import HomePage from '@src/pages/HomePage'
-import LoginPage from '@src/pages/LoginPage'
-import Header from '@src/common/Header'
 import { ThemeProvider } from 'styled-components'
 import { useState } from 'react'
 import { darkTheme, lightTheme } from '@src/style/theme.'
 import { GlobalStyle } from '@src/style/GlobalStyles'
+import HomePage from '@src/pages/HomePage'
+import LoginPage from '@src/pages/LoginPage'
+import SignUpPage from '@src/pages/SignUpPage'
+import Header from '@src/common/Header'
+import MeetingPage from '@src/pages/MeetingPage'
+import BroadcastPage from '@src/pages/BroadcastPage'
+
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
   <Routes>
@@ -21,6 +25,9 @@ const HomeRoutes = () => (
   <Routes>
     <Route path="/" element={<HomePage />} />
     <Route path="/login" element={<LoginPage />} />
+    <Route path="/openvidu" element={<MeetingPage />} />
+    <Route path="/broadcast" element={<BroadcastPage />} />
+    <Route path="/signUp" element={<SignUpPage />} />
   </Routes>
 )
 
