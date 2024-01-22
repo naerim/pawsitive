@@ -6,8 +6,8 @@ import LoginPage from '@src/pages/LoginPage'
 import Header from '@src/common/Header'
 import { ThemeProvider } from 'styled-components'
 import { useState } from 'react'
-import { darkTheme, lightTheme } from '@src/style/theme..ts'
-import { GlobalStyle } from '@src/style/GlobalStyles.ts'
+import { darkTheme, lightTheme } from '@src/style/theme.'
+import { GlobalStyle } from '@src/style/GlobalStyles'
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
   <Routes>
