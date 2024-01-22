@@ -1,8 +1,8 @@
 # 가져올 이미지를 정의
-FROM node:14
+FROM node:20.11.0
 
 # 경로 설정하기
-WORKDIR /app
+WORKDIR /frontend
 
 # package.json 워킹 디렉토리에 복사 (.은 설정한 워킹 디렉토리를 뜻함)
 COPY package.json .
@@ -17,7 +17,7 @@ COPY . .
 EXPOSE 3000
 
 # npm start 스크립트 실행
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
 
 # 그리고 Dockerfile로 docker 이미지를 빌드
 # $ docker build .
