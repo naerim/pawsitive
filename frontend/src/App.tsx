@@ -41,7 +41,9 @@ const App = () => {
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyle />
-      <button onClick={toggleTheme}>{isLight ? 'Dark 🌚 ' : 'Light 🌝'}</button>
+      <button type="button" onClick={toggleTheme}>
+        {isLight ? 'Dark 🌚 ' : 'Light 🌝'}
+      </button>
       <BrowserRouter>
         <Header />
         {user ? <AuthRoutes /> : <HomeRoutes />}
