@@ -1,9 +1,7 @@
+import SettingContainer from '@src/container/SettingContainer'
+
 const SettingPage = () => {
-  return (
-    <div>
-      <div>설정페이지</div>
-    </div>
-  )
+  return <SettingContainer />
 }
 
 export default SettingPage
