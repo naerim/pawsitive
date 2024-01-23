@@ -12,6 +12,11 @@ export default defineConfig({
       registerType: 'autoUpdate',
       devOptions: { enabled: true },
       manifest: {
+        name: 'pawsitive',
+        short_name: 'pawsitive',
+        start_url: '',
+        display: 'standalone',
+        orientation: 'portrait',
         theme_color: '#ffffff',
         icons: [
           {
