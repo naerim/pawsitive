@@ -17,8 +17,6 @@ import com.pawsitive.user.exception.DuplicateIdException;
 import com.pawsitive.user.exception.UserNotLoginException;
 import com.pawsitive.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Objects;
@@ -127,11 +125,8 @@ public class UserController {
             @ApiResponse(responseCode = "401", description = "현재 로그인 한 회원의 계정이 유효하지 않습니다."),
         }
     )
-    public ResponseEntity<AdoptedDogRes> getDogsByUser(
-        @Parameter(name = "사용자 ID", description = "입양 유기견을 조회할 사용자의 ID", in = ParameterIn.PATH)
-        @PathVariable
-        String userId,
-        Authentication authentication) {
+    public ResponseEntity<AdoptedDogRes> getDogsByUser(@PathVariable String userId,
+                                                       Authentication authentication) {
 
         if (!userId.equals("admin")) {
             throw new UserNotLoginException();
