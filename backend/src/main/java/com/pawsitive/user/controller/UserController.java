@@ -8,6 +8,7 @@ import com.pawsitive.auth.CustomUserDetails;
 import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.user.dto.request.UserRegisterPostReq;
 import com.pawsitive.user.dto.request.UserUpdatePatchReq;
+import com.pawsitive.user.dto.response.AdoptedDogRes;
 import com.pawsitive.user.dto.response.UserCheckRes;
 import com.pawsitive.user.dto.response.UserRes;
 import com.pawsitive.user.dto.response.UserUpdateRes;
@@ -16,6 +17,8 @@ import com.pawsitive.user.exception.DuplicateIdException;
 import com.pawsitive.user.exception.UserNotLoginException;
 import com.pawsitive.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Objects;
@@ -113,6 +116,36 @@ public class UserController {
         return ResponseEntity
             .status(OK)
             .build();
+    }
+
+    @GetMapping("/{userId}/dogs")
+    @Operation(summary = "로그인 한 회원의 입양한 유기견 조회",
+        description = "<strong>로그인 한 회원이 입양한 유기견</strong>을 조회한다.",
+        tags = {"03.User"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "로그인 한 회원의 입양한 유기견 조회에 성공하였습니다."),
+            @ApiResponse(responseCode = "401", description = "현재 로그인 한 회원의 계정이 유효하지 않습니다."),
+        }
+    )
+    public ResponseEntity<AdoptedDogRes> getDogsByUser(
+        @Parameter(name = "사용자 ID", description = "입양 유기견을 조회할 사용자의 ID", in = ParameterIn.PATH)
+        @PathVariable
+        String userId,
+        Authentication authentication) {
+
+        if (!userId.equals("admin")) {
+            throw new UserNotLoginException();
+        }
+
+        AdoptedDogRes response = AdoptedDogRes.builder()
+            .adoptedDays(290)
+            .answerCount(10)
+            .memoryCount(9)
+            .build();
+
+        return ResponseEntity
+            .status(OK)
+            .body(response);
     }
 
     @PatchMapping("/{userId}")
