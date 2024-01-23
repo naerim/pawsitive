@@ -44,12 +44,20 @@ public class AuthController {
      * @return
      */
     @PostMapping("/login")
-    @Operation(summary = "로그인", description = "<strong>아이디와 패스워드</strong>를 통해 로그인 한다.", tags = {
-        "02.Auth"}, responses = {
-        @ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = UserLoginPostRes.class))),
-        @ApiResponse(responseCode = "401", description = "인증 실패", content = @Content(schema = @Schema(implementation = BaseResponseBody.class))),
-        @ApiResponse(responseCode = "404", description = "사용자 없음", content = @Content(schema = @Schema(implementation = BaseResponseBody.class))),
-        @ApiResponse(responseCode = "500", description = "서버 오류", content = @Content(schema = @Schema(implementation = BaseResponseBody.class)))})
+    @Operation(
+        summary = "로그인",
+        description = "<strong>아이디와 패스워드</strong>를 통해 로그인 한다.",
+        tags = {"02.Auth"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "성공",
+                content = @Content(schema = @Schema(implementation = UserLoginPostRes.class))),
+            @ApiResponse(responseCode = "401", description = "인증 실패",
+                content = @Content(schema = @Schema(implementation = BaseResponseBody.class))),
+            @ApiResponse(responseCode = "404", description = "사용자 없음",
+                content = @Content(schema = @Schema(implementation = BaseResponseBody.class))),
+            @ApiResponse(responseCode = "500", description = "서버 오류",
+                content = @Content(schema = @Schema(implementation = BaseResponseBody.class)))
+        })
     public ResponseEntity<UserLoginPostRes> login(@RequestBody UserLoginPostReq loginInfo) {
 
         String userId = loginInfo.getId();
