@@ -5,6 +5,7 @@ export const Container = styled.header`
   position: fixed;
   width: 400px;
   bottom: 0;
+  z-index: 100;
 `
 
 export const MenuWrap = styled.div`
