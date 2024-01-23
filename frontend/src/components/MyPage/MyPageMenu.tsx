@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom'
+import * as m from '@src/components/style/MyPageMenuStyle'
 
 const MyPageMenu = () => {
   return (
-    <div>
-      <Link to="/mypage/profile">회원정보수정</Link>
-      <Link to="/mypage/setting">설정</Link>
-    </div>
+    <m.Container>
+      <m.MenuItem to="/mypage/profile">회원정보수정</m.MenuItem>
+      <m.MenuItem to="/mypage/setting">설정</m.MenuItem>
+    </m.Container>
   )
 }
 
