@@ -11,9 +11,13 @@ import org.springframework.context.annotation.Configuration;
 /**
  * API 문서 관련 springdoc 설정 정의.
  */
-@OpenAPIDefinition(info = @Info(title = "WebRTC 스켈레톤 코드 API Document", description = "API Document", version = "v1.0", contact = @Contact(name = "yihoney", email = "109622@naver.com")), tags = {
-    @Tag(name = "01.Common", description = "공통 기능"), @Tag(name = "02.Auth", description = "인증 기능"),
-    @Tag(name = "03.User", description = "유저 기능"),})
+@OpenAPIDefinition(info = @Info(title = "WebRTC 스켈레톤 코드 API Document", description = "API Document", version = "v1.0", contact = @Contact(name = "yihoney", email = "109622@naver.com")),
+    tags = {
+        @Tag(name = "01.Common", description = "공통 기능"),
+        @Tag(name = "02.Auth", description = "인증 기능"),
+        @Tag(name = "03.User", description = "유저 기능"),
+        @Tag(name = "04.Dog", description = "유기견 기능")
+    })
 @Configuration
 public class SwaggerConfig {
 
