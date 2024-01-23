@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import DaumPostcode from 'react-daum-postcode'
+import { DaumPostData } from '@src/types/container/SignUpType'
 
 const SignUpContainer = () => {
   const [name, setName] = useState('')
@@ -8,6 +10,8 @@ const SignUpContainer = () => {
   const [gender, setGender] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [phoneNumberError, setPhoneNumberError] = useState('')
+  const [address, setAddress] = useState('')
+  const [isDaumPostcodeOpen, setIsDaumPostcodeOpen] = useState(false)
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nameInput = e.target.value
@@ -84,6 +88,12 @@ const SignUpContainer = () => {
       setPhoneNumberError('')
     }
   }
+
+  const handleAddressComplete = (data: DaumPostData) => {
+    setAddress(data.address)
+    setIsDaumPostcodeOpen(false)
+  }
+
   return (
     <>
       <h2>NEW ACCOUNT</h2>
@@ -150,6 +160,29 @@ const SignUpContainer = () => {
           />
         </label>
         <div>{phoneNumberError}</div>
+
+        <label htmlFor="address">
+          주소
+          {isDaumPostcodeOpen && (
+            <div>
+              <button
+                type="button"
+                onClick={() => setIsDaumPostcodeOpen(false)}
+              >
+                닫기
+              </button>
+              <DaumPostcode
+                onComplete={handleAddressComplete}
+                style={{ position: 'absolute', zIndex: 1000 }}
+              />
+            </div>
+          )}
+          <input
+            placeholder="주소를 검색해주세요"
+            onClick={() => setIsDaumPostcodeOpen(true)}
+            defaultValue={address}
+          />
+        </label>
       </div>
     </>
   )
