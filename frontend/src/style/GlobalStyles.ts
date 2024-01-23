@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle, DefaultTheme } from 'styled-components'
 import reset from 'styled-reset'
 
 export const GlobalStyle = createGlobalStyle`
@@ -13,9 +13,9 @@ export const GlobalStyle = createGlobalStyle`
         font-size: 16px;
     }
 
-    body {
-        background: ${({ theme }: { theme: any }) => theme.bgColor};
-        color: ${({ theme }: { theme: any }) => theme.textColor};
+    #root {
+        background: ${({ theme }: { theme: DefaultTheme }) => theme.bgColor};
+        color: ${({ theme }: { theme: DefaultTheme }) => theme.textColor};
         display: block;
         width: 100%;
         height: 100%;
@@ -25,7 +25,7 @@ export const GlobalStyle = createGlobalStyle`
     button {
         border: none;
         outline: none;
-        color: ${({ theme }: { theme: any }) => theme.bgColor};
-        background-color: ${({ theme }: { theme: any }) => theme.textColor};
+        color: ${({ theme }: { theme: DefaultTheme }) => theme.bgColor};
+        background-color: ${({ theme }: { theme: DefaultTheme }) => theme.textColor};
     }
 `
