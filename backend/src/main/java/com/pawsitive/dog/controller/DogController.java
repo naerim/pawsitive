@@ -41,5 +41,26 @@ public class DogController {
             .body(dogDetailRes);
     }
 
+    @GetMapping("/recommend/{userId}")
+    @Operation(summary = "추천 강아지 조회", description = "사용자 ID에 해당하는 추천 강아지 정보를 반환합니다.",
+        tags = {"04.Dog"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "해당 강아지 번호에 해당하는 강아지 정보가 있음")
+        }
+    )
+    public ResponseEntity<DogDetailRes> getRecommendDog(@PathVariable String userId) {
+
+        DogDetailRes dogDetailRes = DogDetailRes.builder()
+            .neutralized("중성화")
+            .shelter("송파동물보호소")
+            .description("배에 피부병 (습진) 있습니다.")
+            .name("참이")
+            .build();
+
+        return ResponseEntity
+            .status(OK)
+            .body(dogDetailRes);
+    }
+
 
 }
