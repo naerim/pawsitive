@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle, DefaultTheme } from 'styled-components'
 import reset from 'styled-reset'
 
 export const GlobalStyle = createGlobalStyle`
@@ -14,8 +14,8 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     #root {
-        background: ${({ theme }: { theme: any }) => theme.bgColor};
-        color: ${({ theme }: { theme: any }) => theme.textColor};
+        background: ${({ theme }: { theme: DefaultTheme }) => theme.bgColor};
+        color: ${({ theme }: { theme: DefaultTheme }) => theme.textColor};
         display: block;
         width: 100%;
         height: 100%;
