@@ -17,6 +17,7 @@ import NotFoundPage from '@src/pages/NotFoundPage'
 import { useAtomValue } from 'jotai'
 import { themeAtom } from '@src/stores/atoms/theme'
 import Footer from '@src/common/Footer'
+import DogDetailPage from '@src/pages/DogDetailPage'
 
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
@@ -39,11 +40,12 @@ const HomeRoutes = () => (
     <Route path="/broadcast" element={<BroadcastPage />} />
     <Route path="/signUp" element={<SignUpPage />} />
     <Route path="*" element={<NotFoundPage />} />
+    <Route path="/DogDetail" element={<DogDetailPage />} />
   </Routes>
 )
 
 const App = () => {
-  const user = true
+  const user = false
   const theme = useAtomValue(themeAtom)
 
   return (
