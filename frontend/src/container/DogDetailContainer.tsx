@@ -1,10 +1,11 @@
-import DogDetail from "../components/Wanted/DogDetail.tsx"
+import DogDetailInfo from '@src/components/DogDetail/DogDetailInfo'
 
 const DogDetailContainer = () => {
-    return(
+  return (
     <div>
-        <DogDetail />
-    </div>)
+      <DogDetailInfo />
+    </div>
+  )
 }
 
 export default DogDetailContainer
