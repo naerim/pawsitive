@@ -45,7 +45,7 @@ const HomeRoutes = () => (
 )
 
 const App = () => {
-  const user = false
+  const user = true
   const theme = useAtomValue(themeAtom)
 
   return (

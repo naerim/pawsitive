@@ -25,7 +25,6 @@ export const GlobalStyle = createGlobalStyle`
     button {
         border: none;
         outline: none;
-        color: ${({ theme }: { theme: DefaultTheme }) => theme.bgColor};
-        background-color: ${({ theme }: { theme: DefaultTheme }) => theme.textColor};
+        color: ${({ theme }: { theme: DefaultTheme }) => theme.textColor};
     }
 `
