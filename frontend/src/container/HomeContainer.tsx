@@ -3,15 +3,23 @@ import HomeProgressBar from '@src/components/Home/HomeProgressBar'
 import { useAtomValue } from 'jotai'
 import { userAtom } from '@src/stores/atoms/user'
 import { Link } from 'react-router-dom'
+import AdoptInfo from '@src/components/Home/AfterAdoption/AdoptInfo'
 
 const HomeContainer = () => {
   const user = useAtomValue(userAtom)
+  if (user.stage === 4) {
+    return (
+      <div>
+        <AdoptInfo />
+      </div>
+    )
+  }
   return (
     <div>
       {user.stage !== 0 && <HomeProgressBar currentStage={user.stage} />}
       <HomeTop />
       <h1>메인 페이지</h1>
-      <Link to="/DogDetailInfo">강아지 세부사항</Link>
+      <Link to="/dogDetail">강아지 세부사항</Link>
     </div>
   )
 }
