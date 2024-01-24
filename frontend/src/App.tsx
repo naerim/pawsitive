@@ -40,7 +40,7 @@ const HomeRoutes = () => (
     <Route path="/broadcast" element={<BroadcastPage />} />
     <Route path="/signUp" element={<SignUpPage />} />
     <Route path="*" element={<NotFoundPage />} />
-    <Route path="/DogDetail" element={<DogDetailPage />} />
+    <Route path="/dogDetail" element={<DogDetailPage />} />
   </Routes>
 )
 
