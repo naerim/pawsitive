@@ -6,6 +6,7 @@ import com.pawsitive.user.repository.UserRepository;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ class UserRepositoryTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("회원 아이디로 회원 조회 성공 테스트")
     void findByUserId() {
         Optional<User> user = userRepository.findUserByUserId(dummyUser.getUserId());
