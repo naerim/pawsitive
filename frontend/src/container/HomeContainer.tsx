@@ -11,7 +11,7 @@ const HomeContainer = () => {
       {user.stage !== 0 && <HomeProgressBar currentStage={user.stage} />}
       <HomeTop />
       <h1>메인 페이지</h1>
-      <Link to="/DogDetailInfo">강아지 세부사항</Link>
+      <Link to="/dogDetail">강아지 세부사항</Link>
     </div>
   )
 }
