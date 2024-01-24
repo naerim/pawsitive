@@ -1,4 +1,5 @@
 pipeline {
+  agent any
     environment {
         AWS_PUBLIC_IP = '172.26.8.148'
         SSH_CMD = 'ssh -i /var/jenkins_home/.ssh/id_rsa ubuntu@i10c111.p.ssafy.io'
@@ -6,12 +7,9 @@ pipeline {
         repository = "sejinnnnnn/pawsitive_backend"  //docker hub id와 repository 이름
         DOCKERHUB_CREDENTIALS = credentials('dockerhub') // jenkins에 등록해 놓은 docker hub credentials 이름
         dockerImage = ''
-    }
-  agent any
-    environment {
       REPO = "s10-webmobile1-sub2/S10P12C111"
     }
-
+    
   stages {
 
       //stage('SonarQube') {
