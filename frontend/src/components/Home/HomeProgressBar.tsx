@@ -14,6 +14,10 @@ const stageList = [
     stage: 3,
     text: '입양 수락전',
   },
+  {
+    stage: 4,
+    text: '입양 완료',
+  },
 ]
 
 const HomeProgressBar = (props: ProgressBarType) => {
