@@ -16,13 +16,13 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 /**
  * 인증(authentication) 와 인가(authorization) 처리를 위한 스프링 시큐리티 설정 정의.
@@ -39,6 +39,7 @@ public class SecurityConfig {
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     private final HttpCookieOAuth2AuthorizationRequestRepository
         httpCookieOAuth2AuthorizationRequestRepository;
+    private final CorsConfigurationSource corsConfigurationSource;
 
     // Password 인코딩 방식에 BCrypt 암호화 방식 사용
     @Bean
@@ -72,7 +73,7 @@ public class SecurityConfig {
                 .authenticated() //인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
                 .anyRequest().permitAll())
             .csrf(CsrfConfigurer::disable) // csrf 설정 disable
-            .cors(CorsConfigurer::disable);
+            .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource));
 
         http
             .httpBasic(HttpBasicConfigurer::disable)
