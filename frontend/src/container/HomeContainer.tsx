@@ -4,9 +4,16 @@ import { useAtomValue } from 'jotai'
 import { userAtom } from '@src/stores/atoms/user'
 import { Link } from 'react-router-dom'
 import HomeRecommendDog from '@src/components/Home/HomeRecommendDog'
-
+import AdoptInfo from '@src/components/Home/AfterAdoption/AdoptInfo'
 const HomeContainer = () => {
   const user = useAtomValue(userAtom)
+  if (user.stage === 4) {
+    return (
+      <div>
+        <AdoptInfo />
+      </div>
+    )
+  }
   return (
     <div>
       {user.stage !== 0 && <HomeProgressBar currentStage={user.stage} />}

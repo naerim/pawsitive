@@ -9,3 +9,9 @@ export type UserType = {
   type: number
   stage: number
 }
+
+export type AfterAdoptionUserInfo = {
+  adoptedDays: number
+  answerCount: number
+  memoryCount: number
+}
