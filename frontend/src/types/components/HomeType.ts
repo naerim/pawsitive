@@ -1,3 +1,5 @@
+import { ChildrenType, VisibleType } from '@src/types/propsType.ts'
+
 export type ProgressBarType = {
   currentStage: number
 }
@@ -5,3 +7,5 @@ export type ProgressBarType = {
 export type CirclePropsType = {
   $active: boolean
 }
+
+export type ClosePossibleCardType = ChildrenType & VisibleType

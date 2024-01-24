@@ -1,14 +1,14 @@
 import * as h from '@src/components/style/HomeRecommendDogStyle'
 import ClosePossibleCard from '@src/common/ClosePossibleCard.tsx'
+import { VisibleType } from '@src/types/propsType'
 
-const HomeRecommendDog = () => {
+const HomeRecommendDog = (props: VisibleType) => {
+  const { show, setShow } = props
+
   return (
     <h.Container>
-      <ClosePossibleCard>dd</ClosePossibleCard>
-      <ClosePossibleCard>
-        <div>
-          <h1>ss</h1>
-        </div>
+      <ClosePossibleCard show={show} setShow={setShow}>
+        dd
       </ClosePossibleCard>
       <div>유기견 추천 컴포넌트</div>
     </h.Container>
