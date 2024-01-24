@@ -1,9 +1,7 @@
-import DogDetailContainer from "../container/DogDetailContainer";
+import DogDetailContainer from '@src/container/DogDetailContainer'
 
 const DogDetailPage = () => {
-    return (<>
-        <DogDetailContainer />
-    </>)
+  return <DogDetailContainer />
 }
 
 export default DogDetailPage

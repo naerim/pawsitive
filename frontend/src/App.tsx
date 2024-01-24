@@ -17,7 +17,7 @@ import NotFoundPage from '@src/pages/NotFoundPage'
 import { useAtomValue } from 'jotai'
 import { themeAtom } from '@src/stores/atoms/theme'
 import Footer from '@src/common/Footer'
-import DogDetailPage from "@src/pages/DogDetailPage.tsx";
+import DogDetailPage from '@src/pages/DogDetailPage'
 
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
