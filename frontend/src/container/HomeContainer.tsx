@@ -4,18 +4,13 @@ import { useAtomValue } from 'jotai'
 import { userAtom } from '@src/stores/atoms/user'
 import { Link } from 'react-router-dom'
 import HomeRecommendDog from '@src/components/Home/HomeRecommendDog'
-import { useState } from 'react'
 
 const HomeContainer = () => {
   const user = useAtomValue(userAtom)
-  const [showRecommend, setShowRecommend] = useState(true)
-
   return (
     <div>
       {user.stage !== 0 && <HomeProgressBar currentStage={user.stage} />}
-      {user.stage === 0 && (
-        <HomeRecommendDog show={showRecommend} setShow={setShowRecommend} />
-      )}
+      {user.stage === 0 && <HomeRecommendDog />}
       <HomeTop />
       <h1>메인 페이지</h1>
       <Link to="/dogDetail">강아지 세부사항</Link>

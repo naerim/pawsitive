@@ -1,11 +1,10 @@
 import * as c from '@src/common/style/ClosePossibleCardStyle'
-import { ClosePossibleCardType } from '@src/types/components/HomeType.ts'
+import { useAtom } from 'jotai/index'
+import { homeRecommendDogShowAtom } from '@src/stores/atoms/visible'
+import { ChildrenType } from '@src/types/propsType'
 
-const ClosePossibleCard = ({
-  show,
-  setShow,
-  children,
-}: ClosePossibleCardType) => {
+const ClosePossibleCard = ({ children }: ChildrenType) => {
+  const [show, setShow] = useAtom(homeRecommendDogShowAtom)
   const closeCard = () => setShow(false)
 
   return (
@@ -13,7 +12,7 @@ const ClosePossibleCard = ({
       {show && (
         <c.Container>
           <c.CloseButton onClick={closeCard}>X</c.CloseButton>
-          <div>{children}</div>
+          <c.Wrap>{children}</c.Wrap>
         </c.Container>
       )}
     </>
