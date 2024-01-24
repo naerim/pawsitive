@@ -21,6 +21,9 @@ const SettingStage = () => {
       <button type="button" onClick={() => changeUserStage(3)}>
         stage 3
       </button>
+      <button type="button" onClick={() => changeUserStage(4)}>
+        stage 4
+      </button>
     </div>
   )
 }
