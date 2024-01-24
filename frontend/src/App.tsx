@@ -18,6 +18,7 @@ import { useAtomValue } from 'jotai'
 import { themeAtom } from '@src/stores/atoms/theme'
 import Footer from '@src/common/Footer'
 import DogDetailPage from '@src/pages/DogDetailPage'
+import CommunityPage from '@src/pages/CommunityPage'
 
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
@@ -28,6 +29,7 @@ const AuthRoutes = () => (
     <Route path="/mypage/profile" element={<ProfilePage />} />
     <Route path="/mypage/setting" element={<SettingPage />} />
     <Route path="*" element={<NotFoundPage />} />
+    <Route path="/community" element={<CommunityPage />} />
   </Routes>
 )
 
@@ -45,7 +47,7 @@ const HomeRoutes = () => (
 )
 
 const App = () => {
-  const user = false
+  const user = true
   const theme = useAtomValue(themeAtom)
 
   return (
