@@ -1,6 +1,7 @@
 import * as tmImage from '@teachablemachine/image'
 
 const TeachableMachine = () => {
+  // const URL = 'https://teachablemachine.withgoogle.com/models/KDq_2gk72/'
   const URL = 'https://teachablemachine.withgoogle.com/models/KDq_2gk72/'
 
   let model
@@ -23,7 +24,7 @@ const TeachableMachine = () => {
 
     document.getElementById('webcam-container').appendChild(webcam.canvas)
     labelContainer = document.getElementById('label-container')
-    for (let i = 0; i < maxPredictions; i++) {
+    for (let i = 0; i < maxPredictions; i + 1) {
       labelContainer.appendChild(document.createElement('div'))
     }
   }
