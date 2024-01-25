@@ -54,7 +54,7 @@ pipeline {
 
       stage('Clean image') {
         steps {
-          sh 'docker rmi $repository' // docker image 제거
+          sh 'docker rmi $repository' // jenkins 컨테이너에 있는 docker image 제거
         }
       }
 
@@ -69,7 +69,7 @@ pipeline {
             }
           }
           sh '$SSH_CMD $DOCKER pull $repository:latest'
-          sh '$SSH_CMD $DOCKER run -p 50001:8080 $repository'
+          sh '$SSH_CMD $DOCKER run --name $repository -p 50001:8080 $repository'
         }
       }
   }
