@@ -17,12 +17,11 @@ pipeline {
     //
     //}
 
-    stage('Build') {
+    stage('Install') {
       steps {
         dir('./frontend') {
           script {
             sh 'npm install'
-            sh 'npm run dev'
           }
         }
       }
