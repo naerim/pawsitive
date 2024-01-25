@@ -13,6 +13,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.17.19",
     "@types/axios": "^0.14.0",
+    "@types/kakaomaps": "^1.1.5",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.6.5",
     "jotai": "^2.6.2",
@@ -42,6 +43,7 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "kakao.maps.d.ts": "^0.1.39",
     "prettier": "^3.2.2",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
