@@ -69,7 +69,8 @@ pipeline {
             }
           }
           sh '$SSH_CMD $DOCKER pull $repository:latest'
-          sh '$SSH_CMD $DOCKER run --name pawsitive_backend -p 50001:8080 $repository'
+//           sh '$SSH_CMD $DOCKER run --name pawsitive_backend -p 50001:8080 $repository'
+          sh '$SSH_CMD $DOCKER compose up'
         }
       }
   }
