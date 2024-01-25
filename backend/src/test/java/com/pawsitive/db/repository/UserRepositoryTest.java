@@ -1,8 +1,8 @@
 package com.pawsitive.db.repository;
 
 import com.pawsitive.dummy.UserDummy;
-import com.pawsitive.user.entity.User;
-import com.pawsitive.user.repository.UserRepository;
+import com.pawsitive.usergroup.entity.User;
+import com.pawsitive.usergroup.repository.UserRepository;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

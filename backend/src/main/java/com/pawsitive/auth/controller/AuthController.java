@@ -4,12 +4,12 @@ import static org.springframework.http.HttpStatus.OK;
 
 import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.common.util.JwtTokenUtil;
-import com.pawsitive.user.dto.request.UserLoginPostReq;
-import com.pawsitive.user.dto.response.UserLoginPostRes;
-import com.pawsitive.user.entity.User;
-import com.pawsitive.user.exception.InvalidPasswordException;
-import com.pawsitive.user.exception.UserNotFoundException;
-import com.pawsitive.user.service.UserService;
+import com.pawsitive.usergroup.dto.request.UserLoginPostReq;
+import com.pawsitive.usergroup.dto.response.UserLoginPostRes;
+import com.pawsitive.usergroup.entity.User;
+import com.pawsitive.usergroup.exception.InvalidPasswordException;
+import com.pawsitive.usergroup.exception.UserNotFoundException;
+import com.pawsitive.usergroup.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

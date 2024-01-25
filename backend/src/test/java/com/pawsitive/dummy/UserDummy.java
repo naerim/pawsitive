@@ -1,6 +1,6 @@
 package com.pawsitive.dummy;
 
-import com.pawsitive.user.entity.User;
+import com.pawsitive.usergroup.entity.User;
 
 public class UserDummy {
     public static User getUserSuccess() {

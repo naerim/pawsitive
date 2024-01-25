@@ -1,9 +1,9 @@
 package com.pawsitive.auth.service;
 
 import com.pawsitive.auth.CustomUserDetails;
-import com.pawsitive.user.entity.User;
-import com.pawsitive.user.exception.UserNotFoundException;
-import com.pawsitive.user.repository.UserRepository;
+import com.pawsitive.usergroup.entity.User;
+import com.pawsitive.usergroup.exception.UserNotFoundException;
+import com.pawsitive.usergroup.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

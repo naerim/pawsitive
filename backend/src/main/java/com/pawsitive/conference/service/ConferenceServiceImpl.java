@@ -1,8 +1,8 @@
 package com.pawsitive.conference.service;
 
 import com.pawsitive.conference.repository.ConferenceRepository;
-import com.pawsitive.user.entity.User;
-import com.pawsitive.user.repository.UserRepository;
+import com.pawsitive.usergroup.entity.User;
+import com.pawsitive.usergroup.repository.UserRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
