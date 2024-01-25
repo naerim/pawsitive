@@ -1,8 +1,6 @@
 package com.pawsitive.usergroup.repository;
 
-import com.pawsitive.usergroup.entity.QUser;
 import com.pawsitive.usergroup.entity.User;
-import com.querydsl.jpa.JPQLQuery;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
@@ -18,9 +16,10 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
     }
 
     public Optional<User> findUserByUserId(String userId) {
-        QUser qUser = QUser.user;
-        JPQLQuery<User> user = from(qUser).where(qUser.userId.eq(userId)).select(qUser);
-
-        return Optional.ofNullable(user.fetchOne());
+//        QUser qUser = QUser.user;
+//        JPQLQuery<User> user = from(qUser).where(qUser.userId.eq(userId)).select(qUser);
+//
+//        return Optional.ofNullable(user.fetchOne());
+        return null;
     }
 }
