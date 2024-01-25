@@ -68,7 +68,7 @@ pipeline {
           }
         }
         sh '$SSH_CMD $DOCKER pull $repository:latest'
-        sh '$SSH_CMD $DOCKER run --name pawsitive_frontend -p 9000:3000 $repository'
+        sh '$SSH_CMD $DOCKER run --name pawsitive_frontend -d -p 9000:3000 $repository'
 //         sh '$SSH_CMD $DOCKER compose up'
       }
     }
