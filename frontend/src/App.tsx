@@ -19,6 +19,7 @@ import { themeAtom } from '@src/stores/atoms/theme'
 import Footer from '@src/common/Footer'
 import DogDetailPage from '@src/pages/DogDetailPage'
 import CommunityPage from '@src/pages/CommunityPage'
+import CommunityCreatePage from '@src/pages/CommunityCreatePage'
 import CreateDogPage from '@src/pages/CreateDogPage'
 import TeachablePage from '@src/pages/TeachablePage'
 
@@ -32,6 +33,7 @@ const AuthRoutes = () => (
     <Route path="/mypage/setting" element={<SettingPage />} />
     <Route path="*" element={<NotFoundPage />} />
     <Route path="/community" element={<CommunityPage />} />
+    <Route path="/article/create" element={<CommunityCreatePage />} />
     <Route path="/new/dog" element={<CreateDogPage />} />
     <Route path="/mypage/teachable" element={<TeachablePage />} />
   </Routes>
