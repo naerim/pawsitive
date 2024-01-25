@@ -19,6 +19,7 @@ import { themeAtom } from '@src/stores/atoms/theme'
 import Footer from '@src/common/Footer'
 import DogDetailPage from '@src/pages/DogDetailPage'
 import CommunityPage from '@src/pages/CommunityPage'
+import TeachablePage from '@src/pages/TeachablePage'
 
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
@@ -30,6 +31,7 @@ const AuthRoutes = () => (
     <Route path="/mypage/setting" element={<SettingPage />} />
     <Route path="*" element={<NotFoundPage />} />
     <Route path="/community" element={<CommunityPage />} />
+    <Route path="/mypage/teachable" element={<TeachablePage />} />
   </Routes>
 )
 
