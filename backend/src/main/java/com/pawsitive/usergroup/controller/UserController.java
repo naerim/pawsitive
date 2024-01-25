@@ -1,4 +1,4 @@
-package com.pawsitive.user.controller;
+package com.pawsitive.usergroup.controller;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
@@ -6,16 +6,16 @@ import static org.springframework.http.HttpStatus.OK;
 
 import com.pawsitive.auth.CustomUserDetails;
 import com.pawsitive.common.dto.BaseResponseBody;
-import com.pawsitive.user.dto.request.UserRegisterPostReq;
-import com.pawsitive.user.dto.request.UserUpdatePatchReq;
-import com.pawsitive.user.dto.response.AdoptedDogRes;
-import com.pawsitive.user.dto.response.UserCheckRes;
-import com.pawsitive.user.dto.response.UserRes;
-import com.pawsitive.user.dto.response.UserUpdateRes;
-import com.pawsitive.user.entity.User;
-import com.pawsitive.user.exception.DuplicateIdException;
-import com.pawsitive.user.exception.UserNotLoginException;
-import com.pawsitive.user.service.UserService;
+import com.pawsitive.usergroup.dto.request.UserRegisterPostReq;
+import com.pawsitive.usergroup.dto.request.UserUpdatePatchReq;
+import com.pawsitive.usergroup.dto.response.AdoptedDogRes;
+import com.pawsitive.usergroup.dto.response.UserCheckRes;
+import com.pawsitive.usergroup.dto.response.UserRes;
+import com.pawsitive.usergroup.dto.response.UserUpdateRes;
+import com.pawsitive.usergroup.entity.User;
+import com.pawsitive.usergroup.exception.DuplicateIdException;
+import com.pawsitive.usergroup.exception.UserNotLoginException;
+import com.pawsitive.usergroup.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;

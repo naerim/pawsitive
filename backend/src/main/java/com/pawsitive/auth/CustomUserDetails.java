@@ -1,6 +1,6 @@
 package com.pawsitive.auth;
 
-import com.pawsitive.user.entity.User;
+import com.pawsitive.usergroup.entity.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

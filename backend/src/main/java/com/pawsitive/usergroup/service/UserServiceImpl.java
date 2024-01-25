@@ -1,13 +1,13 @@
-package com.pawsitive.user.service;
+package com.pawsitive.usergroup.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.pawsitive.conference.service.ConferenceHistoryService;
 import com.pawsitive.conference.service.ConferenceService;
-import com.pawsitive.user.dto.request.UserRegisterPostReq;
-import com.pawsitive.user.dto.request.UserUpdatePatchReq;
-import com.pawsitive.user.entity.User;
-import com.pawsitive.user.exception.UserNotFoundException;
-import com.pawsitive.user.repository.UserRepository;
+import com.pawsitive.usergroup.dto.request.UserRegisterPostReq;
+import com.pawsitive.usergroup.dto.request.UserUpdatePatchReq;
+import com.pawsitive.usergroup.entity.User;
+import com.pawsitive.usergroup.exception.UserNotFoundException;
+import com.pawsitive.usergroup.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

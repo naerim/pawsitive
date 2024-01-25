@@ -1,7 +1,7 @@
-package com.pawsitive.user.repository;
+package com.pawsitive.usergroup.repository;
 
-import com.pawsitive.user.entity.QUser;
-import com.pawsitive.user.entity.User;
+import com.pawsitive.usergroup.entity.QUser;
+import com.pawsitive.usergroup.entity.User;
 import com.querydsl.jpa.JPQLQuery;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;

@@ -1,7 +1,7 @@
-package com.pawsitive.user.dto.response;
+package com.pawsitive.usergroup.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.pawsitive.user.entity.User;
+import com.pawsitive.usergroup.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,7 +1,7 @@
 package com.pawsitive.conference.entity;
 
 import com.pawsitive.common.entity.BaseEntity;
-import com.pawsitive.user.entity.User;
+import com.pawsitive.usergroup.entity.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;

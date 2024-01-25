@@ -6,10 +6,10 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import com.pawsitive.common.dto.BaseResponseBody;
-import com.pawsitive.user.exception.DuplicateIdException;
-import com.pawsitive.user.exception.InvalidPasswordException;
-import com.pawsitive.user.exception.UserNotFoundException;
-import com.pawsitive.user.exception.UserNotLoginException;
+import com.pawsitive.usergroup.exception.DuplicateIdException;
+import com.pawsitive.usergroup.exception.InvalidPasswordException;
+import com.pawsitive.usergroup.exception.UserNotFoundException;
+import com.pawsitive.usergroup.exception.UserNotLoginException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

@@ -1,4 +1,4 @@
-package com.pawsitive.user.dto.request;
+package com.pawsitive.usergroup.dto.request;
 
 //import io.swagger.annotations.ApiModel;
 //import io.swagger.annotations.ApiModelProperty;
@@ -8,12 +8,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 유저 회원가입 API ([POST] /api/v1/users) 요청에 필요한 리퀘스트 바디 정의.
+ * 유저 로그인 API ([POST] /api/v1/auth/login) 요청에 필요한 리퀘스트 바디 정의.
  */
 @Getter
 @Setter
-@Schema(description = "UserRegisterPostRequest")
-public class UserRegisterPostReq {
+@Schema(description = "UserLoginPostRequest")
+public class UserLoginPostReq {
 
     @Schema(name = "유저 ID", example = "ssafy_web")
     String id;

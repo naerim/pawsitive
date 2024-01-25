@@ -1,4 +1,4 @@
-package com.pawsitive.user.dto.request;
+package com.pawsitive.usergroup.dto.request;
 
 //import io.swagger.annotations.ApiModel;
 //import io.swagger.annotations.ApiModelProperty;

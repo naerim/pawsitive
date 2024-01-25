@@ -1,4 +1,4 @@
-package com.pawsitive.user.dto.response;
+package com.pawsitive.usergroup.dto.response;
 
 import com.pawsitive.common.dto.BaseResponseBody;
 import io.swagger.v3.oas.annotations.media.Schema;
