@@ -14,7 +14,8 @@
 </head>
 <body>
 <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=%VITE_KAKAO_MAP_API_KEY%"></script>
+        strategy="beforeInteractive"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=%VITE_KAKAO_MAP_API_KEY%&autoload=true&libraries=services"></script>
 
 <div id="root"></div>
 <script type="module" src="src/main.tsx"></script>
