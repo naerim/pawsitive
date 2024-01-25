@@ -5,6 +5,7 @@ import { userAtom } from '@src/stores/atoms/user'
 import { Link } from 'react-router-dom'
 import HomeRecommendDog from '@src/components/Home/HomeRecommendDog'
 import AdoptInfo from '@src/components/Home/AfterAdoption/AdoptInfo'
+
 const HomeContainer = () => {
   const user = useAtomValue(userAtom)
   if (user.stage === 4) {
@@ -21,6 +22,8 @@ const HomeContainer = () => {
       <HomeTop />
       <h1>메인 페이지</h1>
       <Link to="/dogDetail">강아지 세부사항</Link>
+      <br />
+      <Link to="/new/dog">유기견 추가</Link>
     </div>
   )
 }
