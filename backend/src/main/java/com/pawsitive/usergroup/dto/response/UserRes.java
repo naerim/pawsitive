@@ -1,7 +1,6 @@
 package com.pawsitive.usergroup.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.pawsitive.usergroup.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,12 +26,12 @@ public class UserRes {
     @Schema(name = "이름")
     private String name;
 
-    public static UserRes of(User user) {
-        UserRes res = new UserRes();
-        res.setDepartment(user.getDepartment());
-        res.setPosition(user.getPosition());
-        res.setName(user.getName());
-        res.setUserId(user.getUserId());
-        return res;
-    }
+//    public static UserRes of(User user) {
+//        UserRes res = new UserRes();
+//        res.setDepartment(user.getDepartment());
+//        res.setPosition(user.getPosition());
+//        res.setName(user.getName());
+//        res.setUserId(user.getUserId());
+//        return res;
+//    }
 }
