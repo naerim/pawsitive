@@ -71,7 +71,7 @@ pipeline {
 //                             // sh '$SSH_CMD $DOCKER login localhost:5000 -u $USERNAME -p $PASSWORD'
 //                         sh 'docker push $repository:latest'
                         sh '$SSH_CMD $DOCKER pull $repository:latest'
-                        sh '$SSH_CMD $DOCKER run -p 50000:8080 $repository'
+                        sh '$SSH_CMD $DOCKER run -p 50001:8080 $repository'
                         }
                 }
       }
