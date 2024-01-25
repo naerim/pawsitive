@@ -54,27 +54,23 @@ pipeline {
 
       stage('Clean image') {
         steps {
-            sh 'docker rmi $repository' // docker image 제거
+          sh 'docker rmi $repository' // docker image 제거
         }
       }
 
       stage('Deployment') {
         steps {
-                script {
-                            try {
-                                sh '$SSH_CMD $DOCKER stop $repository'
-                                sh '$SSH_CMD $DOCKER rm $repository'
-                            } catch (e) {
-                                sh 'echo "fail to stop and remove container"'
-                            }
-//                             sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-//                             // sh '$SSH_CMD $DOCKER login localhost:5000 -u $USERNAME -p $PASSWORD'
-//                         sh 'docker push $repository:latest'
-                        sh '$SSH_CMD $DOCKER pull $repository:latest'
-                        sh '$SSH_CMD $DOCKER run -p 50001:8080 $repository'
-                        }
-                }
+          script {
+            try {
+              sh '$SSH_CMD $DOCKER stop $repository'
+              sh '$SSH_CMD $DOCKER rm $repository'
+            } catch (e) {
+              sh 'echo "fail to stop and remove container"'
+            }
+          }
+          sh '$SSH_CMD $DOCKER pull $repository:latest'
+          sh '$SSH_CMD $DOCKER run -p 50001:8080 $repository'
+        }
       }
-
   }
-    }
+}
