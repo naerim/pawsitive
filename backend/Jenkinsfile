@@ -62,14 +62,14 @@ pipeline {
       steps {
         script {
           try {
-            sh '$SSH_CMD $DOCKER stop pawsitive_backend'
-            sh '$SSH_CMD $DOCKER rm pawsitive_backend'
+            sh '$SSH_CMD $DOCKER stop $repository'
+            sh '$SSH_CMD $DOCKER rm $repository'
           } catch (e) {
             sh 'echo "fail to stop and remove container"'
           }
         }
         sh '$SSH_CMD $DOCKER pull $repository:latest'
-        sh '$SSH_CMD $DOCKER run --name pawsitive_backend -p 50001:8080 $repository'
+        sh '$SSH_CMD $DOCKER run --name $repository -p 50001:8080 $repository'
 //         sh '$SSH_CMD $DOCKER compose up'
       }
     }
