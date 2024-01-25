@@ -67,7 +67,7 @@ pipeline {
                             } catch (e) {
                                 sh 'echo "fail to stop and remove container"'
                             }
-                            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                             // sh '$SSH_CMD $DOCKER login localhost:5000 -u $USERNAME -p $PASSWORD'
                         sh 'docker push $repository:latest'
                         sh '$SSH_CMD $DOCKER pull $repository:latest'
