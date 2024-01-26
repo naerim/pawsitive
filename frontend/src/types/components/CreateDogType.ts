@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction } from 'react'
 
 export type CreateDogInfoType = {
   name: string | number | number[]
@@ -10,4 +10,9 @@ export type CreateDogInfoType = {
   setColor: (e: ChangeEvent<HTMLInputElement>) => void
   note: string | number | number[]
   setNote: (e: ChangeEvent<HTMLTextAreaElement>) => void
+}
+
+export type CreateDogMbtiType = {
+  mbti: number[]
+  setMbti: Dispatch<SetStateAction<number[]>>
 }
