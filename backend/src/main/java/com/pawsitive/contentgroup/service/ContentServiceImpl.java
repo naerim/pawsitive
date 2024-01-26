@@ -17,9 +17,10 @@ public class ContentServiceImpl implements ContentService {
         return contentRepository.findContents();
     }
 
+
     @Override
     public List<ContentRes> getContentList(int contentCategoryNo) {
-        List<Content> contentList =
+        return
             contentRepository.findContentListByContentCategoryNo(contentCategoryNo);
 
     }
