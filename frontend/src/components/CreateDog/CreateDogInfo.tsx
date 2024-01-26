@@ -15,8 +15,8 @@ const CreateDogInfo = (props: CreateDogInfoType) => {
   return (
     <div>
       <div>보호소 번호(임의 1)</div>
-      <div>이름</div>
-      <input type="text" value={String(name)} onChange={setName} />
+      <label htmlFor="name">이름</label>
+      <input id="name" type="text" value={String(name)} onChange={setName} />
       <div>품종</div>
       <input type="text" value={String(kind)} onChange={setKind} />
       <div>중성화여부</div>

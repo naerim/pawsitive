@@ -7,3 +7,7 @@ export type ChildrenType = {
 export type ClickType = {
   onClick: () => void
 }
+
+export type FormClickType = {
+  onClick: (e: React.FormEvent<HTMLFormElement>) => void
+}

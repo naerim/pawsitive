@@ -16,3 +16,8 @@ export type CreateDogMbtiType = {
   mbti: number[]
   setMbti: Dispatch<SetStateAction<number[]>>
 }
+
+export type CreateDogFileType = {
+  file: File[]
+  setFile: Dispatch<SetStateAction<File[]>>
+}
