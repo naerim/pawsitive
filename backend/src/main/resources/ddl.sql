@@ -94,14 +94,12 @@ CREATE TABLE `community_board` (
 	`content_category_no`	INT	NOT NULL
 );
 
-DROP TABLE IF EXISTS `community_comment_no`;
+DROP TABLE IF EXISTS `community_comment`;
 
-CREATE TABLE `community_comment_no` (
+CREATE TABLE `community_comment` (
 	`community_comment_no`	INT	NOT NULL auto_increment primary key,
 	`member_no`	INT	NOT NULL,
-	`title`	VARCHAR(100)	NOT NULL,
 	`content`	VARCHAR(500)	NOT NULL,
-	`photo`	VARCHAR(300)	NULL,
 	`created_at`	TIMESTAMP	NOT NULL
 );
 
@@ -133,8 +131,8 @@ CREATE TABLE `community_liked` (
 DROP TABLE IF EXISTS `community_category`;
 
 CREATE TABLE `community_category` (
-	`content_category_no`	INT	NOT NULL auto_increment primary key,
-	`content_category_name`	VARCHAR(20)	NOT NULL
+	`community_category_no`	INT	NOT NULL auto_increment primary key,
+	`community_category_name`	VARCHAR(20)	NOT NULL
 );
 
 DROP TABLE IF EXISTS `dog_image`;
@@ -142,7 +140,7 @@ DROP TABLE IF EXISTS `dog_image`;
 CREATE TABLE `dog_image` (
 	`dog_image_no`	INT	NOT NULL auto_increment primary key,
 	`dog_no`	INT	NOT NULL,
-	`dog_image_url;`	VARCHAR(500)	NULL
+	`url;`	VARCHAR(500)	NULL
 );
 
 ALTER TABLE `dog` ADD CONSTRAINT `FK_user_TO_dog_1` FOREIGN KEY (
@@ -202,23 +200,23 @@ REFERENCES `member` (
 );
 
 ALTER TABLE `community_board` ADD CONSTRAINT `FK_community_category_TO_community_board_1` FOREIGN KEY (
-	`content_category_no`
+	`community_category_no`
 )
 REFERENCES `community_category` (
-	`content_category_no`
+	`community_category_no`
 );
 
-ALTER TABLE `community_comment_no` ADD CONSTRAINT `FK_member_TO_community_comment_no_1` FOREIGN KEY (
+ALTER TABLE `community_comment` ADD CONSTRAINT `FK_member_TO_community_comment_1` FOREIGN KEY (
 	`member_no`
 )
 REFERENCES `member` (
 	`member_no`
 );
 
-ALTER TABLE `community` ADD CONSTRAINT `FK_community_comment_no_TO_community_1` FOREIGN KEY (
+ALTER TABLE `community` ADD CONSTRAINT `FK_community_comment_TO_community_1` FOREIGN KEY (
 	`community_board_no`
 )
-REFERENCES `community_comment_no` (
+REFERENCES `community_comment` (
 	`community_comment_no`
 );
 
