@@ -23,6 +23,7 @@ import CommunityPage from '@src/pages/CommunityPage'
 import CommunityCreatePage from '@src/pages/CommunityCreatePage'
 import CreateDogPage from '@src/pages/CreateDogPage'
 import TeachablePage from '@src/pages/TeachablePage'
+import AdoptionSurveyPage from '@src/pages/AdoptionSurveyPage'
 import DictionaryPage from '@src/pages/DictionaryPage'
 
 // 로그인된 경우 접근할 수 있는 url
@@ -38,6 +39,8 @@ const AuthRoutes = () => (
     <Route path="/article/create" element={<CommunityCreatePage />} />
     <Route path="/new/dog" element={<CreateDogPage />} />
     <Route path="/mypage/teachable" element={<TeachablePage />} />
+    <Route path="/dogDetail" element={<DogDetailPage />} />
+    <Route path="/mypage/adoptionSurvey" element={<AdoptionSurveyPage />} />
     <Route path="/dictionary" element={<DictionaryPage />} />
   </Routes>
 )
@@ -52,7 +55,6 @@ const HomeRoutes = () => (
     <Route path="/signUp" element={<SignUpPage />} />
     <Route path="/shelterSignUp" element={<ShelterSignUpPage />} />
     <Route path="*" element={<NotFoundPage />} />
-    <Route path="/dogDetail" element={<DogDetailPage />} />
   </Routes>
 )
 
