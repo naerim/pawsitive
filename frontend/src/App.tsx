@@ -7,6 +7,7 @@ import { GlobalStyle } from '@src/style/GlobalStyles'
 import HomePage from '@src/pages/HomePage'
 import LoginPage from '@src/pages/LoginPage'
 import SignUpPage from '@src/pages/SignUpPage'
+import ShelterSignUpPage from '@src/pages/ShelterSignUpPage'
 import Header from '@src/common/Header'
 import MeetingPage from '@src/pages/MeetingPage'
 import BroadcastPage from '@src/pages/BroadcastPage'
@@ -22,6 +23,7 @@ import CommunityPage from '@src/pages/CommunityPage'
 import CommunityCreatePage from '@src/pages/CommunityCreatePage'
 import CreateDogPage from '@src/pages/CreateDogPage'
 import TeachablePage from '@src/pages/TeachablePage'
+import DictionaryPage from '@src/pages/DictionaryPage'
 
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
@@ -36,6 +38,7 @@ const AuthRoutes = () => (
     <Route path="/article/create" element={<CommunityCreatePage />} />
     <Route path="/new/dog" element={<CreateDogPage />} />
     <Route path="/mypage/teachable" element={<TeachablePage />} />
+    <Route path="/dictionary" element={<DictionaryPage />} />
   </Routes>
 )
 
@@ -47,6 +50,7 @@ const HomeRoutes = () => (
     <Route path="/openvidu" element={<MeetingPage />} />
     <Route path="/broadcast" element={<BroadcastPage />} />
     <Route path="/signUp" element={<SignUpPage />} />
+    <Route path="/shelterSignUp" element={<ShelterSignUpPage />} />
     <Route path="*" element={<NotFoundPage />} />
     <Route path="/dogDetail" element={<DogDetailPage />} />
   </Routes>
