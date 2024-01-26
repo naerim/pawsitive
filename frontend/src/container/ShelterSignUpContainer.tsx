@@ -1,13 +1,18 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import DaumPostcode from 'react-daum-postcode'
 import { DaumPostData } from '@src/types/container/SignUpType'
 
 const ShelterSignUpContainer = () => {
+  const [name, setName] = useState('')
   const [address, setAddress] = useState('')
   const [isDaumPostcodeOpen, setIsDaumPostcodeOpen] = useState(false)
   const [buildingName, setBuilidngName] = useState('')
   const [detailAddress, setDetailAddress] = useState('')
 
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const nameInput = e.target.value
+    setName(nameInput)
+  }
   const handleDaumPostcodeOpen = () => {
     setIsDaumPostcodeOpen(true)
     setDetailAddress('')
@@ -27,6 +32,17 @@ const ShelterSignUpContainer = () => {
   }
   return (
     <>
+      <label htmlFor="name">
+        보호소 이름
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={name}
+          onChange={handleNameChange}
+          required
+        />
+      </label>
       <div>
         <label htmlFor="address">
           주소
