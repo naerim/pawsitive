@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 
-const Camera = () => {
+const CreateDogFile = () => {
   const [isCameraAllowed, setIsCameraAllowed] = useState<boolean>(false)
   const videoRef = useRef<HTMLVideoElement | null>(null)
 
@@ -20,7 +20,9 @@ const Camera = () => {
   return (
     <div>
       {!isCameraAllowed ? (
-        <button onClick={requestCameraPermission}>Allow Camera Access</button>
+        <button type="button" onClick={requestCameraPermission}>
+          Allow Camera Access
+        </button>
       ) : (
         <>
           <p>사진 다중 첨부</p>
@@ -35,4 +37,4 @@ const Camera = () => {
   )
 }
 
-export default Camera
+export default CreateDogFile
