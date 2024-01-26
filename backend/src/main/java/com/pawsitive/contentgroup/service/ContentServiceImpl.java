@@ -1,7 +1,6 @@
 package com.pawsitive.contentgroup.service;
 
-import com.pawsitive.contentgroup.dto.response.ContentRes;
-import com.pawsitive.contentgroup.entity.Content;
+import com.pawsitive.contentgroup.dto.response.ContentDetailRes;
 import com.pawsitive.contentgroup.repository.ContentRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -13,15 +12,18 @@ public class ContentServiceImpl implements ContentService {
     private final ContentRepository contentRepository;
 
     @Override
-    public List<Content> getContentList() {
-        return contentRepository.findContents();
+    public List<ContentDetailRes> getContentList() {
+        return contentRepository.findContentList();
     }
 
 
     @Override
-    public List<ContentRes> getContentList(int contentCategoryNo) {
-        return
-            contentRepository.findContentListByContentCategoryNo(contentCategoryNo);
+    public List<ContentDetailRes> getContentListByContentCategoryNo(int contentCategoryNo) {
+        return contentRepository.findContentListByContentCategoryNo(contentCategoryNo);
+    }
 
+    @Override
+    public ContentDetailRes getContent(int contentNo) {
+        return contentRepository.findContentByContentNo(contentNo);
     }
 }
