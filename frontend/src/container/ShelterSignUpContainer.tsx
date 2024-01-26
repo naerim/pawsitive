@@ -10,6 +10,8 @@ const ShelterSignUpContainer = () => {
 
   const handleDaumPostcodeOpen = () => {
     setIsDaumPostcodeOpen(true)
+    setDetailAddress('')
+    setBuilidngName('')
   }
 
   const handleAddressComplete = (data: DaumPostData) => {
