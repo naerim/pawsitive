@@ -9,6 +9,7 @@ const ShelterSignUpContainer = () => {
   const [buildingName, setBuilidngName] = useState('')
   const [detailAddress, setDetailAddress] = useState('')
   const [id, setId] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nameInput = e.target.value
@@ -38,6 +39,10 @@ const ShelterSignUpContainer = () => {
 
   const handleCheckDuplicate = () => {
     // 아이디 중복 확인 로직을 추가
+  }
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value)
   }
 
   return (
@@ -100,6 +105,17 @@ const ShelterSignUpContainer = () => {
       <button type="button" onClick={handleCheckDuplicate}>
         중복확인
       </button>
+
+      <div>
+        <label htmlFor="password">비밀번호:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={password}
+          onChange={handlePasswordChange}
+        />
+      </div>
     </>
   )
 }
