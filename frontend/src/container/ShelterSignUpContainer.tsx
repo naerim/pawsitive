@@ -66,40 +66,34 @@ const ShelterSignUpContainer = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="name">
-        보호소 이름
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={name}
-          onChange={handleNameChange}
-          required
-        />
-      </label>
+      <label htmlFor="name">보호소 이름 </label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        value={name}
+        onChange={handleNameChange}
+        required
+      />
+
       <div>
-        <label htmlFor="address">
-          주소
-          {isDaumPostcodeOpen && (
-            <div>
-              <button
-                type="button"
-                onClick={() => setIsDaumPostcodeOpen(false)}
-              >
-                닫기
-              </button>
-              <DaumPostcode
-                onComplete={handleAddressComplete}
-                style={{ position: 'absolute', zIndex: 100, width: 200 }}
-              />
-            </div>
-          )}
-          <input
-            placeholder="주소를 검색해주세요"
-            onClick={handleDaumPostcodeOpen}
-            defaultValue={address}
-          />
-        </label>
+        <label htmlFor="address"> </label>
+        {isDaumPostcodeOpen && (
+          <div>
+            <button type="button" onClick={() => setIsDaumPostcodeOpen(false)}>
+              닫기
+            </button>
+            <DaumPostcode
+              onComplete={handleAddressComplete}
+              style={{ position: 'absolute', zIndex: 100, width: 200 }}
+            />
+          </div>
+        )}
+        <input
+          placeholder="주소를 검색해주세요"
+          onClick={handleDaumPostcodeOpen}
+          defaultValue={address}
+        />
       </div>
       <div>{buildingName && <input defaultValue={buildingName} />}</div>
       <div>
