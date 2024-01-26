@@ -8,6 +8,7 @@ const ShelterSignUpContainer = () => {
   const [isDaumPostcodeOpen, setIsDaumPostcodeOpen] = useState(false)
   const [buildingName, setBuilidngName] = useState('')
   const [detailAddress, setDetailAddress] = useState('')
+  const [id, setId] = useState<string>('')
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nameInput = e.target.value
@@ -30,6 +31,15 @@ const ShelterSignUpContainer = () => {
 
     setDetailAddress(detailAddressInput)
   }
+
+  const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setId(e.target.value)
+  }
+
+  const handleCheckDuplicate = () => {
+    // 아이디 중복 확인 로직을 추가
+  }
+
   return (
     <>
       <label htmlFor="name">
@@ -78,6 +88,18 @@ const ShelterSignUpContainer = () => {
           />
         </label>
       </div>
+
+      <label htmlFor="id">아이디:</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        value={id}
+        onChange={handleIdChange}
+      />
+      <button type="button" onClick={handleCheckDuplicate}>
+        중복확인
+      </button>
     </>
   )
 }
