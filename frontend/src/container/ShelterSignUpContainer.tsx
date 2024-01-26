@@ -6,6 +6,7 @@ const ShelterSignUpContainer = () => {
   const [address, setAddress] = useState('')
   const [isDaumPostcodeOpen, setIsDaumPostcodeOpen] = useState(false)
   const [buildingName, setBuilidngName] = useState('')
+  const [detailAddress, setDetailAddress] = useState('')
 
   const handleDaumPostcodeOpen = () => {
     setIsDaumPostcodeOpen(true)
@@ -17,6 +18,11 @@ const ShelterSignUpContainer = () => {
     setIsDaumPostcodeOpen(false)
   }
 
+  const handleDetailAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const detailAddressInput = e.target.value
+
+    setDetailAddress(detailAddressInput)
+  }
   return (
     <>
       <div>
@@ -44,6 +50,16 @@ const ShelterSignUpContainer = () => {
         </label>
       </div>
       <div>{buildingName && <input defaultValue={buildingName} />}</div>
+      <div>
+        <label htmlFor={detailAddress}>
+          상세 주소
+          <input
+            type="text"
+            placeholder="상세 주소"
+            onChange={handleDetailAddress}
+          />
+        </label>
+      </div>
     </>
   )
 }
