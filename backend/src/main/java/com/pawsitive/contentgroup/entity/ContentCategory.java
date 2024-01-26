@@ -26,5 +26,5 @@ public class ContentCategory {
 
     @Convert(converter = ContentCategoryEnumConverter.class)
     @Column(name = "content_category_name")
-    private ContentCategoryEnum contentCategoryName;
+    private ContentCategory contentCategory;
 }

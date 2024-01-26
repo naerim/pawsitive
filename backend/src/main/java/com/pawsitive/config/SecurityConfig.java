@@ -4,6 +4,7 @@ import com.pawsitive.auth.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.pawsitive.auth.filter.JwtAuthenticationFilter;
 import com.pawsitive.auth.handler.OAuth2AuthenticationFailureHandler;
 import com.pawsitive.auth.handler.OAuth2AuthenticationSuccessHandler;
+import com.pawsitive.auth.jwt.JwtTokenProvider;
 import com.pawsitive.auth.service.CustomOAuth2UserService;
 import com.pawsitive.auth.service.CustomUserDetailService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 /**
@@ -33,6 +35,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final JwtTokenProvider jwtTokenProvider;
     private final CustomUserDetailService customUserDetailService;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
@@ -70,7 +73,8 @@ public class SecurityConfig {
                 .requestMatchers("/v3/**", "/swagger-ui/**", "/swagger-resources/**")
                 .permitAll()
                 .requestMatchers("/api/v1/users/me")
-                .authenticated() //인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
+                .hasRole("USER")
+//                .authenticated()
                 .anyRequest().permitAll())
             .csrf(CsrfConfigurer::disable) // csrf 설정 disable
             .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource));
@@ -79,8 +83,8 @@ public class SecurityConfig {
             .httpBasic(HttpBasicConfigurer::disable)
             .sessionManagement(  // 토큰 기반 인증이므로 세션 사용 하지않음
                 configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .addFilter( //HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
-                new JwtAuthenticationFilter(authenticationManager(), this.customUserDetailService));
+            .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
+                UsernamePasswordAuthenticationFilter.class);
 
         http
             .oauth2Login(configurer ->
@@ -88,8 +92,7 @@ public class SecurityConfig {
                         httpCookieOAuth2AuthorizationRequestRepository))
                     .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
                     .successHandler(oAuth2AuthenticationSuccessHandler)
-                    .failureHandler(oAuth2AuthenticationFailureHandler)
-            );
+                    .failureHandler(oAuth2AuthenticationFailureHandler));
 
         return http.build();
     }

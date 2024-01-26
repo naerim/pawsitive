@@ -3,6 +3,7 @@ package com.pawsitive.auth.service;
 import com.pawsitive.auth.CustomUserDetails;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.exception.UserNotFoundException;
+import com.pawsitive.usergroup.repository.MemberRepository;
 import com.pawsitive.usergroup.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,11 +20,16 @@ import org.springframework.stereotype.Component;
 public class CustomUserDetailService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user =
-            userRepository.findUserByUserId(username).orElseThrow(UserNotFoundException::new);
+            userRepository.findUserByEmail(email).orElseThrow(UserNotFoundException::new);
+
+//        org.springframework.security.core.userdetails.User userDetails = new org.springframework.security.core.userdetails.User()
+
         return new CustomUserDetails(user);
     }
+
 }
