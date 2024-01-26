@@ -26,5 +26,5 @@ public class CommunityCategory {
 
     @Convert(converter = CommunityCategoryEnumConverter.class)
     @Column(name = "community_category_name")
-    private CommunityCategory communityCategoryName;
+    private CommunityCategoryEnum communityCategoryEnum;
 }
