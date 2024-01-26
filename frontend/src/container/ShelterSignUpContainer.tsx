@@ -58,8 +58,14 @@ const ShelterSignUpContainer = () => {
     } else setPasswordError('')
   }
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setPasswordError('')
+    // 실제 회원가입 로직을 추가
+  }
+
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <label htmlFor="name">
         보호소 이름
         <input
@@ -141,7 +147,11 @@ const ShelterSignUpContainer = () => {
         />
         {passwordError && <div>{passwordError}</div>}
       </div>
-    </>
+
+      <div>
+        <button type="submit">회원가입</button>
+      </div>
+    </form>
   )
 }
 
