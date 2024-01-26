@@ -1,12 +1,13 @@
 package com.pawsitive.contentgroup.entity;
 
-import com.pawsitive.contentgroup.converter.ContentCategoryEnumConverter;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,15 +17,24 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "content_category")
-public class ContentCategory {
+@Table(name = "content")
+public class Content {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "content_category_no")
-    private int contentCategoryNo;
+    @Column(name = "content_no")
+    private int contentNo;
 
-    @Convert(converter = ContentCategoryEnumConverter.class)
-    @Column(name = "content_category_name")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "content_category_no")
     private ContentCategory contentCategory;
+
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "content")
+    private String content;
+
+    @Column(name = "photo")
+    private String photo;
 }

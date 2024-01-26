@@ -2,8 +2,11 @@ package com.pawsitive.usergroup.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +22,7 @@ import lombok.Setter;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_no")
     private int userNo;
 
@@ -37,5 +41,12 @@ public class User {
     @Column(name = "photo")
     private String photo;
 
-
+    @Builder
+    public User(String email, String name, String password, String address, String photo) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.address = address;
+        this.photo = photo;
+    }
 }

@@ -1,8 +1,8 @@
-package com.pawsitive.dog.controller;
+package com.pawsitive.doggroup.controller;
 
 import static org.springframework.http.HttpStatus.OK;
 
-import com.pawsitive.dog.dto.response.DogDetailRes;
+import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -1,4 +1,4 @@
-package com.pawsitive.dog.dto.response;
+package com.pawsitive.doggroup.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;

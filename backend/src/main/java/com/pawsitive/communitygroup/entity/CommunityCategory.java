@@ -1,6 +1,6 @@
-package com.pawsitive.contentgroup.entity;
+package com.pawsitive.communitygroup.entity;
 
-import com.pawsitive.contentgroup.converter.ContentCategoryEnumConverter;
+import com.pawsitive.communitygroup.converter.CommunityCategoryEnumConverter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -16,15 +16,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "content_category")
-public class ContentCategory {
+@Table(name = "community_category")
+public class CommunityCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "content_category_no")
-    private int contentCategoryNo;
+    @Column(name = "community_category_no")
+    private int communityCategoryNo;
 
-    @Convert(converter = ContentCategoryEnumConverter.class)
-    @Column(name = "content_category_name")
-    private ContentCategory contentCategory;
+    @Convert(converter = CommunityCategoryEnumConverter.class)
+    @Column(name = "community_category_name")
+    private CommunityCategory communityCategoryName;
 }
