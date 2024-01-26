@@ -1,4 +1,4 @@
-package com.pawsitive.dog.entity;
+package com.pawsitive.doggroup.entity;
 
 import com.pawsitive.usergroup.entity.User;
 import jakarta.persistence.Column;
