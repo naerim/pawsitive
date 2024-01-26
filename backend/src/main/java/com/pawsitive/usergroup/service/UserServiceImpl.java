@@ -1,31 +1,42 @@
-//package com.pawsitive.usergroup.service;
-//
-//import com.fasterxml.jackson.databind.JsonNode;
-//import com.pawsitive.usergroup.dto.request.UserRegisterPostReq;
-//import com.pawsitive.usergroup.dto.request.UserUpdatePatchReq;
-//import com.pawsitive.usergroup.entity.User;
-//import com.pawsitive.usergroup.exception.UserNotFoundException;
-//import com.pawsitive.usergroup.repository.UserRepository;
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.http.HttpEntity;
-//import org.springframework.http.HttpHeaders;
-//import org.springframework.http.HttpMethod;
-//import org.springframework.http.MediaType;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
-//import org.springframework.util.LinkedMultiValueMap;
-//import org.springframework.util.MultiValueMap;
-//import org.springframework.web.client.RestTemplate;
-//
-///**
-// * 유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
-// */
-//@Service("userService")
-//@RequiredArgsConstructor
-//public class UserServiceImpl implements UserService {
-//
+package com.pawsitive.usergroup.service;
+
+import com.pawsitive.auth.jwt.JwtToken;
+import com.pawsitive.auth.jwt.JwtTokenProvider;
+import com.pawsitive.usergroup.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * 유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
+ */
+@Service("userService")
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+@Slf4j
+public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final JwtTokenProvider jwtTokenProvider;
+
+    @Transactional
+    @Override
+    public JwtToken signIn(String userEmail, String password) {
+        UsernamePasswordAuthenticationToken authenticationToken =
+            new UsernamePasswordAuthenticationToken(userEmail, password);
+
+        Authentication authentication =
+            authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+        return jwtTokenProvider.generateToken(authentication);
+    }
+
+
 //    private final UserRepository userRepository;
 //    private final PasswordEncoder passwordEncoder;
 //    private final RestTemplate restTemplate = new RestTemplate();
@@ -108,4 +119,5 @@
 //        HttpEntity entity = new HttpEntity(headers);
 //        return restTemplate.exchange(resourceUri, HttpMethod.GET, entity, JsonNode.class).getBody();
 //    }
-//}
+
+}
