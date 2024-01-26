@@ -10,6 +10,8 @@ const ShelterSignUpContainer = () => {
   const [detailAddress, setDetailAddress] = useState('')
   const [id, setId] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [confirmPassword, setConfirmPassword] = useState<string>('')
+  const [passwordError, setPasswordError] = useState<string>('')
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nameInput = e.target.value
@@ -43,6 +45,17 @@ const ShelterSignUpContainer = () => {
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
+  }
+
+  const handleConfirmPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const confirmPasswordInput = e.target.value
+    setConfirmPassword(confirmPasswordInput)
+
+    if (password !== confirmPasswordInput) {
+      setPasswordError('비밀번호가 일치하지 않습니다.')
+    } else setPasswordError('')
   }
 
   return (
@@ -115,6 +128,18 @@ const ShelterSignUpContainer = () => {
           value={password}
           onChange={handlePasswordChange}
         />
+      </div>
+
+      <div>
+        <label htmlFor="confirmPassword">비밀번호 확인:</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          value={confirmPassword}
+          onChange={handleConfirmPasswordChange}
+        />
+        {passwordError && <div>{passwordError}</div>}
       </div>
     </>
   )
