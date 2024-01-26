@@ -16,7 +16,8 @@ import org.springframework.context.annotation.Configuration;
         @Tag(name = "01.Common", description = "공통 기능"),
         @Tag(name = "02.Auth", description = "인증 기능"),
         @Tag(name = "03.User", description = "유저 기능"),
-        @Tag(name = "04.Dog", description = "유기견 기능")
+        @Tag(name = "04.Dog", description = "유기견 기능"),
+        @Tag(name = "05.Content", description = "펫과사전 기능")
     })
 @Configuration
 public class SwaggerConfig {
