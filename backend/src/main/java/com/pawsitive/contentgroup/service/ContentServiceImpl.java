@@ -13,17 +13,17 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     public List<ContentDetailRes> getContentList() {
-        return contentRepository.findContentList();
+        return contentRepository.getContentList();
     }
 
 
     @Override
     public List<ContentDetailRes> getContentListByContentCategoryNo(int contentCategoryNo) {
-        return contentRepository.findContentListByContentCategoryNo(contentCategoryNo);
+        return contentRepository.getContentListByContentCategoryNo(contentCategoryNo);
     }
 
     @Override
     public ContentDetailRes getContent(int contentNo) {
-        return contentRepository.findContentByContentNo(contentNo);
+        return contentRepository.getContentByContentNo(contentNo);
     }
 }

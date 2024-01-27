@@ -12,7 +12,7 @@ public interface ContentRepositoryCustom {
      *
      * @return 모든 컨텐츠
      */
-    List<ContentDetailRes> findContentList();
+    List<ContentDetailRes> getContentList();
 
     /**
      * 카테고리별 컨텐츠를 조회합니다.
@@ -21,7 +21,7 @@ public interface ContentRepositoryCustom {
      * @return 카테고리별 컨텐츠
      */
 
-    List<ContentDetailRes> findContentListByContentCategoryNo(int contentCategoryNo);
+    List<ContentDetailRes> getContentListByContentCategoryNo(int contentCategoryNo);
 
     /**
      * 컨텐츠 고유번호로 컨텐츠를 상세 조회합니다.
@@ -29,5 +29,5 @@ public interface ContentRepositoryCustom {
      * @param contentNo 조회할 컨텐츠 고유번호
      * @return 컨텐츠
      */
-    ContentDetailRes findContentByContentNo(int contentNo);
+    ContentDetailRes getContentByContentNo(int contentNo);
 }

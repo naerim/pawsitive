@@ -19,30 +19,30 @@ public class ContentRepositoryImpl extends QuerydslRepositorySupport
     }
 
     @Override
-    public List<ContentDetailRes> findContentList() {
+    public List<ContentDetailRes> getContentList() {
 
-        JPQLQuery<ContentDetailRes> contentListQuery = getContentList();
+        JPQLQuery<ContentDetailRes> contentListQuery = getQueryContentList();
 
         return contentListQuery.fetch();
     }
 
     @Override
-    public List<ContentDetailRes> findContentListByContentCategoryNo(int contentCategoryNo) {
+    public List<ContentDetailRes> getContentListByContentCategoryNo(int contentCategoryNo) {
 
-        return getContentList()
+        return getQueryContentList()
             .where(qContentCategory.contentCategoryNo.eq(contentCategoryNo))
             .fetch();
     }
 
     @Override
-    public ContentDetailRes findContentByContentNo(int contentNo) {
-        return getContentList()
+    public ContentDetailRes getContentByContentNo(int contentNo) {
+        return getQueryContentList()
             .where(qContent.contentNo.eq(contentNo))
             .fetchOne();
     }
 
 
-    private JPQLQuery<ContentDetailRes> getContentList() {
+    private JPQLQuery<ContentDetailRes> getQueryContentList() {
         return from(qContent)
             .innerJoin(qContent.contentCategory, qContentCategory)
             .select(Projections.constructor(ContentDetailRes.class, qContent.contentNo,
