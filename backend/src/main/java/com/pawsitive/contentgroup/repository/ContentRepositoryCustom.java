@@ -2,6 +2,7 @@ package com.pawsitive.contentgroup.repository;
 
 import com.pawsitive.contentgroup.dto.response.ContentDetailRes;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
@@ -29,5 +30,5 @@ public interface ContentRepositoryCustom {
      * @param contentNo 조회할 컨텐츠 고유번호
      * @return 컨텐츠
      */
-    ContentDetailRes getContentByContentNo(int contentNo);
+    Optional<ContentDetailRes> getContentByContentNo(int contentNo);
 }

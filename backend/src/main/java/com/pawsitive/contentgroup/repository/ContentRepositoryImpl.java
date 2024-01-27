@@ -7,6 +7,7 @@ import com.pawsitive.contentgroup.entity.QContentCategory;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 public class ContentRepositoryImpl extends QuerydslRepositorySupport
@@ -35,10 +36,10 @@ public class ContentRepositoryImpl extends QuerydslRepositorySupport
     }
 
     @Override
-    public ContentDetailRes getContentByContentNo(int contentNo) {
-        return getQueryContentList()
+    public Optional<ContentDetailRes> getContentByContentNo(int contentNo) {
+        return Optional.ofNullable(getQueryContentList()
             .where(qContent.contentNo.eq(contentNo))
-            .fetchOne();
+            .fetchOne());
     }
 
 

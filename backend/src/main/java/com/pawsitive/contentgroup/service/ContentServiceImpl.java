@@ -1,6 +1,7 @@
 package com.pawsitive.contentgroup.service;
 
 import com.pawsitive.contentgroup.dto.response.ContentDetailRes;
+import com.pawsitive.contentgroup.exception.ContentNotFoundException;
 import com.pawsitive.contentgroup.repository.ContentRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     public ContentDetailRes getContent(int contentNo) {
-        return contentRepository.getContentByContentNo(contentNo);
+        return contentRepository.getContentByContentNo(contentNo)
+            .orElseThrow(ContentNotFoundException::new);
     }
 }
