@@ -1,33 +1,68 @@
-import Camera from '@src/components/CreateDog/Camera'
+import CreateDogFile from '@src/components/CreateDog/CreateDogFile'
+import CreateDogInfo from '@src/components/CreateDog/CreateDogInfo'
+import CreateDogMbti from '@src/components/CreateDog/CreateDogMbti'
+import { useInput } from '@src/hooks/useInput'
+import React, { useState } from 'react'
+import CreateDogDoneButton from '@src/components/CreateDog/CreateDogDoneButton.tsx'
 
 const CreateDogContainer = () => {
+  const [name, setName] = useInput({ initialValue: '' })
+  const [kind, setKind] = useInput({ initialValue: '' })
+  const [isNaturalized, setIsNaturalized] = useInput({ initialValue: 0 })
+  const [color, setColor] = useInput({ initialValue: '' })
+  const [note, setNote] = useInput({ initialValue: '' })
+  const [mbti, setMbti] = useState<number[]>([])
+  const [file, setFile] = useState<File[]>([])
+
+  const onClickCreateDogButton = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = new FormData()
+    const dogData = {
+      name,
+      kind,
+      isNaturalized,
+      color,
+      note,
+      mbti,
+    }
+    for (let i = 0; i < file.length; i++) {
+      formData.append('files', file[i])
+    }
+    formData.append(
+      'dogData',
+      new Blob([JSON.stringify(dogData)], { type: 'application/json' }),
+    )
+
+    // FormData의 key 확인
+    for (const key of formData.keys()) {
+      console.log(key)
+    }
+
+    // FormData의 value 확인
+    for (const value of formData.values()) {
+      console.log(value)
+    }
+  }
+
   return (
-    <div>
+    <div style={{ height: 300, overflow: 'scroll' }}>
       <h1>보호소의 유기견 추가 페이지</h1>
-      <div>보호소 번호(임의 1)</div>
-      <div>이름</div>
-      <input type="text" />
-      <div>품종</div>
-      <input type="text" />
-      <div>공고등록일</div>
-      <input type="text" />
-      <div>중성화여부</div>
-      <input type="radio" id="naturalized" name="naturalized" value="1" />
-      중성화 o
-      <input type="radio" id="naturalized" name="naturalized" value="0" />
-      중성화 x<div>색상</div>
-      <input type="text" />
-      <div>유기견 추가 정보</div>
-      <div>
-        <input type="radio" id="e1" name="e" value="0" />
-        <label htmlFor="e1">질문</label>
-      </div>
-      <div>
-        <input type="radio" id="e2" name="e" value="300" />
-        <label htmlFor="e2">질문</label>
-      </div>
-      <div />
-      <Camera />
+      <form onSubmit={onClickCreateDogButton}>
+        <CreateDogInfo
+          name={name}
+          setName={setName}
+          kind={kind}
+          setKind={setKind}
+          setIsNaturalized={setIsNaturalized}
+          color={color}
+          setColor={setColor}
+          note={note}
+          setNote={setNote}
+        />
+        <CreateDogMbti mbti={mbti} setMbti={setMbti} />
+        <CreateDogFile file={file} setFile={setFile} />
+        <CreateDogDoneButton onClick={onClickCreateDogButton} />
+      </form>
     </div>
   )
 }

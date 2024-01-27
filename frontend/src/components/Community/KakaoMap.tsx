@@ -3,8 +3,8 @@ import { MutableRefObject, useCallback, useEffect, useRef } from 'react'
 import Locations from '@src/components/Community/Locations'
 
 const KakaoMap = () => {
-  const mapRef = useRef<kakao.maps.Map | null>(null)
-  const location: string | { latitude: number; longitude: number } = Locations()
+  const mapRef = useRef(null)
+  const location: { latitude: number; longitude: number } | string = Locations()
 
   const initMap = useCallback(() => {
     if (typeof location !== 'string') {
@@ -15,7 +15,7 @@ const KakaoMap = () => {
       }
 
       const map = new kakao.maps.Map(container as HTMLElement, options)
-      ;(mapRef as MutableRefObject<kakao.maps.Map>).current = map
+      ;(mapRef as unknown as MutableRefObject<kakao.maps.Map>).current = map
 
       // 더미 데이터에서 위치 정보를 가져와 마커를 표시
       const dummyData = [
