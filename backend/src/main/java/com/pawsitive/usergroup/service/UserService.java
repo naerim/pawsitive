@@ -1,13 +1,17 @@
 package com.pawsitive.usergroup.service;
 
 import com.pawsitive.auth.jwt.JwtToken;
+import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
+import com.pawsitive.usergroup.entity.User;
 
 /**
  * 유저 관련 비즈니스 로직 처리를 위한 서비스 인터페이스 정의.
  */
 public interface UserService {
 
-    public JwtToken signIn(String userName, String password);
+    JwtToken signIn(String userName, String password);
+
+    User joinUser(UserJoinPostReq userJoinPostReq);
 
 //    User createUser(UserRegisterPostReq userRegisterInfo);
 //
@@ -18,5 +22,5 @@ public interface UserService {
 //    void deleteUserByUserId(String userId);
 //
 //    void doSocialLogin(String code, String registrationId);
-    
+
 }
