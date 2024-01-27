@@ -39,7 +39,7 @@ const CreateDogContainer = () => {
   }
 
   return (
-    <div style={{ height: 300, overflow: 'scroll' }}>
+    <div style={{ height: 400 }}>
       <h1>보호소의 유기견 추가 페이지</h1>
       <form onSubmit={onClickCreateDogButton}>
         <CreateDogInfo
