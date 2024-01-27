@@ -3,6 +3,7 @@ package com.pawsitive.doggroup.controller;
 import static org.springframework.http.HttpStatus.OK;
 
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
+import com.pawsitive.doggroup.service.DogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,9 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "04.Dog")
 @RestController
-@RequestMapping("/api/v1/dog")
+@RequestMapping("/api/v1/dogs")
 @RequiredArgsConstructor
 public class DogController {
+    private final DogService dogService;
 
     @GetMapping("/{dogNo}")
     @Operation(summary = "강아지 상세 조회", description = "전달받은 강아지 번호에 대한 상세 정보를 반환합니다.",

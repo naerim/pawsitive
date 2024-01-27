@@ -8,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -53,4 +54,18 @@ public class Dog {
 
     @Column(name = "mbti")
     private String mbti;
+
+    @Builder
+    public Dog(User user, String name, String kind, boolean isNaturalized, String color,
+               String video,
+               String note, String mbti) {
+        this.user = user;
+        this.name = name;
+        this.kind = kind;
+        this.isNaturalized = isNaturalized;
+        this.color = color;
+        this.video = video;
+        this.note = note;
+        this.mbti = mbti;
+    }
 }
