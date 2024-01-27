@@ -1,9 +1,7 @@
 package com.pawsitive.common.dto;
 
-//import io.swagger.annotations.ApiModel;
-//import io.swagger.annotations.ApiModelProperty;
-
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;

@@ -1,21 +1,25 @@
 package com.pawsitive.auth;
 
 import com.pawsitive.auth.info.OAuth2UserInfo;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class CustomOAuth2UserDetails implements OAuth2User, UserDetails {
 
     private final OAuth2UserInfo userInfo;
-
-    public CustomOAuth2UserDetails(OAuth2UserInfo userInfo) {
-        this.userInfo = userInfo;
-    }
-
+    
     @Override
     public String getPassword() {
         return null;

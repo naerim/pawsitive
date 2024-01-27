@@ -2,14 +2,22 @@ package com.pawsitive.usergroup.service;
 
 import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.auth.jwt.JwtTokenProvider;
+import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
+import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -23,6 +31,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
@@ -34,6 +43,28 @@ public class UserServiceImpl implements UserService {
             authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
         return jwtTokenProvider.generateToken(authentication);
+    }
+
+    @Transactional
+    @Override
+    public User joinUser(UserJoinPostReq userJoinPostReq) throws IllegalArgumentException {
+
+        // 이미 등록된 유저라면 예외 던지기
+        if (!userRepository.findUserByEmail(userJoinPostReq.getEmail()).isEmpty()) {
+            throw new IllegalArgumentException("이미 등록된 사용자 아이디입니다.");
+        }
+
+        // 비밀번호 암호화
+        String encryptedPassword = passwordEncoder.encode(userJoinPostReq.getPassword());
+
+        return userRepository.save(User.builder()
+            .email(userJoinPostReq.getEmail())
+            .password(encryptedPassword)
+            .name(userJoinPostReq.getName())
+            .address(userJoinPostReq.getAddress())
+            .role(userJoinPostReq.getRole())
+            .build());
+
     }
 
 
