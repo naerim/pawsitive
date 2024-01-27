@@ -1,9 +1,9 @@
 import * as c from '@src/components/style/CreateDogMbtiStyle'
-import { CreateDogMbtiType } from '@src/types/components/CreateDogType.ts'
+import { CreateDogMbtiType } from '@src/types/components/CreateDogType'
 
 const CreateDogMbti = (props: CreateDogMbtiType) => {
   const { mbti, setMbti } = props
-  const handleRadio = (category: string, value: number) => {
+  const handleRadio = (category: string, value: boolean) => {
     const updatedMbti = [...mbti]
     switch (category) {
       case 'e':
@@ -35,7 +35,7 @@ const CreateDogMbti = (props: CreateDogMbtiType) => {
             id="e1"
             name="e"
             value="300"
-            onChange={() => handleRadio('e', 300)}
+            onChange={() => handleRadio('e', true)}
           />
           <label htmlFor="e1">잘 때 빼고 항상 활발하고 밝아요.</label>
         </div>
@@ -45,7 +45,7 @@ const CreateDogMbti = (props: CreateDogMbtiType) => {
             id="e2"
             name="e"
             value="0"
-            onChange={() => handleRadio('e', 0)}
+            onChange={() => handleRadio('e', false)}
           />
           <label htmlFor="e2">집에서도 스스로 잘 놀아요</label>
         </div>
@@ -57,7 +57,7 @@ const CreateDogMbti = (props: CreateDogMbtiType) => {
             id="s1"
             name="s"
             value="300"
-            onChange={() => handleRadio('s', 300)}
+            onChange={() => handleRadio('s', true)}
           />
           <label htmlFor="s1">반려인을 많이 따라요</label>
         </div>
@@ -67,7 +67,7 @@ const CreateDogMbti = (props: CreateDogMbtiType) => {
             id="s2"
             name="s"
             value="0"
-            onChange={() => handleRadio('s', 0)}
+            onChange={() => handleRadio('s', false)}
           />
           <label htmlFor="s2">스스로 행동하는 걸 선호해요</label>
         </div>
@@ -79,7 +79,7 @@ const CreateDogMbti = (props: CreateDogMbtiType) => {
             id="a1"
             name="a"
             value="300"
-            onChange={() => handleRadio('a', 300)}
+            onChange={() => handleRadio('a', true)}
           />
           <label htmlFor="a1">
             모든 것에 호기심이 많고 즐거운 성격을 가지고 있어요
@@ -91,7 +91,7 @@ const CreateDogMbti = (props: CreateDogMbtiType) => {
             id="a2"
             name="a"
             value="0"
-            onChange={() => handleRadio('a', 0)}
+            onChange={() => handleRadio('a', false)}
           />
           <label htmlFor="a2">
             낯가리는 성향으로 처음 보는 환경에는 조심스럽게 대응해요
@@ -105,7 +105,7 @@ const CreateDogMbti = (props: CreateDogMbtiType) => {
             id="f1"
             name="f"
             value="300"
-            onChange={() => handleRadio('f', 300)}
+            onChange={() => handleRadio('f', true)}
           />
           <label htmlFor="f1">
             성실하게 주인의 요구에 따르며 언제나 충성스럽게 행동해요.
@@ -117,7 +117,7 @@ const CreateDogMbti = (props: CreateDogMbtiType) => {
             id="f2"
             name="f"
             value="0"
-            onChange={() => handleRadio('f', 0)}
+            onChange={() => handleRadio('f', false)}
           />
           <label htmlFor="f2">재치 있고 조금은 개성 넘치게 행동해요</label>
         </div>

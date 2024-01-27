@@ -3,7 +3,7 @@ import CreateDogInfo from '@src/components/CreateDog/CreateDogInfo'
 import CreateDogMbti from '@src/components/CreateDog/CreateDogMbti'
 import { useInput } from '@src/hooks/useInput'
 import React, { useState } from 'react'
-import CreateDogDoneButton from '@src/components/CreateDog/CreateDogDoneButton.tsx'
+import CreateDogDoneButton from '@src/components/CreateDog/CreateDogDoneButton'
 
 const CreateDogContainer = () => {
   const [name, setName] = useInput({ initialValue: '' })
@@ -11,7 +11,7 @@ const CreateDogContainer = () => {
   const [isNaturalized, setIsNaturalized] = useInput({ initialValue: 0 })
   const [color, setColor] = useInput({ initialValue: '' })
   const [note, setNote] = useInput({ initialValue: '' })
-  const [mbti, setMbti] = useState<number[]>([])
+  const [mbti, setMbti] = useState<boolean[]>([])
   const [file, setFile] = useState<File[]>([])
 
   const onClickCreateDogButton = (e: React.FormEvent<HTMLFormElement>) => {
@@ -23,25 +23,19 @@ const CreateDogContainer = () => {
       isNaturalized,
       color,
       note,
-      mbti,
+      E: mbti[0],
+      S: mbti[1],
+      A: mbti[2],
+      F: mbti[3],
     }
-    for (let i = 0; i < file.length; i++) {
+    for (let i = 0; i < file.length; i += 1) {
       formData.append('files', file[i])
     }
     formData.append(
       'dogData',
       new Blob([JSON.stringify(dogData)], { type: 'application/json' }),
     )
-
-    // FormData의 key 확인
-    for (const key of formData.keys()) {
-      console.log(key)
-    }
-
-    // FormData의 value 확인
-    for (const value of formData.values()) {
-      console.log(value)
-    }
+    console.log(JSON.stringify(dogData))
   }
 
   return (
