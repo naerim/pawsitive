@@ -17,7 +17,7 @@ import ProfilePage from '@src/pages/ProfilePage'
 import NotFoundPage from '@src/pages/NotFoundPage'
 import { useAtomValue } from 'jotai'
 import { themeAtom } from '@src/stores/atoms/theme'
-import Footer from '@src/common/Footer'
+import Navbar from '@src/common/Navbar.tsx'
 import DogDetailPage from '@src/pages/DogDetailPage'
 import CommunityPage from '@src/pages/CommunityPage'
 import CommunityCreatePage from '@src/pages/CommunityCreatePage'
@@ -68,7 +68,7 @@ const App = () => {
       <BrowserRouter>
         <Header />
         {user ? <AuthRoutes /> : <HomeRoutes />}
-        <Footer />
+        <Navbar />
         <ReactQueryDevtools initialIsOpen={false} />
       </BrowserRouter>
     </ThemeProvider>
