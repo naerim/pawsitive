@@ -2,12 +2,6 @@ import * as m from '@src/components/style/KakaoMapStyle'
 import { MutableRefObject, useCallback, useEffect, useRef } from 'react'
 import Locations from '@src/components/Community/Locations'
 
-declare global {
-  interface Window {
-    kakao: any
-  }
-}
-
 const KakaoMap = () => {
   const mapRef = useRef(null)
   const location: { latitude: number; longitude: number } | string = Locations()
@@ -16,44 +10,44 @@ const KakaoMap = () => {
     if (typeof location !== 'string') {
       const container = document.getElementById('map')
       const options = {
-        center: new window.kakao.maps.LatLng(location.latitude, location.longitude),
+        center: new kakao.maps.LatLng(location.latitude, location.longitude),
         level: 2,
       }
 
-      const map = new window.kakao.maps.Map(container as HTMLElement, options)
-      ;(mapRef as MutableRefObject<kakao.maps.Map>).current = map
+      const map = new kakao.maps.Map(container as HTMLElement, options)
+      ;(mapRef as unknown as MutableRefObject<kakao.maps.Map>).current = map
 
       // 더미 데이터에서 위치 정보를 가져와 마커를 표시
       const dummyData = [
         {
           title: '마커1',
-          latlng: new window.kakao.maps.LatLng(
+          latlng: new kakao.maps.LatLng(
             location.latitude + 0.0002,
             location.longitude + 0.0002,
           ),
         },
         {
           title: '마커2',
-          latlng: new window.kakao.maps.LatLng(
+          latlng: new kakao.maps.LatLng(
             location.latitude - 0.0002,
             location.longitude - 0.0002,
           ),
         },
         {
           title: '마커3',
-          latlng: new window.kakao.maps.LatLng(location.latitude, location.longitude),
+          latlng: new kakao.maps.LatLng(location.latitude, location.longitude),
         },
       ]
 
       dummyData.forEach(data => {
-        const marker = new window.kakao.maps.Marker({
+        const marker = new kakao.maps.Marker({
           position: data.latlng,
           map,
           title: data.title,
         })
 
         // 마커를 클릭했을 때의 이벤트 처리
-        window.kakao.maps.event.addListener(marker, 'click', function () {
+        kakao.maps.event.addListener(marker, 'click', function () {
           alert(`마커 클릭 - ${data.title}`)
         })
       })
@@ -61,7 +55,7 @@ const KakaoMap = () => {
   }, [location])
 
   useEffect(() => {
-    window.kakao.maps.load(() => initMap())
+    kakao.maps.load(() => initMap())
   }, [mapRef, location, initMap])
 
   return (
