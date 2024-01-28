@@ -1,13 +1,10 @@
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
-  // 세 번째 매개변수를 ''로 설정하면 `VITE_` 접두사에 관계없이 모든 환경 변수를 불러옴
-  // const env = loadEnv(mode, process.cwd(), '')
-  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
+export default defineConfig(() => {
   return {
     plugins: [
       react(),
@@ -55,11 +52,6 @@ export default defineConfig(({ mode }) => {
       port: 3000,
       host: true,
       origin: 'http://0.0.0.0',
-    },
-    define: {
-      VITE_APP_KAKAO_MAP_API_KEY: JSON.stringify(
-        process.env.VITE_APP_KAKAO_MAP_API_KEY,
-      ),
     },
   }
 })
