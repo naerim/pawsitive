@@ -2,8 +2,6 @@ package com.pawsitive.doggroup.controller;
 
 import static org.springframework.http.HttpStatus.OK;
 
-import com.pawsitive.common.exeption.InvalidRequestDataException;
-import com.pawsitive.common.util.ErrorMessageUtil;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.entity.Dog;
@@ -14,7 +12,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class DogController {
     private final DogService dogService;
-    private final ErrorMessageUtil errorMessageUtil;
 
     @PostMapping
     @Operation(summary = "유기견 등록", description = "전달받은 입력 정보를 유기견 테이블에 등록합니다.",
@@ -44,13 +40,7 @@ public class DogController {
                                                   @RequestPart(required = false)
                                                   MultipartFile video,
                                                   @RequestPart(required = false)
-                                                  MultipartFile[] images,
-                                                  BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
-            String msg = errorMessageUtil.getErrorMessage(bindingResult);
-            throw new InvalidRequestDataException(msg);
-        }
+                                                  MultipartFile[] images) {
 
         Dog dog = dogService.createDog(req, video, images);
 
