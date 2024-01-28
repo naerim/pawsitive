@@ -11,3 +11,11 @@ export type ClickType = {
 export type FormClickType = {
   onClick: (e: React.FormEvent<HTMLFormElement>) => void
 }
+
+export type CommunityDummyDataType = {
+  title: string
+  latitude: number
+  longitude: number
+}[]
+
+export type LocationType = { latitude: number; longitude: number }
