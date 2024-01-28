@@ -1,10 +1,12 @@
 package com.pawsitive.auth;
 
 import com.pawsitive.usergroup.entity.User;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,27 +21,24 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 @Getter
 @Setter
-@RequiredArgsConstructor
-@AllArgsConstructor
-@Builder
 public class CustomUserDetails implements UserDetails {
 
     private final User user;
-    private boolean accountNonExpired;
-    private boolean accountNonLocked;
-    private boolean credentialNonExpired;
+    private List<String> roles;
 
-    @Builder.Default
-    private boolean enabled = true;
+    public CustomUserDetails(User user) {
 
-    @Builder.Default
-    private List<String> roles = new ArrayList<>();
+        this.user = user;
+
+        roles = new ArrayList<>();
+        roles.add(user.getRole());
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream()
             .map(SimpleGrantedAuthority::new)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     @Override
@@ -53,7 +52,22 @@ public class CustomUserDetails implements UserDetails {
     }
 
     @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
     public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
         return true;
     }
 

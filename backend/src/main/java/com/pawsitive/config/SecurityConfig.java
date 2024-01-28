@@ -68,21 +68,18 @@ public class SecurityConfig {
 
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/v3/**", "/swagger-ui/**", "/swagger-resources/**")
-                .permitAll()
-                .requestMatchers("/api/v1/users/me")
-                .hasRole("USER")
-//                .authenticated()
-                .anyRequest().permitAll())
-            .csrf(CsrfConfigurer::disable) // csrf 설정 disable
-            .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource));
 
         http
             .httpBasic(HttpBasicConfigurer::disable)
-            .sessionManagement(  // 토큰 기반 인증이므로 세션 사용 하지않음
+            .csrf(CsrfConfigurer::disable) // csrf 설정 disable
+            .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource))
+            .sessionManagement(
                 configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/v3/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
+                .requestMatchers("/api/v1/users/me").authenticated()
+                .anyRequest().permitAll()
+            )
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                 UsernamePasswordAuthenticationFilter.class);
 

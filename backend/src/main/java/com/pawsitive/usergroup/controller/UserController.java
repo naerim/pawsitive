@@ -2,6 +2,7 @@ package com.pawsitive.usergroup.controller;
 
 import static org.springframework.http.HttpStatus.OK;
 
+import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.usergroup.dto.response.AdoptedDogRes;
 import com.pawsitive.usergroup.exception.UserNotLoginException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -99,7 +100,7 @@ public class UserController {
 //            .build();
 //    }
 
-    @GetMapping("/{userId}/dogs")
+    @GetMapping("recommendation/{userId}")
     @Operation(summary = "로그인 한 회원의 입양한 유기견 조회",
         description = "<strong>로그인 한 회원이 입양한 유기견</strong>을 조회한다.",
         tags = {"03.User"},
@@ -124,6 +125,13 @@ public class UserController {
         return ResponseEntity
             .status(OK)
             .body(response);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<BaseResponseBody> myPage() {
+        return ResponseEntity
+            .status(OK)
+            .body(new BaseResponseBody(OK, "성공"));
     }
 
 //    @PatchMapping("/{userId}")

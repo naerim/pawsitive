@@ -13,8 +13,8 @@ export type CreateDogInfoType = {
 }
 
 export type CreateDogMbtiType = {
-  mbti: number[]
-  setMbti: Dispatch<SetStateAction<number[]>>
+  mbti: boolean[]
+  setMbti: Dispatch<SetStateAction<boolean[]>>
 }
 
 export type CreateDogFileType = {

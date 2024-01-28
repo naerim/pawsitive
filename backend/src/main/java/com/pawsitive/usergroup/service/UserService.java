@@ -1,6 +1,7 @@
 package com.pawsitive.usergroup.service;
 
 import com.pawsitive.auth.jwt.JwtToken;
+import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
 import com.pawsitive.usergroup.entity.User;
 
 /**
@@ -8,7 +9,9 @@ import com.pawsitive.usergroup.entity.User;
  */
 public interface UserService {
 
-    public JwtToken signIn(String userName, String password);
+    JwtToken signIn(String userName, String password);
+
+    User joinUser(UserJoinPostReq userJoinPostReq);
 
     //    private final UserRepository userRepository;
     //    private final PasswordEncoder passwordEncoder;
