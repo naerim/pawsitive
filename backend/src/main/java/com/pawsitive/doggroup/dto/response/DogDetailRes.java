@@ -19,7 +19,6 @@ public class DogDetailRes {
     private String note;
     private int hit;
     private String mbti;
-    private String[] photoList;
-    private String video;
+    private String[] images;
 
 }

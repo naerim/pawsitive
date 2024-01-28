@@ -7,9 +7,10 @@ import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author 이하늬
@@ -17,13 +18,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class DogServiceImpl implements DogService {
     private final DogRepository dogRepository;
     private final DogImageService dogImageService;
     private final UserService userService;
 
     @Override
-    public boolean createDog(DogCreateReq req) {
+    @Transactional
+    public Dog createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images) {
         User user = userService.getUserByUserNo(req.getUserNo());
 
         Dog dog = Dog.builder()
@@ -33,13 +36,14 @@ public class DogServiceImpl implements DogService {
             .isNaturalized(req.getIsNaturalized())
             .color(req.getColor())
             .note(req.getNote())
-//            .mbti(getMbti(req))
-            .mbti("esaf")
+            .mbti(getMbti(req))
+            .video(getVideoUrl(video))
             .build();
 
-        Dog saveDog = dogRepository.save(dog);
-        dogImageService.createDogImage(req);
-        return Objects.nonNull(saveDog);
+        dogRepository.save(dog);
+        dogImageService.createDogImage(images, dog);
+
+        return dog;
     }
 
     @Override
@@ -49,8 +53,21 @@ public class DogServiceImpl implements DogService {
     }
 
     private String getMbti(DogCreateReq req) {
-        //TODO mbti 구하는 로직 세우기
+        StringBuilder sb = new StringBuilder();
+        String tmp;
+        tmp = req.getEq() ? "E" : "Q";
+        sb.append(tmp);
+        tmp = req.getSi() ? "S" : "I";
+        sb.append(tmp);
+        tmp = req.getAw() ? "A" : "W";
+        sb.append(tmp);
+        tmp = req.getFc() ? "F" : "C";
+        sb.append(tmp);
+        return sb.toString();
+    }
 
+    //TODO [Yi] S3에 비디오 업로드 후 url 받아오는 로직 추가 필요
+    private String getVideoUrl(MultipartFile video) {
         return null;
     }
 }

@@ -31,9 +31,10 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
     }
 
     private JPQLQuery<DogDetailRes> getQueryDogList() {
-        return from(qDogImage)
-            .innerJoin(qDogImage.dog, qDog)
+        return from(qDog)
             .innerJoin(qDog.user, qUser)
-            .select(Projections.constructor((DogDetailRes.class)));
+            .select(Projections.constructor(DogDetailRes.class, qDog.dogNo,
+                qDog.user.userNo, qDog.name, qDog.kind, qDog.createdAt, qDog.isNaturalized,
+                qDog.color, qDog.video, qDog.note, qDog.hit, qDog.mbti, qDog.images));
     }
 }
