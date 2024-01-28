@@ -6,7 +6,7 @@ CREATE TABLE `user` (
 	`name`	VARCHAR(10)	NOT NULL,
 	`password`	VARCHAR(256)	NOT NULL,
 	`address`	VARCHAR(100)	NOT NULL,
-	`photo`	VARCHAR(300)	NULL
+	`image`	VARCHAR(300)	NULL
 );
 
 DROP TABLE IF EXISTS `dog`;
@@ -16,7 +16,7 @@ CREATE TABLE `dog` (
 	`user_no`	INT	NOT NULL,
 	`name`	VARCHAR(10)	NOT NULL,
 	`kind_cd`	VARCHAR(20)	NOT NULL,
-	`created_at`	TIMESTAMP	NOT NULL,
+	`created_at`	DATETIME	NOT NULL,
 	`is_naturalized`	tinyint(1)	NOT NULL,
 	`color`	VARCHAR(10)	NOT NULL,
 	`video`	VARCHAR(300)	NULL,
@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS `member`;
 
 CREATE TABLE `member` (
 	`member_no`	INT	NOT NULL auto_increment primary key,
-	`birth`	TIMESTAMP	NOT NULL,
+	`birth`	DATETIME	NOT NULL,
 	`gender`	CHAR(1)	NOT NULL,
 	`type`	INT	NOT NULL,
 	`stage`	INT	NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE `content` (
 	`content_category_no`	INT	NOT NULL,
 	`title`	VARCHAR(100)	NOT NULL,
 	`content`	VARCHAR(500)	NOT NULL,
-	`photo`	VARCHAR(300)	NULL
+	`image`	VARCHAR(300)	NULL
 );
 
 DROP TABLE IF EXISTS `dog_content`;
@@ -74,7 +74,7 @@ CREATE TABLE `member_question` (
 	`member_question_no`	INT	NOT NULL auto_increment primary key,
 	`member_no`	INT	NOT NULL,
 	`question_no`	INT	NOT NULL,
-	`created_at`	TIMESTAMP	NOT NULL,
+	`created_at`	DATETIME	NOT NULL,
 	`answer`	VARCHAR(500)	NULL
 );
 
@@ -85,11 +85,11 @@ CREATE TABLE `community_board` (
 	`member_no`	INT	NOT NULL,
 	`title`	VARCHAR(100)	NOT NULL,
 	`content`	VARCHAR(500)	NOT NULL,
-	`photo`	VARCHAR(300)	NULL,
+	`image`	VARCHAR(300)	NULL,
 	`is_public`	TINYINT(1)	NULL,
 	`latitude`	DECIMAL	NULL,
 	`longitude`	DECIMAL	NULL,
-	`created_at`	TIMESTAMP	NOT NULL,
+	`created_at`	DATETIME	NOT NULL,
 	`hit`	INT	NULL,
 	`content_category_no`	INT	NOT NULL
 );
@@ -100,7 +100,7 @@ CREATE TABLE `community_comment` (
 	`community_comment_no`	INT	NOT NULL auto_increment primary key,
 	`member_no`	INT	NOT NULL,
 	`content`	VARCHAR(500)	NOT NULL,
-	`created_at`	TIMESTAMP	NOT NULL
+	`created_at`	DATETIME	NOT NULL
 );
 
 DROP TABLE IF EXISTS `community`;

@@ -49,7 +49,7 @@ public class ContentRepositoryImpl extends QuerydslRepositorySupport
             .select(Projections.constructor(ContentDetailRes.class, qContent.contentNo,
                 qContent.contentCategory.contentCategoryNo,
                 qContentCategory.contentCategoryEnum.stringValue(), qContent.title,
-                qContent.content, qContent.photo));
+                qContent.content, qContent.image));
     }
 
 }

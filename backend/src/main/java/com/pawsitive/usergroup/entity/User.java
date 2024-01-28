@@ -38,15 +38,15 @@ public class User {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "photo")
-    private String photo;
+    @Column(name = "image")
+    private String image;
 
     @Builder
-    public User(String email, String name, String password, String address, String photo) {
+    public User(String email, String name, String password, String address, String image) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.address = address;
-        this.photo = photo;
+        this.image = image;
     }
 }
