@@ -9,9 +9,9 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 @SpringBootApplication
-public class BackendApplication {
+public class PawsitiveApplication {
     public static void main(String[] args) {
-        SpringApplication.run(BackendApplication.class, args);
+        SpringApplication.run(PawsitiveApplication.class, args);
     }
 
     @Bean
