@@ -1,13 +1,18 @@
 import * as m from '@src/components/style/KakaoMapStyle'
 import { MutableRefObject, useCallback, useEffect, useRef } from 'react'
 import Locations from '@src/components/Community/Locations'
+import { atom, useAtom } from 'jotai'
+
+const loadingAtom = atom(false)
 
 const KakaoMap = () => {
-  const mapRef = useRef(null)
+  const mapRef = useRef<kakao.maps.Map>(null)
   const location: { latitude: number; longitude: number } | string = Locations()
+  const [loading, setLoading] = useAtom(loadingAtom)
 
   const initMap = useCallback(() => {
-    if (typeof location !== 'string') {
+    if (location.latitude !== 0) {
+      setLoading(true)
       const container = document.getElementById('map')
       const options = {
         center: new kakao.maps.LatLng(location.latitude, location.longitude),
@@ -51,8 +56,18 @@ const KakaoMap = () => {
           alert(`마커 클릭 - ${data.title}`)
         })
       })
+    } else {
+      // 위치가 잡히기 전에 임시로 띄우는 위치
+      const container = document.getElementById('map')
+      const options = {
+        center: new kakao.maps.LatLng(35.19088746066458, 126.81240608875785),
+        level: 2,
+      }
+
+      const map = new kakao.maps.Map(container as HTMLElement, options)
+      ;(mapRef as unknown as MutableRefObject<kakao.maps.Map>).current = map
     }
-  }, [location])
+  }, [location, setLoading])
 
   useEffect(() => {
     kakao.maps.load(() => initMap())
@@ -61,7 +76,11 @@ const KakaoMap = () => {
   return (
     <div>
       <m.Container id="map" />
-      <m.CurrentButton onClick={() => initMap()}>현재 위치</m.CurrentButton>
+      {loading ? (
+        <m.CurrentButton onClick={() => initMap()}>현재 위치</m.CurrentButton>
+      ) : (
+        <>현재 위치를 불러오는 중입니다.</>
+      )}
     </div>
   )
 }
