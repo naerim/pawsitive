@@ -1,11 +1,13 @@
 package com.pawsitive.common.advisor;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import com.pawsitive.common.dto.BaseResponseBody;
+import com.pawsitive.common.exeption.InvalidRequestDataException;
 import com.pawsitive.usergroup.exception.DuplicateIdException;
 import com.pawsitive.usergroup.exception.InvalidPasswordException;
 import com.pawsitive.usergroup.exception.UserNotFoundException;
@@ -26,13 +28,13 @@ public class RestControllerAdvisor {
      * @param e 실제 발생한 예외객체입니다.
      * @return 에러메세지를 response entity 에 담아서 전송합니다.
      */
-//  @ExceptionHandler
-//  public ResponseEntity<BaseResponseBody> badRequestException400(Exception e) {
-//
-//    return ResponseEntity
-//        .status(BAD_REQUEST)
-//        .body(BaseResponseBody.of(BAD_REQUEST, e.getMessage()));
-//  }
+    @ExceptionHandler(value = {InvalidRequestDataException.class})
+    public ResponseEntity<BaseResponseBody> badRequestException400(Exception e) {
+
+        return ResponseEntity
+            .status(BAD_REQUEST)
+            .body(BaseResponseBody.of(BAD_REQUEST, e.getMessage()));
+    }
 
     /**
      * 401에 해당하는 예외들을 한번에 처리하는 메소드입니다.
