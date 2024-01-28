@@ -5,8 +5,8 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd())
-  // console.log(env)
+  // 세 번째 매개변수를 ''로 설정하면 `VITE_` 접두사에 관계없이 모든 환경 변수를 불러옴
+  const env = loadEnv(mode, process.cwd(), '')
   return {
     plugins: [
       react(),
@@ -54,6 +54,9 @@ export default defineConfig(({ mode }) => {
       port: 3000,
       host: true,
       origin: 'http://0.0.0.0',
+    },
+    define: {
+      __VITE_KAKAO_MAP_API_KEY__: JSON.stringify(env.VITE_KAKAO_MAP_API_KEY),
     },
   }
 })
