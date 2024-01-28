@@ -11,5 +11,5 @@ public class ContentDetailRes {
     private String contentCategoryName;
     private String title;
     private String content;
-    private String photo;
+    private String image;
 }

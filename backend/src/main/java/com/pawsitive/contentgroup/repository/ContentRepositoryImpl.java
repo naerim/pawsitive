@@ -7,6 +7,7 @@ import com.pawsitive.contentgroup.entity.QContentCategory;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 public class ContentRepositoryImpl extends QuerydslRepositorySupport
@@ -19,36 +20,36 @@ public class ContentRepositoryImpl extends QuerydslRepositorySupport
     }
 
     @Override
-    public List<ContentDetailRes> findContentList() {
+    public List<ContentDetailRes> getContentList() {
 
-        JPQLQuery<ContentDetailRes> contentListQuery = getContentList();
+        JPQLQuery<ContentDetailRes> contentListQuery = getQueryContentList();
 
         return contentListQuery.fetch();
     }
 
     @Override
-    public List<ContentDetailRes> findContentListByContentCategoryNo(int contentCategoryNo) {
+    public List<ContentDetailRes> getContentListByContentCategoryNo(int contentCategoryNo) {
 
-        return getContentList()
+        return getQueryContentList()
             .where(qContentCategory.contentCategoryNo.eq(contentCategoryNo))
             .fetch();
     }
 
     @Override
-    public ContentDetailRes findContentByContentNo(int contentNo) {
-        return getContentList()
+    public Optional<ContentDetailRes> getContentByContentNo(int contentNo) {
+        return Optional.ofNullable(getQueryContentList()
             .where(qContent.contentNo.eq(contentNo))
-            .fetchOne();
+            .fetchOne());
     }
 
 
-    private JPQLQuery<ContentDetailRes> getContentList() {
+    private JPQLQuery<ContentDetailRes> getQueryContentList() {
         return from(qContent)
             .innerJoin(qContent.contentCategory, qContentCategory)
             .select(Projections.constructor(ContentDetailRes.class, qContent.contentNo,
                 qContent.contentCategory.contentCategoryNo,
                 qContentCategory.contentCategoryEnum.stringValue(), qContent.title,
-                qContent.content, qContent.photo));
+                qContent.content, qContent.image));
     }
 
 }

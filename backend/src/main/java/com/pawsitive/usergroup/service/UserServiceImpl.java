@@ -4,6 +4,7 @@ import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.auth.jwt.JwtTokenProvider;
 import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
 import com.pawsitive.usergroup.entity.User;
+import com.pawsitive.usergroup.exception.UserNotFoundException;
 import com.pawsitive.usergroup.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -66,9 +67,7 @@ public class UserServiceImpl implements UserService {
             .build());
 
     }
-
-
-//    private final UserRepository userRepository;
+    //    private final UserRepository userRepository;
 //    private final PasswordEncoder passwordEncoder;
 //    private final RestTemplate restTemplate = new RestTemplate();
 //
@@ -82,11 +81,11 @@ public class UserServiceImpl implements UserService {
 //        return userRepository.save(user);
 //    }
 //
-//    @Override
-//    public User getUserByUserId(String userId) {
-//        // 디비에 유저 정보 조회 (userId 를 통한 조회).
-//        return userRepository.findUserByUserId(userId).orElseThrow(UserNotFoundException::new);
-//    }
+    @Override
+    public User getUserByUserNo(int userNo) {
+        // 디비에 유저 정보 조회 (userId 를 통한 조회).
+        return userRepository.findUserByUserNo(userNo).orElseThrow(UserNotFoundException::new);
+    }
 //
 //    @Override
 //    public User updateUser(String userId, UserUpdatePatchReq userUpdateInfo) {

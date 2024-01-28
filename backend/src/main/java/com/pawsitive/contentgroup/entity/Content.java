@@ -35,6 +35,6 @@ public class Content {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "photo")
-    private String photo;
+    @Column(name = "image")
+    private String image;
 }

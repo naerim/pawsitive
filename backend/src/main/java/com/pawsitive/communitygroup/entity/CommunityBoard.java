@@ -37,8 +37,8 @@ public class CommunityBoard {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "photo")
-    private String photo;
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "is_public")
     private boolean isPublic;

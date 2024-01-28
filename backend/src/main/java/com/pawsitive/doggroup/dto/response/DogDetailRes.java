@@ -1,17 +1,24 @@
 package com.pawsitive.doggroup.dto.response;
 
-import lombok.Builder;
+import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
-@Builder
+@AllArgsConstructor
 public class DogDetailRes {
 
+    private int dogNo;
+    private int userNo;
     private String name;
-    private String shelter;
-    private String neutralized;
-    private String description;
+    private String kind;
+    private LocalDateTime createdAt;
+    private boolean isNaturalized;
+    private String color;
+    private String video;
+    private String note;
+    private int hit;
+    private String mbti;
+    private String[] images;
 
 }
