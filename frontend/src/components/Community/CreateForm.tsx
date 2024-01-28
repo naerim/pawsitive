@@ -1,5 +1,4 @@
 import { atom, useAtom } from 'jotai'
-import KakaoMap from '@src/components/Community/KakaoMap'
 
 const nameAtom = atom('')
 const categoryAtom = atom('')
@@ -46,8 +45,6 @@ const CreateForm = () => {
       <label htmlFor="위치">
         위 치 : <input value={locationValue} onChange={handleLocationChange} />
       </label>
-      <br />
-      <KakaoMap />
 
       <br />
       <button type="submit" onClick={handleSubmit}>

@@ -2,12 +2,15 @@ import * as m from '@src/components/style/KakaoMapStyle'
 import { MutableRefObject, useCallback, useEffect, useRef } from 'react'
 import Locations from '@src/components/Community/Locations'
 import { atom, useAtom } from 'jotai'
+import { CommunityDummyDataType, LocationType } from '@src/types/propsType'
 
 const loadingAtom = atom(false)
 
-const KakaoMap = () => {
+const KakaoMap = (props: { dummyData: CommunityDummyDataType }) => {
+  const { dummyData } = props
+
   const mapRef = useRef<kakao.maps.Map>(null)
-  const location: { latitude: number; longitude: number } | string = Locations()
+  const location: LocationType | string = Locations()
   const [loading, setLoading] = useAtom(loadingAtom)
 
   const initMap = useCallback(() => {
@@ -22,31 +25,9 @@ const KakaoMap = () => {
       const map = new kakao.maps.Map(container as HTMLElement, options)
       ;(mapRef as unknown as MutableRefObject<kakao.maps.Map>).current = map
 
-      // 더미 데이터에서 위치 정보를 가져와 마커를 표시
-      const dummyData = [
-        {
-          title: '마커1',
-          latlng: new kakao.maps.LatLng(
-            location.latitude + 0.0002,
-            location.longitude + 0.0002,
-          ),
-        },
-        {
-          title: '마커2',
-          latlng: new kakao.maps.LatLng(
-            location.latitude - 0.0002,
-            location.longitude - 0.0002,
-          ),
-        },
-        {
-          title: '마커3',
-          latlng: new kakao.maps.LatLng(location.latitude, location.longitude),
-        },
-      ]
-
       dummyData.forEach(data => {
         const marker = new kakao.maps.Marker({
-          position: data.latlng,
+          position: new kakao.maps.LatLng(data.latitude, data.longitude),
           map,
           title: data.title,
         })
@@ -67,7 +48,7 @@ const KakaoMap = () => {
       const map = new kakao.maps.Map(container as HTMLElement, options)
       ;(mapRef as unknown as MutableRefObject<kakao.maps.Map>).current = map
     }
-  }, [location, setLoading])
+  }, [dummyData, location.latitude, location.longitude, setLoading])
 
   useEffect(() => {
     kakao.maps.load(() => initMap())
