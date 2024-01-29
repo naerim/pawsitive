@@ -25,6 +25,7 @@ import CreateDogPage from '@src/pages/CreateDogPage'
 import FindSimilarDogPage from '@src/pages/FindSimilarDogPage'
 import AdoptionSurveyPage from '@src/pages/AdoptionSurveyPage'
 import DictionaryListPage from '@src/pages/DictionaryListPage'
+import DictionaryDetailPage from '@src/pages/DictionaryDetailPage'
 
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
@@ -42,6 +43,7 @@ const AuthRoutes = () => (
     <Route path="/dogDetail" element={<DogDetailPage />} />
     <Route path="/mypage/adoptionSurvey" element={<AdoptionSurveyPage />} />
     <Route path="/dictionary" element={<DictionaryListPage />} />
+    <Route path="/dictionary/:contentNo" element={<DictionaryDetailPage />} />
   </Routes>
 )
 
