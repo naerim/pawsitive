@@ -18,6 +18,7 @@ CREATE TABLE `dog` (
 	`kind_cd`	VARCHAR(20)	NOT NULL,
 	`created_at`	DATETIME	NOT NULL,
 	`is_naturalized`	tinyint(1)	NOT NULL,
+	`age`	INT	NOT NULL,
 	`color`	VARCHAR(10)	NOT NULL,
 	`video`	VARCHAR(300)	NULL,
 	`note`	VARCHAR(500)	NULL,
@@ -118,6 +119,7 @@ CREATE TABLE `member_dog` (
 	`member_no`	INT	NOT NULL,
 	`dog_no`	INT	NOT NULL,
 	`type`	CHAR(1)	NOT NULL
+        `type`	CHAR(1)	NOT NULL
 );
 
 DROP TABLE IF EXISTS `community_liked`;

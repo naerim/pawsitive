@@ -43,6 +43,6 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
             .innerJoin(qDog.user, qUser)
             .select(Projections.constructor(DogDetailRes.class, qDog.dogNo,
                 qDog.user.userNo, qDog.name, qDog.kind, qDog.createdAt, qDog.isNaturalized,
-                qDog.color, qDog.video, qDog.note, qDog.hit, qDog.mbti, qDog.images));
+                qDog.age, qDog.color, qDog.video, qDog.note, qDog.hit, qDog.mbti, qDog.images));
     }
 }

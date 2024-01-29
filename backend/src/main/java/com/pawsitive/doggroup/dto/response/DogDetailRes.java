@@ -14,6 +14,7 @@ public class DogDetailRes {
     private String kind;
     private LocalDateTime createdAt;
     private boolean isNaturalized;
+    private int age;
     private String color;
     private String video;
     private String note;
