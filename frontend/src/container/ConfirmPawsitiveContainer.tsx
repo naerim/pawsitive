@@ -11,7 +11,9 @@ const ConfirmPawsitiveContainer = () => {
       <br />
       <button type="button">네</button>
       <br />
-      <button type="button">아니요, 조금만 더 둘러볼래요</button>
+      <button type="button" onClick={onClick}>
+        아니요, 조금만 더 둘러볼래요
+      </button>
       <br />
       <br />
       <button type="button" onClick={onClick}>

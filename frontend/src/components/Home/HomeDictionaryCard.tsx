@@ -1,6 +1,6 @@
 import CustomCard from '@src/common/CustomCard'
 
-const TodayDictionary = () => {
+const HomeDictionaryCard = () => {
   return (
     <CustomCard>
       <div>목줄/기슴줄 착용하기</div>
@@ -8,4 +8,4 @@ const TodayDictionary = () => {
   )
 }
 
-export default TodayDictionary
+export default HomeDictionaryCard

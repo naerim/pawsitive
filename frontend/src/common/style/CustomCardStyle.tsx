@@ -8,5 +8,4 @@ export const Container = styled.div`
   width: 90%;
   margin: 0 auto 20px auto;
   border-radius: 6px;
-  cursor: pointer;
 `

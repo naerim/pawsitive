@@ -7,7 +7,9 @@ const CheckPawsitiveCard = () => {
 
   return (
     <CustomCard>
-      <div onClick={onClick}>포지티버가 되어 보시겠어요?</div>
+      <div onClick={onClick} role="presentation">
+        포지티버가 되어 보시겠어요?
+      </div>
     </CustomCard>
   )
 }

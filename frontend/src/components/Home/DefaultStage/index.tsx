@@ -1,7 +1,7 @@
 import CheckPawsitiveCard from '@src/components/Home/DefaultStage/CheckPawsitiveCard'
 import HomeStatistics from '@src/components/Home/HomeStatistics'
-import CustomCard from '@src/common/CustomCard.tsx'
-import TodayDictionary from '@src/components/Home/TodayDictionary'
+import CustomCard from '@src/common/CustomCard'
+import HomeDictionaryCard from '@src/components/Home/HomeDictionaryCard'
 
 const Index = () => {
   return (
@@ -11,7 +11,7 @@ const Index = () => {
       <CustomCard>
         <div style={{ height: 200 }}>추천 컴포넌트</div>
       </CustomCard>
-      <TodayDictionary />
+      <HomeDictionaryCard />
       <HomeStatistics />
     </div>
   )
