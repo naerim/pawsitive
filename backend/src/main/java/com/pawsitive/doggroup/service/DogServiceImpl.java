@@ -1,5 +1,10 @@
 package com.pawsitive.doggroup.service;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.entity.Dog;
@@ -7,7 +12,11 @@ import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
+import java.io.IOException;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,15 +28,24 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class DogServiceImpl implements DogService {
+
     private final DogRepository dogRepository;
     private final DogImageService dogImageService;
     private final UserService userService;
+
+    private final AmazonS3Client amazonS3Client;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     @Override
     @Transactional
     public Dog createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images) {
         User user = userService.getUserByUserNo(req.getUserNo());
+
+        String videoKey = uploadFile(video);
 
         Dog dog = Dog.builder()
             .user(user)
@@ -37,10 +55,11 @@ public class DogServiceImpl implements DogService {
             .color(req.getColor())
             .note(req.getNote())
             .mbti(getMbti(req))
-            .video(getVideoUrl(video))
+            .video(videoKey)
             .build();
 
         dogRepository.save(dog);
+
         dogImageService.createDogImage(images, dog);
 
         return dog;
@@ -66,8 +85,29 @@ public class DogServiceImpl implements DogService {
         return sb.toString();
     }
 
-    //TODO [Yi] S3에 비디오 업로드 후 url 받아오는 로직 추가 필요
-    private String getVideoUrl(MultipartFile video) {
-        return null;
+    private String uploadFile(MultipartFile file) {
+
+        try {
+            String key = UUID.randomUUID() + "_" + file.getOriginalFilename();
+
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentType(file.getContentType());
+            metadata.setContentLength(file.getSize());
+
+            PutObjectRequest request =
+                new PutObjectRequest(bucket, key, file.getInputStream(), metadata);
+
+            request.withCannedAcl(CannedAccessControlList.AuthenticatedRead);
+
+            PutObjectResult result = amazonS3Client.putObject(request);
+
+            log.info(result.toString());
+
+            return key;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
+
 }

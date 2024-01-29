@@ -1,9 +1,18 @@
 package com.pawsitive.doggroup.service;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.entity.DogImage;
 import com.pawsitive.doggroup.repository.DogImageRepository;
+import java.io.IOException;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,23 +24,49 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class DogImageServiceImpl implements DogImageService {
+
     private final DogImageRepository dogImageRepository;
+    private final AmazonS3Client amazonS3Client;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     @Override
     @Transactional
     public Dog createDogImage(MultipartFile[] dogImages, Dog dog) {
         if (dogImages == null) {
-            return null;
+            return dog;
         }
-        //TODO [Yi] S3에 업로드 한 url 받아오는 로직 추가 필요
+
         for (MultipartFile file : dogImages) {
-            String url = null;
-            DogImage image = new DogImage();
-            image.setDog(dog);
-            image.setUrl(url);
-            dogImageRepository.save(image);
+            try {
+                String url = UUID.randomUUID() + "_" + file.getOriginalFilename();
+
+                ObjectMetadata metadata = new ObjectMetadata();
+                metadata.setContentType(file.getContentType());
+                metadata.setContentLength(file.getSize());
+
+                PutObjectRequest request =
+                    new PutObjectRequest(bucket, url, file.getInputStream(), metadata);
+                request.withCannedAcl(CannedAccessControlList.AuthenticatedRead);
+
+                PutObjectResult result = amazonS3Client.putObject(request);
+
+                log.info(result.toString());
+
+                DogImage image = new DogImage();
+                image.setDog(dog);
+                image.setUrl(url);
+                dogImageRepository.save(image);
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
         }
         return dog;
     }
+
 }
