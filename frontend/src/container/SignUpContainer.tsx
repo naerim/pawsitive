@@ -221,6 +221,7 @@ const SignUpContainer = () => {
           placeholder="주소를 검색해주세요"
           onClick={handleDaumPostcodeOpen}
           defaultValue={address}
+          readOnly
         />
       </div>
 
