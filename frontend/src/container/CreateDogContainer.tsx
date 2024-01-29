@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import CreateDogDoneButton from '@src/components/CreateDog/CreateDogDoneButton'
 import { useMutation } from '@tanstack/react-query'
 import { createDog } from '@src/apis/dog'
+import * as c from '@src/container/style/CreateDogContainerStyle'
 
 const CreateDogContainer = () => {
   const [name, setName] = useInput({ initialValue: '' })
@@ -54,7 +55,7 @@ const CreateDogContainer = () => {
   }
 
   return (
-    <div style={{ height: 400 }}>
+    <c.Container>
       <h1>보호소의 유기견 추가 페이지</h1>
       <form onSubmit={onClickCreateDogButton} encType="multipart/form-data">
         <CreateDogInfo
@@ -72,7 +73,7 @@ const CreateDogContainer = () => {
         <CreateDogFile file={file} setFile={setFile} />
         <CreateDogDoneButton onClick={onClickCreateDogButton} />
       </form>
-    </div>
+    </c.Container>
   )
 }
 
