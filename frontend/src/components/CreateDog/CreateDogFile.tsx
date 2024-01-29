@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
-import { CreateDogFileType } from '@src/types/components/CreateDogType.ts'
+import { CreateDogFileType } from '@src/types/components/CreateDogType'
 import * as c from '@src/components/style/CreateDogFileStyle'
 
 const CreateDogFile = (props: CreateDogFileType) => {
@@ -26,8 +26,8 @@ const CreateDogFile = (props: CreateDogFileType) => {
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target
     if (files) {
-      const fileArray = Array.from(files, file => file as File) // Use a mapping function
-      const count = fileArray.filter(file => file.type.includes('video')).length
+      const fileArray = Array.from(files, f => f as File) // Use a mapping function
+      const count = fileArray.filter(f => f.type.includes('video')).length
 
       if (count <= 1) {
         setFile(fileArray)
@@ -75,10 +75,10 @@ const CreateDogFile = (props: CreateDogFileType) => {
             onChange={handleFile}
           />
           <br />
-          <div onClick={resetFile}>삭제하기</div>
+          <button type="button" onClick={resetFile}>
+            삭제하기
+          </button>
           <br />
-          <h1>모바일일때 - 카메라</h1>
-          <input type="file" accept="image/*" capture="environment" />
         </c.Container>
       )}
     </div>

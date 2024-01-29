@@ -13,7 +13,7 @@ const CreateDogInfo = (props: CreateDogInfoType) => {
     setNote,
   } = props
   return (
-    <div style={{ height: 600 }}>
+    <div>
       <div>보호소 번호(임의 1)</div>
       <label htmlFor="name">이름</label>
       <input id="name" type="text" value={String(name)} onChange={setName} />

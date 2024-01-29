@@ -4,6 +4,8 @@ import CreateDogMbti from '@src/components/CreateDog/CreateDogMbti'
 import { useInput } from '@src/hooks/useInput'
 import React, { useState } from 'react'
 import CreateDogDoneButton from '@src/components/CreateDog/CreateDogDoneButton'
+import { useMutation } from '@tanstack/react-query'
+import { createDog } from '@src/apis/dog'
 
 const CreateDogContainer = () => {
   const [name, setName] = useInput({ initialValue: '' })
@@ -14,10 +16,19 @@ const CreateDogContainer = () => {
   const [mbti, setMbti] = useState<boolean[]>([])
   const [file, setFile] = useState<File[]>([])
 
+  const { mutate } = useMutation({
+    mutationKey: ['createDog'],
+    mutationFn: createDog,
+    onSuccess() {
+      console.log('유기견 추가 성공')
+    },
+  })
+
   const onClickCreateDogButton = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData()
     const dogData = {
+      userNo: 1,
       name,
       kind,
       isNaturalized,
@@ -29,19 +40,23 @@ const CreateDogContainer = () => {
       F: mbti[3],
     }
     for (let i = 0; i < file.length; i += 1) {
-      formData.append('files', file[i])
+      formData.append('req', JSON.stringify(dogData))
     }
-    formData.append(
-      'dogData',
-      new Blob([JSON.stringify(dogData)], { type: 'application/json' }),
-    )
-    console.log(JSON.stringify(dogData))
+    for (let i = 0; i < file.length; i += 1) {
+      formData.append('images', file[i])
+    }
+    // formData.append(
+    //   'dogData',
+    //   new Blob([JSON.stringify(dogData)], { type: 'application/json' }),
+    // )
+    mutate(formData)
+    // console.log(JSON.stringify(dogData))
   }
 
   return (
     <div style={{ height: 400 }}>
       <h1>보호소의 유기견 추가 페이지</h1>
-      <form onSubmit={onClickCreateDogButton}>
+      <form onSubmit={onClickCreateDogButton} encType="multipart/form-data">
         <CreateDogInfo
           name={name}
           setName={setName}
