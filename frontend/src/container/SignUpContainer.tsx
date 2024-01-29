@@ -5,6 +5,8 @@ import { DaumPostData } from '@src/types/container/SignUpType'
 const SignUpContainer = () => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [confirmPassword, setConfirmPassword] = useState<string>('')
+  const [passwordError, setPasswordError] = useState<string>('')
   const [name, setName] = useState('')
   const [nameError, setNameError] = useState('')
   const [dob, setDob] = useState('')
@@ -27,6 +29,17 @@ const SignUpContainer = () => {
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
+  }
+
+  const handleConfirmPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const confirmPasswordInput = e.target.value
+    setConfirmPassword(confirmPasswordInput)
+
+    if (password !== confirmPasswordInput) {
+      setPasswordError('비밀번호가 일치하지 않습니다.')
+    } else setPasswordError('')
   }
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -156,6 +169,18 @@ const SignUpContainer = () => {
           value={password}
           onChange={handlePasswordChange}
         />
+      </div>
+
+      <div>
+        <label htmlFor="confirmPassword">비밀번호 확인:</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          value={confirmPassword}
+          onChange={handleConfirmPasswordChange}
+        />
+        <div>{passwordError}</div>
       </div>
 
       <div>
