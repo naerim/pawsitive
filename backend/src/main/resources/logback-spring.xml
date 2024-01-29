@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Configuration>
 
-    <logger name="org.springframework.beans.factory" level="warn"/>
+    <logger name="org.springframework.beans.factory" level="info"/>
 
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
     <conversionRule conversionWord="wex"
