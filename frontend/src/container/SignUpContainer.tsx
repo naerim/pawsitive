@@ -4,6 +4,7 @@ import { DaumPostData } from '@src/types/container/SignUpType'
 
 const SignUpContainer = () => {
   const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
   const [name, setName] = useState('')
   const [nameError, setNameError] = useState('')
   const [dob, setDob] = useState('')
@@ -22,6 +23,10 @@ const SignUpContainer = () => {
 
   const handleCheckEmail = () => {
     // email 인증 로직 추가
+  }
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value)
   }
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,6 +107,7 @@ const SignUpContainer = () => {
 
   const handleDaumPostcodeOpen = () => {
     setIsDaumPostcodeOpen(true)
+    setAddress('')
     setDetailAddress('')
     setBuilidngName('')
   }
@@ -139,6 +145,17 @@ const SignUpContainer = () => {
         <button type="button" onClick={handleCheckEmail}>
           인증번호 받기
         </button>
+      </div>
+
+      <div>
+        <label htmlFor="password">비밀번호:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={password}
+          onChange={handlePasswordChange}
+        />
       </div>
 
       <div>
