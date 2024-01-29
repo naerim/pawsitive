@@ -59,7 +59,12 @@ public class DogServiceImpl implements DogService {
             .video(videoKey)
             .build();
 
-        dogRepository.save(dog);
+        try {
+            dogRepository.save(dog);
+        } catch (Exception e) {
+            amazonS3Client.deleteObject(bucket, videoKey);
+            throw new RuntimeException(e);
+        }
 
         dogImageService.createDogImage(images, dog);
 
