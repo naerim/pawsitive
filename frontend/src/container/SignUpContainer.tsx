@@ -98,91 +98,78 @@ const SignUpContainer = () => {
     <>
       <h2>NEW ACCOUNT</h2>
       <div>
-        <label htmlFor="name">
-          이름
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={name}
-            onChange={handleNameChange}
-            required
-          />
-        </label>
+        <label htmlFor="name">이름 </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={name}
+          onChange={handleNameChange}
+          required
+        />
         <div>{nameError}</div>
 
-        <label htmlFor="dob">
-          생년월일
-          <input
-            type="text"
-            id="dob"
-            name="dob"
-            value={dob}
-            onChange={handleDobChange}
-            placeholder="YYYY.MM.DD"
-            required
-          />
-        </label>
+        <label htmlFor="dob">생년월일 </label>
+        <input
+          type="text"
+          id="dob"
+          name="dob"
+          value={dob}
+          onChange={handleDobChange}
+          placeholder="YYYY.MM.DD"
+          required
+        />
         <div>{dobError}</div>
 
-        <label htmlFor="gender">
-          성별
-          <div>
-            <input
-              type="radio"
-              name="gender"
-              value="male"
-              checked={gender === 'male'}
-              onChange={handleGenderChange}
-            />
-            남성
-            <input
-              type="radio"
-              name="gender"
-              value="female"
-              checked={gender === 'female'}
-              onChange={handleGenderChange}
-            />
-            여성
-          </div>
-        </label>
-
-        <label htmlFor="phoneNumber">
-          핸드폰 번호
+        <label htmlFor="gender">성별 </label>
+        <div>
           <input
-            type="text"
-            id="phoneNumber"
-            name="phoneNumber"
-            value={phoneNumber}
-            onChange={handlePhoneNumberChange}
-            placeholder="010-1234-5678"
-            required
+            type="radio"
+            name="gender"
+            value="male"
+            checked={gender === 'male'}
+            onChange={handleGenderChange}
           />
-        </label>
+          남성
+          <input
+            type="radio"
+            name="gender"
+            value="female"
+            checked={gender === 'female'}
+            onChange={handleGenderChange}
+          />
+          여성
+        </div>
+
+        <label htmlFor="phoneNumber">핸드폰 번호 </label>
+        <input
+          type="text"
+          id="phoneNumber"
+          name="phoneNumber"
+          value={phoneNumber}
+          onChange={handlePhoneNumberChange}
+          placeholder="010-1234-5678"
+          required
+        />
         <div>{phoneNumberError}</div>
 
-        <label htmlFor="address">
-          주소
-          {isDaumPostcodeOpen && (
-            <div>
-              <button
-                type="button"
-                onClick={() => setIsDaumPostcodeOpen(false)}
-              >
-                닫기
-              </button>
-              <DaumPostcode
-                onComplete={handleAddressComplete}
-                style={{ position: 'absolute', zIndex: 1000 }}
-              />
-            </div>
-          )}
-          <input
-            placeholder="주소를 검색해주세요"
-            onClick={() => setIsDaumPostcodeOpen(true)}
-            defaultValue={address}
-          />
-        </label>
+        <label htmlFor="address">주소 </label>
+        {isDaumPostcodeOpen && (
+          <div>
+            <button type="button" onClick={() => setIsDaumPostcodeOpen(false)}>
+              닫기
+            </button>
+            <DaumPostcode
+              onComplete={handleAddressComplete}
+              style={{ position: 'absolute', zIndex: 1000 }}
+            />
+          </div>
+        )}
+        <input
+          placeholder="주소를 검색해주세요"
+          onClick={() => setIsDaumPostcodeOpen(true)}
+          defaultValue={address}
+        />
       </div>
     </>
   )
