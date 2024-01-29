@@ -1,10 +1,12 @@
 package com.pawsitive.communitygroup.service;
 
+import com.pawsitive.communitygroup.entity.Community;
 import com.pawsitive.communitygroup.exception.CommunityBoardNotFoundException;
 import com.pawsitive.communitygroup.repository.CommunityRepository;
 import com.pawsitive.communitygroup.response.CommunityBoardDetailRes;
 import com.pawsitive.communitygroup.response.CommunityCommentDetailRes;
 import com.pawsitive.communitygroup.response.CommunityDetailRes;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,8 +39,15 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     @Override
-    public List<CommunityBoardDetailRes> getRecommendationList(Integer num) {
-        return null;
+    public List<CommunityDetailRes> getRecommendationCommunityList(int num) {
+        List<CommunityDetailRes> communityDetailList = new ArrayList<>();
+        List<Community> communityList =
+            communityRepository.getRecommendationCommunityList(num);
+        for (Community community : communityList) {
+            communityDetailList.add(this.getCommunity(community.getCommunityBoard()
+                .getCommunityBoardNo()));
+        }
+        return communityDetailList;
     }
 
 }

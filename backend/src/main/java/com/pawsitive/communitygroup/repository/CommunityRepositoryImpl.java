@@ -29,8 +29,10 @@ public class CommunityRepositoryImpl extends QuerydslRepositorySupport
     }
 
     @Override
-    public List<CommunityBoardDetailRes> getRecommendationCommunityList(int num) {
-        return null;
+    public List<Community> getRecommendationCommunityList(int num) {
+        return from(qCommunity)
+            .limit(num)
+            .fetch();
     }
 
     @Override

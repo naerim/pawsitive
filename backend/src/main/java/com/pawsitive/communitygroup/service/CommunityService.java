@@ -11,5 +11,5 @@ public interface CommunityService {
 
     CommunityDetailRes getCommunity(int boardNo);
 
-    List<CommunityBoardDetailRes> getRecommendationList(Integer num);
+    List<CommunityDetailRes> getRecommendationCommunityList(int num);
 }

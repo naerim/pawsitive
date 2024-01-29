@@ -67,7 +67,7 @@ public class DogController {
     }
 
     @GetMapping("/recommendation")
-    @Operation(summary = "추천 강아지 조회", description = "<strong>유기견 목록을 파라미터로 조회할 갯수만큼 조회</strong> 한다.",
+    @Operation(summary = "추천 강아지 조회", description = "<strong>유기견 목록을 파라미터로 전달 받은 조회할 갯수만큼 조회</strong> 한다.",
         tags = {"04.Dog"},
         responses = {
             @ApiResponse(responseCode = "200", description = "추천 강아지 목록을 정상적으로 반환한다."),

@@ -1,5 +1,6 @@
 package com.pawsitive.communitygroup.repository;
 
+import com.pawsitive.communitygroup.entity.Community;
 import com.pawsitive.communitygroup.response.CommunityBoardDetailRes;
 import com.pawsitive.communitygroup.response.CommunityCommentDetailRes;
 import java.util.List;
@@ -21,7 +22,7 @@ public interface CommunityRepositoryCustom {
      *
      * @return 인기글
      */
-    List<CommunityBoardDetailRes> getRecommendationCommunityList(int num);
+    List<Community> getRecommendationCommunityList(int num);
 
     /**
      * 카테고리별 커뮤니티 글을 조회합니다.
