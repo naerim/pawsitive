@@ -32,26 +32,28 @@ const CreateDogContainer = () => {
       userNo: 1,
       name,
       kind,
-      isNaturalized,
+      isNaturalized: isNaturalized !== 0,
       color,
       note,
-      E: mbti[0],
-      S: mbti[1],
-      A: mbti[2],
-      F: mbti[3],
+      aw: mbti[0],
+      eq: mbti[1],
+      fc: mbti[2],
+      si: mbti[3],
     }
-    for (let i = 0; i < file.length; i += 1) {
-      formData.append('req', JSON.stringify(dogData))
-    }
+    // for (let i = 0; i < file.length; i += 1) {
+    //   formData.append('req', JSON.stringify(dogData))
+    // }
+    // formData.append('req', JSON.stringify(dogData))
+
     for (let i = 0; i < file.length; i += 1) {
       formData.append('images', file[i])
     }
-    // formData.append(
-    //   'dogData',
-    //   new Blob([JSON.stringify(dogData)], { type: 'application/json' }),
-    // )
+    formData.append(
+      'req',
+      new Blob([JSON.stringify(dogData)], { type: 'application/json' }),
+    )
     mutate(formData)
-    // console.log(JSON.stringify(dogData))
+    console.log(JSON.stringify(dogData))
   }
 
   return (
