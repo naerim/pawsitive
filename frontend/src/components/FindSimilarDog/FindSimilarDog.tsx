@@ -172,6 +172,7 @@ const FindSimilarDog = () => {
   function stop() {
     if (webcam) {
       webcam.stop()
+      webcam = null // 웹캠 객체를 null로 설정
       isPredicting = false
     }
   }
