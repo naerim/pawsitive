@@ -1,6 +1,6 @@
 import * as tmImage from '@teachablemachine/image'
 
-const TeachableMachine = () => {
+const FindSimilarDog = () => {
   const URL = 'https://teachablemachine.withgoogle.com/models/KDq_2gk72/'
 
   let model
@@ -83,11 +83,11 @@ const TeachableMachine = () => {
   )
 }
 
-export default TeachableMachine
+export default FindSimilarDog
 
 // import * as tmImage from '@teachablemachine/image'
 //
-// const TeachableMachine = () => {
+// const FindSimilarDog = () => {
 //   const URL = 'https://teachablemachine.withgoogle.com/models/KDq_2gk72/'
 //
 //   let model
@@ -132,7 +132,7 @@ export default TeachableMachine
 //
 //   return (
 //     <div>
-//       <div> Teachable Machine Image Model</div>
+//       <div> FindSimilarDog Machine Image Model</div>
 //       <button type="button" onClick={init}>
 //         Start
 //       </button>
@@ -143,4 +143,4 @@ export default TeachableMachine
 //     </div>
 //   )
 // }
-// export default TeachableMachine
+// export default FindSimilarDog
