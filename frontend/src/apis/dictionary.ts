@@ -5,3 +5,10 @@ export const fetchDictionaryList = async (): Promise<DictionaryItemType[]> => {
   const response = await publicRequest.get('api/v1/contents')
   return response.data
 }
+
+export const fetchDictionaryDetail = async (
+  contentNo: number,
+): Promise<DictionaryItemType> => {
+  const response = await publicRequest.get(`/api/v1/contents/${contentNo}`)
+  return response.data
+}
