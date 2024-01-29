@@ -7,7 +7,7 @@ import { fetchDogRecommend } from '@src/apis/recommend'
 const HomeRecommendDog = () => {
   const { isLoading, data } = useQuery<DogDetailInfoType>({
     queryKey: ['dogRecommend'],
-    queryFn: () => fetchDogRecommend('admin'),
+    queryFn: () => fetchDogRecommend('1'),
   })
   return (
     <h.Container>
