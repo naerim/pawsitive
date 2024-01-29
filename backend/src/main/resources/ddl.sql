@@ -143,6 +143,44 @@ CREATE TABLE `dog_image` (
 	`url;`	VARCHAR(500)	NULL
 );
 
+DROP TABLE IF EXISTS `chat`;
+
+
+
+DROP TABLE IF EXISTS `chat_room`;
+
+CREATE TABLE `chat_room` (
+	`chat_room_no`	VARCHAR(16)	NOT NULL,
+	`name`	VARCHAR(30)	NULL,
+	`created_at`	DATETIME	NOT NULL
+);
+
+ALTER TABLE `chat_room` ADD CONSTRAINT `PK_CHAT_ROOM` PRIMARY KEY (
+	`chat_room_no`
+);
+
+CREATE TABLE `chat` (
+	`chat_no`	INT	NOT NULL auto_increment primary key,
+	`chat_room_no`	INT	NOT NULL,
+	`user_no`	INT	NOT NULL,
+	`message`	VARCHAR(500)	NULL
+);
+
+ALTER TABLE `chat` ADD CONSTRAINT `FK_chat_room_TO_chat_1` FOREIGN KEY (
+	`chat_room_no`
+)
+REFERENCES `chat_room` (
+	`chat_room_no`
+);
+
+ALTER TABLE `chat` ADD CONSTRAINT `FK_user_TO_chat_1` FOREIGN KEY (
+	`user_no`
+)
+REFERENCES `user` (
+	`user_no`
+);
+
+
 ALTER TABLE `dog` ADD CONSTRAINT `FK_user_TO_dog_1` FOREIGN KEY (
 	`user_no`
 )
