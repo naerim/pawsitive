@@ -13,6 +13,7 @@ import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -86,6 +87,10 @@ public class DogServiceImpl implements DogService {
     }
 
     private String uploadFile(MultipartFile file) {
+
+        if (Objects.isNull(file)) {
+            return "";
+        }
 
         try {
             String key = UUID.randomUUID() + "_" + file.getOriginalFilename();
