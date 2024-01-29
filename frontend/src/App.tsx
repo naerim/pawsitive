@@ -17,12 +17,12 @@ import ProfilePage from '@src/pages/ProfilePage'
 import NotFoundPage from '@src/pages/NotFoundPage'
 import { useAtomValue } from 'jotai'
 import { themeAtom } from '@src/stores/atoms/theme'
-import Navbar from '@src/common/Navbar.tsx'
+import Navbar from '@src/common/Navbar'
 import DogDetailPage from '@src/pages/DogDetailPage'
 import CommunityPage from '@src/pages/CommunityPage'
 import CommunityCreatePage from '@src/pages/CommunityCreatePage'
 import CreateDogPage from '@src/pages/CreateDogPage'
-import TeachablePage from '@src/pages/TeachablePage'
+import FindSimilarDogPage from '@src/pages/FindSimilarDogPage'
 import AdoptionSurveyPage from '@src/pages/AdoptionSurveyPage'
 import DictionaryPage from '@src/pages/DictionaryPage'
 
@@ -38,7 +38,7 @@ const AuthRoutes = () => (
     <Route path="/community" element={<CommunityPage />} />
     <Route path="/article/create" element={<CommunityCreatePage />} />
     <Route path="/new/dog" element={<CreateDogPage />} />
-    <Route path="/mypage/teachable" element={<TeachablePage />} />
+    <Route path="/mypage/findSimilarDog" element={<FindSimilarDogPage />} />
     <Route path="/dogDetail" element={<DogDetailPage />} />
     <Route path="/mypage/adoptionSurvey" element={<AdoptionSurveyPage />} />
     <Route path="/dictionary" element={<DictionaryPage />} />
