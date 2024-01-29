@@ -2,28 +2,36 @@ import { useAtomValue } from 'jotai'
 import { userAtom } from '@src/stores/atoms/user'
 import DefaultStage from '@src/components/Home/DefaultStage'
 import AdoptInfo from '@src/components/Home/AfterAdoption/AdoptInfo'
+import FirstStage from '@src/components/Home/FirstStage'
+import HomeStatistics from '@src/components/Home/HomeStatistics.tsx'
+import HomeDictionaryCard from '@src/components/Home/HomeDictionaryCard.tsx'
 
 const HomeContainer = () => {
   const user = useAtomValue(userAtom)
+
+  let currentStageComponent
+
   switch (user.stage) {
     case 0:
-      return <DefaultStage />
+      currentStageComponent = <DefaultStage />
+      break
+    case 1:
+      currentStageComponent = <FirstStage />
+      break
     case 4:
-      return <AdoptInfo />
+      currentStageComponent = <AdoptInfo />
+      break
     default:
-      return <div>error</div>
+      currentStageComponent = <div>error</div>
   }
-  // if (user.stage === 0) {
-  //   return <DefaultStage />
-  // }
-  //
-  // if (user.stage === 4) {
-  //   return (
-  //     <div>
-  //       <AdoptInfo />
-  //     </div>
-  //   )
-  // }
+
+  return (
+    <div>
+      {currentStageComponent}
+      <HomeDictionaryCard />
+      <HomeStatistics />
+    </div>
+  )
   // return (
   //   <div>
   //     {user.stage > 1 && <HomeProgressBar currentStage={user.stage} />}
