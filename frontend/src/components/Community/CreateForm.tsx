@@ -1,13 +1,20 @@
 import { atom, useAtom } from 'jotai'
 import * as c from '@src/components/style/CommunityCreateFormStyle'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
+import { DaumPostData } from '@src/types/container/SignUpType'
+import DaumPostcode from 'react-daum-postcode'
 
 const titleAtom = atom('')
 const categoryAtom = atom('0')
 const contentAtom = atom('')
 const imageFileAtom = atom('')
 const isPublicAtom = atom(true)
-const locationAtom = atom('')
+const addressAtom = atom('')
+const latitudeAtom = atom(0)
+const longitudeAtom = atom(0)
+const isDaumPostcodeOpenAtom = atom(false)
+const mapAtom = atom<any>(null)
+const markerAtom = atom<any>(null)
 
 const categoryList = [
   { value: '쇼핑하개', index: 0 },
@@ -15,19 +22,31 @@ const categoryList = [
   { value: '자랑하개', index: 2 },
   { value: '영양있개', index: 3 },
 ]
+
 const CreateForm = () => {
   const [categoryValue, setCategory] = useAtom(categoryAtom)
   const [titleValue, setTitle] = useAtom(titleAtom)
   const [contentValue, setContent] = useAtom(contentAtom)
   const [imageFileValue, setImageFile] = useAtom(imageFileAtom)
   const [isPublicValue, setIsPublic] = useAtom(isPublicAtom)
-  const [locationValue, setLocation] = useAtom(locationAtom)
+  const [mapValue, setMap] = useAtom(mapAtom)
+  const [markerValue, setMarker] = useAtom(markerAtom)
+  const [latitudeValue, setLatitude] = useAtom(latitudeAtom)
+  const [longitudeValue, setLongitude] = useAtom(longitudeAtom)
+  const [addressValue, setAddress] = useAtom(addressAtom)
+  const [isDaumPostcodeOpenValue, setIsDaumPostcodeOpen] = useAtom(
+    isDaumPostcodeOpenAtom,
+  )
+
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setTitle(e.target.value)
+
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value)
   }
+
   const handleContentChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setContent(e.target.value)
 
@@ -45,22 +64,114 @@ const CreateForm = () => {
 
   const handleIsPublicChange = () => setIsPublic(!isPublicValue)
 
-  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setLocation(e.target.value)
+  const handleDaumPostcodeOpen = () => {
+    setIsDaumPostcodeOpen(true)
+    setAddress('')
+  }
+
+  // 카카오맵 불러오기
+  useEffect(() => {
+    window.kakao.maps.load(() => {
+      const container = containerRef.current
+      if (container) {
+        const options = {
+          center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+          level: 3,
+        }
+        const newMap = new window.kakao.maps.Map(
+          container as HTMLElement,
+          options,
+        )
+        setMap(newMap)
+        setMarker(new window.kakao.maps.Marker())
+      }
+    })
+  }, [])
+
+  const handleAddressComplete = (data: DaumPostData) => {
+    setAddress(data.address)
+    setIsDaumPostcodeOpen(false)
+
+    // 검색된 주소 위치 표시
+    if (window.kakao.maps && window.kakao.maps.services) {
+      const geocoder = new window.kakao.maps.services.Geocoder()
+      geocoder.addressSearch(data.address, (result: any, status: any) => {
+        if (status === window.kakao.maps.services.Status.OK) {
+          const currentPos = new window.kakao.maps.LatLng(
+            result[0].y,
+            result[0].x,
+          )
+          setLatitude(result[0].y)
+          setLongitude(result[0].x)
+
+          if (mapValue && markerValue) {
+            markerValue.setMap(null)
+            markerValue.setPosition(currentPos)
+            markerValue.setMap(mapValue)
+
+            mapValue.panTo(currentPos)
+          }
+        }
+      })
+    } else {
+      console.error('Kakao maps or services not loaded')
+    }
+  }
+
+  // useEffect 내부에서 DaumPostcode로 주소를 선택했을 때의 콜백 함수를 등록
+  useEffect(() => {
+    if (mapValue) {
+      const clickHandler = (mouseEvent: any) => {
+        const geocoder = new window.kakao.maps.services.Geocoder()
+
+        geocoder.coord2Address(
+          mouseEvent.latLng.getLng(),
+          mouseEvent.latLng.getLat(),
+          (result: any, status: any) => {
+            if (status === window.kakao.maps.services.Status.OK) {
+              const addr = !!result[0].road_address
+                ? result[0].road_address.address_name
+                : result[0].address.address_name
+              // 마커로 찍은 주소를 저장한다.
+              setAddress(addr)
+              setLatitude(result[0].y)
+              setLongitude(result[0].x)
+              // 기존 마커를 제거하고 새로운 마커를 넣음
+              markerValue.setMap(null)
+              // 마커를 클릭한 위치에 표시
+              markerValue.setPosition(mouseEvent.latLng)
+              markerValue.setMap(mapValue)
+            }
+          },
+        )
+      }
+
+      // 클릭 이벤트 등록
+      window.kakao.maps.event.addListener(mapValue, 'click', clickHandler)
+
+      // 컴포넌트가 언마운트될 때 클릭 이벤트 제거
+      return () => {
+        window.kakao.maps.event.removeListener(mapValue, 'click', clickHandler)
+      }
+    }
+  }, [mapValue, markerValue])
 
   const handleSubmit = () => {
     console.log('title:', titleValue)
     console.log('category:', categoryValue)
     console.log('content:', contentValue)
-    console.log('location:', locationValue)
+    console.log('imageFile:', imageFileValue)
     console.log('isPublic:', isPublicValue)
+    console.log('latitude:', latitudeValue)
+    console.log('longitude:', longitudeValue)
   }
+
   return (
     <c.Container>
       <h1>생성폼입니다.</h1>
       <br />
       <c.Label htmlFor="title">제 목 :</c.Label>
-      <input id="title" value={titleValue} onChange={handleTitleChange} />
+      <c.Input id="title" value={titleValue} onChange={handleTitleChange} />
       <br />
 
       <c.Label htmlFor="category">카테고리 :</c.Label>
@@ -78,7 +189,11 @@ const CreateForm = () => {
       <br />
 
       <c.Label htmlFor="content">내 용 :</c.Label>
-      <input id="content" value={contentValue} onChange={handleContentChange} />
+      <c.Input
+        id="content"
+        value={contentValue}
+        onChange={handleContentChange}
+      />
       <br />
 
       <c.Label htmlFor="image">사진 추가하기</c.Label>
@@ -86,7 +201,6 @@ const CreateForm = () => {
         id="image"
         type="file"
         accept="image/*"
-        // value={locationValue}
         onChange={handleFileUpload}
       />
       <c.ImagePreview>
@@ -103,7 +217,7 @@ const CreateForm = () => {
       <br />
 
       <c.Label htmlFor="isPublic">비공개 :</c.Label>
-      <input
+      <c.Input
         type="checkbox"
         id="isPublic"
         defaultChecked={false}
@@ -111,13 +225,35 @@ const CreateForm = () => {
       />
       <br />
 
-      <c.Label htmlFor="위치">위 치 :</c.Label>
-      <input value={locationValue} onChange={handleLocationChange} />
-      <br />
+      <div>
+        {isDaumPostcodeOpenValue && (
+          <div>
+            <button type="button" onClick={() => setIsDaumPostcodeOpen(false)}>
+              닫기
+            </button>
+            <DaumPostcode
+              onComplete={handleAddressComplete}
+              style={{ position: 'absolute', zIndex: 400 }}
+            />
+          </div>
+        )}
+        <c.Input
+          placeholder="주소를 검색해주세요"
+          onClick={handleDaumPostcodeOpen}
+          id="address"
+          value={addressValue}
+          readOnly
+        />
+        <c.Map ref={containerRef}></c.Map>
+      </div>
 
       <button type="submit" onClick={handleSubmit}>
         게시글 등록
       </button>
+      <br />
+      <br />
+      <br />
+      <br />
     </c.Container>
   )
 }
