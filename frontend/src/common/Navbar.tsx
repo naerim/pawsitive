@@ -1,9 +1,11 @@
 import * as n from '@src/common/style/NavbarStyle'
+import { useLocation } from 'react-router-dom'
 
 const Navbar = () => {
-  // const locationNow = useLocation()
+  const locationNow = useLocation()
 
   // if (locationNow.pathname.match(/^\/chat\/\d+$/)) return null
+  if (locationNow.pathname === '/confirm/pawsitive') return null
   return (
     <n.Container>
       <n.MenuWrap>

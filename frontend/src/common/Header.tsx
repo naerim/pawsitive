@@ -1,6 +1,10 @@
 import * as h from '@src/common/style/HeaderStyle'
+import { useLocation } from 'react-router-dom'
 
 const Header = () => {
+  const locationNow = useLocation()
+  if (locationNow.pathname === '/confirm/pawsitive') return null
+
   return (
     <h.Container>
       <h.Logo>Pawsitive</h.Logo>

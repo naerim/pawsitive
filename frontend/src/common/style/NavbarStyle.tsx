@@ -12,7 +12,7 @@ export const Container = styled.nav`
 export const MenuWrap = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   width: 100%;
   height: 89px;
 `
