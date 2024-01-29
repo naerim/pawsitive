@@ -3,6 +3,7 @@ import DaumPostcode from 'react-daum-postcode'
 import { DaumPostData } from '@src/types/container/SignUpType'
 
 const SignUpContainer = () => {
+  const [email, setEmail] = useState<string>('')
   const [name, setName] = useState('')
   const [nameError, setNameError] = useState('')
   const [dob, setDob] = useState('')
@@ -14,6 +15,14 @@ const SignUpContainer = () => {
   const [isDaumPostcodeOpen, setIsDaumPostcodeOpen] = useState(false)
   const [buildingName, setBuilidngName] = useState('')
   const [detailAddress, setDetailAddress] = useState('')
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value)
+  }
+
+  const handleCheckEmail = () => {
+    // email 인증 로직 추가
+  }
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nameInput = e.target.value
@@ -110,12 +119,26 @@ const SignUpContainer = () => {
   }
   const onSubmitSignUp = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(name, dob, gender, phoneNumber, address)
+    const role = 'USER'
+    const totalAddress = `${address} ${buildingName} ${detailAddress}`
+    console.log(totalAddress, role)
   }
 
   return (
     <form onSubmit={onSubmitSignUp}>
       <h2>NEW ACCOUNT</h2>
+      <label htmlFor="id">E-mail:</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        value={email}
+        onChange={handleEmailChange}
+      />
+      <button type="button" onClick={handleCheckEmail}>
+        인증번호 받기
+      </button>
+
       <div>
         <label htmlFor="name">이름 </label>
         <input
