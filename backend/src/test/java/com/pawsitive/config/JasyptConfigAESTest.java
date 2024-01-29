@@ -23,7 +23,7 @@ class JasyptConfigAESTest {
             "jdbc:mysql://i10c111.p.ssafy.io:3306/pawsitive_dev?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true";
         String mysqlUsername = "pawsitive";
         String mysqlPassword = "gkrkddPdl12~!";
-        String redisHost = "172.26.8.148";
+        String redisHost = "3.36.63.3";
         String redisPort = "6379";
         String redisDatabase = "3";
         String redisPassword = "gkrkddPdl12!@";
