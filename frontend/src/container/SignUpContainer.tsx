@@ -94,8 +94,13 @@ const SignUpContainer = () => {
     setIsDaumPostcodeOpen(false)
   }
 
+  const onSubmitSignUp = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log(name, dob, gender, phoneNumber, address)
+  }
+
   return (
-    <>
+    <form onSubmit={onSubmitSignUp}>
       <h2>NEW ACCOUNT</h2>
       <div>
         <label htmlFor="name">이름 </label>
@@ -171,7 +176,9 @@ const SignUpContainer = () => {
           defaultValue={address}
         />
       </div>
-    </>
+
+      <button type="submit">회원가입</button>
+    </form>
   )
 }
 
