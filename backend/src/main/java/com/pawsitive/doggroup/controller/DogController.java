@@ -32,7 +32,7 @@ public class DogController {
     @Operation(summary = "유기견 등록", description = "전달받은 입력 정보를 유기견 테이블에 등록합니다.",
         tags = {"04.Dog"},
         responses = {
-            @ApiResponse(responseCode = "200", description = "유기견 등록 성공"),
+            @ApiResponse(responseCode = "201", description = "유기견 등록 성공"),
             @ApiResponse(responseCode = "400", description = "유기견 등록에 필요한 정보가 유효하지 않음")
         }
     )
@@ -54,6 +54,7 @@ public class DogController {
         tags = {"04.Dog"},
         responses = {
             @ApiResponse(responseCode = "200", description = "유기견 고유 번호에 해당하는 강아지 상세 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "유기견 고유 번호에 해당하는 강아지가 없음"),
         }
     )
     public ResponseEntity<DogDetailRes> getDogByDogNo(@PathVariable int dogNo) {
