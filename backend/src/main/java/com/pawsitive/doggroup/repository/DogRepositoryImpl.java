@@ -7,6 +7,7 @@ import com.pawsitive.doggroup.entity.QDogImage;
 import com.pawsitive.usergroup.entity.QUser;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
@@ -28,6 +29,13 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
         return Optional.ofNullable(getQueryDogList()
             .where(qDog.dogNo.eq(dogNo))
             .fetchOne());
+    }
+
+    @Override
+    public List<DogDetailRes> getRecommendationDogList(int num) {
+        return getQueryDogList()
+            .limit(num)
+            .fetch();
     }
 
     private JPQLQuery<DogDetailRes> getQueryDogList() {

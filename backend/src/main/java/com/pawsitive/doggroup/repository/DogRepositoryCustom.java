@@ -1,6 +1,7 @@
 package com.pawsitive.doggroup.repository;
 
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -11,4 +12,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 @NoRepositoryBean
 public interface DogRepositoryCustom {
     Optional<DogDetailRes> getDogByDogNo(int dogNo);
+
+    List<DogDetailRes> getRecommendationDogList(int num);
 }

@@ -46,14 +46,14 @@ public class CommunityController {
 
     @GetMapping("/recommendation")
     @Operation(summary = "커뮤니티 인기글 조회",
-        description = "커뮤니티 <strong>인기글을 3개 조회</strong>를 한다. 파라미터로 조회할 갯수가 넘어온다면 <strong>인기글 목록을 num개 조회</strong> 한다.",
+        description = "<strong>인기글 목록을 파라미터로 조회할 갯수만큼 조회</strong> 한다.",
         tags = {"07.Community"},
         responses = {
-            @ApiResponse(responseCode = "200", description = "전체 커뮤니티 목록 또는 카테고리에 해당되는 전체 커뮤니티 목록을 정상적으로 반환한다."),
+            @ApiResponse(responseCode = "200", description = "인기 커뮤니티 글 목록을 정상적으로 반환한다."),
         }
     )
     public ResponseEntity<List<CommunityBoardDetailRes>> getRecommendationCommunityList(
-        @RequestParam(required = false) Integer num) {
+        @RequestParam Integer num) {
         return ResponseEntity
             .status(OK)
             .body(communityService.getRecommendationList(num));
