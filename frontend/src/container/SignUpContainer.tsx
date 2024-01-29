@@ -127,17 +127,19 @@ const SignUpContainer = () => {
   return (
     <form onSubmit={onSubmitSignUp}>
       <h2>NEW ACCOUNT</h2>
-      <label htmlFor="id">E-mail:</label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        value={email}
-        onChange={handleEmailChange}
-      />
-      <button type="button" onClick={handleCheckEmail}>
-        인증번호 받기
-      </button>
+      <div>
+        <label htmlFor="id">E-mail:</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          value={email}
+          onChange={handleEmailChange}
+        />
+        <button type="button" onClick={handleCheckEmail}>
+          인증번호 받기
+        </button>
+      </div>
 
       <div>
         <label htmlFor="name">이름 </label>
@@ -150,7 +152,9 @@ const SignUpContainer = () => {
           required
         />
         <div>{nameError}</div>
+      </div>
 
+      <div>
         <label htmlFor="dob">생년월일 </label>
         <input
           type="text"
@@ -162,7 +166,9 @@ const SignUpContainer = () => {
           required
         />
         <div>{dobError}</div>
+      </div>
 
+      <div>
         <label htmlFor="gender">성별 </label>
         <div>
           <input
@@ -182,7 +188,9 @@ const SignUpContainer = () => {
           />
           여성
         </div>
+      </div>
 
+      <div>
         <label htmlFor="phoneNumber">핸드폰 번호 </label>
         <input
           type="text"
@@ -194,7 +202,9 @@ const SignUpContainer = () => {
           required
         />
         <div>{phoneNumberError}</div>
+      </div>
 
+      <div>
         <label htmlFor="address">주소 </label>
         {isDaumPostcodeOpen && (
           <div>
