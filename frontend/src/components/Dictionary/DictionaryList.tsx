@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import * as c from '@src/components/style/DictionaryList'
 import { DictionaryItemType } from '@src/types/components/DictionaryType'
 
@@ -13,7 +14,9 @@ const DictionaryList: React.FC<DictionaryListProps> = ({ data }) => {
       <c.ulStyles>
         {data.map(item => (
           <c.liStyles key={item.contentNo}>
-            <c.strongStyles>{item.title}</c.strongStyles>
+            <Link to={`/dictionary/${item.contentNo}`}>
+              <c.strongStyles>{item.title}</c.strongStyles>
+            </Link>
             {item.image && <c.imgStyles src={item.image} alt="" />}
           </c.liStyles>
         ))}
