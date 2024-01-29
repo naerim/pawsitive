@@ -22,7 +22,7 @@ const HomeContainer = () => {
       currentStageComponent = <AdoptInfo />
       break
     default:
-      currentStageComponent = <div>error</div>
+      currentStageComponent = <div />
   }
 
   return (

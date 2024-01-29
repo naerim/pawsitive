@@ -3,16 +3,12 @@ import { ProgressBarType } from '@src/types/components/HomeType'
 
 const stageList = [
   {
-    stage: 1,
+    stage: 2,
     text: '입양 설문 완료',
   },
   {
-    stage: 2,
-    text: '입양 진행중',
-  },
-  {
     stage: 3,
-    text: '입양 수락전',
+    text: '입양 진행중',
   },
   {
     stage: 4,

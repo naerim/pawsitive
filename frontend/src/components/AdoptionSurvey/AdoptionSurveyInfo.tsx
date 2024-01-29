@@ -1,13 +1,10 @@
 import * as a from '@src/components/style/AdoptionSurveyInfoStyle'
-import { useNavigate } from 'react-router-dom'
+import { useGoBack } from '@src/hooks/useNavigateHooks'
 
 const AdoptionSurveyInfo = () => {
-  const navigate = useNavigate()
-  const goBack = () => navigate(-1)
-
   return (
     <a.Container>
-      <a.CloseButton type="button" onClick={goBack}>
+      <a.CloseButton type="button" onClick={useGoBack}>
         X
       </a.CloseButton>
       <a.Title>입양 설문</a.Title>
