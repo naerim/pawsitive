@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.Length;
 @Getter
 @AllArgsConstructor
 public class DogCreateReq {
+    
     @NotNull(message = "userNo can't be null")
     private int userNo;
 
