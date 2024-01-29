@@ -1,9 +1,9 @@
-import AdoptionSurveyInfo from '@src/components/AdoptionSurvey/AdoptionSurveyInfo'
+import AdoptionSurveyContainer from '@src/container/AdoptionSurveyContainer'
 
 const AdoptionSurveyPage = () => {
   return (
     <div>
-      <AdoptionSurveyInfo />
+      <AdoptionSurveyContainer />
     </div>
   )
 }

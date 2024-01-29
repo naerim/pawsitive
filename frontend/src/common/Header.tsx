@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 const Header = () => {
   const locationNow = useLocation()
   if (locationNow.pathname === '/confirm/pawsitive') return null
-
+  if (locationNow.pathname === '/mypage/survey') return null
   return (
     <h.Container>
       <h.Logo>Pawsitive</h.Logo>
