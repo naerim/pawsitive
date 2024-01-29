@@ -12,6 +12,7 @@ const SignUpContainer = () => {
   const [phoneNumberError, setPhoneNumberError] = useState('')
   const [address, setAddress] = useState('')
   const [isDaumPostcodeOpen, setIsDaumPostcodeOpen] = useState(false)
+  const [buildingName, setBuilidngName] = useState('')
   const [detailAddress, setDetailAddress] = useState('')
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,10 +94,12 @@ const SignUpContainer = () => {
   const handleDaumPostcodeOpen = () => {
     setIsDaumPostcodeOpen(true)
     setDetailAddress('')
+    setBuilidngName('')
   }
 
   const handleAddressComplete = (data: DaumPostData) => {
     setAddress(data.address)
+    setBuilidngName(data.buildingName)
     setIsDaumPostcodeOpen(false)
   }
 
@@ -188,6 +191,7 @@ const SignUpContainer = () => {
         />
       </div>
 
+      <div>{buildingName && <input defaultValue={buildingName} />}</div>
       <div>
         <label htmlFor={detailAddress}>
           상세 주소
