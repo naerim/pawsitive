@@ -28,6 +28,9 @@ class JasyptConfigAESTest {
         String redisDatabase = "3";
         String redisPassword = "gkrkddPdl12!@";
 
+        String s3AccessPublicKey = "AKIARTWBXT3OXMQPHTNT";
+        String s3AccessPrivateKey = "gTnolVNPybUjfUnRCPB2o+uIKDEncfyyrLDz+4Tk";
+
 
         System.out.println("mysqlUrl: " + jasyptEncoding(mysqlUrl));
         System.out.println("mysqlUsername: " + jasyptEncoding(mysqlUsername));
@@ -36,6 +39,9 @@ class JasyptConfigAESTest {
         System.out.println("redisPassword: " + jasyptEncoding(redisPassword));
         System.out.println("redisPort: " + jasyptEncoding(redisPort));
         System.out.println("redisDatabase: " + jasyptEncoding(redisDatabase));
+
+        System.out.println("s3AccessPublicKey: " + jasyptEncoding(s3AccessPublicKey));
+        System.out.println("s3AccessPrivateKey: " + jasyptEncoding(s3AccessPrivateKey));
     }
 
     @Test
