@@ -1,4 +1,4 @@
-import CustomCard from '@src/common/CustomCard.tsx'
+import CustomCard from '@src/common/CustomCard'
 
 const HomeStatistics = () => {
   return (

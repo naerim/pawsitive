@@ -5,6 +5,7 @@ import AdoptInfo from '@src/components/Home/AfterAdoption/AdoptInfo'
 import FirstStage from '@src/components/Home/FirstStage'
 import HomeStatistics from '@src/components/Home/HomeStatistics'
 import HomeDictionaryCard from '@src/components/Home/HomeDictionaryCard'
+import HomeLayout from '@src/components/Home/HomeLayout.tsx'
 
 const HomeContainer = () => {
   const user = useAtomValue(userAtom)
@@ -26,11 +27,11 @@ const HomeContainer = () => {
   }
 
   return (
-    <div>
+    <HomeLayout>
       {currentStageComponent}
       <HomeDictionaryCard />
       <HomeStatistics />
-    </div>
+    </HomeLayout>
   )
   // return (
   //   <div>
