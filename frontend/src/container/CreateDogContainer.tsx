@@ -4,6 +4,9 @@ import CreateDogMbti from '@src/components/CreateDog/CreateDogMbti'
 import { useInput } from '@src/hooks/useInput'
 import React, { useState } from 'react'
 import CreateDogDoneButton from '@src/components/CreateDog/CreateDogDoneButton'
+import { useMutation } from '@tanstack/react-query'
+import { createDog } from '@src/apis/dog'
+import * as c from '@src/container/style/CreateDogContainerStyle'
 
 const CreateDogContainer = () => {
   const [name, setName] = useInput({ initialValue: '' })
@@ -14,34 +17,49 @@ const CreateDogContainer = () => {
   const [mbti, setMbti] = useState<boolean[]>([])
   const [file, setFile] = useState<File[]>([])
 
+  const { mutate } = useMutation({
+    mutationKey: ['createDog'],
+    mutationFn: createDog,
+    onSuccess() {
+      console.log('유기견 추가 성공')
+    },
+  })
+
   const onClickCreateDogButton = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData()
     const dogData = {
+      userNo: 1,
       name,
       kind,
-      isNaturalized,
+      isNaturalized: isNaturalized !== 0,
       color,
       note,
-      E: mbti[0],
-      S: mbti[1],
-      A: mbti[2],
-      F: mbti[3],
+      aw: mbti[0],
+      eq: mbti[1],
+      fc: mbti[2],
+      si: mbti[3],
     }
+    // for (let i = 0; i < file.length; i += 1) {
+    //   formData.append('req', JSON.stringify(dogData))
+    // }
+    // formData.append('req', JSON.stringify(dogData))
+
     for (let i = 0; i < file.length; i += 1) {
-      formData.append('files', file[i])
+      formData.append('images', file[i])
     }
     formData.append(
-      'dogData',
+      'req',
       new Blob([JSON.stringify(dogData)], { type: 'application/json' }),
     )
+    mutate(formData)
     console.log(JSON.stringify(dogData))
   }
 
   return (
-    <div style={{ height: 400 }}>
+    <c.Container>
       <h1>보호소의 유기견 추가 페이지</h1>
-      <form onSubmit={onClickCreateDogButton}>
+      <form onSubmit={onClickCreateDogButton} encType="multipart/form-data">
         <CreateDogInfo
           name={name}
           setName={setName}
@@ -57,7 +75,7 @@ const CreateDogContainer = () => {
         <CreateDogFile file={file} setFile={setFile} />
         <CreateDogDoneButton onClick={onClickCreateDogButton} />
       </form>
-    </div>
+    </c.Container>
   )
 }
 
