@@ -1,5 +1,5 @@
 import MainColorMoveCard from '@src/common/MainColorMoveCard'
-import LightColorMoveCard from '@src/common/LightColorMoveCard'
+import HomeDictionary from '@src/components/Home/SecondStage/HomeDictionary'
 
 const Index = () => {
   return (
@@ -9,7 +9,7 @@ const Index = () => {
         subTitle="포지티버의 후기 확인하기"
         url="/community "
       />
-      <LightColorMoveCard title="더 많은 펫과사전 찾아보기" url="/dictionary" />
+      <HomeDictionary />
     </div>
   )
 }
