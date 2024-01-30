@@ -1,31 +1,26 @@
-import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import DictionaryDetail from '@src/components/Dictionary/DictionaryDetail'
-import { fetchDictionaryDetail } from '@src/apis/dictionary'
+import { useQuery } from '@tanstack/react-query'
 import { DictionaryItemType } from '@src/types/components/DictionaryType'
+import { fetchDictionaryDetail } from '@src/apis/dictionary'
+import DictionaryDetail from '@src/components/Dictionary/DictionaryDetail'
 
 const DictionaryDetailContainer = () => {
-  const [detailData, setDetailData] = useState<DictionaryItemType | null>(null)
   const { contentNo } = useParams<{ contentNo: string }>()
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const data = await fetchDictionaryDetail(Number(contentNo))
-        setDetailData(data)
-      } catch (error) {
-        console.error('Error fetching dictionary detail:', error)
-      }
-    }
+  const { data, isLoading, error } = useQuery<DictionaryItemType | null>({
+    queryKey: ['dictionaryDetail'],
+    queryFn: () => fetchDictionaryDetail(Number(contentNo)),
+  })
 
-    getData()
-  }, [contentNo])
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
-  return (
-    <div>
-      <DictionaryDetail item={detailData} />
-    </div>
-  )
+  if (error) {
+    return <div>Error fetching data</div>
+  }
+
+  return <DictionaryDetail item={data!} />
 }
 
 export default DictionaryDetailContainer
