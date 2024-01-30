@@ -1,14 +1,20 @@
-import CustomCard from '@src/common/CustomCard'
+import * as h from '@src/components/style/HomeStatisticsStyle'
 
 const HomeStatistics = () => {
   return (
-    <CustomCard>
-      <div>
-        <div>오늘의 구조</div>
-        <div>입양률</div>
-        <div>안락사율</div>
-      </div>
-    </CustomCard>
+    <h.Container>
+      <h.Text>
+        구조 <b>158마리</b>
+      </h.Text>
+      <h.Line />
+      <h.Text>
+        입양률 <b>3.2%</b>
+      </h.Text>
+      <h.Line />
+      <h.Text>
+        안락사율 <b>0.5%</b>
+      </h.Text>
+    </h.Container>
   )
 }
 

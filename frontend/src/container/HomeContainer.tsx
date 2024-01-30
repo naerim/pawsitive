@@ -3,8 +3,6 @@ import { userAtom } from '@src/stores/atoms/user'
 import DefaultStage from '@src/components/Home/DefaultStage'
 import AdoptInfo from '@src/components/Home/AfterAdoption/AdoptInfo'
 import FirstStage from '@src/components/Home/FirstStage'
-import HomeStatistics from '@src/components/Home/HomeStatistics'
-import HomeDictionaryCard from '@src/components/Home/HomeDictionaryCard'
 import HomeLayout from '@src/components/Home/HomeLayout.tsx'
 
 const HomeContainer = () => {
@@ -26,13 +24,7 @@ const HomeContainer = () => {
       currentStageComponent = <div />
   }
 
-  return (
-    <HomeLayout>
-      {currentStageComponent}
-      <HomeDictionaryCard />
-      <HomeStatistics />
-    </HomeLayout>
-  )
+  return <HomeLayout>{currentStageComponent}</HomeLayout>
   // return (
   //   <div>
   //     {user.stage > 1 && <HomeProgressBar currentStage={user.stage} />}
