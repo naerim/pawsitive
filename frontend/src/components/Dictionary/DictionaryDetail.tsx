@@ -26,7 +26,7 @@ const DictionaryDetail: React.FC<DictionaryDetailProps> = ({ item }) => {
         </c.DetailContainer>
       )
       break
-    case '건강':
+    case '질병정보':
       contentRenderer = (
         <c.DetailContainer>
           {item.image && <c.DetailImg src={item.image} alt="" />}
@@ -43,7 +43,7 @@ const DictionaryDetail: React.FC<DictionaryDetailProps> = ({ item }) => {
         </c.DetailContainer>
       )
       break
-    case '상식':
+    case '행동교육':
       contentRenderer = (
         <c.DetailContainer>
           {item.image && <c.DetailImg src={item.image} alt="" />}
@@ -54,7 +54,7 @@ const DictionaryDetail: React.FC<DictionaryDetailProps> = ({ item }) => {
         </c.DetailContainer>
       )
       break
-    case '기타':
+    case '애견상식':
       contentRenderer = (
         <c.DetailContainer>
           {item.image && <c.DetailImg src={item.image} alt="" />}

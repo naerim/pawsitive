@@ -1,25 +1,23 @@
-import { useEffect, useState } from 'react'
-import { fetchDictionaryList } from '@src/apis/dictionary'
-import DictionaryList from '@src/components/Dictionary/DictionaryList'
+import { useQuery } from '@tanstack/react-query'
 import { DictionaryItemType } from '@src/types/components/DictionaryType'
+import DictionaryList from '@src/components/Dictionary/DictionaryList'
+import { fetchDictionaryList } from '@src/apis/dictionary'
 
 const DictionaryListContainer = () => {
-  const [dictionaryList, setDictionaryList] = useState<DictionaryItemType[]>([])
+  const { data, isLoading, error } = useQuery<DictionaryItemType[]>({
+    queryKey: ['dictionaryList'],
+    queryFn: fetchDictionaryList,
+  })
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const data = await fetchDictionaryList()
-        setDictionaryList(data)
-      } catch (error) {
-        console.error('Error fetching dictionary list:', error)
-      }
-    }
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
-    getData()
-  }, [])
+  if (error) {
+    return <div>Error fetching data</div>
+  }
 
-  return <DictionaryList data={dictionaryList} />
+  return <DictionaryList data={data!} />
 }
 
 export default DictionaryListContainer

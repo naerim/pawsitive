@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import DaumPostcode from 'react-daum-postcode'
 import { DaumPostData } from '@src/types/container/SignUpType'
+import { joinUser } from '@src/apis/user'
 
 const SignUpContainer = () => {
   const [email, setEmail] = useState<string>('')
@@ -140,7 +141,8 @@ const SignUpContainer = () => {
     e.preventDefault()
     const role = 'USER'
     const totalAddress = `${address} ${buildingName} ${detailAddress}`
-    console.log(totalAddress, role)
+    const userData = { email, password, name, address: totalAddress, role }
+    joinUser(userData)
   }
 
   return (

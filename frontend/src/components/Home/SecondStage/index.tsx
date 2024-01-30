@@ -2,6 +2,7 @@ import MainColorMoveCard from '@src/common/MainColorMoveCard'
 import LightColorMoveCard from '@src/common/LightColorMoveCard'
 import HomeProgressBar from '@src/components/Home/HomeProgressBar'
 import HomeStatistics from '@src/components/Home/HomeStatistics'
+import HomeDictionary from '@src/components/Home/SecondStage/HomeDictionary'
 
 const Index = () => {
   return (
@@ -19,6 +20,7 @@ const Index = () => {
           url="/dictionary"
         />
       </div>
+      <HomeDictionary />
     </div>
   )
 }
