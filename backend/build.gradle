@@ -106,6 +106,9 @@ dependencies {
     implementation 'org.webjars:jquery:3.6.4'
 
 
+    // AWS S3
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
 }
 
 tasks.named('test') {

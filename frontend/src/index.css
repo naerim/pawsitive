@@ -1,8 +1,83 @@
-:root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+@font-face {
+    font-family: "SCDream";
+    font-style: normal;
+    font-weight: 100;
+    src: url('src/fonts/SCDream1.woff') format('woff');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SCDream";
+    font-style: normal;
+    font-weight: 200;
+    src: url('src/fonts/SCDream2.woff') format('woff');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SCDream";
+    font-style: normal;
+    font-weight: 300;
+    src: url('src/fonts/SCDream3.woff') format('woff');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SCDream";
+    font-style: normal;
+    font-weight: 400;
+    src: url('src/fonts/SCDream4.woff') format('woff');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SCDream";
+    font-style: normal;
+    font-weight: 500;
+    src: url('src/fonts/SCDream5.woff') format('woff');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SCDream";
+    font-style: normal;
+    font-weight: 600;
+    src: url('src/fonts/SCDream6.woff') format('woff');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SCDream";
+    font-style: normal;
+    font-weight: 700;
+    src: url('src/fonts/SCDream7.woff') format('woff');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SCDream";
+    font-style: normal;
+    font-weight: 800;
+    src: url('src/fonts/SCDream8.woff') format('woff');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SCDream";
+    font-style: normal;
+    font-weight: 900;
+    src: url('src/fonts/SCDream9.woff') format('woff');
+    font-display: swap;
+}
+
+html, body {
+    font-family: 'SCDream', sans-serif;
     line-height: 1.5;
     font-weight: 400;
+}
 
+:root {
+    font-family: 'SCDream', sans-serif;
     color-scheme: light dark;
     color: rgba(255, 255, 255, 0.87);
     background-color: #242424;

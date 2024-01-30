@@ -3,6 +3,8 @@ package com.pawsitive.doggroup.entity;
 import com.pawsitive.usergroup.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -25,6 +27,7 @@ public class Dog {
 
     @Id
     @Column(name = "dog_no")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int dogNo;
 
     @ManyToOne
@@ -37,7 +40,7 @@ public class Dog {
     @Column(name = "kind")
     private String kind;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "is_naturalized")
@@ -77,4 +80,16 @@ public class Dog {
         this.note = note;
         this.mbti = mbti;
     }
+
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Dog{");
+        sb.append("dogNo=").append(dogNo);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", kind='").append(kind).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
+
 }

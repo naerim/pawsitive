@@ -3,22 +3,19 @@ package com.pawsitive.usergroup.service;
 import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.auth.jwt.JwtTokenProvider;
 import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
+import com.pawsitive.usergroup.entity.Member;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.exception.UserNotFoundException;
+import com.pawsitive.usergroup.repository.MemberRepository;
 import com.pawsitive.usergroup.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -30,6 +27,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
@@ -67,25 +65,31 @@ public class UserServiceImpl implements UserService {
             .build());
 
     }
-    //    private final UserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
-//    private final RestTemplate restTemplate = new RestTemplate();
-//
-//    @Override
-//    @Transactional
-//    public User createUser(UserRegisterPostReq userRegisterInfo) {
-//        User user = new User();
-//        user.setUserId(userRegisterInfo.getId());
-//        // 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
-//        user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
-//        return userRepository.save(user);
-//    }
-//
+
     @Override
     public User getUserByUserNo(int userNo) {
         // 디비에 유저 정보 조회 (userId 를 통한 조회).
         return userRepository.findUserByUserNo(userNo).orElseThrow(UserNotFoundException::new);
     }
+
+    @Override
+    public void updateField(String field, int userNo, String value) {
+
+        if ("type".equals(field)) {
+            Member member =
+                memberRepository.findMemberByMemberNo(userNo).orElseThrow(RuntimeException::new);
+            member.setType(Integer.parseInt(value));
+            memberRepository.save(member);
+        } else if ("stage".equals(field)) {
+            Member member =
+                memberRepository.findMemberByMemberNo(userNo).orElseThrow(RuntimeException::new);
+            member.setStage(Integer.parseInt(value));
+            memberRepository.save(member);
+        }
+
+    }
+
+
 //
 //    @Override
 //    public User updateUser(String userId, UserUpdatePatchReq userUpdateInfo) {

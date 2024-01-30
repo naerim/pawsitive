@@ -1,14 +1,17 @@
 package com.pawsitive.doggroup.service;
 
+import com.pawsitive.common.util.S3BucketUtil;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
+import com.pawsitive.doggroup.exception.DogNotSavedException;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,15 +23,23 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class DogServiceImpl implements DogService {
+
     private final DogRepository dogRepository;
-    private final DogImageService dogImageService;
+
     private final UserService userService;
+    private final DogImageService dogImageService;
+
+    private final S3BucketUtil s3BucketUtil;
 
     @Override
     @Transactional
-    public Dog createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images) {
+    public Dog createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images)
+        throws Exception {
         User user = userService.getUserByUserNo(req.getUserNo());
+
+        String videoKey = s3BucketUtil.uploadFile(video);
 
         Dog dog = Dog.builder()
             .user(user)
@@ -38,13 +49,20 @@ public class DogServiceImpl implements DogService {
             .color(req.getColor())
             .note(req.getNote())
             .mbti(getMbti(req))
-            .video(getVideoUrl(video))
+            .video(videoKey)
             .build();
 
-        dogRepository.save(dog);
-        dogImageService.createDogImage(images, dog);
+        try {
+            dog = dogRepository.save(dog);
+            log.info(dog.toString());
+        } catch (Exception e) {
+            s3BucketUtil.deleteFile(videoKey);
+            throw new DogNotSavedException();
+        }
 
-        return dog;
+        log.info(dog.toString());
+
+        return dogImageService.createDogImage(dog, images);
     }
 
     @Override
@@ -73,8 +91,5 @@ public class DogServiceImpl implements DogService {
         return sb.toString();
     }
 
-    //TODO [Yi] S3에 비디오 업로드 후 url 받아오는 로직 추가 필요
-    private String getVideoUrl(MultipartFile video) {
-        return null;
-    }
+
 }

@@ -17,14 +17,18 @@ import ProfilePage from '@src/pages/ProfilePage'
 import NotFoundPage from '@src/pages/NotFoundPage'
 import { useAtomValue } from 'jotai'
 import { themeAtom } from '@src/stores/atoms/theme'
-import Navbar from '@src/common/Navbar.tsx'
+import Navbar from '@src/common/Navbar'
 import DogDetailPage from '@src/pages/DogDetailPage'
-import CommunityPage from '@src/pages/CommunityPage'
+import CommunityInfoPage from '@src/pages/CommunityInfoPage'
+import CommunityDetailPage from '@src/pages/CommunityDetailPage'
 import CommunityCreatePage from '@src/pages/CommunityCreatePage'
 import CreateDogPage from '@src/pages/CreateDogPage'
-import TeachablePage from '@src/pages/TeachablePage'
+import FindSimilarDogPage from '@src/pages/FindSimilarDogPage'
 import AdoptionSurveyPage from '@src/pages/AdoptionSurveyPage'
-import DictionaryPage from '@src/pages/DictionaryPage'
+import ChattingPage from '@src/pages/ChattingPage'
+import ConfirmPawsitivePage from '@src/pages/ConfirmPawsitivePage'
+import DictionaryListPage from '@src/pages/DictionaryListPage'
+import DictionaryDetailPage from '@src/pages/DictionaryDetailPage'
 
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
@@ -35,13 +39,19 @@ const AuthRoutes = () => (
     <Route path="/mypage/profile" element={<ProfilePage />} />
     <Route path="/mypage/setting" element={<SettingPage />} />
     <Route path="*" element={<NotFoundPage />} />
-    <Route path="/community" element={<CommunityPage />} />
-    <Route path="/article/create" element={<CommunityCreatePage />} />
+    <Route path="/community" element={<CommunityInfoPage />} />
+    <Route path="/community/:contentNo" element={<CommunityDetailPage />} />
+    <Route path="/community/create" element={<CommunityCreatePage />} />
     <Route path="/new/dog" element={<CreateDogPage />} />
-    <Route path="/mypage/teachable" element={<TeachablePage />} />
+    <Route path="/mypage/findSimilarDog" element={<FindSimilarDogPage />} />
     <Route path="/dogDetail" element={<DogDetailPage />} />
+    <Route path="/mypage/survey" element={<AdoptionSurveyPage />} />
+    <Route path="/chat" element={<ChattingPage />} />
+    <Route path="/chat/1" element={<ChattingPage />} />
+    <Route path="/confirm/pawsitive" element={<ConfirmPawsitivePage />} />
     <Route path="/mypage/adoptionSurvey" element={<AdoptionSurveyPage />} />
-    <Route path="/dictionary" element={<DictionaryPage />} />
+    <Route path="/dictionary" element={<DictionaryListPage />} />
+    <Route path="/dictionary/:contentNo" element={<DictionaryDetailPage />} />
   </Routes>
 )
 

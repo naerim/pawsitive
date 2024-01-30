@@ -1,6 +1,13 @@
+import * as a from '@src/components/style/AdoptionSurveyInfoStyle'
+import { useGoBack } from '@src/hooks/useNavigateHooks'
+
 const AdoptionSurveyInfo = () => {
   return (
-    <div>
+    <a.Container>
+      <a.CloseButton type="button" onClick={useGoBack}>
+        X
+      </a.CloseButton>
+      <a.Title>입양 설문</a.Title>
       <h1>1. 유의사항 안내</h1>
       <div>
         <h2>[강아지를 입양하기 전 충분히 고려해주세요]</h2>
@@ -26,7 +33,7 @@ const AdoptionSurveyInfo = () => {
         <h2>4. 답변 작성</h2>
         <br />
       </div>
-    </div>
+    </a.Container>
   )
 }
 

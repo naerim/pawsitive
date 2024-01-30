@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -38,11 +37,11 @@ public class DogController {
             @ApiResponse(responseCode = "400", description = "유기견 등록에 필요한 정보가 유효하지 않음")
         }
     )
-    public ResponseEntity<DogDetailRes> createDog(@Valid @RequestBody DogCreateReq req,
+    public ResponseEntity<DogDetailRes> createDog(@Valid @RequestPart DogCreateReq req,
                                                   @RequestPart(required = false)
                                                   MultipartFile video,
                                                   @RequestPart(required = false)
-                                                  MultipartFile[] images) {
+                                                  MultipartFile[] images) throws Exception {
 
         Dog dog = dogService.createDog(req, video, images);
 

@@ -3,6 +3,10 @@ import DaumPostcode from 'react-daum-postcode'
 import { DaumPostData } from '@src/types/container/SignUpType'
 
 const SignUpContainer = () => {
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [confirmPassword, setConfirmPassword] = useState<string>('')
+  const [passwordError, setPasswordError] = useState<string>('')
   const [name, setName] = useState('')
   const [nameError, setNameError] = useState('')
   const [dob, setDob] = useState('')
@@ -12,6 +16,31 @@ const SignUpContainer = () => {
   const [phoneNumberError, setPhoneNumberError] = useState('')
   const [address, setAddress] = useState('')
   const [isDaumPostcodeOpen, setIsDaumPostcodeOpen] = useState(false)
+  const [buildingName, setBuilidngName] = useState('')
+  const [detailAddress, setDetailAddress] = useState('')
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value)
+  }
+
+  const handleCheckEmail = () => {
+    // email 인증 로직 추가
+  }
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value)
+  }
+
+  const handleConfirmPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const confirmPasswordInput = e.target.value
+    setConfirmPassword(confirmPasswordInput)
+
+    if (password !== confirmPasswordInput) {
+      setPasswordError('비밀번호가 일치하지 않습니다.')
+    } else setPasswordError('')
+  }
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nameInput = e.target.value
@@ -89,102 +118,169 @@ const SignUpContainer = () => {
     }
   }
 
+  const handleDaumPostcodeOpen = () => {
+    setIsDaumPostcodeOpen(true)
+    setAddress('')
+    setDetailAddress('')
+    setBuilidngName('')
+  }
+
   const handleAddressComplete = (data: DaumPostData) => {
     setAddress(data.address)
+    setBuilidngName(data.buildingName)
     setIsDaumPostcodeOpen(false)
   }
 
+  const handleDetailAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const detailAddressInput = e.target.value
+
+    setDetailAddress(detailAddressInput)
+  }
+  const onSubmitSignUp = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const role = 'USER'
+    const totalAddress = `${address} ${buildingName} ${detailAddress}`
+    console.log(totalAddress, role)
+  }
+
   return (
-    <>
+    <form onSubmit={onSubmitSignUp}>
       <h2>NEW ACCOUNT</h2>
       <div>
-        <label htmlFor="name">
-          이름
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={name}
-            onChange={handleNameChange}
-            required
-          />
-        </label>
+        <label htmlFor="id">E-mail:</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          value={email}
+          onChange={handleEmailChange}
+        />
+        <button type="button" onClick={handleCheckEmail}>
+          인증번호 받기
+        </button>
+      </div>
+
+      <div>
+        <label htmlFor="password">비밀번호:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={password}
+          onChange={handlePasswordChange}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="confirmPassword">비밀번호 확인:</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          value={confirmPassword}
+          onChange={handleConfirmPasswordChange}
+        />
+        <div>{passwordError}</div>
+      </div>
+
+      <div>
+        <label htmlFor="name">이름 </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={name}
+          onChange={handleNameChange}
+          required
+        />
         <div>{nameError}</div>
+      </div>
 
-        <label htmlFor="dob">
-          생년월일
-          <input
-            type="text"
-            id="dob"
-            name="dob"
-            value={dob}
-            onChange={handleDobChange}
-            placeholder="YYYY.MM.DD"
-            required
-          />
-        </label>
+      <div>
+        <label htmlFor="dob">생년월일 </label>
+        <input
+          type="text"
+          id="dob"
+          name="dob"
+          value={dob}
+          onChange={handleDobChange}
+          placeholder="YYYY.MM.DD"
+          required
+        />
         <div>{dobError}</div>
+      </div>
 
-        <label htmlFor="gender">
-          성별
+      <div>
+        <label htmlFor="gender">성별 </label>
+        <div>
+          <input
+            type="radio"
+            name="gender"
+            value="male"
+            checked={gender === 'male'}
+            onChange={handleGenderChange}
+          />
+          남성
+          <input
+            type="radio"
+            name="gender"
+            value="female"
+            checked={gender === 'female'}
+            onChange={handleGenderChange}
+          />
+          여성
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="phoneNumber">핸드폰 번호 </label>
+        <input
+          type="text"
+          id="phoneNumber"
+          name="phoneNumber"
+          value={phoneNumber}
+          onChange={handlePhoneNumberChange}
+          placeholder="010-1234-5678"
+          required
+        />
+        <div>{phoneNumberError}</div>
+      </div>
+
+      <div>
+        <label htmlFor="address">주소 </label>
+        {isDaumPostcodeOpen && (
           <div>
-            <input
-              type="radio"
-              name="gender"
-              value="male"
-              checked={gender === 'male'}
-              onChange={handleGenderChange}
+            <button type="button" onClick={() => setIsDaumPostcodeOpen(false)}>
+              닫기
+            </button>
+            <DaumPostcode
+              onComplete={handleAddressComplete}
+              style={{ position: 'absolute', zIndex: 1000 }}
             />
-            남성
-            <input
-              type="radio"
-              name="gender"
-              value="female"
-              checked={gender === 'female'}
-              onChange={handleGenderChange}
-            />
-            여성
           </div>
-        </label>
+        )}
+        <input
+          placeholder="주소를 검색해주세요"
+          onClick={handleDaumPostcodeOpen}
+          defaultValue={address}
+          readOnly
+        />
+      </div>
 
-        <label htmlFor="phoneNumber">
-          핸드폰 번호
+      <div>{buildingName && <input defaultValue={buildingName} />}</div>
+      <div>
+        <label htmlFor={detailAddress}>
+          상세 주소
           <input
             type="text"
-            id="phoneNumber"
-            name="phoneNumber"
-            value={phoneNumber}
-            onChange={handlePhoneNumberChange}
-            placeholder="010-1234-5678"
-            required
-          />
-        </label>
-        <div>{phoneNumberError}</div>
-
-        <label htmlFor="address">
-          주소
-          {isDaumPostcodeOpen && (
-            <div>
-              <button
-                type="button"
-                onClick={() => setIsDaumPostcodeOpen(false)}
-              >
-                닫기
-              </button>
-              <DaumPostcode
-                onComplete={handleAddressComplete}
-                style={{ position: 'absolute', zIndex: 1000 }}
-              />
-            </div>
-          )}
-          <input
-            placeholder="주소를 검색해주세요"
-            onClick={() => setIsDaumPostcodeOpen(true)}
-            defaultValue={address}
+            placeholder="상세 주소"
+            onChange={handleDetailAddress}
           />
         </label>
       </div>
-    </>
+
+      <button type="submit">회원가입</button>
+    </form>
   )
 }
 
