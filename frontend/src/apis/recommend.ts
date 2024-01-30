@@ -1,4 +1,4 @@
-import { publicRequest } from '@src/hooks/requestMethods.tsx'
+import { publicRequest } from '@src/hooks/requestMethods'
 
 export const fetchDogRecommend = async (userId: string) => {
   return publicRequest
