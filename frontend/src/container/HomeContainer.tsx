@@ -1,12 +1,11 @@
 import { useAtomValue } from 'jotai'
 import { userAtom } from '@src/stores/atoms/user'
 import DefaultStage from '@src/components/Home/DefaultStage'
-import AdoptInfo from '@src/components/Home/AfterAdoption/AdoptInfo'
 import FirstStage from '@src/components/Home/FirstStage'
 import HomeLayout from '@src/components/Home/HomeLayout'
 import HomePopularCommunity from '@src/components/Home/HomePopularCommunity'
 import SecondStage from '@src/components/Home/SecondStage'
-import HomeStatistics from '@src/components/Home/HomeStatistics'
+import ThirdStageContainer from '@src/container/ThirdStageContainer'
 
 const HomeContainer = () => {
   const user = useAtomValue(userAtom)
@@ -24,7 +23,7 @@ const HomeContainer = () => {
       currentStageComponent = <SecondStage />
       break
     case 4:
-      currentStageComponent = <AdoptInfo />
+      currentStageComponent = <ThirdStageContainer />
       break
     default:
       currentStageComponent = <div />
