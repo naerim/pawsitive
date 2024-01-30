@@ -29,7 +29,6 @@ public class CommunityComment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "community_board_no")
-    @JoinColumn(name = "community_board_no")
     private CommunityBoard board;
 
     @ManyToOne(fetch = FetchType.LAZY)

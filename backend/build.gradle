@@ -112,7 +112,7 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-clean {
-    delete file('src/main/generated')
-}
+//clean {
+//    delete file('src/main/generated')
+//}
 
