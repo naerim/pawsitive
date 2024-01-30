@@ -67,7 +67,7 @@ public class DogImageServiceImpl implements DogImageService {
                 }
 
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
 
         }
