@@ -5,7 +5,7 @@ import FirstStage from '@src/components/Home/FirstStage'
 import HomeLayout from '@src/components/Home/HomeLayout'
 import HomePopularCommunity from '@src/components/Home/HomePopularCommunity'
 import SecondStage from '@src/components/Home/SecondStage'
-import Index from '@src/components/Home/ThirdStage'
+import ThirdStage from '@src/components/Home/ThirdStage'
 
 const HomeContainer = () => {
   const user = useAtomValue(userAtom)
@@ -23,7 +23,7 @@ const HomeContainer = () => {
       currentStageComponent = <SecondStage />
       break
     case 4:
-      currentStageComponent = <Index />
+      currentStageComponent = <ThirdStage />
       break
     default:
       currentStageComponent = <div />
