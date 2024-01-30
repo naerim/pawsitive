@@ -39,7 +39,7 @@ public class DogController {
                                                   @RequestPart(required = false)
                                                   MultipartFile video,
                                                   @RequestPart(required = false)
-                                                  MultipartFile[] images) {
+                                                  MultipartFile[] images) throws Exception {
 
         Dog dog = dogService.createDog(req, video, images);
 
