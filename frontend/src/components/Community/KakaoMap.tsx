@@ -1,21 +1,16 @@
 import * as m from '@src/components/style/KakaoMapStyle'
 import { MutableRefObject, useCallback, useEffect, useRef } from 'react'
 import Locations from '@src/components/Community/Locations'
-import { atom, useAtom } from 'jotai'
 import { CommunityDummyDataType, LocationType } from '@src/types/propsType'
-
-const loadingAtom = atom(false)
 
 const KakaoMap = (props: { dummyData: CommunityDummyDataType }) => {
   const { dummyData } = props
 
   const mapRef = useRef<kakao.maps.Map>(null)
   const location: LocationType | string = Locations()
-  const [loading, setLoading] = useAtom(loadingAtom)
 
   const initMap = useCallback(() => {
     if (location.latitude !== 0) {
-      setLoading(true)
       const container = document.getElementById('map')
       const options = {
         center: new kakao.maps.LatLng(location.latitude, location.longitude),
@@ -24,6 +19,8 @@ const KakaoMap = (props: { dummyData: CommunityDummyDataType }) => {
 
       const map = new kakao.maps.Map(container as HTMLElement, options)
       ;(mapRef as unknown as MutableRefObject<kakao.maps.Map>).current = map
+      // 확대, 축소 막기
+      map.setZoomable(false)
 
       dummyData.forEach(data => {
         const marker = new kakao.maps.Marker({
@@ -48,21 +45,17 @@ const KakaoMap = (props: { dummyData: CommunityDummyDataType }) => {
       const map = new kakao.maps.Map(container as HTMLElement, options)
       ;(mapRef as unknown as MutableRefObject<kakao.maps.Map>).current = map
     }
-  }, [dummyData, location.latitude, location.longitude, setLoading])
+  }, [dummyData, location.latitude, location.longitude])
 
   useEffect(() => {
     kakao.maps.load(() => initMap())
   }, [mapRef, location, initMap])
 
   return (
-    <div>
-      <m.Container id="map" />
-      {loading ? (
-        <m.CurrentButton onClick={() => initMap()}>현재 위치</m.CurrentButton>
-      ) : (
-        <>현재 위치를 불러오는 중입니다.</>
-      )}
-    </div>
+    <m.Container>
+      <m.Map id="map" />
+      <m.CurrentButton onClick={() => initMap()}>⊙</m.CurrentButton>
+    </m.Container>
   )
 }
 
