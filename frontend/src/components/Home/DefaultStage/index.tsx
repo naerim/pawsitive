@@ -1,5 +1,6 @@
 import MainColorMoveCard from '@src/common/MainColorMoveCard'
 import HomeStatistics from '@src/components/Home/HomeStatistics'
+import ShowDogCard from '@src/components/Home/DefaultStage/ShowDogCard.tsx'
 
 const Index = () => {
   return (
@@ -10,6 +11,7 @@ const Index = () => {
         url="/confirm/pawsitive"
       />
       <HomeStatistics />
+      <ShowDogCard />
     </div>
   )
 }
