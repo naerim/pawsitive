@@ -4,7 +4,7 @@ export type MainColorMoveCardType = {
   url: string
 }
 
-export type MainLightColorMoveCardType = {
+export type LightColorMoveCardType = {
   title: string
   url: string
 }
