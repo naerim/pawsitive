@@ -59,7 +59,12 @@ public class DogImageServiceImpl implements DogImageService {
                 DogImage image = new DogImage();
                 image.setDog(dog);
                 image.setUrl(url);
-                dogImageRepository.save(image);
+
+                try {
+                    dogImageRepository.save(image);
+                } catch (Exception e) {
+                    amazonS3Client.deleteObject(bucket, url);
+                }
 
             } catch (IOException e) {
                 throw new RuntimeException(e);

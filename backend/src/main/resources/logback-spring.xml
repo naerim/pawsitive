@@ -35,7 +35,7 @@
 
         <appender name="systemLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">;
-                <fileNamePattern>${LOG_PATH}/system-%d{yyyy-MM-dd}.log</fileNamePattern>
+                <fileNamePattern>/home/ubuntu/pawsitive-api-log/system-%d{yyyy-MM-dd}.log</fileNamePattern>
                 <timeBasedFileNamingTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                     <maxFileSize>100MB</maxFileSize>
                 </timeBasedFileNamingTriggeringPolicy>

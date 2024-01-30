@@ -37,7 +37,7 @@ public class Dog {
     @Column(name = "kind")
     private String kind;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "is_naturalized")
