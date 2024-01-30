@@ -1,13 +1,17 @@
-import CustomCard from '@src/common/CustomCard'
-import QuestionSurveyCard from '@src/components/Home/FirstStage/QuestionSurveyCard'
+import HomeProgressBar from '@src/components/Home/HomeProgressBar'
+import HomeStatistics from '@src/components/Home/HomeStatistics'
+import MainColorMoveCard from '@src/common/MainColorMoveCard'
 
 const Index = () => {
   return (
     <div>
-      <QuestionSurveyCard />
-      <CustomCard>
-        <div style={{ height: 200 }}>추천 컴포넌트</div>
-      </CustomCard>
+      <HomeProgressBar currentStage={1} />
+      <HomeStatistics />
+      <MainColorMoveCard
+        title="아직 설문이 완료되지 않았어요!"
+        subTitle="입양 질문에 답하러 가기"
+        url="/mypage/survey"
+      />
     </div>
   )
 }
