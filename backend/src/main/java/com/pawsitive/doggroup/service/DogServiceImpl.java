@@ -1,27 +1,16 @@
 package com.pawsitive.doggroup.service;
 
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectResult;
+import com.pawsitive.common.util.S3BucketUtil;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.entity.Dog;
-import com.pawsitive.doggroup.entity.DogImage;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
-import com.pawsitive.doggroup.repository.DogImageRepository;
+import com.pawsitive.doggroup.exception.DogNotSavedException;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,14 +26,11 @@ import org.springframework.web.multipart.MultipartFile;
 public class DogServiceImpl implements DogService {
 
     private final DogRepository dogRepository;
-    private final DogImageRepository dogImageRepository;
 
     private final UserService userService;
+    private final DogImageService dogImageService;
 
-    private final AmazonS3Client amazonS3Client;
-
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
+    private final S3BucketUtil s3BucketUtil;
 
     @Override
     @Transactional
@@ -52,7 +38,7 @@ public class DogServiceImpl implements DogService {
         throws Exception {
         User user = userService.getUserByUserNo(req.getUserNo());
 
-        String videoKey = uploadFile(video);
+        String videoKey = s3BucketUtil.uploadFile(video);
 
         Dog dog = Dog.builder()
             .user(user)
@@ -67,39 +53,15 @@ public class DogServiceImpl implements DogService {
 
         try {
             dog = dogRepository.save(dog);
+            log.info(dog.toString());
         } catch (Exception e) {
-            amazonS3Client.deleteObject(bucket, videoKey);
-            throw new Exception(e.getMessage());
+            s3BucketUtil.deleteFile(videoKey);
+            throw new DogNotSavedException();
         }
 
-        List<DogImage> dogImageList = new ArrayList<>();
-        List<String> imageKeys = new ArrayList<>();
+        log.info(dog.toString());
 
-        for (MultipartFile image : images) {
-            // 버킷에 업로드한 뒤 파일 명 가져오기
-            String imageKey = uploadFile(image);
-
-            // 엔티티 저장 실패 시 Transaction 처리를 위해 파일명 List에 저장
-            imageKeys.add(imageKey);
-
-            // DogImage 객체 생성 후 dog와 url 지정한 뒤 List에 저장
-            DogImage dogImage = new DogImage();
-            dogImage.setDog(dog);
-            dogImage.setUrl(imageKey);
-            dogImageList.add(dogImage);
-        }
-
-        try {
-            dogImageRepository.saveAll(dogImageList);
-        } catch (Exception e) {
-            for (String key : imageKeys) {
-                amazonS3Client.deleteObject(bucket, key);
-            }
-
-            throw new Exception(e.getMessage());
-        }
-
-        return dog;
+        return dogImageService.createDogImage(dog, images);
     }
 
     @Override
@@ -122,33 +84,5 @@ public class DogServiceImpl implements DogService {
         return sb.toString();
     }
 
-    private String uploadFile(MultipartFile file) {
-
-        if (Objects.isNull(file)) {
-            return "";
-        }
-
-        try {
-            String key = UUID.randomUUID() + "_" + file.getOriginalFilename();
-
-            ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentType(file.getContentType());
-            metadata.setContentLength(file.getSize());
-
-            PutObjectRequest request =
-                new PutObjectRequest(bucket, key, file.getInputStream(), metadata);
-
-            request.withCannedAcl(CannedAccessControlList.AuthenticatedRead);
-
-            PutObjectResult result = amazonS3Client.putObject(request);
-
-            log.info(result.toString());
-
-            return key;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 
 }

@@ -109,7 +109,6 @@ public class RestControllerAdvisor {
         return ResponseEntity.status(CONFLICT).body(BaseResponseBody.of(CONFLICT, e.getMessage()));
     }
 
-
     /**
      * 500에 해당하는 예외들을 한번에 처리하는 메소드입니다.
      *
