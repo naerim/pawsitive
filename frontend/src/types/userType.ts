@@ -15,3 +15,11 @@ export type AfterAdoptionUserInfo = {
   answerCount: number
   memoryCount: number
 }
+
+export type JoinUserType = {
+  email: string
+  password: string
+  name: string
+  address: string
+  role: string
+}
