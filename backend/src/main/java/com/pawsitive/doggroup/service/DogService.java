@@ -3,6 +3,7 @@ package com.pawsitive.doggroup.service;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.entity.Dog;
+import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -28,4 +29,11 @@ public interface DogService {
      */
     DogDetailRes getDogByDogNo(int dogNo);
 
+    /**
+     * 추천 강아지를 num마리 조회하는 메서드입니다.
+     *
+     * @param num 조회할 유기견 마리 수
+     * @return 추천 강아지 목록
+     */
+    List<DogDetailRes> getRecommendationDogList(int num);
 }

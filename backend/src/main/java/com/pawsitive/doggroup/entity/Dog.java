@@ -46,6 +46,9 @@ public class Dog {
     @Column(name = "is_naturalized")
     private boolean isNaturalized;
 
+    @Column(name = "age")
+    private int age;
+
     @Column(name = "color")
     private String color;
 
@@ -65,13 +68,13 @@ public class Dog {
     private List<DogImage> images = new ArrayList<>();
 
     @Builder
-    public Dog(User user, String name, String kind, boolean isNaturalized, String color,
-               String video,
-               String note, String mbti) {
+    public Dog(User user, String name, String kind, boolean isNaturalized, int age,
+               String color, String video, String note, String mbti) {
         this.user = user;
         this.name = name;
         this.kind = kind;
         this.isNaturalized = isNaturalized;
+        this.age = age;
         this.color = color;
         this.video = video;
         this.note = note;

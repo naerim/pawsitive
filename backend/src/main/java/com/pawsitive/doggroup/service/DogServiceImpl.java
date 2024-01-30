@@ -9,6 +9,7 @@ import com.pawsitive.doggroup.exception.DogNotSavedException;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -68,6 +69,12 @@ public class DogServiceImpl implements DogService {
     public DogDetailRes getDogByDogNo(int dogNo) {
         return dogRepository.getDogByDogNo(dogNo)
             .orElseThrow(DogNotFoundException::new);
+    }
+
+    // TODO [Yi] 추천로직 작성 (추천기준도 정해야댐)
+    @Override
+    public List<DogDetailRes> getRecommendationDogList(int num) {
+        return dogRepository.getRecommendationDogList(num);
     }
 
     private String getMbti(DogCreateReq req) {

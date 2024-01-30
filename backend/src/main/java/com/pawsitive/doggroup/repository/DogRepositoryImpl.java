@@ -7,6 +7,7 @@ import com.pawsitive.doggroup.entity.QDogImage;
 import com.pawsitive.usergroup.entity.QUser;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
@@ -30,11 +31,18 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
             .fetchOne());
     }
 
+    @Override
+    public List<DogDetailRes> getRecommendationDogList(int num) {
+        return getQueryDogList()
+            .limit(num)
+            .fetch();
+    }
+
     private JPQLQuery<DogDetailRes> getQueryDogList() {
         return from(qDog)
             .innerJoin(qDog.user, qUser)
             .select(Projections.constructor(DogDetailRes.class, qDog.dogNo,
                 qDog.user.userNo, qDog.name, qDog.kind, qDog.createdAt, qDog.isNaturalized,
-                qDog.color, qDog.video, qDog.note, qDog.hit, qDog.mbti, qDog.images));
+                qDog.age, qDog.color, qDog.video, qDog.note, qDog.hit, qDog.mbti, qDog.images));
     }
 }
