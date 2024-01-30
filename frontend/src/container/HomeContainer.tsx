@@ -28,9 +28,6 @@ const HomeContainer = () => {
   return (
     <div>
       {currentStageComponent}
-      <h1 style={{ fontFamily: 'SCDream', fontWeight: 400 }}>안녕?</h1>
-      <h1 style={{ fontFamily: 'SCDream', fontWeight: 100 }}>안녕?</h1>
-      <h1>안녕?</h1>
       <HomeDictionaryCard />
       <HomeStatistics />
     </div>

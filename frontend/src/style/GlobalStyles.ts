@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
 
     body, html {
         font-family: 'SCDream', sans-serif;
-        font-size: 16px;
+        font-size: 15px;
     }
 
     #root {
