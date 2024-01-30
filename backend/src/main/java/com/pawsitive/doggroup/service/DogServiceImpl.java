@@ -8,11 +8,15 @@ import com.amazonaws.services.s3.model.PutObjectResult;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.entity.Dog;
+import com.pawsitive.doggroup.entity.DogImage;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
+import com.pawsitive.doggroup.repository.DogImageRepository;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +37,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class DogServiceImpl implements DogService {
 
     private final DogRepository dogRepository;
-    private final DogImageService dogImageService;
+    private final DogImageRepository dogImageRepository;
+    
     private final UserService userService;
 
     private final AmazonS3Client amazonS3Client;
@@ -43,7 +48,8 @@ public class DogServiceImpl implements DogService {
 
     @Override
     @Transactional
-    public Dog createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images) {
+    public Dog createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images)
+        throws Exception {
         User user = userService.getUserByUserNo(req.getUserNo());
 
         String videoKey = uploadFile(video);
@@ -63,9 +69,35 @@ public class DogServiceImpl implements DogService {
             dogRepository.save(dog);
         } catch (Exception e) {
             amazonS3Client.deleteObject(bucket, videoKey);
+            throw new Exception(e.getMessage());
         }
 
-        dogImageService.createDogImage(images, dog);
+        List<DogImage> dogImageList = new ArrayList<>();
+        List<String> imageKeys = new ArrayList<>();
+
+        for (MultipartFile image : images) {
+            // 버킷에 업로드한 뒤 파일 명 가져오기
+            String imageKey = uploadFile(image);
+
+            // 엔티티 저장 실패 시 Transaction 처리를 위해 파일명 List에 저장
+            imageKeys.add(imageKey);
+
+            // DogImage 객체 생성 후 dog와 url 지정한 뒤 List에 저장
+            DogImage dogImage = new DogImage();
+            dogImage.setDog(dog);
+            dogImage.setUrl(imageKey);
+            dogImageList.add(dogImage);
+        }
+
+        try {
+            dogImageRepository.saveAll(dogImageList);
+        } catch (Exception e) {
+            for (String key : imageKeys) {
+                amazonS3Client.deleteObject(bucket, key);
+            }
+
+            throw new Exception(e.getMessage());
+        }
 
         return dog;
     }

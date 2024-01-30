@@ -18,7 +18,7 @@ public interface DogService {
      * @param images 유기견 사진들
      * @return 유기견 등록 성공 여부
      */
-    Dog createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images);
+    Dog createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images) throws Exception;
 
     /**
      * 유기견을 유기견 고유 번호로 상세조회하는 메서드입니다.
