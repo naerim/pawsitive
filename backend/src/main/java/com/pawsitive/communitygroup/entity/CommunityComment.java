@@ -28,6 +28,10 @@ public class CommunityComment {
     private int CommunityCommentNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "community_board_no")
+    private CommunityBoard board;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")
     private Member member;
 

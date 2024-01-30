@@ -1,23 +1,17 @@
 package com.pawsitive.doggroup.service;
 
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectResult;
+import com.pawsitive.common.util.S3BucketUtil;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
+import com.pawsitive.doggroup.exception.DogNotSavedException;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,20 +27,19 @@ import org.springframework.web.multipart.MultipartFile;
 public class DogServiceImpl implements DogService {
 
     private final DogRepository dogRepository;
-    private final DogImageService dogImageService;
+
     private final UserService userService;
+    private final DogImageService dogImageService;
 
-    private final AmazonS3Client amazonS3Client;
-
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
+    private final S3BucketUtil s3BucketUtil;
 
     @Override
     @Transactional
-    public Dog createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images) {
+    public Dog createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images)
+        throws Exception {
         User user = userService.getUserByUserNo(req.getUserNo());
 
-        String videoKey = uploadFile(video);
+        String videoKey = s3BucketUtil.uploadFile(video);
 
         Dog dog = Dog.builder()
             .user(user)
@@ -60,21 +53,28 @@ public class DogServiceImpl implements DogService {
             .build();
 
         try {
-            dogRepository.save(dog);
+            dog = dogRepository.save(dog);
+            log.info(dog.toString());
         } catch (Exception e) {
-            amazonS3Client.deleteObject(bucket, videoKey);
-            throw new RuntimeException(e);
+            s3BucketUtil.deleteFile(videoKey);
+            throw new DogNotSavedException();
         }
 
-        dogImageService.createDogImage(images, dog);
+        log.info(dog.toString());
 
-        return dog;
+        return dogImageService.createDogImage(dog, images);
     }
 
     @Override
     public DogDetailRes getDogByDogNo(int dogNo) {
         return dogRepository.getDogByDogNo(dogNo)
             .orElseThrow(DogNotFoundException::new);
+    }
+
+    // TODO [Yi] 추천로직 작성 (추천기준도 정해야댐)
+    @Override
+    public List<DogDetailRes> getRecommendationDogList(int num) {
+        return dogRepository.getRecommendationDogList(num);
     }
 
     private String getMbti(DogCreateReq req) {
@@ -91,33 +91,5 @@ public class DogServiceImpl implements DogService {
         return sb.toString();
     }
 
-    private String uploadFile(MultipartFile file) {
-
-        if (Objects.isNull(file)) {
-            return "";
-        }
-
-        try {
-            String key = UUID.randomUUID() + "_" + file.getOriginalFilename();
-
-            ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentType(file.getContentType());
-            metadata.setContentLength(file.getSize());
-
-            PutObjectRequest request =
-                new PutObjectRequest(bucket, key, file.getInputStream(), metadata);
-
-            request.withCannedAcl(CannedAccessControlList.AuthenticatedRead);
-
-            PutObjectResult result = amazonS3Client.putObject(request);
-
-            log.info(result.toString());
-
-            return key;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 
 }

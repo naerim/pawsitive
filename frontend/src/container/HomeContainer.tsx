@@ -5,6 +5,8 @@ import AdoptInfo from '@src/components/Home/AfterAdoption/AdoptInfo'
 import FirstStage from '@src/components/Home/FirstStage'
 import HomeLayout from '@src/components/Home/HomeLayout'
 import HomePopularCommunity from '@src/components/Home/HomePopularCommunity.tsx'
+import SecondStage from '@src/components/Home/SecondStage'
+import HomeStatistics from '@src/components/Home/HomeStatistics'
 
 const HomeContainer = () => {
   const user = useAtomValue(userAtom)
@@ -17,6 +19,9 @@ const HomeContainer = () => {
       break
     case 1:
       currentStageComponent = <FirstStage />
+      break
+    case 2:
+      currentStageComponent = <SecondStage />
       break
     case 4:
       currentStageComponent = <AdoptInfo />

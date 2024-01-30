@@ -3,6 +3,8 @@ package com.pawsitive.doggroup.entity;
 import com.pawsitive.usergroup.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -25,6 +27,7 @@ public class Dog {
 
     @Id
     @Column(name = "dog_no")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int dogNo;
 
     @ManyToOne
@@ -42,6 +45,9 @@ public class Dog {
 
     @Column(name = "is_naturalized")
     private boolean isNaturalized;
+
+    @Column(name = "age")
+    private int age;
 
     @Column(name = "color")
     private String color;
@@ -62,16 +68,28 @@ public class Dog {
     private List<DogImage> images = new ArrayList<>();
 
     @Builder
-    public Dog(User user, String name, String kind, boolean isNaturalized, String color,
-               String video,
-               String note, String mbti) {
+    public Dog(User user, String name, String kind, boolean isNaturalized, int age,
+               String color, String video, String note, String mbti) {
         this.user = user;
         this.name = name;
         this.kind = kind;
         this.isNaturalized = isNaturalized;
+        this.age = age;
         this.color = color;
         this.video = video;
         this.note = note;
         this.mbti = mbti;
     }
+
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Dog{");
+        sb.append("dogNo=").append(dogNo);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", kind='").append(kind).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
+
 }
