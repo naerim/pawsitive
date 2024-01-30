@@ -10,9 +10,7 @@ const LightColorMoveCard = (props: LightColorMoveCardType) => {
 
   return (
     <m.Container onClick={onClick}>
-      <div>
-        <m.Title>{title}</m.Title>
-      </div>
+      <m.Title>{title}</m.Title>
     </m.Container>
   )
 }

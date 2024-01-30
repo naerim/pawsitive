@@ -35,6 +35,7 @@ const CreateDogContainer = () => {
       isNaturalized: isNaturalized !== 0,
       color,
       note,
+      age: 1,
       aw: mbti[0],
       eq: mbti[1],
       fc: mbti[2],
