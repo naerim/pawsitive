@@ -1,6 +1,6 @@
 import MainColorMoveCard from '@src/common/MainColorMoveCard'
 import HomeStatistics from '@src/components/Home/HomeStatistics'
-import ShowDogCard from '@src/components/Home/DefaultStage/ShowDogCard.tsx'
+import ShowDogCard from '@src/components/Home/DefaultStage/ShowDogCard'
 
 const Index = () => {
   return (
