@@ -9,7 +9,12 @@ const Index = () => {
         subTitle="포지티버의 후기 확인하기"
         url="/community "
       />
-      <LightColorMoveCard title="더 많은 펫과사전 찾아보기" url="/dictionary" />
+      <div style={{ marginLeft: 20, marginRight: 20 }}>
+        <LightColorMoveCard
+          title="더 많은 펫과사전 찾아보기"
+          url="/dictionary"
+        />
+      </div>
     </div>
   )
 }
