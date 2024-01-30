@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, String> {
     Optional<ChatRoom> findByChatRoomNo(String chatRoomNo);
 
-    List<ChatRoom> findChatRoomsDescCreatedAt();
+    List<ChatRoom> findChatRoomsByOrderByCreatedAtDesc();
 }

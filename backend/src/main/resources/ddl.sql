@@ -92,7 +92,7 @@ CREATE TABLE `community_board` (
 	`longitude`	DECIMAL	NULL,
 	`created_at`	DATETIME	NOT NULL,
 	`hit`	INT	NULL,
-	`content_category_no`	INT	NOT NULL
+	`community_category_no`	INT	NOT NULL
 );
 
 DROP TABLE IF EXISTS `community_comment`;
@@ -101,16 +101,38 @@ CREATE TABLE `community_comment` (
 	`community_comment_no`	INT	NOT NULL auto_increment primary key,
 	`member_no`	INT	NOT NULL,
 	`content`	VARCHAR(500)	NOT NULL,
-	`created_at`	DATETIME	NOT NULL
+	`created_at`	DATETIME	NOT NULL,
+	`community_board_no`	INT	NOT NULL
 );
 
-DROP TABLE IF EXISTS `community`;
-
-CREATE TABLE `community` (
-	`community_no`	INT	NOT NULL auto_increment primary key,
-	`community_board_no`	INT	NOT NULL,
-	`community_comment_no`	INT	NOT NULL
+ALTER TABLE `community_board` ADD CONSTRAINT `FK_member_TO_community_board_1` FOREIGN KEY (
+	`member_no`
+)
+REFERENCES `member` (
+	`member_no`
 );
+
+ALTER TABLE `community_board` ADD CONSTRAINT `FK_community_category_TO_community_board_1` FOREIGN KEY (
+	`community_category_no`
+)
+REFERENCES `community_category` (
+	`community_category_no`
+);
+
+ALTER TABLE `community_comment` ADD CONSTRAINT `FK_member_TO_community_comment_1` FOREIGN KEY (
+	`member_no`
+)
+REFERENCES `member` (
+	`member_no`
+);
+
+ALTER TABLE `community_comment` ADD CONSTRAINT `FK_community_board_TO_community_comment_1` FOREIGN KEY (
+	`community_board_no`
+)
+REFERENCES `community_board` (
+	`community_board_no`
+);
+
 
 DROP TABLE IF EXISTS `member_dog`;
 
@@ -232,40 +254,10 @@ REFERENCES `question` (
 	`question_no`
 );
 
-ALTER TABLE `community_board` ADD CONSTRAINT `FK_member_TO_community_board_1` FOREIGN KEY (
-	`member_no`
-)
-REFERENCES `member` (
-	`member_no`
-);
 
-ALTER TABLE `community_board` ADD CONSTRAINT `FK_community_category_TO_community_board_1` FOREIGN KEY (
-	`community_category_no`
-)
-REFERENCES `community_category` (
-	`community_category_no`
-);
 
-ALTER TABLE `community_comment` ADD CONSTRAINT `FK_member_TO_community_comment_1` FOREIGN KEY (
-	`member_no`
-)
-REFERENCES `member` (
-	`member_no`
-);
 
-ALTER TABLE `community` ADD CONSTRAINT `FK_community_comment_TO_community_1` FOREIGN KEY (
-	`community_board_no`
-)
-REFERENCES `community_comment` (
-	`community_comment_no`
-);
 
-ALTER TABLE `community` ADD CONSTRAINT `FK_community_board_TO_community_1` FOREIGN KEY (
-	`community_comment_no`
-)
-REFERENCES `community_board` (
-	`community_board_no`
-);
 
 ALTER TABLE `member_dog` ADD CONSTRAINT `FK_member_TO_member_dog_1` FOREIGN KEY (
 	`member_no`

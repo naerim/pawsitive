@@ -2,7 +2,6 @@ package com.pawsitive.communitygroup.controller;
 
 import static org.springframework.http.HttpStatus.OK;
 
-import com.pawsitive.communitygroup.response.CommunityBoardDetailRes;
 import com.pawsitive.communitygroup.response.CommunityDetailRes;
 import com.pawsitive.communitygroup.service.CommunityService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,7 +31,7 @@ public class CommunityController {
             @ApiResponse(responseCode = "200", description = "전체 커뮤니티 목록 또는 카테고리에 해당되는 전체 커뮤니티 목록을 정상적으로 반환한다."),
         }
     )
-    public ResponseEntity<List<CommunityBoardDetailRes>> getCommunityList(
+    public ResponseEntity<List<CommunityDetailRes>> getCommunityList(
         @RequestParam(required = false) Integer categoryNo) {
         if (categoryNo == null) {
             return ResponseEntity

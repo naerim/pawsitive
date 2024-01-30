@@ -49,7 +49,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
      */
     @Override
     public List<ChatRoom> getChatRooms() {
-        return chatRoomRepository.findChatRoomsDescCreatedAt();
+        return chatRoomRepository.findChatRoomsByOrderByCreatedAtDesc();
     }
 
 }

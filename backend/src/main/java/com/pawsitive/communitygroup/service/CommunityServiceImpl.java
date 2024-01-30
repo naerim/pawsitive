@@ -1,6 +1,5 @@
 package com.pawsitive.communitygroup.service;
 
-import com.pawsitive.communitygroup.entity.Community;
 import com.pawsitive.communitygroup.exception.CommunityBoardNotFoundException;
 import com.pawsitive.communitygroup.repository.CommunityRepository;
 import com.pawsitive.communitygroup.response.CommunityBoardDetailRes;
@@ -17,37 +16,48 @@ public class CommunityServiceImpl implements CommunityService {
     private final CommunityRepository communityRepository;
 
     @Override
-    public List<CommunityBoardDetailRes> getCommunityList() {
-        return communityRepository.getCommunityList();
+    public List<CommunityDetailRes> getCommunityList() {
+        List<CommunityBoardDetailRes> boardList = communityRepository.getBoardList();
+        return getCommunityListByBoardList(boardList);
     }
 
 
     @Override
-    public List<CommunityBoardDetailRes> getCommunityListByCommunityCategoryNo(
-        int contentCategoryNo) {
-        return null;
+    public List<CommunityDetailRes> getCommunityListByCommunityCategoryNo(int categoryNo) {
+        List<CommunityBoardDetailRes> boardList =
+            communityRepository.getBoardListByCategoryNo(categoryNo);
+
+        return getCommunityListByBoardList(boardList);
     }
 
     @Override
     public CommunityDetailRes getCommunity(int boardNo) {
-        CommunityBoardDetailRes board =
-            communityRepository.getBoardByBoardNo(boardNo)
-                .orElseThrow(CommunityBoardNotFoundException::new);
-        List<CommunityCommentDetailRes> comments =
-            communityRepository.getCommentsByBoardNo(boardNo);
-        return new CommunityDetailRes(board, comments);
+        CommunityBoardDetailRes board = communityRepository.getBoardByBoardNo(boardNo)
+            .orElseThrow(CommunityBoardNotFoundException::new);
+        return getCommunityByBoard(board);
     }
 
     @Override
     public List<CommunityDetailRes> getRecommendationCommunityList(int num) {
-        List<CommunityDetailRes> communityDetailList = new ArrayList<>();
-        List<Community> communityList =
-            communityRepository.getRecommendationCommunityList(num);
-        for (Community community : communityList) {
-            communityDetailList.add(this.getCommunity(community.getCommunityBoard()
-                .getCommunityBoardNo()));
-        }
-        return communityDetailList;
+        List<CommunityBoardDetailRes> boardList =
+            communityRepository.getRecommendationBoardListLimitNum(num);
+        return getCommunityListByBoardList(boardList);
     }
 
+    private CommunityDetailRes getCommunityByBoard(CommunityBoardDetailRes board) {
+        List<CommunityCommentDetailRes> commentList =
+            communityRepository.getCommentsByBoardNo(board.getBoardNo());
+        return new CommunityDetailRes(board, commentList);
+    }
+
+    private List<CommunityDetailRes> getCommunityListByBoardList(
+        List<CommunityBoardDetailRes> boardList) {
+        List<CommunityDetailRes> communityList = new ArrayList<>();
+
+        for (CommunityBoardDetailRes board : boardList) {
+            communityList.add(getCommunityByBoard(board));
+        }
+
+        return communityList;
+    }
 }

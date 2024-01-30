@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CommunityBoardDetailRes {
+    private int boardNo;
     private String memberEmail;
     private String memberName;
     private String title;

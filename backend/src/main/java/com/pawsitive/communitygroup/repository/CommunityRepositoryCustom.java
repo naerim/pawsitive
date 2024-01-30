@@ -1,6 +1,5 @@
 package com.pawsitive.communitygroup.repository;
 
-import com.pawsitive.communitygroup.entity.Community;
 import com.pawsitive.communitygroup.response.CommunityBoardDetailRes;
 import com.pawsitive.communitygroup.response.CommunityCommentDetailRes;
 import java.util.List;
@@ -11,18 +10,18 @@ import org.springframework.data.repository.NoRepositoryBean;
 public interface CommunityRepositoryCustom {
 
     /**
-     * 커뮤니티 글을 전체 조회합니다.
+     * 커뮤니티 글을 최근에 작성한 순으로 전체 조회합니다.
      *
      * @return 모든 커뮤니티 글
      */
-    List<CommunityBoardDetailRes> getCommunityList();
+    List<CommunityBoardDetailRes> getBoardList();
 
     /**
      * 커뮤니티 인기글을 전체 조회합니다.
      *
      * @return 인기글
      */
-    List<Community> getRecommendationCommunityList(int num);
+    List<CommunityBoardDetailRes> getRecommendationBoardListLimitNum(int num);
 
     /**
      * 카테고리별 커뮤니티 글을 조회합니다.
@@ -31,7 +30,8 @@ public interface CommunityRepositoryCustom {
      * @return 카테고리별 커뮤니티 글
      */
 
-    List<CommunityBoardDetailRes> getCommunityListByCommunityCategoryNo(int communityCategoryNo);
+    List<CommunityBoardDetailRes> getBoardListByCategoryNo(
+        int communityCategoryNo);
 
     /**
      * 커뮤니티 글 고유번호로 커뮤니티 글을 상세 조회합니다.
@@ -39,8 +39,15 @@ public interface CommunityRepositoryCustom {
      * @param boardNo 조회할 커뮤니티 글 고유번호
      * @return 커뮤니티 글
      */
-    Optional<CommunityBoardDetailRes> getBoardByBoardNo(int boardNo);
+    Optional<CommunityBoardDetailRes> getBoardByBoardNo(
+        int boardNo);
 
 
+    /**
+     * 커뮤니티 글 고유번호로 해당 커뮤니티 글이 댓글들을 조회합니다.
+     *
+     * @param boardNo
+     * @return
+     */
     List<CommunityCommentDetailRes> getCommentsByBoardNo(int boardNo);
 }

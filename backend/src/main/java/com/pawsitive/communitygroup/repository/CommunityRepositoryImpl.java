@@ -1,11 +1,13 @@
 package com.pawsitive.communitygroup.repository;
 
-import com.pawsitive.communitygroup.entity.Community;
-import com.pawsitive.communitygroup.entity.QCommunity;
+import com.pawsitive.communitygroup.entity.CommunityBoard;
 import com.pawsitive.communitygroup.entity.QCommunityBoard;
+import com.pawsitive.communitygroup.entity.QCommunityCategory;
 import com.pawsitive.communitygroup.entity.QCommunityComment;
 import com.pawsitive.communitygroup.response.CommunityBoardDetailRes;
 import com.pawsitive.communitygroup.response.CommunityCommentDetailRes;
+import com.pawsitive.usergroup.entity.QMember;
+import com.pawsitive.usergroup.entity.QUser;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import java.util.List;
@@ -14,39 +16,75 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 
 public class CommunityRepositoryImpl extends QuerydslRepositorySupport
     implements CommunityRepositoryCustom {
-    private final QCommunity qCommunity = QCommunity.community;
-    private final QCommunityBoard qBoard = qCommunity.communityBoard;
-    private final QCommunityComment qComment = qCommunity.communityComment;
+    private final QCommunityBoard qBoard = QCommunityBoard.communityBoard;
+    private final QCommunityComment qComment = QCommunityComment.communityComment;
+    private final QMember qMember = QMember.member;
+    private final QUser qUser = QUser.user;
+    private final QCommunityCategory qCategory = QCommunityCategory.communityCategory;
 
     public CommunityRepositoryImpl() {
-        super(Community.class);
+        super(CommunityBoard.class);
     }
 
 
     @Override
-    public List<CommunityBoardDetailRes> getCommunityList() {
-        return null;
+    public List<CommunityBoardDetailRes> getBoardList() {
+        return getQueryBoardList()
+            .orderBy(qBoard.createdAt.desc())
+            .fetch();
     }
 
     @Override
-    public List<Community> getRecommendationCommunityList(int num) {
-        return from(qCommunity)
+    public List<CommunityBoardDetailRes> getRecommendationBoardListLimitNum(int num) {
+        return getQueryBoardList()
+            .orderBy(qBoard.hit.desc())
             .limit(num)
             .fetch();
     }
 
     @Override
-    public List<CommunityBoardDetailRes> getCommunityListByCommunityCategoryNo(
-        int communityCategoryNo) {
-        return null;
+    public List<CommunityBoardDetailRes> getBoardListByCategoryNo(int categoryNo) {
+        return getQueryBoardList()
+            .where(qCategory.communityCategoryNo.eq(categoryNo))
+            .orderBy(qBoard.createdAt.desc())
+            .fetch();
+
+
     }
 
     @Override
     public Optional<CommunityBoardDetailRes> getBoardByBoardNo(int boardNo) {
-        JPQLQuery<CommunityBoardDetailRes> getQueryBoard = from(qCommunity)
-            .select(Projections.constructor(CommunityBoardDetailRes.class,
-                qBoard.member.user.email,
-                qBoard.member.user.name,
+        return Optional.ofNullable((getQueryBoardList())
+            .where(qBoard.communityBoardNo.eq(boardNo))
+            .fetchOne());
+    }
+
+
+    @Override
+    public List<CommunityCommentDetailRes> getCommentsByBoardNo(int boardNo) {
+        return from(qComment)
+            .innerJoin(qComment.board, qBoard)
+            .innerJoin(qComment.member, qMember)
+            .innerJoin(qMember.user, qUser)
+            .select(Projections.constructor(CommunityCommentDetailRes.class,
+                qBoard.communityBoardNo,
+                qUser.email,
+                qUser.name,
+                qComment.content,
+                qComment.createdAt))
+            .fetch();
+    }
+
+
+    private JPQLQuery<CommunityBoardDetailRes> getQueryBoardList() {
+        return from(qBoard)
+            .innerJoin(qBoard.member, qMember)
+            .innerJoin(qMember.user, qUser)
+            .innerJoin(qBoard.communityCategory, qCategory)
+            .select(Projections.constructor(
+                CommunityBoardDetailRes.class,
+                qUser.email,
+                qUser.name,
                 qBoard.title,
                 qBoard.content,
                 qBoard.image,
@@ -55,21 +93,8 @@ public class CommunityRepositoryImpl extends QuerydslRepositorySupport
                 qBoard.longitude,
                 qBoard.createdAt,
                 qBoard.hit,
-                qBoard.communityCategory.communityCategoryNo,
-                qBoard.communityCategory.communityCategoryEnum.stringValue()));
-        return Optional.ofNullable((getQueryBoard)
-            .where(qCommunity.communityBoard.communityBoardNo.eq(boardNo))
-            .fetchOne());
+                qCategory.communityCategoryNo,
+                qCategory.communityCategoryEnum.stringValue()));
     }
 
-    @Override
-    public List<CommunityCommentDetailRes> getCommentsByBoardNo(int boardNo) {
-        return from(qCommunity)
-            .select(Projections.constructor(CommunityCommentDetailRes.class,
-                qComment.member.user.email,
-                qComment.member.user.name,
-                qComment.content,
-                qComment.createdAt))
-            .fetch();
-    }
 }
