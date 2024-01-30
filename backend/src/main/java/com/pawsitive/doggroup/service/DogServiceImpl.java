@@ -38,7 +38,7 @@ public class DogServiceImpl implements DogService {
 
     private final DogRepository dogRepository;
     private final DogImageRepository dogImageRepository;
-    
+
     private final UserService userService;
 
     private final AmazonS3Client amazonS3Client;
@@ -66,7 +66,7 @@ public class DogServiceImpl implements DogService {
             .build();
 
         try {
-            dogRepository.save(dog);
+            dog = dogRepository.save(dog);
         } catch (Exception e) {
             amazonS3Client.deleteObject(bucket, videoKey);
             throw new Exception(e.getMessage());
