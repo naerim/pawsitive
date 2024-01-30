@@ -13,8 +13,16 @@ const addressAtom = atom('')
 const latitudeAtom = atom(0)
 const longitudeAtom = atom(0)
 const isDaumPostcodeOpenAtom = atom(false)
-const mapAtom = atom<any>(null)
-const markerAtom = atom<any>(null)
+
+const defaultMap = new window.kakao.maps.Map(document.createElement('div'), {
+  center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+  level: 3,
+})
+
+const defaultMarker = new window.kakao.maps.Marker()
+
+const mapAtom = atom<kakao.maps.Map>(defaultMap)
+const markerAtom = atom<kakao.maps.Marker>(defaultMarker)
 
 const categoryList = [
   { value: '쇼핑하개', index: 0 },
@@ -86,7 +94,7 @@ const CreateForm = () => {
         setMarker(new window.kakao.maps.Marker())
       }
     })
-  }, [])
+  }, [setMap, setMarker])
 
   const handleAddressComplete = (data: DaumPostData) => {
     setAddress(data.address)
@@ -95,24 +103,27 @@ const CreateForm = () => {
     // 검색된 주소 위치 표시
     if (window.kakao.maps && window.kakao.maps.services) {
       const geocoder = new window.kakao.maps.services.Geocoder()
-      geocoder.addressSearch(data.address, (result: any, status: any) => {
-        if (status === window.kakao.maps.services.Status.OK) {
-          const currentPos = new window.kakao.maps.LatLng(
-            result[0].y,
-            result[0].x,
-          )
-          setLatitude(result[0].y)
-          setLongitude(result[0].x)
+      geocoder.addressSearch(
+        data.address,
+        (result: any[], status: kakao.maps.services.Status) => {
+          if (status === window.kakao.maps.services.Status.OK) {
+            const currentPos = new window.kakao.maps.LatLng(
+              result[0].y,
+              result[0].x,
+            )
+            setLatitude(result[0].y)
+            setLongitude(result[0].x)
 
-          if (mapValue && markerValue) {
-            markerValue.setMap(null)
-            markerValue.setPosition(currentPos)
-            markerValue.setMap(mapValue)
+            if (mapValue && markerValue) {
+              markerValue.setMap(null)
+              markerValue.setPosition(currentPos)
+              markerValue.setMap(mapValue)
 
-            mapValue.panTo(currentPos)
+              mapValue.panTo(currentPos)
+            }
           }
-        }
-      })
+        },
+      )
     } else {
       console.error('Kakao maps or services not loaded')
     }
@@ -121,21 +132,19 @@ const CreateForm = () => {
   // useEffect 내부에서 DaumPostcode로 주소를 선택했을 때의 콜백 함수를 등록
   useEffect(() => {
     if (mapValue) {
-      const clickHandler = (mouseEvent: any) => {
+      const clickHandler = (mouseEvent: kakao.maps.MouseEvent) => {
         const geocoder = new window.kakao.maps.services.Geocoder()
 
         geocoder.coord2Address(
           mouseEvent.latLng.getLng(),
           mouseEvent.latLng.getLat(),
-          (result: any, status: any) => {
+          (result: any[], status: kakao.maps.services.Status) => {
             if (status === window.kakao.maps.services.Status.OK) {
-              const addr = !!result[0].road_address
-                ? result[0].road_address.address_name
-                : result[0].address.address_name
+              const addr = result[0].address.address_name
               // 마커로 찍은 주소를 저장한다.
               setAddress(addr)
-              setLatitude(result[0].y)
-              setLongitude(result[0].x)
+              setLatitude(mouseEvent.latLng.getLat())
+              setLongitude(mouseEvent.latLng.getLng())
               // 기존 마커를 제거하고 새로운 마커를 넣음
               markerValue.setMap(null)
               // 마커를 클릭한 위치에 표시
@@ -154,7 +163,7 @@ const CreateForm = () => {
         window.kakao.maps.event.removeListener(mapValue, 'click', clickHandler)
       }
     }
-  }, [mapValue, markerValue])
+  }, [mapValue, markerValue, setAddress, setLatitude, setLongitude])
 
   const handleSubmit = () => {
     console.log('title:', titleValue)
@@ -244,7 +253,7 @@ const CreateForm = () => {
           value={addressValue}
           readOnly
         />
-        <c.Map ref={containerRef}></c.Map>
+        <c.Map ref={containerRef} />
       </div>
 
       <button type="submit" onClick={handleSubmit}>
