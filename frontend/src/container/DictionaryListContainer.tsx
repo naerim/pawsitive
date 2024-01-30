@@ -14,7 +14,6 @@ const DictionaryListContainer = () => {
   }
 
   if (error) {
-    console.error('Error fetching dictionary list:', error)
     return <div>Error fetching data</div>
   }
 
