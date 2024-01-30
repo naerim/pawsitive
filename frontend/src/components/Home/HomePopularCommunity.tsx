@@ -1,5 +1,5 @@
 import * as h from '@src/components/style/HomePopularCommunityStyle'
-import LightColorMoveCard from '@src/common/LightColorMoveCard.tsx'
+import LightColorMoveCard from '@src/common/LightColorMoveCard'
 
 const HomePopularCommunity = () => {
   return (

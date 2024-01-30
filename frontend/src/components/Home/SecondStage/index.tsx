@@ -1,7 +1,7 @@
 import MainColorMoveCard from '@src/common/MainColorMoveCard'
 import LightColorMoveCard from '@src/common/LightColorMoveCard'
 import HomeProgressBar from '@src/components/Home/HomeProgressBar'
-import HomeStatistics from '@src/components/Home/HomeStatistics.tsx'
+import HomeStatistics from '@src/components/Home/HomeStatistics'
 
 const Index = () => {
   return (

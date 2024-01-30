@@ -1,6 +1,6 @@
-import HomeProgressBar from '@src/components/Home/HomeProgressBar.tsx'
-import HomeStatistics from '@src/components/Home/HomeStatistics.tsx'
-import MainColorMoveCard from '@src/common/MainColorMoveCard.tsx'
+import HomeProgressBar from '@src/components/Home/HomeProgressBar'
+import HomeStatistics from '@src/components/Home/HomeStatistics'
+import MainColorMoveCard from '@src/common/MainColorMoveCard'
 
 const Index = () => {
   return (
