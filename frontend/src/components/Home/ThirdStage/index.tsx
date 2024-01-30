@@ -3,7 +3,7 @@ import DogInfo from '@src/components/Home/ThirdStage/DogInfo'
 import PawsitiverCertification from '@src/components/Home/ThirdStage/PawsitiverCertification'
 import AdoptInfo from '@src/components/Home/ThirdStage/AdoptInfo'
 
-const ThirdStageContainer = () => {
+const Index = () => {
   return (
     <HomeLayout>
       <AdoptInfo />
@@ -13,4 +13,4 @@ const ThirdStageContainer = () => {
   )
 }
 
-export default ThirdStageContainer
+export default Index
