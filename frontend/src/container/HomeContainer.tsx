@@ -1,31 +1,45 @@
-import HomeTop from '@src/components/Home/HomeTop'
-import HomeProgressBar from '@src/components/Home/HomeProgressBar'
 import { useAtomValue } from 'jotai'
 import { userAtom } from '@src/stores/atoms/user'
-import { Link } from 'react-router-dom'
-import HomeRecommendDog from '@src/components/Home/HomeRecommendDog'
+import DefaultStage from '@src/components/Home/DefaultStage'
 import AdoptInfo from '@src/components/Home/AfterAdoption/AdoptInfo'
+import FirstStage from '@src/components/Home/FirstStage'
+import HomeStatistics from '@src/components/Home/HomeStatistics'
+import HomeDictionaryCard from '@src/components/Home/HomeDictionaryCard'
 
 const HomeContainer = () => {
   const user = useAtomValue(userAtom)
-  if (user.stage === 4) {
-    return (
-      <div>
-        <AdoptInfo />
-      </div>
-    )
+
+  let currentStageComponent
+
+  switch (user.stage) {
+    case 0:
+      currentStageComponent = <DefaultStage />
+      break
+    case 1:
+      currentStageComponent = <FirstStage />
+      break
+    case 4:
+      currentStageComponent = <AdoptInfo />
+      break
+    default:
+      currentStageComponent = <div />
   }
+
   return (
     <div>
-      {user.stage !== 0 && <HomeProgressBar currentStage={user.stage} />}
-      {user.stage === 0 && <HomeRecommendDog />}
-      <HomeTop />
-      <h1>메인 페이지</h1>
-      <Link to="/dogDetail">강아지 세부사항</Link>
-      <br />
-      <Link to="/new/dog">유기견 추가</Link>
+      {currentStageComponent}
+      <HomeDictionaryCard />
+      <HomeStatistics />
     </div>
   )
+  // return (
+  //   <div>
+  //     {user.stage > 1 && <HomeProgressBar currentStage={user.stage} />}
+  //     <Link to="/dogDetail">강아지 세부사항</Link>
+  //     <br />
+  //     <Link to="/new/dog">유기견 추가</Link>
+  //   </div>
+  // )
 }
 
 export default HomeContainer

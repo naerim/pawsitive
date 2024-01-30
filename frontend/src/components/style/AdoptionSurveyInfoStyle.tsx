@@ -1,17 +1,18 @@
 import styled from 'styled-components'
 
-export const Container = styled.header`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #f7f7f7;
   padding: 20px;
 `
 
 export const CloseButton = styled.button`
   width: 20px;
-  height: 20px;
-  padding: 0;
   margin-left: auto;
+  background-color: #ffffff;
 `
 
-export const Wrap = styled.div``
+export const Title = styled.h1`
+  font-size: 22px;
+  margin-bottom: 20px;
+`
