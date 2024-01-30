@@ -74,4 +74,16 @@ public class Dog {
         this.note = note;
         this.mbti = mbti;
     }
+
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Dog{");
+        sb.append("dogNo=").append(dogNo);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", kind='").append(kind).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
+
 }
