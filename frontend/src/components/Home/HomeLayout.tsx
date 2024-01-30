@@ -3,8 +3,8 @@ import { ChildrenType } from '@src/types/propsType'
 
 const HomeLayout = ({ children }: ChildrenType) => {
   return (
-    <div>
-      <h.Container>
+    <h.Container>
+      <h.TopWrap>
         <div>
           <h.Title>PAWSITIVE</h.Title>
           <h.SubTitle>
@@ -13,9 +13,9 @@ const HomeLayout = ({ children }: ChildrenType) => {
           </h.SubTitle>
         </div>
         <h.HomeImage src="/img/img_main_house.png" alt="" />
-      </h.Container>
-      <h.Wrap>{children}</h.Wrap>
-    </div>
+      </h.TopWrap>
+      <h.BottomWrap>{children}</h.BottomWrap>
+    </h.Container>
   )
 }
 

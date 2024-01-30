@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom'
 
 export const Container = styled.nav`
   position: fixed;
-  width: 400px;
+  width: 392px;
   bottom: 0;
   z-index: 100;
   border-top: 1px solid #f7f7f7;
+  background-color: #fff;
 `
 
 export const MenuWrap = styled.div`
