@@ -3,3 +3,8 @@ export type MainColorMoveCardType = {
   subTitle: string
   url: string
 }
+
+export type MainLightColorMoveCardType = {
+  title: string
+  url: string
+}
