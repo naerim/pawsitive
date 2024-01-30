@@ -1,9 +1,8 @@
 import { publicRequest } from '@src/hooks/requestMethods'
 import { CommunityItemType } from '@src/types/components/CommunityType'
 
-export const fetchCommunityList = async (): Promise<CommunityItemType[]> => {
-  const response = await publicRequest.get('api/v1/community')
-  return response.data
+export const fetchCommunityList = async () => {
+  return publicRequest.get('/api/v1/community').then(res => res.data)
 }
 
 export const fetchCommunityDetail = async (
