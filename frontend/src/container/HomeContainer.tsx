@@ -3,8 +3,8 @@ import { userAtom } from '@src/stores/atoms/user'
 import DefaultStage from '@src/components/Home/DefaultStage'
 import AdoptInfo from '@src/components/Home/AfterAdoption/AdoptInfo'
 import FirstStage from '@src/components/Home/FirstStage'
-import HomeStatistics from '@src/components/Home/HomeStatistics.tsx'
-import HomeDictionaryCard from '@src/components/Home/HomeDictionaryCard.tsx'
+import HomeStatistics from '@src/components/Home/HomeStatistics'
+import HomeDictionaryCard from '@src/components/Home/HomeDictionaryCard'
 
 const HomeContainer = () => {
   const user = useAtomValue(userAtom)
@@ -28,6 +28,9 @@ const HomeContainer = () => {
   return (
     <div>
       {currentStageComponent}
+      <h1 style={{ fontFamily: 'SCDream', fontWeight: 400 }}>안녕?</h1>
+      <h1 style={{ fontFamily: 'SCDream', fontWeight: 100 }}>안녕?</h1>
+      <h1>안녕?</h1>
       <HomeDictionaryCard />
       <HomeStatistics />
     </div>
