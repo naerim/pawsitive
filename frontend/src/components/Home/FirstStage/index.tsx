@@ -1,6 +1,7 @@
 import HomeProgressBar from '@src/components/Home/HomeProgressBar'
 import HomeStatistics from '@src/components/Home/HomeStatistics'
 import MainColorMoveCard from '@src/common/MainColorMoveCard'
+import HomeRecommendDog from '@src/components/Home/FirstStage/HomeRecommendDog'
 
 const Index = () => {
   return (
@@ -12,6 +13,7 @@ const Index = () => {
         subTitle="입양 질문에 답하러 가기"
         url="/mypage/survey"
       />
+      <HomeRecommendDog />
     </div>
   )
 }
