@@ -23,3 +23,13 @@ export type JoinUserType = {
   address: string
   role: string
 }
+
+export type JoinUserResponseType = {
+  address: string
+  email: string
+  image: string
+  name: string
+  password: string
+  role: string
+  userNo: number
+}
