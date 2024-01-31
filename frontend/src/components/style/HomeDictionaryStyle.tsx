@@ -3,7 +3,8 @@ import styled from 'styled-components'
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 29px 20px 0 20px;
+  width: 86%;
+  margin: 29px auto 0;
   border-top: 1px solid #e8e8e8;
 `
 
@@ -34,8 +35,8 @@ export const Item = styled.div`
   box-sizing: border-box;
   border: 1px solid #ebebeb;
   border-radius: 11px;
-  width: 80px;
-  height: 135px;
+  width: 75px;
+  height: 125px;
   margin: 3px 0 6px;
   padding: 10px;
 
@@ -49,5 +50,5 @@ export const Item = styled.div`
 
 export const ItemTitle = styled.div`
   font-weight: 450;
-  font-size: 15px;
+  font-size: 13px;
 `

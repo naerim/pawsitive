@@ -2,6 +2,7 @@ package com.pawsitive.doggroup.service;
 
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
+import com.pawsitive.doggroup.dto.response.DogPageRes;
 import com.pawsitive.doggroup.entity.Dog;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,4 +37,14 @@ public interface DogService {
      * @return 추천 강아지 목록
      */
     List<DogDetailRes> getRecommendationDogList(int num);
+
+    /**
+     * 유기견 공고 목록을 조회하는 메서드입니다.
+     *
+     * @param pageNo 조회할 유기견 리스트 페이지 수
+     * @return 해당 페이지 유기견 리스트
+     */
+    DogPageRes getDogList(int pageNo);
+
+
 }

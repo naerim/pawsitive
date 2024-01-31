@@ -7,7 +7,7 @@ const Index = () => {
     <div>
       <MainColorMoveCard
         title="포지티버가 되어 볼까요?"
-        subTitle="입양 질문에 답하고 강아지들을 만나봐요"
+        subTitle="체크리스트 확인 후 강아지들을 만나봐요"
         url="/confirm/pawsitive"
       />
       <HomeStatistics />
