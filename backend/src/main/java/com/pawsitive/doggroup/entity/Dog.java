@@ -43,8 +43,8 @@ public class Dog {
     @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "is_naturalized")
-    private boolean isNaturalized;
+    @Column(name = "is_neutralized")
+    private boolean isNeutralized;
 
     @Column(name = "age")
     private int age;
@@ -70,13 +70,16 @@ public class Dog {
     @OneToMany(mappedBy = "dog")
     private List<DogImage> images = new ArrayList<>();
 
+    @Column(name = "sex")
+    private String sex;
+
     @Builder
-    public Dog(User user, String name, String kind, boolean isNaturalized, int age,
+    public Dog(User user, String name, String kind, boolean isNeutralized, int age,
                String color, String video, String note, String mbti) {
         this.user = user;
         this.name = name;
         this.kind = kind;
-        this.isNaturalized = isNaturalized;
+        this.isNeutralized = isNeutralized;
         this.age = age;
         this.color = color;
         this.video = video;

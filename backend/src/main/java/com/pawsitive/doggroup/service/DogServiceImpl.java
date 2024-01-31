@@ -51,7 +51,7 @@ public class DogServiceImpl implements DogService {
             .user(user)
             .name(req.getName())
             .kind(req.getKind())
-            .isNaturalized(req.getIsNaturalized())
+            .isNeutralized(req.getIsNaturalized())
             .color(req.getColor())
             .note(req.getNote())
             .mbti(getMbti(req))
@@ -93,7 +93,7 @@ public class DogServiceImpl implements DogService {
         Page<Dog> page = dogRepository.findAll(pageable);
 
         return DogPageRes.builder()
-            .content(page.getContent())
+            .content(DogPageRes.toDogDetailRes(page.getContent()))
             .totalPages(page.getTotalPages())
             .pageSize(page.getSize())
             .currentPage(pageNo)
