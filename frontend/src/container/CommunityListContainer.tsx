@@ -65,6 +65,7 @@ const CommunityListContainer: React.FC = () => {
         <p>Loading...</p>
       ) : (
         <div>
+          {/* 카테고리 */}
           <c.Category>
             <Button type="button" onClick={handleAllCategoriesClick}>
               전체보기
@@ -74,6 +75,7 @@ const CommunityListContainer: React.FC = () => {
               onCategoryClick={handleCategoryClick}
             />
           </c.Category>
+          {/* 커뮤니티 리스트 */}
           <CommunityList data={filteredData} />
         </div>
       )}
