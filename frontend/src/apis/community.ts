@@ -8,3 +8,11 @@ export const fetchCommunityList = async () => {
 export const fetchCommunityDetail = async (num: number) => {
   return publicRequest.get(`/api/v1/community/${num}`).then(res => res.data)
 }
+
+// 메인페이지 추천 커뮤니티글
+export const fetchPopularCommunity = async (
+  num: number,
+): Promise<CommunityItemType[]> => {
+  const res = await publicRequest.get(`/community/recommendation?num=${num}`)
+  return res.data
+}

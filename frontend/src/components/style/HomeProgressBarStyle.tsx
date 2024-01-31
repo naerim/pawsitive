@@ -3,7 +3,8 @@ import styled from 'styled-components'
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 20px;
+  width: 86%;
+  margin: 0 auto;
   padding: 16px;
   background-color: #fff3e9;
   border-radius: 10px;
@@ -36,10 +37,10 @@ export const ImageWrap = styled.div`
 export const TopRightWrap = styled.div`
   display: flex;
   flex-direction: column;
+  width: 83%;
 `
 export const PawsitiveInfoWrap = styled.div`
   display: flex;
-  width: 270px;
   justify-content: space-between;
   margin-bottom: 6px;
 
