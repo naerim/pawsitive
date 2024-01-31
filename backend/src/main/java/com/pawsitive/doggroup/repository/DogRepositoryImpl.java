@@ -26,6 +26,7 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
 
     @Override
     public Optional<DogDetailRes> getDogByDogNo(int dogNo) {
+
         return Optional.ofNullable(getQueryDogList()
             .where(qDog.dogNo.eq(dogNo))
             .fetchOne());
@@ -38,11 +39,21 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
             .fetch();
     }
 
+    @Override
+    public List<String> getDogImagesByDogNo(int dogNo) {
+        return from(qDogImage)
+            .select(qDogImage.url)
+            .where(qDogImage.dog.dogNo.eq(dogNo))
+            .fetch();
+    }
+
     private JPQLQuery<DogDetailRes> getQueryDogList() {
         return from(qDog)
             .innerJoin(qDog.user, qUser)
-            .select(Projections.constructor(DogDetailRes.class, qDog.dogNo,
-                qDog.user.userNo, qDog.name, qDog.kind, qDog.createdAt, qDog.isNaturalized,
-                qDog.age, qDog.color, qDog.video, qDog.note, qDog.hit, qDog.mbti, qDog.images));
+            .select(Projections.fields(DogDetailRes.class, qDog.dogNo,
+                qUser.userNo, qUser.name.as("userName"), qDog.name, qDog.kind, qDog.createdAt,
+                qDog.isNaturalized, qDog.age, qDog.color, qDog.video, qDog.note, qDog.hit,
+                qDog.mbti, qDog.isAdopted
+            ));
     }
 }

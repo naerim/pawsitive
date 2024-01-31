@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { useSetAtom } from 'jotai/index'
 import { userAtom } from '@src/stores/atoms/user'
+import Lottie from 'react-lottie'
+import coolGoldBadge from '@src/assets/lotties/cool_gold_badge.json'
 
 const ConfirmPawsitiveContainer = () => {
   const navigate = useNavigate()
@@ -12,9 +14,19 @@ const ConfirmPawsitiveContainer = () => {
     goBack()
   }
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: coolGoldBadge,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+    },
+  }
+
   return (
     <div>
       <div>입양 마음 확정 페이지</div>
+      <Lottie options={defaultOptions} height={200} width={200} />
       <br />
       <br />
       <button type="button" onClick={onClick}>

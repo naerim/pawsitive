@@ -3,6 +3,7 @@ package com.pawsitive.usergroup.service;
 import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.auth.jwt.JwtTokenProvider;
 import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
+import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
 import com.pawsitive.usergroup.entity.Member;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.exception.UserNotFoundException;
@@ -73,19 +74,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateField(String field, int userNo, String value) {
+    public void updateField(UserTypeStagePatchReq req, int userNo) {
 
-        if ("type".equals(field)) {
-            Member member =
-                memberRepository.findMemberByMemberNo(userNo).orElseThrow(RuntimeException::new);
-            member.setType(Integer.parseInt(value));
-            memberRepository.save(member);
-        } else if ("stage".equals(field)) {
-            Member member =
-                memberRepository.findMemberByMemberNo(userNo).orElseThrow(RuntimeException::new);
-            member.setStage(Integer.parseInt(value));
-            memberRepository.save(member);
+        Member member =
+            memberRepository.findMemberByMemberNo(userNo).orElseThrow(UserNotFoundException::new);
+
+        if ("type".equals(req.getField())) {
+            // TODO 나중에
+            member.setType(Integer.parseInt(req.getValue()));
         }
+        if ("stage".equals(req.getField())) {
+            member.setStage(member.getStage() + 1);
+        }
+        memberRepository.save(member);
 
     }
 

@@ -11,6 +11,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CommunityCommentDetailRes {
+    private int boardNo;
+    private int commentNo;
     private String memberEmail;
     private String memberName;
     private String content;
