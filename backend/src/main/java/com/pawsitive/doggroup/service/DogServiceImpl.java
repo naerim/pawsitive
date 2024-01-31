@@ -3,7 +3,6 @@ package com.pawsitive.doggroup.service;
 import com.pawsitive.common.util.S3BucketUtil;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
-import com.pawsitive.doggroup.dto.response.DogPageRes;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.exception.DogNotSavedException;
@@ -88,17 +87,11 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
-    public DogPageRes getDogList(int pageNo) {
+    public Page<DogDetailRes> getDogList(int pageNo) {
         Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE);
-        Page<Dog> page = dogRepository.findAll(pageable);
+        log.info("DogService - Page offset : " + pageable.getOffset());
 
-        return DogPageRes.builder()
-            .content(DogPageRes.toDogDetailRes(page.getContent()))
-            .totalPages(page.getTotalPages())
-            .pageSize(page.getSize())
-            .currentPage(pageNo)
-            .totalElements((int) page.getTotalElements())
-            .build();
+        return dogRepository.getDogList(pageable);
     }
 
     private String getMbti(DogCreateReq req) {

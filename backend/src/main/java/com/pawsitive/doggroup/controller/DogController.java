@@ -4,7 +4,6 @@ import static org.springframework.http.HttpStatus.OK;
 
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
-import com.pawsitive.doggroup.dto.response.DogPageRes;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.service.DogService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +13,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -95,9 +95,9 @@ public class DogController {
         }
 
     )
-    public ResponseEntity<DogPageRes> getDogList(@RequestParam int pageNo) {
+    public ResponseEntity<Page<DogDetailRes>> getDogList(@RequestParam int pageNo) {
 
-        DogPageRes dogPageRes = dogService.getDogList(pageNo);
+        Page<DogDetailRes> dogPageRes = dogService.getDogList(pageNo);
         log.info("dogPageRes content : " + dogPageRes.getContent().size());
 
         return ResponseEntity
