@@ -19,13 +19,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "member_question")
+@Table(name = "answer")
 public class Answer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_question_no")
-    private int MemberQuestionNo;
+    @Column(name = "answer_no")
+    private int answer_no;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")
@@ -38,7 +38,7 @@ public class Answer {
     @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "answer")
-    private String answer;
+    @Column(name = "content")
+    private String content;
 
 }

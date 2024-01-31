@@ -25,7 +25,7 @@ public class AnswerServiceImpl implements AnswerService {
         Answer answer = new Answer();
         answer.setMember(userService.getMemberByUserNo(userNo));
         answer.setQuestion(questionService.getQuestionByQuestionNo(req.getQuestionNo()));
-        answer.setAnswer(req.getAnswerContent());
+        answer.setContent(req.getAnswerContent());
         answerRepository.save(answer);
 
         return getQuestionAnswer(answer.getQuestion().getQuestionNo(), userNo);

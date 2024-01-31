@@ -2,6 +2,7 @@ package com.pawsitive.questiongroup.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * @author 이하늬
@@ -11,5 +12,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class QuestionCreateReq {
     private int questionNo;
+    @Length(max = 500)
     private String answerContent;
 }

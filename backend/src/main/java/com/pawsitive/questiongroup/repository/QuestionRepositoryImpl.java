@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 public class QuestionRepositoryImpl extends QuerydslRepositorySupport implements
     QuestionRepositoryCustom {
     private final QQuestion qQuestion = QQuestion.question;
-    private final QAnswer qAnswer = QAnswer.answer1;
+    private final QAnswer qAnswer = QAnswer.answer;
 
     public QuestionRepositoryImpl() {
         super(Question.class);

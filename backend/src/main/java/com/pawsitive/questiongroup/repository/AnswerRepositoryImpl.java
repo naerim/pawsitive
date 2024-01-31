@@ -18,7 +18,7 @@ public class AnswerRepositoryImpl extends QuerydslRepositorySupport
     implements AnswerRepositoryCustom {
     private QMember qMember = QMember.member;
     private QQuestion qQuestion = QQuestion.question;
-    private QAnswer qAnswer = QAnswer.answer1;
+    private QAnswer qAnswer = QAnswer.answer;
 
 
     public AnswerRepositoryImpl() {
@@ -32,7 +32,7 @@ public class AnswerRepositoryImpl extends QuerydslRepositorySupport
             .innerJoin(qAnswer.question, qQuestion)
             .select(Projections.constructor(AnswerDetailRes.class,
                 qMember.memberNo, qQuestion.questionNo, qQuestion.content,
-                qAnswer.MemberQuestionNo, qAnswer.answer, qAnswer.createdAt))
+                qAnswer.answer_no, qAnswer.content, qAnswer.createdAt))
             .where(qAnswer.question.questionNo.eq(questionNo))
             .where(qMember.memberNo.eq(userNo));
 
