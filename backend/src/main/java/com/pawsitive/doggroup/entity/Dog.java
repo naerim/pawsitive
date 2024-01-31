@@ -64,6 +64,9 @@ public class Dog {
     @Column(name = "mbti")
     private String mbti;
 
+    @Column(name = "is_adopted")
+    private boolean isAdopted;
+
     @OneToMany(mappedBy = "dog")
     private List<DogImage> images = new ArrayList<>();
 
