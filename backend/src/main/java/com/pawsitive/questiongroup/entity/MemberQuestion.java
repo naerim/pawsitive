@@ -1,6 +1,6 @@
-package com.pawsitive.usergroup.entity;
+package com.pawsitive.questiongroup.entity;
 
-import com.pawsitive.question.entity.Question;
+import com.pawsitive.usergroup.entity.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
