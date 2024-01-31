@@ -3,9 +3,9 @@ import styled from 'styled-components'
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 86%;
+  width: 90%;
   margin: 0 auto;
-  padding: 16px;
+  padding: 20px;
   background-color: #fff3e9;
   border-radius: 10px;
 `
@@ -46,19 +46,18 @@ export const PawsitiveInfoWrap = styled.div`
 
   .title {
     color: #ff9232;
-    font-size: 14px;
+    font-size: 1.2em;
     font-weight: 600;
   }
 
   .stage {
     color: #582900;
-    font-size: 11px;
     text-decoration: underline;
   }
 `
 
 export const UserStage = styled.div`
-  font-size: 12px;
+  font-size: 1em;
 
   b {
     font-weight: 500;
@@ -68,10 +67,9 @@ export const UserStage = styled.div`
 
 export const Progress = styled.progress`
   width: 100%;
-  height: 10px;
+  height: 12px;
   appearance: none;
-  margin-top: 13px;
-  margin-bottom: 9px;
+  margin: 18px 0 10px 0;
 
   &::-webkit-progress-bar {
     background-color: #fff;
@@ -87,7 +85,7 @@ export const Progress = styled.progress`
 export const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
-  font-size: 12px;
+  font-size: 0.8em;
 
   .right {
     font-weight: 300;
