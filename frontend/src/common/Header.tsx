@@ -1,13 +1,19 @@
 import * as h from '@src/common/style/HeaderStyle'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Header = () => {
   const locationNow = useLocation()
+  const navigate = useNavigate()
+
+  const homeClick = () => {
+    navigate(`/`)
+  }
+
   if (locationNow.pathname === '/confirm/pawsitive') return null
   if (locationNow.pathname === '/mypage/survey') return null
   return (
     <h.Container>
-      <h.Logo>Pawsitive</h.Logo>
+      <h.Logo onClick={homeClick}>Pawsitive</h.Logo>
       <div>
         <h.MenuItem to="/dictionary">백과사전</h.MenuItem>
         <h.MenuItem to="/signUp">회원가입</h.MenuItem>

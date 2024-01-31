@@ -43,6 +43,7 @@ export const Item = styled.div`
 
 export const ItemTitle = styled.div`
   margin-bottom: 10px;
+  color: black;
 `
 
 export const ItemDesc = styled.div`
