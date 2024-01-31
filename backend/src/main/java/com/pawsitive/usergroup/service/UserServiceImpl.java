@@ -80,10 +80,11 @@ public class UserServiceImpl implements UserService {
             memberRepository.findMemberByMemberNo(userNo).orElseThrow(UserNotFoundException::new);
 
         if ("type".equals(req.getField())) {
+            // TODO 나중에
             member.setType(Integer.parseInt(req.getValue()));
         }
         if ("stage".equals(req.getField())) {
-            member.setStage(Integer.parseInt(req.getValue()));
+            member.setStage(member.getStage() + 1);
         }
         memberRepository.save(member);
 
