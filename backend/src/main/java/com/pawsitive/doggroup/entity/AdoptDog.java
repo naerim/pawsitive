@@ -1,6 +1,6 @@
-package com.pawsitive.usergroup.entity;
+package com.pawsitive.doggroup.entity;
 
-import com.pawsitive.question.entity.Question;
+import com.pawsitive.usergroup.entity.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,25 +19,31 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "member_question")
-public class MemberQuestion {
+@Table(name = "adopt_dog")
+public class AdoptDog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_question_no")
-    private int MemberQuestionNo;
+    @Column(name = "adopt_dog_no")
+    private int adoptDogNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_no")
-    private Question question;
+    @JoinColumn(name = "dog_no")
+    private Dog dog;
 
-    @Column(name = "createdAt")
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "answer")
-    private String answer;
+    @Column(name = "weight")
+    private int weight;
+
+    @Column(name = "age")
+    private int age;
 }

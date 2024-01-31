@@ -38,7 +38,7 @@ public class CommunityComment {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
 }
