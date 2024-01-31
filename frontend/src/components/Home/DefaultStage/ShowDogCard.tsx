@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 const ShowDogCard = () => {
   const navigate = useNavigate()
-  const goDogList = () => navigate('/dog/list')
+  const goDogList = () => navigate('/dogs')
 
   return (
     <s.Container>
