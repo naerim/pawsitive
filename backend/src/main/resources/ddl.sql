@@ -133,16 +133,16 @@ REFERENCES `community_board` (
 	`community_board_no`
 );
 
-
 DROP TABLE IF EXISTS `member_dog`;
 
 CREATE TABLE `member_dog` (
-	`member_dog_no`	INT	NOT NULL auto_increment primary key,
+	`member_dog_no`	INT	NOT NULL primary key auto_increment,
 	`member_no`	INT	NOT NULL,
-	`dog_no`	INT	NOT NULL,
-	`type`	CHAR(1)	NOT NULL
-        `type`	CHAR(1)	NOT NULL
+    `dog_no`	INT	NOT NULL,
+	`created_at`	DATETIME	NOT NULL
 );
+
+
 
 DROP TABLE IF EXISTS `community_liked`;
 
@@ -189,6 +189,34 @@ CREATE TABLE `chat` (
 	`user_no`	INT	NOT NULL,
 	`message`	VARCHAR(500)	NULL
 );
+
+DROP TABLE IF EXISTS `adopt_dog`;
+
+CREATE TABLE `adopt_dog` (
+	`adopt_dog_no`	INT NOT NULL primary key auto_increment ,
+	`member_no`	INT	NOT NULL,
+	`dog_no`	INT	NOT NULL,
+	`name`	VARCHAR(20)	NULL,
+	`created_at`	DATETIME	NOT NULL,
+	`weight`	INT	NULL,
+	`age`	INT	NULL
+);
+
+
+ALTER TABLE `adopt_dog` ADD CONSTRAINT `FK_member_TO_adopt_dog_1` FOREIGN KEY (
+	`member_no`
+)
+REFERENCES `member` (
+	`member_no`
+);
+
+ALTER TABLE `adopt_dog` ADD CONSTRAINT `FK_dog_TO_adopt_dog_1` FOREIGN KEY (
+	`dog_no`
+)
+REFERENCES `dog` (
+	`dog_no`
+);
+
 
 ALTER TABLE `chat` ADD CONSTRAINT `FK_chat_room_TO_chat_1` FOREIGN KEY (
 	`chat_room_no`
@@ -256,9 +284,6 @@ REFERENCES `question` (
 
 
 
-
-
-
 ALTER TABLE `member_dog` ADD CONSTRAINT `FK_member_TO_member_dog_1` FOREIGN KEY (
 	`member_no`
 )
@@ -272,6 +297,10 @@ ALTER TABLE `member_dog` ADD CONSTRAINT `FK_dog_TO_member_dog_1` FOREIGN KEY (
 REFERENCES `dog` (
 	`dog_no`
 );
+
+
+
+
 
 ALTER TABLE `community_liked` ADD CONSTRAINT `FK_member_TO_community_liked_1` FOREIGN KEY (
 	`member_no`
