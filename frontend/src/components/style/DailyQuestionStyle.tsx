@@ -23,7 +23,7 @@ export const Title = styled.div`
   margin-left: 10px;
 `
 
-export const DogBone = styled.img`
+export const Letter = styled.img`
   width: 30px;
   height: 25px;
 `
