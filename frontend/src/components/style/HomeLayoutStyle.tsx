@@ -6,9 +6,8 @@ export const Container = styled.div`
 
 export const TopWrap = styled.div`
   display: flex;
-  margin-left: 22px;
-  margin-right: 22px;
-  margin-top: 40px;
+  width: 86%;
+  margin: 40px auto 0 auto;
 `
 
 export const Title = styled.div`
@@ -24,9 +23,9 @@ export const SubTitle = styled.div`
 `
 
 export const HomeImage = styled.img`
-  width: 185px;
-  height: 185px;
-  transform: translateY(-45px);
+  width: 160px;
+  height: 165px;
+  transform: translate(30px, -45px);
 `
 
 export const BottomWrap = styled.div`
