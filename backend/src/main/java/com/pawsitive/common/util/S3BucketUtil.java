@@ -23,6 +23,9 @@ public class S3BucketUtil {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    @Value("${cloud.aws.region.static}")
+    private String region;
+
     public String uploadFile(MultipartFile file) {
 
         if (Objects.isNull(file)) {
@@ -30,7 +33,7 @@ public class S3BucketUtil {
         }
 
         try {
-            String key = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            String key = UUID.randomUUID().toString();
 
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
@@ -53,6 +56,10 @@ public class S3BucketUtil {
 
     public void deleteFile(String fileName) {
         amazonS3Client.deleteObject(bucket, fileName);
+    }
+
+    public String getFileUrl(String key) {
+        return "https://" + bucket + ".s3." + region + ".amazonaws.com/" + key;
     }
 
 }

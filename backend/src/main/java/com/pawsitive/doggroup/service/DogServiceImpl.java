@@ -49,7 +49,7 @@ public class DogServiceImpl implements DogService {
             .color(req.getColor())
             .note(req.getNote())
             .mbti(getMbti(req))
-            .video(videoKey)
+            .video(s3BucketUtil.getFileUrl(videoKey))
             .build();
 
         try {
