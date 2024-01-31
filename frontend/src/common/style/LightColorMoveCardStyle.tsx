@@ -3,17 +3,14 @@ import styled from 'styled-components'
 export const Container = styled.div`
   display: flex;
   cursor: pointer;
-  padding: 16px 21px;
+  padding: 13px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   background-color: #fff3e9;
-  margin: 20px 20px;
   border-radius: 7px;
-  color: #ff9232;
+  margin-top: 20px;
 `
 export const Title = styled.div`
+  color: #ff9232;
   font-size: 13px;
-  margin-bottom: 6px;
-  font-weight: 200;
-  line-height: 15px;
 `

@@ -26,7 +26,7 @@ public class Member {
 
     @MapsId("memberNo")
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_no")
+    @JoinColumn(name = "member_no")
     private User user;
 
     @Column(name = "birth")

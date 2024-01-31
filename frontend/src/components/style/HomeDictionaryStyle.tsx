@@ -34,30 +34,20 @@ export const Item = styled.div`
   box-sizing: border-box;
   border: 1px solid #ebebeb;
   border-radius: 11px;
-  width: 170px;
-  height: 240px;
+  width: 80px;
+  height: 135px;
   margin: 3px 0 6px;
-  padding-bottom: 10px;
+  padding: 10px;
 
   img {
-    width: 165px;
-    height: 165px;
-    border-radius: 8px;
+    width: 62px;
+    height: 62px;
     padding: 6px;
-    margin-bottom: 10px;
+    margin: 5px 0 10px;
   }
 `
 
 export const ItemTitle = styled.div`
-  color: #000000;
-  font-weight: 500;
+  font-weight: 450;
   font-size: 15px;
-  line-height: 18px;
-`
-export const ItemSubTitle = styled.div`
-  color: #818181;
-  font-weight: 200;
-  font-size: 13px;
-  line-height: 16px;
-  margin-top: 3px;
 `

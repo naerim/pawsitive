@@ -1,12 +1,23 @@
 export type CommunityItemType = {
-  contentNo: number
-  title: string
-  content: string
-  // image: string
-  // isPublic: number
-  // latitude: number
-  // longitude: number
-  // createdAt: number
-  // hit: number
-  // categoryNo: number
+  board: {
+    boardNo: number
+    memberEmail: string
+    memberName: string
+    title: string
+    content: string
+    image: string
+    isPublic: boolean
+    latitude: number
+    longitude: number
+    createdAt: string
+    hit: number
+    communityCategoryNo: number
+    communityCategoryName: string
+  }
+  comments: {
+    memberEmail: string
+    memberName: string
+    content: string
+    createdAt: string
+  }
 }
