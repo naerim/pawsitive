@@ -1,5 +1,6 @@
 import * as h from '@src/components/style/HomeProgressBarStyle'
 import { ProgressBarType } from '@src/types/components/HomeType'
+import StageInfoModal from '@src/common/StageInfoModal'
 
 const HomeProgressBar = (props: ProgressBarType) => {
   const { currentStage } = props
@@ -17,7 +18,7 @@ const HomeProgressBar = (props: ProgressBarType) => {
         <h.TopRightWrap>
           <h.PawsitiveInfoWrap>
             <div className="title">예비 포지티버</div>
-            <div className="stage">단계안내</div>
+            <StageInfoModal />
           </h.PawsitiveInfoWrap>
           <h.UserStage>
             <b>김현지</b>님의 입양 단계

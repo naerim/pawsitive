@@ -14,4 +14,6 @@ public interface DogRepositoryCustom {
     Optional<DogDetailRes> getDogByDogNo(int dogNo);
 
     List<DogDetailRes> getRecommendationDogList(int num);
+
+    List<String> getDogImagesByDogNo(int dogNo);
 }

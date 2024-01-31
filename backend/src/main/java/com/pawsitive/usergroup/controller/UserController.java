@@ -144,6 +144,7 @@ public class UserController {
     public ResponseEntity<BaseResponseBody> updateField(@PathVariable Integer userNo,
                                                         @RequestBody UserTypeStagePatchReq req) {
 
+        userService.updateField(req, userNo);
 
         return ResponseEntity
             .status(OK)
