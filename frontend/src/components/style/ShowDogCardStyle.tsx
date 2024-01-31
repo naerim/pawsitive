@@ -6,8 +6,8 @@ export const Container = styled.div`
   align-items: center;
   background-color: #fff3e9;
   border-radius: 10px;
-  margin-left: 20px;
-  margin-right: 20px;
+  width: 86%;
+  margin: 0 auto;
   padding: 17px;
 `
 
