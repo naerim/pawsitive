@@ -2,6 +2,7 @@ package com.pawsitive.usergroup.service;
 
 import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
+import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
 import com.pawsitive.usergroup.entity.User;
 
 /**
@@ -15,7 +16,7 @@ public interface UserService {
 
     User getUserByUserNo(int userNo);
 
-    void updateField(String field, int userNo, String value);
+    void updateField(UserTypeStagePatchReq req, int userNo);
 
 //    User createUser(UserRegisterPostReq userRegisterInfo);
 //
