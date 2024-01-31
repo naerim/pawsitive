@@ -35,9 +35,6 @@ public class MemberDog {
     @JoinColumn(name = "dog_no")
     private Dog dog;
 
-    @Column(name = "type")
-    private char type;
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 }
