@@ -1,5 +1,4 @@
 import MainColorMoveCard from '@src/common/MainColorMoveCard'
-import LightColorMoveCard from '@src/common/LightColorMoveCard'
 import HomeProgressBar from '@src/components/Home/HomeProgressBar'
 import HomeStatistics from '@src/components/Home/HomeStatistics'
 import HomeDictionary from '@src/components/Home/SecondStage/HomeDictionary'
@@ -14,12 +13,6 @@ const Index = () => {
         subTitle="포지티버의 후기 확인하기"
         url="/community "
       />
-      <div style={{ marginLeft: 20, marginRight: 20 }}>
-        <LightColorMoveCard
-          title="더 많은 펫과사전 찾아보기"
-          url="/dictionary"
-        />
-      </div>
       <HomeDictionary />
     </div>
   )

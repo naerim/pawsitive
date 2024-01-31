@@ -1,46 +1,34 @@
 import CommunityList from '@src/components/Community/CommunityList'
-import { atom, useAtomValue } from 'jotai'
 import { CommunityItemType } from '@src/types/components/CommunityType'
-// import { useQuery } from '@tanstack/react-query'
-// import { fetchCommunityList } from '@src/apis/community'
-
-const dummyDataAtom = atom<CommunityItemType[]>([
-  {
-    contentNo: 1,
-    title: '제목1',
-    content: '내용1',
-  },
-  {
-    contentNo: 2,
-    title: '제목2',
-    content: '내용2',
-  },
-  {
-    contentNo: 3,
-    title: '제목3',
-    content: '내용3',
-  },
-])
+import { useQuery } from '@tanstack/react-query'
+import { fetchCommunityList } from '@src/apis/community'
+import { CommunityListAtom } from '@src/stores/atoms/community'
+import { useAtom } from 'jotai'
+import { useEffect } from 'react'
 
 const CommunityListContainer = () => {
-  const dummyDataValue = useAtomValue(dummyDataAtom)
-  // const { isLoading, data } = useQuery<CommunityItemType[]>({
-  //   queryKey: ['Detail'],
-  //   queryFn: () => fetchCommunityList(),
-  // })
+  const { isLoading, data } = useQuery<CommunityItemType[]>({
+    queryKey: ['List'],
+    queryFn: () => fetchCommunityList(),
+  })
+
+  const [CommunityListValue, setCommunityList] = useAtom(CommunityListAtom)
+
+  useEffect(() => {
+    if (data) {
+      setCommunityList(data)
+    }
+  }, [data, setCommunityList])
 
   return (
-    // <div>
-    //   {isLoading ? (
-    //     <p>Loading...</p>
-    //   ) : (
-    //     <div>
-    //       <CommunityList data={data} />
-    //     </div>
-    //   )}
-    // </div>
     <div>
-      <CommunityList data={dummyDataValue} />
+      {isLoading || !CommunityListValue || CommunityListValue.length === 0 ? (
+        <p>Loading...</p>
+      ) : (
+        <div>
+          <CommunityList data={CommunityListValue} />
+        </div>
+      )}
     </div>
   )
 }
