@@ -15,3 +15,11 @@ export const fetchCommunityDetail = async (
   // 반환문을 추가하여 결과를 반환합니다.
   return response.data
 }
+
+// 메인페이지 추천 커뮤니티글
+export const fetchPopularCommunity = async (
+  num: number,
+): Promise<CommunityItemType[]> => {
+  const res = await publicRequest.get(`/community/recommendation?num=${num}`)
+  return res.data
+}
