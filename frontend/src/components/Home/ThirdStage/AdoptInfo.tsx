@@ -1,20 +1,27 @@
 import { AfterAdoptionUserInfo } from '@src/types/userType'
 import { useQuery } from '@tanstack/react-query'
 import { fetchAfterAdoptionUser } from '@src/apis/user'
+import * as a from '@src/components/style/AdoptInfoStyle'
 
 const AdoptInfo = () => {
-  const { data, isLoading } = useQuery<AfterAdoptionUserInfo>({
+  const { isLoading } = useQuery<AfterAdoptionUserInfo>({
     queryKey: ['afterAdoptionUser'],
     queryFn: () => fetchAfterAdoptionUser(),
   })
+
   return isLoading ? (
     <p>Loading</p>
   ) : (
-    <div>
-      <div>함께한지 : {data && data.adoptedDays}일</div>
-      <div>{data && data.answerCount}개의 답변이 있어요.</div>
-      <div>{data && data.memoryCount}개의 추억일기가 있어요.</div>
-    </div>
+    <a.Container>
+      <a.DogImage src="img/image_sample_dog.png" />
+      <a.TextContainer>
+        <a.TogetherContainer>
+          <a.DogName>머꾸꾸</a.DogName>
+          <a.Together>와 함께한지</a.Together>
+        </a.TogetherContainer>
+        <a.Day> 290일</a.Day>
+      </a.TextContainer>
+    </a.Container>
   )
 }
 
