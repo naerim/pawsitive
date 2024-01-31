@@ -22,6 +22,11 @@ export type CommunityItemType = {
   }
 }
 
+export type CategoryType = {
+  communityCategoryNo: number
+  communityCategoryName: string
+}
+
 // export type CommunityListType = {
 //   boardNo: number
 //   memberName: string
