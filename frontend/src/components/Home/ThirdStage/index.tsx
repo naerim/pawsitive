@@ -1,13 +1,15 @@
-import DogInfo from '@src/components/Home/ThirdStage/DogInfo'
-import PawsitiverCertification from '@src/components/Home/ThirdStage/PawsitiverCertification'
 import AdoptInfo from '@src/components/Home/ThirdStage/AdoptInfo'
+import DailyQuestion from '@src/components/Home/ThirdStage/DailyQuestion'
+import DogInfo from '@src/components/Home/ThirdStage/DogInfo'
 
 const Index = () => {
   return (
     <>
-      <AdoptInfo />
-      <DogInfo />
-      <PawsitiverCertification />
+      <DailyQuestion />
+      <div>
+        <AdoptInfo />
+        <DogInfo />
+      </div>
     </>
   )
 }

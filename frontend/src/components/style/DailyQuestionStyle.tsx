@@ -6,22 +6,22 @@ export const Container = styled.div`
   border-radius: 12.333px;
   background: #fff2e8;
   display: flex;
-  justify-content: space-around;
-  padding: 21px;
+  padding: 13px 18px;
+  align-items: center;
 `
 
 export const Title = styled.div`
-  font-size: 16px;
+  font-size: 0.8em;
   font-style: normal;
   font-weight: 500;
   display: flex;
   align-items: center;
   color: #ff9232;
-  margin-right: 35px;
+  margin-left: 10px;
 `
 
 export const DogBone = styled.img`
-  width: 32px;
+  width: 30px;
   height: 25px;
 `
 
@@ -31,5 +31,7 @@ export const Button = styled.div`
   font-weight: 500;
   display: flex;
   align-items: center;
+
   color: #ff9232;
+  margin-left: auto;
 `
