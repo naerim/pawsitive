@@ -3,13 +3,15 @@ package com.pawsitive.doggroup.dto.response;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@NoArgsConstructor
 @Setter
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class DogDetailRes {
 
@@ -19,7 +21,7 @@ public class DogDetailRes {
     private String name;
     private String kind;
     private LocalDateTime createdAt;
-    private boolean isNaturalized;
+    private boolean isNeutralized;
     private int age;
     private String color;
     private String video;
@@ -28,5 +30,6 @@ public class DogDetailRes {
     private String mbti;
     private boolean isAdopted;
     private List<String> images;
+    private String sex;
 
 }

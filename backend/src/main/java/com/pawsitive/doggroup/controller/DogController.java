@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/v1/dogs")
 @RequiredArgsConstructor
+@Slf4j
 public class DogController {
     private final DogService dogService;
 
@@ -94,6 +96,10 @@ public class DogController {
 
     )
     public ResponseEntity<DogPageRes> getDogList(@RequestParam int pageNo) {
+
+        DogPageRes dogPageRes = dogService.getDogList(pageNo);
+        log.info("dogPageRes content : " + dogPageRes.getContent().size());
+
         return ResponseEntity
             .status(OK)
             .body(dogService.getDogList(pageNo));
