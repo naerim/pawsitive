@@ -38,5 +38,6 @@ export const GlobalStyle = createGlobalStyle`
         border: none;
         outline: none;
         color: ${({ theme }: { theme: DefaultTheme }) => theme.textColor};
+        font-size: 0.9em;
     }
 `
