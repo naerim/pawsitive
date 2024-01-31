@@ -1,6 +1,6 @@
 package com.pawsitive.questiongroup.repository;
 
-import com.pawsitive.questiongroup.dto.QuestionDetailRes;
+import com.pawsitive.questiongroup.dto.response.QuestionDetailRes;
 import java.util.Optional;
 import org.springframework.data.repository.NoRepositoryBean;
 

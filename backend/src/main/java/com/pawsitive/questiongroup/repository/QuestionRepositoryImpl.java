@@ -1,8 +1,8 @@
 package com.pawsitive.questiongroup.repository;
 
-import com.pawsitive.questiongroup.QMemberQuestion;
-import com.pawsitive.questiongroup.QQuestion;
-import com.pawsitive.questiongroup.dto.QuestionDetailRes;
+import com.pawsitive.questiongroup.dto.response.QuestionDetailRes;
+import com.pawsitive.questiongroup.entity.QAnswer;
+import com.pawsitive.questiongroup.entity.QQuestion;
 import com.pawsitive.questiongroup.entity.Question;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 public class QuestionRepositoryImpl extends QuerydslRepositorySupport implements
     QuestionRepositoryCustom {
     private final QQuestion qQuestion = QQuestion.question;
-    private final QMemberQuestion qMemberQuestion = QMemberQuestion.memberQuestion;
+    private final QAnswer qAnswer = QAnswer.answer1;
 
     public QuestionRepositoryImpl() {
         super(Question.class);
@@ -23,11 +23,11 @@ public class QuestionRepositoryImpl extends QuerydslRepositorySupport implements
     public Optional<QuestionDetailRes> getQuestionByUserNo(int userNo) {
         QuestionDetailRes questionDetailRes = from(qQuestion)
             .select(Projections.constructor(QuestionDetailRes.class, qQuestion.questionNo,
-                qQuestion.questionNo))
+                qQuestion.content))
             .where(qQuestion.questionNo.notIn(
-                JPAExpressions.select(qMemberQuestion.question.questionNo)
-                    .from(qMemberQuestion)
-                    .where(qMemberQuestion.member.memberNo.eq(userNo))))
+                JPAExpressions.select(qAnswer.question.questionNo)
+                    .from(qAnswer)
+                    .where(qAnswer.member.memberNo.eq(userNo))))
             .fetchFirst();
         return Optional.ofNullable(questionDetailRes);
     }

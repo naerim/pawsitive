@@ -20,7 +20,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Table(name = "member_question")
-public class MemberQuestion {
+public class Answer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,15 +35,10 @@ public class MemberQuestion {
     @JoinColumn(name = "question_no")
     private Question question;
 
-    @Column(name = "createdAt")
+    @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "answer")
     private String answer;
 
-    public MemberQuestion(Member member, Question question, String answer) {
-        this.member = member;
-        this.question = question;
-        this.answer = answer;
-    }
 }

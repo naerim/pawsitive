@@ -1,4 +1,4 @@
-package com.pawsitive.questiongroup.dto;
+package com.pawsitive.questiongroup.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
