@@ -40,4 +40,10 @@ public class MemberQuestion {
 
     @Column(name = "answer")
     private String answer;
+
+    public MemberQuestion(Member member, Question question, String answer) {
+        this.member = member;
+        this.question = question;
+        this.answer = answer;
+    }
 }

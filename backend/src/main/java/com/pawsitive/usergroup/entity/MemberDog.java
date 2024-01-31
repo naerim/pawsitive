@@ -35,6 +35,6 @@ public class MemberDog {
     @JoinColumn(name = "dog_no")
     private Dog dog;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 }
