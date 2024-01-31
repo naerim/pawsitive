@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import React from 'react'
 import { CommunityItemType } from '@src/types/components/CommunityType'
+import CommunityCard from '@src/components/Community/CommunityCard'
+import * as c from '@src/components/style/CommunityListStyle'
 
 interface CommunityListProps {
   data: CommunityItemType[]
@@ -9,14 +11,13 @@ interface CommunityListProps {
 const CommunityList: React.FC<CommunityListProps> = props => {
   const { data } = props
   return (
-    <div>
-      <h1>리스트 전체 목록</h1>
+    <c.Box>
       {data?.map(item => (
-        <li key={item.contentNo}>
-          <Link to={`${item.contentNo}`}>{item.title}</Link>
-        </li>
+        <Link key={item.board.boardNo} to={`${item.board.boardNo}`}>
+          <CommunityCard data={item} />
+        </Link>
       ))}
-    </div>
+    </c.Box>
   )
 }
 

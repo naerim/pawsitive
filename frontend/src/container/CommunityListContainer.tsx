@@ -1,46 +1,84 @@
 import CommunityList from '@src/components/Community/CommunityList'
-import { atom, useAtomValue } from 'jotai'
-import { CommunityItemType } from '@src/types/components/CommunityType'
-// import { useQuery } from '@tanstack/react-query'
-// import { fetchCommunityList } from '@src/apis/community'
+import {
+  CategoryType,
+  CommunityItemType,
+} from '@src/types/components/CommunityType'
+import { useQuery } from '@tanstack/react-query'
+import { fetchCommunityList } from '@src/apis/community'
+import { CommunityListAtom } from '@src/stores/atoms/community'
+import { useAtom } from 'jotai'
+import React, { useEffect, useState } from 'react'
+import CategoryButton from '@src/components/Community/CategoryButton'
+import { Button } from '@src/components/style/CategoryButtonStyle'
+import * as c from '@src/container/style/CommunityListContainerStyle'
 
-const dummyDataAtom = atom<CommunityItemType[]>([
+const allCategories: CategoryType[] = [
   {
-    contentNo: 1,
-    title: '제목1',
-    content: '내용1',
+    communityCategoryNo: 1,
+    communityCategoryName: '지식쌓개',
   },
   {
-    contentNo: 2,
-    title: '제목2',
-    content: '내용2',
+    communityCategoryNo: 2,
+    communityCategoryName: '자랑하개',
   },
   {
-    contentNo: 3,
-    title: '제목3',
-    content: '내용3',
+    communityCategoryNo: 3,
+    communityCategoryName: '영양있개',
   },
-])
+  {
+    communityCategoryNo: 4,
+    communityCategoryName: '쇼핑하개',
+  },
+]
 
-const CommunityListContainer = () => {
-  const dummyDataValue = useAtomValue(dummyDataAtom)
-  // const { isLoading, data } = useQuery<CommunityItemType[]>({
-  //   queryKey: ['Detail'],
-  //   queryFn: () => fetchCommunityList(),
-  // })
+const CommunityListContainer: React.FC = () => {
+  const { isLoading, data } = useQuery<CommunityItemType[]>({
+    queryKey: ['List'],
+    queryFn: () => fetchCommunityList(),
+  })
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
+  const [CommunityListValue, setCommunityList] = useAtom(CommunityListAtom)
+
+  useEffect(() => {
+    if (data) {
+      setCommunityList(data)
+    }
+  }, [data, setCommunityList])
+
+  const handleCategoryClick = (categoryNo: number) => {
+    setSelectedCategory(categoryNo)
+  }
+
+  const handleAllCategoriesClick = () => {
+    setSelectedCategory(null)
+  }
+
+  const filteredData: CommunityItemType[] = selectedCategory
+    ? CommunityListValue.filter(
+        item => item.board.communityCategoryNo === selectedCategory,
+      )
+    : CommunityListValue
 
   return (
-    // <div>
-    //   {isLoading ? (
-    //     <p>Loading...</p>
-    //   ) : (
-    //     <div>
-    //       <CommunityList data={data} />
-    //     </div>
-    //   )}
-    // </div>
     <div>
-      <CommunityList data={dummyDataValue} />
+      {isLoading || !CommunityListValue || CommunityListValue.length === 0 ? (
+        <p>Loading...</p>
+      ) : (
+        <div>
+          {/* 카테고리 */}
+          <c.Category>
+            <Button type="button" onClick={handleAllCategoriesClick}>
+              전체보기
+            </Button>
+            <CategoryButton
+              categories={allCategories}
+              onCategoryClick={handleCategoryClick}
+            />
+          </c.Category>
+          {/* 커뮤니티 리스트 */}
+          <CommunityList data={filteredData} />
+        </div>
+      )}
     </div>
   )
 }

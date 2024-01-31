@@ -68,6 +68,7 @@ public class CommunityRepositoryImpl extends QuerydslRepositorySupport
             .innerJoin(qMember.user, qUser)
             .select(Projections.constructor(CommunityCommentDetailRes.class,
                 qBoard.communityBoardNo,
+                qComment.CommunityCommentNo,
                 qUser.email,
                 qUser.name,
                 qComment.content,
@@ -83,6 +84,7 @@ public class CommunityRepositoryImpl extends QuerydslRepositorySupport
             .innerJoin(qBoard.communityCategory, qCategory)
             .select(Projections.constructor(
                 CommunityBoardDetailRes.class,
+                qBoard.communityBoardNo,
                 qUser.email,
                 qUser.name,
                 qBoard.title,
