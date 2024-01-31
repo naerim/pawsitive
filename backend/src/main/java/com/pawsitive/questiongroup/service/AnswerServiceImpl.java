@@ -6,6 +6,7 @@ import com.pawsitive.questiongroup.entity.Answer;
 import com.pawsitive.questiongroup.exception.AnswerNotFoundException;
 import com.pawsitive.questiongroup.repository.AnswerRepository;
 import com.pawsitive.usergroup.service.UserService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,10 @@ public class AnswerServiceImpl implements AnswerService {
     public AnswerDetailRes getQuestionAnswer(int questionNo, int userNo) {
         return answerRepository.getAnswerByUserNoAndQuestionNo(questionNo, userNo)
             .orElseThrow(AnswerNotFoundException::new);
+    }
+
+    @Override
+    public List<AnswerDetailRes> getQuestionListByUserNo(int userNo) {
+        return answerRepository.getAnswerListByUserNo(userNo);
     }
 }

@@ -7,6 +7,7 @@ import com.pawsitive.questiongroup.entity.QQuestion;
 import com.pawsitive.usergroup.entity.QMember;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
@@ -27,15 +28,29 @@ public class AnswerRepositoryImpl extends QuerydslRepositorySupport
 
     @Override
     public Optional<AnswerDetailRes> getAnswerByUserNoAndQuestionNo(int questionNo, int userNo) {
-        JPQLQuery<AnswerDetailRes> answerList = from(qAnswer)
-            .innerJoin(qAnswer.member, qMember)
-            .innerJoin(qAnswer.question, qQuestion)
-            .select(Projections.constructor(AnswerDetailRes.class,
-                qMember.memberNo, qQuestion.questionNo, qQuestion.content,
-                qAnswer.answer_no, qAnswer.content, qAnswer.createdAt))
+        JPQLQuery<AnswerDetailRes> answerList = getQueryAnswerDetail()
             .where(qAnswer.question.questionNo.eq(questionNo))
             .where(qMember.memberNo.eq(userNo));
 
         return Optional.ofNullable(answerList.fetchOne());
     }
+
+    @Override
+    public List<AnswerDetailRes> getAnswerListByUserNo(int userNo) {
+        return getQueryAnswerDetail()
+            .where(qMember.memberNo.eq(userNo))
+            .fetch();
+
+    }
+
+
+    private JPQLQuery<AnswerDetailRes> getQueryAnswerDetail() {
+        return from(qAnswer)
+            .innerJoin(qAnswer.member, qMember)
+            .innerJoin(qAnswer.question, qQuestion)
+            .select(Projections.constructor(AnswerDetailRes.class,
+                qMember.memberNo, qQuestion.questionNo, qQuestion.content,
+                qAnswer.answer_no, qAnswer.content, qAnswer.createdAt));
+    }
+
 }
