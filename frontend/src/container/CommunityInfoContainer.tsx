@@ -1,6 +1,7 @@
 import KakaoMap from '@src/components/Community/KakaoMap'
 import { Link } from 'react-router-dom'
-import CommunityListContainer from '@src/container/CommunityListContainer' // 더미 데이터에서 위치 정보를 가져와 마커를 표시
+import CommunityListContainer from '@src/container/CommunityListContainer'
+import * as c from '@src/components/style/CategoryButtonStyle'
 
 // 더미 데이터에서 위치 정보를 가져와 마커를 표시
 const dummyData = [
@@ -25,9 +26,9 @@ const CommunityInfoContainer = () => {
   return (
     <div>
       <KakaoMap dummyData={dummyData} />
-      <Link to="/community/create">커뮤니티 글 작성하기</Link>
-      {/* TODO 카테고리 필터 component 제작 */}
-      <p>카테고리 필터</p>
+      <Link to="/community/create">
+        <c.Button>커뮤니티 글 작성하기</c.Button>
+      </Link>
       <CommunityListContainer />
     </div>
   )

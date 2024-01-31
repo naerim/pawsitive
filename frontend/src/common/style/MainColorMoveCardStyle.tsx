@@ -7,8 +7,8 @@ export const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   background-color: #ff9232;
-  margin-left: 20px;
-  margin-right: 20px;
+  width: 86%;
+  margin: 0 auto;
   border-radius: 12px;
   color: #fff;
 `
