@@ -8,6 +8,7 @@ export const Container = styled.nav`
   z-index: 100;
   border-top: 1px solid #f7f7f7;
   background-color: #fff;
+  border-radius: 16px 16px 0 0;
 `
 
 export const MenuWrap = styled.div`
@@ -16,7 +17,7 @@ export const MenuWrap = styled.div`
   justify-content: space-between;
   width: 90%;
   margin: 0 auto;
-  height: 89px;
+  height: 69px;
 `
 
 export const MenuItem = styled(Link)`
@@ -28,11 +29,12 @@ export const MenuItem = styled(Link)`
 `
 
 export const Image = styled.img`
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
 `
 
 export const Label = styled.div`
   margin-top: 10px;
   font-size: 0.8em;
+  font-weight: 500;
 `

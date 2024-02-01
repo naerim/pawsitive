@@ -8,6 +8,7 @@ export const Container = styled.div`
   padding: 20px;
   background-color: #fff3e9;
   border-radius: 10px;
+  box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.1);
 `
 export const Top = styled.div`
   display: flex;
