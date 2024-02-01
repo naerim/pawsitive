@@ -22,7 +22,7 @@ const CommunityDetail: React.FC<CommunityDetailProps> = props => {
       </c.Container>
       <c.Container>
         <c.P>
-          사진: {data.board.image ? data.board.image : '이미지가 없습니다.'}
+          사진: {data.board.images ? data.board.images : '이미지가 없습니다.'}
         </c.P>
       </c.Container>
       <c.Container>

@@ -26,6 +26,9 @@ import ConfirmPawsitivePage from '@src/pages/ConfirmPawsitivePage'
 import DictionaryListPage from '@src/pages/DictionaryListPage'
 import DictionaryDetailPage from '@src/pages/DictionaryDetailPage'
 import DogListPage from '@src/pages/DogListPage'
+import CommunityInfoPage from '@src/pages/CommunityInfoPage'
+import CommunityDetailPage from '@src/pages/CommunityDetailPage'
+import CommunityCreatePage from '@src/pages/CommunityCreatePage'
 import AdoptionSurveyDonePage from '@src/pages/AdoptionSurveyDonePage'
 import DailyDiaryPage from '@src/pages/DailyDiaryPage'
 
@@ -38,9 +41,9 @@ const AuthRoutes = () => (
     <Route path="/mypage/profile" element={<ProfilePage />} />
     <Route path="/mypage/setting" element={<SettingPage />} />
     <Route path="*" element={<NotFoundPage />} />
-    {/* <Route path="/community" element={<CommunityInfoPage />} /> */}
-    {/* <Route path="/community/:contentNo" element={<CommunityDetailPage />} /> */}
-    {/* <Route path="/community/create" element={<CommunityCreatePage />} /> */}
+    <Route path="/community" element={<CommunityInfoPage />} />
+    <Route path="/community/:contentNo" element={<CommunityDetailPage />} />
+    <Route path="/community/create" element={<CommunityCreatePage />} />
     <Route path="/new/dog" element={<CreateDogPage />} />
     <Route path="/mypage/findSimilarDog" element={<FindSimilarDogPage />} />
     <Route path="/dogs" element={<DogListPage />} />
