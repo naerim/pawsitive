@@ -8,6 +8,7 @@ export const Container = styled.div`
 
 export const Wrap = styled.div`
   display: flex;
+  flex-direction: column;
   height: 100%;
   padding-top: 20px;
 `
