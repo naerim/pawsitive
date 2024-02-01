@@ -1,7 +1,13 @@
 import HomeContainer from '@src/container/HomeContainer'
+import Header from '@src/common/Header'
 
 const HomePage = () => {
-  return <HomeContainer />
+  return (
+    <div>
+      <Header />
+      <HomeContainer />
+    </div>
+  )
 }
 
 export default HomePage

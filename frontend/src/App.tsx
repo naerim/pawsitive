@@ -8,7 +8,6 @@ import HomePage from '@src/pages/HomePage'
 import LoginPage from '@src/pages/LoginPage'
 import SignUpPage from '@src/pages/SignUpPage'
 import ShelterSignUpPage from '@src/pages/ShelterSignUpPage'
-import Header from '@src/common/Header'
 import MeetingPage from '@src/pages/MeetingPage'
 import BroadcastPage from '@src/pages/BroadcastPage'
 import MyPage from '@src/pages/MyPage'
@@ -75,7 +74,6 @@ const App = () => {
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyle />
       <BrowserRouter>
-        <Header />
         {user ? <AuthRoutes /> : <HomeRoutes />}
         <Navbar />
         <ReactQueryDevtools initialIsOpen={false} />
