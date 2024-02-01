@@ -27,7 +27,8 @@ const FindSimilarDog = () => {
   let labelContainer: HTMLDivElement | null = null
   let maxPredictions: number | null = null
 
-  const isPredictingRef = useRef<boolean>(false)
+  const isPredictingRef = useRef<boolean>(false) // stop 기능을 추가하기 위해
+  const [started, setStarted] = useState<boolean>(false) // start 전/후의 화면 구성을 위해
 
   const [chartData, setChartData] = useState<number[]>([])
   const labels: string[] = ['말티즈', '비숑', '치와와', '푸들', '리트리버']
@@ -77,8 +78,8 @@ const FindSimilarDog = () => {
     window.requestAnimationFrame(loop)
 
     document.getElementById('webcam-container').appendChild(webcam.canvas)
-
     labelContainer = document.getElementById('label-container')
+
     for (let i = 0; i < maxPredictions; i++) {
       labelContainer.appendChild(document.createElement('div'))
     }
@@ -123,20 +124,31 @@ const FindSimilarDog = () => {
 
   return (
     <f.Container>
-      <f.Button type="button" onClick={init}>
-        Start
-      </f.Button>
-      <f.WebcamContainer id="webcam-container" />
-      <f.BarContainer>
-        <Bar data={data} options={options} />
-      </f.BarContainer>
-      <f.LabelContainer id="label-container" />
-      <f.ActionButtons>
-        <f.CaptureButton onClick={stop}>촬영하기</f.CaptureButton>
-        <f.NextButton onClick={handleNextButtonClick}>
-          결과화면보기
-        </f.NextButton>
-      </f.ActionButtons>
+      {started ? (
+        <>
+          <f.WebcamContainer id="webcam-container" />
+          <f.BarContainer>
+            <Bar data={data} options={options} />
+          </f.BarContainer>
+          <f.LabelContainer id="label-container" />
+          <f.ActionButtons>
+            <f.CaptureButton onClick={stop}>촬영하기</f.CaptureButton>
+            <f.NextButton onClick={handleNextButtonClick}>
+              결과화면보기
+            </f.NextButton>
+          </f.ActionButtons>
+        </>
+      ) : (
+        <f.Button
+          type="button"
+          onClick={() => {
+            setStarted(true)
+            init()
+          }}
+        >
+          시작하기
+        </f.Button>
+      )}
     </f.Container>
   )
 }
