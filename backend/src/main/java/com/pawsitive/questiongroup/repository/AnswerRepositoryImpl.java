@@ -30,7 +30,7 @@ public class AnswerRepositoryImpl extends QuerydslRepositorySupport
     public Optional<AnswerDetailRes> getAnswerByUserNoAndQuestionNo(int questionNo, int userNo) {
         JPQLQuery<AnswerDetailRes> answerList = getQueryAnswerDetail()
             .where(qAnswer.question.questionNo.eq(questionNo))
-            .where(qMember.memberNo.eq(userNo));
+            .where(qMember.userNo.eq(userNo));
 
         return Optional.ofNullable(answerList.fetchOne());
     }
@@ -38,7 +38,7 @@ public class AnswerRepositoryImpl extends QuerydslRepositorySupport
     @Override
     public List<AnswerDetailRes> getAnswerListByUserNo(int userNo) {
         return getQueryAnswerDetail()
-            .where(qMember.memberNo.eq(userNo))
+            .where(qMember.userNo.eq(userNo))
             .fetch();
 
     }
@@ -49,7 +49,7 @@ public class AnswerRepositoryImpl extends QuerydslRepositorySupport
             .innerJoin(qAnswer.member, qMember)
             .innerJoin(qAnswer.question, qQuestion)
             .select(Projections.constructor(AnswerDetailRes.class,
-                qMember.memberNo, qQuestion.questionNo, qQuestion.content,
+                qMember.userNo, qQuestion.questionNo, qQuestion.content,
                 qAnswer.answer_no, qAnswer.content, qAnswer.createdAt));
     }
 
