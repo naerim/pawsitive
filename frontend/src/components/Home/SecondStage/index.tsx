@@ -7,9 +7,9 @@ const Index = () => {
   return (
     <div>
       <HomeProgressBar currentStage={2} />
+      <HomeDictionary />
       <HomeStatistics />
       <HomeCommunityCard />
-      <HomeDictionary />
     </div>
   )
 }

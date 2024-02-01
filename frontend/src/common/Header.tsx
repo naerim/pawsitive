@@ -13,11 +13,12 @@ const Header = () => {
   if (locationNow.pathname === '/mypage/survey') return null
   return (
     <h.Container>
-      <h.Logo onClick={homeClick}>Pawsitive</h.Logo>
-      <div>
-        <h.MenuItem to="/dictionary">백과사전</h.MenuItem>
-        <h.MenuItem to="/signUp">회원가입</h.MenuItem>
-      </div>
+      <h.Wrap>
+        <h.Logo onClick={homeClick} />
+        <div>
+          <h.MenuItem to="/dictionary">펫과사전</h.MenuItem>
+        </div>
+      </h.Wrap>
     </h.Container>
   )
 }

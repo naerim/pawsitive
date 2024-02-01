@@ -10,6 +10,7 @@ const HomePopularCommunity = () => {
     queryKey: ['popularCommunity'],
     queryFn: () => fetchPopularCommunity(2),
   })
+
   return (
     <h.Container>
       <h.SubTitle>커뮤니티 TOP 게시글</h.SubTitle>
