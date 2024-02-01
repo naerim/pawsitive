@@ -23,8 +23,8 @@ const Navbar = () => {
           <n.Label>공고</n.Label>
         </n.MenuItem>
         <n.MenuItem to="/community">
-          <n.Image src="/icon/icon_community.png" alt="" />
-          <n.Label>커뮤니티</n.Label>
+          <n.Image src="/icon/icon_footprint.png" alt="" />
+          <n.Label>발자국</n.Label>
         </n.MenuItem>
         <n.MenuItem to="/mypage">
           <n.Image src="/icon/icon_mypage.png" alt="" />
