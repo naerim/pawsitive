@@ -22,23 +22,26 @@ const FindSimilarDog = () => {
   }
   const URL = 'https://teachablemachine.withgoogle.com/models/EYgf6bU6pf/'
 
-  let model
-  let webcam
-  let labelContainer
-  let maxPredictions
-  const isPredictingRef = useRef(false)
+  let model: tmImage.CustomMobileNet | null = null
+  let webcam: tmImage.Webcam | null = null
+  let labelContainer: HTMLDivElement | null = null
+  let maxPredictions: number | null = null
 
-  const [chartData, setChartData] = useState([])
-  const labels = ['말티즈', '비숑', '치와와', '푸들', '리트리버']
+  const isPredictingRef = useRef<boolean>(false)
+
+  const [chartData, setChartData] = useState<number[]>([])
+  const labels: string[] = ['말티즈', '비숑', '치와와', '푸들', '리트리버']
 
   async function predict() {
     const prediction = await model.predict(webcam.canvas)
     setChartData(prediction.map(item => item.probability))
     for (let i = 0; i < maxPredictions; i++) {
-      const classPrediction = prediction[i].className
-      const probability = Math.round(prediction[i].probability * 100)
-      labelContainer.childNodes[i].innerHTML =
-        `<div>${classPrediction}</div><div>${probability}%</div>`
+      const classPrediction: string = prediction[i].className
+      const probability: number = Math.round(prediction[i].probability * 100)
+      if (labelContainer.childNodes[i] instanceof HTMLDivElement) {
+        labelContainer.childNodes[i].innerHTML =
+          `<div>${classPrediction}</div><div>${probability}%</div>`
+      }
     }
   }
 
@@ -82,7 +85,7 @@ const FindSimilarDog = () => {
   }
 
   // 실시간 예측결과 중 최댓값 추출
-  const maxProbability = Math.max(...chartData)
+  const maxProbability: number = Math.max(...chartData)
   const backgroundColors = chartData.map(probability =>
     probability === maxProbability
       ? 'rgba(255, 146, 50, 0.8)'
