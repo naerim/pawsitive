@@ -141,6 +141,14 @@ public class UserController {
     }
 
     @PatchMapping("/{userNo}")
+    @Operation(summary = "유저 정보 수정하기",
+        description = "로그인한 회원의 정보를 수정한다.",
+        tags = {"03.User"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "회원 정보 수정 성공"),
+            @ApiResponse(responseCode = "401", description = "현재 로그인 한 회원의 계정이 유효하지 않습니다."),
+        }
+    )
     public ResponseEntity<BaseResponseBody> updateField(@PathVariable Integer userNo,
                                                         @RequestBody UserTypeStagePatchReq req) {
 
