@@ -18,27 +18,31 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 const FindSimilarDog = () => {
   const navigate = useNavigate()
   const handleNextButtonClick = () => {
-    navigate('/findSimilarDog/result')
+    navigate('/mypage/findSimilarDog/result')
   }
   const URL = 'https://teachablemachine.withgoogle.com/models/EYgf6bU6pf/'
 
-  let model
-  let webcam
-  let labelContainer
-  let maxPredictions
-  const isPredictingRef = useRef(false)
+  let model: tmImage.CustomMobileNet | null = null
+  let webcam: tmImage.Webcam | null = null
+  let labelContainer: HTMLDivElement | null = null
+  let maxPredictions: number | null = null
 
-  const [chartData, setChartData] = useState([])
-  const labels = ['말티즈', '비숑', '치와와', '푸들', '리트리버']
+  const isPredictingRef = useRef<boolean>(false) // stop 기능을 추가하기 위해
+  const [started, setStarted] = useState<boolean>(false) // start 전/후의 화면 구성을 위해
+
+  const [chartData, setChartData] = useState<number[]>([])
+  const labels: string[] = ['말티즈', '비숑', '치와와', '푸들', '리트리버']
 
   async function predict() {
     const prediction = await model.predict(webcam.canvas)
     setChartData(prediction.map(item => item.probability))
     for (let i = 0; i < maxPredictions; i++) {
-      const classPrediction = prediction[i].className
-      const probability = Math.round(prediction[i].probability * 100)
-      labelContainer.childNodes[i].innerHTML =
-        `<div>${classPrediction}</div><div>${probability}%</div>`
+      const classPrediction: string = prediction[i].className
+      const probability: number = Math.round(prediction[i].probability * 100)
+      if (labelContainer.childNodes[i] instanceof HTMLDivElement) {
+        labelContainer.childNodes[i].innerHTML =
+          `<div>${classPrediction}</div><div>${probability}%</div>`
+      }
     }
   }
 
@@ -74,15 +78,15 @@ const FindSimilarDog = () => {
     window.requestAnimationFrame(loop)
 
     document.getElementById('webcam-container').appendChild(webcam.canvas)
-
     labelContainer = document.getElementById('label-container')
+
     for (let i = 0; i < maxPredictions; i++) {
       labelContainer.appendChild(document.createElement('div'))
     }
   }
 
   // 실시간 예측결과 중 최댓값 추출
-  const maxProbability = Math.max(...chartData)
+  const maxProbability: number = Math.max(...chartData)
   const backgroundColors = chartData.map(probability =>
     probability === maxProbability
       ? 'rgba(255, 146, 50, 0.8)'
@@ -120,20 +124,31 @@ const FindSimilarDog = () => {
 
   return (
     <f.Container>
-      <f.Button type="button" onClick={init}>
-        Start
-      </f.Button>
-      <f.WebcamContainer id="webcam-container" />
-      <f.BarContainer>
-        <Bar data={data} options={options} />
-      </f.BarContainer>
-      <f.LabelContainer id="label-container" />
-      <f.ActionButtons>
-        <f.CaptureButton onClick={stop}>촬영하기</f.CaptureButton>
-        <f.NextButton onClick={handleNextButtonClick}>
-          결과화면보기
-        </f.NextButton>
-      </f.ActionButtons>
+      {started ? (
+        <>
+          <f.WebcamContainer id="webcam-container" />
+          <f.BarContainer>
+            <Bar data={data} options={options} />
+          </f.BarContainer>
+          <f.LabelContainer id="label-container" />
+          <f.ActionButtons>
+            <f.CaptureButton onClick={stop}>촬영하기</f.CaptureButton>
+            <f.NextButton onClick={handleNextButtonClick}>
+              결과화면보기
+            </f.NextButton>
+          </f.ActionButtons>
+        </>
+      ) : (
+        <f.Button
+          type="button"
+          onClick={() => {
+            setStarted(true)
+            init()
+          }}
+        >
+          시작하기
+        </f.Button>
+      )}
     </f.Container>
   )
 }
