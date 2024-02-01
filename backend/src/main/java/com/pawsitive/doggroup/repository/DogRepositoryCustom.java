@@ -21,4 +21,6 @@ public interface DogRepositoryCustom {
 
     Page<DogDetailRes> getDogList(Pageable pageable);
 
+    Page<DogDetailRes> getDogListByKindNo(Pageable pageable, String kind);
+
 }

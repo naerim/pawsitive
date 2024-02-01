@@ -1,22 +1,24 @@
 import { Link } from 'react-router-dom'
 import React from 'react'
-import { CommunityItemType } from '@src/types/components/CommunityType'
+import { CommunityListType } from '@src/types/components/CommunityType'
 import CommunityCard from '@src/components/Community/CommunityCard'
 import * as c from '@src/components/style/CommunityListStyle'
 
 interface CommunityListProps {
-  data: CommunityItemType[]
+  data: CommunityListType
 }
 
 const CommunityList: React.FC<CommunityListProps> = props => {
   const { data } = props
+  const Content = data.content
   return (
     <c.Box>
-      {data?.map(item => (
-        <Link key={item.board.boardNo} to={`${item.board.boardNo}`}>
-          <CommunityCard data={item} />
-        </Link>
-      ))}
+      {Content &&
+        Content.map(item => (
+          <Link key={item.boardNo} to={`${item.boardNo}`}>
+            <CommunityCard data={item} />
+          </Link>
+        ))}
     </c.Box>
   )
 }

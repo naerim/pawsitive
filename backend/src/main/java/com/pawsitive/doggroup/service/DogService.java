@@ -42,9 +42,10 @@ public interface DogService {
      * 유기견 공고 목록을 조회하는 메서드입니다.
      *
      * @param pageable 조회할 유기견 리스트 페이지 정보
+     * @param kind
      * @return 해당 페이지 유기견 리스트
      */
-    Page<DogDetailRes> getDogList(Pageable pageable);
+    Page<DogDetailRes> getDogList(Pageable pageable, String kind);
 
 
 }

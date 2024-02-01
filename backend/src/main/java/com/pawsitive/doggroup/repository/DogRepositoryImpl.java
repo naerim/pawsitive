@@ -5,6 +5,7 @@ import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.entity.QDog;
 import com.pawsitive.doggroup.entity.QDogImage;
 import com.pawsitive.usergroup.entity.QUser;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import java.util.List;
@@ -19,9 +20,9 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
  * @since 1.0
  */
 public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogRepositoryCustom {
-    private final QDog qDog = QDog.dog;
-    private final QUser qUser = QUser.user;
-    private final QDogImage qDogImage = QDogImage.dogImage;
+    private static final QDog qDog = QDog.dog;
+    private static final QUser qUser = QUser.user;
+    private static final QDogImage qDogImage = QDogImage.dogImage;
 
     public DogRepositoryImpl() {
         super(Dog.class);
@@ -65,13 +66,29 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
         return new PageImpl<>(content, pageable, count);
     }
 
+    @Override
+    public Page<DogDetailRes> getDogListByKindNo(Pageable pageable, String kind) {
+        List<DogDetailRes> content = getQueryDogList()
+            .where(qDog.kind.stringValue().eq(kind))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+
+        Long count = from(qDog)
+            .select(qDog.count())
+            .fetchOne();
+
+        return new PageImpl<>(content, pageable, count);
+    }
+
     private JPQLQuery<DogDetailRes> getQueryDogList() {
         return from(qDog)
             .innerJoin(qDog.user, qUser)
             .select(Projections.fields(DogDetailRes.class, qDog.dogNo,
-                qUser.userNo, qUser.name.as("userName"), qDog.name, qDog.kind, qDog.createdAt,
-                qDog.isNeutralized, qDog.age, qDog.color, qDog.video, qDog.note, qDog.hit,
-                qDog.mbti, qDog.isAdopted, qDog.sex
+                qUser.userNo, qUser.name.as("userName"), qDog.name,
+                ExpressionUtils.as(qDog.kind.stringValue(), "kind"), qDog.createdAt,
+                qDog.isNeutralized, qDog.age, qDog.color, qDog.video, qDog.note,
+                qDog.hit, qDog.mbti, qDog.isAdopted, qDog.sex
             ));
     }
 }

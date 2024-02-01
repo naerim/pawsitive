@@ -3,6 +3,7 @@ import * as c from '@src/components/style/CommunityCreateFormStyle'
 import React, { useEffect, useRef } from 'react'
 import { DaumPostData } from '@src/types/container/SignUpType'
 import DaumPostcode from 'react-daum-postcode'
+import { useNavigate } from 'react-router-dom'
 
 const titleAtom = atom('')
 const categoryAtom = atom('0')
@@ -25,10 +26,10 @@ const mapAtom = atom<kakao.maps.Map>(defaultMap)
 const markerAtom = atom<kakao.maps.Marker>(defaultMarker)
 
 const categoryList = [
-  { value: '쇼핑하개', index: 0 },
-  { value: '지식쌓개', index: 1 },
-  { value: '자랑하개', index: 2 },
-  { value: '영양있개', index: 3 },
+  { value: '쇼핑하개', index: 1 },
+  { value: '지식쌓개', index: 2 },
+  { value: '자랑하개', index: 3 },
+  { value: '영양있개', index: 4 },
 ]
 
 const CreateForm = () => {
@@ -45,6 +46,7 @@ const CreateForm = () => {
   const [isDaumPostcodeOpenValue, setIsDaumPostcodeOpen] = useAtom(
     isDaumPostcodeOpenAtom,
   )
+  const navigate = useNavigate()
 
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -175,90 +177,143 @@ const CreateForm = () => {
     console.log('longitude:', longitudeValue)
   }
 
+  // 뒤로가기 버튼 로직
+  const closeClick = () => {
+    navigate(-1)
+  }
+
   return (
     <c.Container>
-      <h1>생성폼입니다.</h1>
-      <br />
-      <c.Label htmlFor="title">제 목 :</c.Label>
-      <c.Input id="title" value={titleValue} onChange={handleTitleChange} />
-      <br />
+      <c.Top>
+        <c.CloseButton type="button" onClick={closeClick}>
+          <img className="img" src="/icon/icon_close.png" alt="" />
+        </c.CloseButton>
+        <c.H1>글쓰기</c.H1>
 
-      <c.Label htmlFor="category">카테고리 :</c.Label>
-      <select
-        id="category"
-        value={categoryValue}
-        onChange={handleCategoryChange}
-      >
-        {categoryList.map(categoryItem => (
-          <option value={categoryItem.index} key={categoryItem.index}>
-            {categoryItem.value}
-          </option>
-        ))}
-      </select>
-      <br />
+        <c.SubmitButton type="submit" onClick={handleSubmit}>
+          완료
+        </c.SubmitButton>
+      </c.Top>
 
-      <c.Label htmlFor="content">내 용 :</c.Label>
-      <c.Input
-        id="content"
-        value={contentValue}
-        onChange={handleContentChange}
-      />
-      <br />
-
-      <c.Label htmlFor="image">사진 추가하기</c.Label>
-      <c.ImageInput
-        id="image"
-        type="file"
-        accept="image/*"
-        onChange={handleFileUpload}
-      />
-      <c.ImagePreview>
-        {imageFileValue ? (
-          <img
-            src={imageFileValue}
-            alt="upload img"
-            style={{ maxWidth: '100%', height: '150px', width: 'auto' }}
-          />
-        ) : (
-          <p>파일이 추가되지 않았습니다.</p>
-        )}
-      </c.ImagePreview>
-      <br />
-
-      <c.Label htmlFor="isPublic">비공개 :</c.Label>
-      <c.Input
-        type="checkbox"
-        id="isPublic"
-        defaultChecked={false}
-        onChange={handleIsPublicChange}
-      />
-      <br />
-
-      <div>
-        {isDaumPostcodeOpenValue && (
-          <div>
-            <button type="button" onClick={() => setIsDaumPostcodeOpen(false)}>
-              닫기
-            </button>
-            <DaumPostcode
-              onComplete={handleAddressComplete}
-              style={{ position: 'absolute', zIndex: 400 }}
-            />
-          </div>
-        )}
-        <c.Input
-          placeholder="주소를 검색해주세요"
-          onClick={handleDaumPostcodeOpen}
-          id="address"
-          value={addressValue}
-          readOnly
+      <c.ImgContainer>
+        <c.ImgLabel htmlFor="image">
+          <c.ImgBox>
+            <img className="img" src="/icon/icon_camera.png" alt="" />
+            <p className="p">0/1</p>
+          </c.ImgBox>
+        </c.ImgLabel>
+        <c.ImageInput
+          id="image"
+          type="file"
+          accept="image/*"
+          onChange={handleFileUpload}
         />
-        <c.Map ref={containerRef} />
-      </div>
+        {imageFileValue && (
+          <c.ImagePreview>
+            <img
+              src={imageFileValue}
+              alt="upload img"
+              style={{ height: '70px', width: '70px' }}
+            />
+          </c.ImagePreview>
+        )}
+        {/* <c.ImagePreview> */}
+        {/*  {imageFileValue ? ( */}
+        {/*    <img */}
+        {/*      src={imageFileValue} */}
+        {/*      alt="upload img" */}
+        {/*      style={{ height: '70px', width: 'auto' }} */}
+        {/*    /> */}
+        {/*  ) : ( */}
+        {/*    <p>파일이 추가되지 않았습니다.</p> */}
+        {/*  )} */}
+        {/* </c.ImagePreview> */}
+      </c.ImgContainer>
+      <c.DivLine />
 
-      <button type="submit" onClick={handleSubmit}>
-        게시글 등록
-      </button>
+      <c.Top>
+        <c.Tag>
+          <c.Label htmlFor="title">글 제목</c.Label>
+          <c.ContentInput
+            id="title"
+            value={titleValue}
+            onChange={handleTitleChange}
+          />
+        </c.Tag>
+
+        <c.Tag>
+          <c.Label htmlFor="isPublic">비공개</c.Label>
+          <c.CheckBox
+            type="checkbox"
+            id="isPublic"
+            defaultChecked={false}
+            onChange={handleIsPublicChange}
+          />
+          <label className="label" htmlFor="isPublic" />
+        </c.Tag>
+      </c.Top>
+      <c.DivLine />
+
+      <c.Tag>
+        <c.Label htmlFor="category">카테고리</c.Label>
+        <c.Select
+          id="category"
+          value={categoryValue}
+          onChange={handleCategoryChange}
+        >
+          <option selected hidden>
+            카테고리 선택
+          </option>
+          {categoryList.map(categoryItem => (
+            <option value={categoryItem.index} key={categoryItem.index}>
+              {categoryItem.value}
+            </option>
+          ))}
+        </c.Select>
+        <c.Label htmlFor="category">
+          <img className="img" src="/icon/icon_black_arrow_bottom.png" alt="" />
+        </c.Label>
+      </c.Tag>
+      <c.DivLine />
+
+      <c.Tag>
+        <c.Label htmlFor="content">내 용 :</c.Label>
+        <c.ContentInput
+          id="content"
+          value={contentValue}
+          onChange={handleContentChange}
+        />
+        <br />
+      </c.Tag>
+      <c.DivLine />
+
+      <c.Tag>
+        <div>
+          {isDaumPostcodeOpenValue && (
+            <div>
+              <button
+                type="button"
+                onClick={() => setIsDaumPostcodeOpen(false)}
+              >
+                닫기
+              </button>
+              <DaumPostcode
+                onComplete={handleAddressComplete}
+                style={{ position: 'absolute', zIndex: 400 }}
+              />
+            </div>
+          )}
+          <c.ContentInput
+            placeholder="주소를 검색해주세요"
+            onClick={handleDaumPostcodeOpen}
+            id="address"
+            value={addressValue}
+            readOnly
+          />
+          <c.Map ref={containerRef} />
+        </div>
+      </c.Tag>
+
       <br />
       <br />
       <br />

@@ -1,7 +1,9 @@
 package com.pawsitive.doggroup.entity;
 
+import com.pawsitive.doggroup.converter.DogKindEnumConverter;
 import com.pawsitive.usergroup.entity.User;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,8 +39,9 @@ public class Dog {
     @Column(name = "name")
     private String name;
 
+    @Convert(converter = DogKindEnumConverter.class)
     @Column(name = "kind")
-    private String kind;
+    private DogKindEnum kind;
 
     @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
@@ -74,7 +77,7 @@ public class Dog {
     private String sex;
 
     @Builder
-    public Dog(User user, String name, String kind, boolean isNeutralized, int age,
+    public Dog(User user, String name, DogKindEnum kind, boolean isNeutralized, int age,
                String color, String video, String note, String mbti) {
         this.user = user;
         this.name = name;
@@ -85,17 +88,6 @@ public class Dog {
         this.video = video;
         this.note = note;
         this.mbti = mbti;
-    }
-
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Dog{");
-        sb.append("dogNo=").append(dogNo);
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", kind='").append(kind).append('\'');
-        sb.append('}');
-        return sb.toString();
     }
 
 }
