@@ -8,8 +8,8 @@ const Index = () => {
     <div>
       <HomeProgressBar currentStage={2} />
       <HomeStatistics />
-      <HomeCommunityCard />
       <HomeDictionary />
+      <HomeCommunityCard />
     </div>
   )
 }
