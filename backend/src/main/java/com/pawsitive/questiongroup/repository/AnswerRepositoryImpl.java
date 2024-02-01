@@ -50,7 +50,7 @@ public class AnswerRepositoryImpl extends QuerydslRepositorySupport
             .innerJoin(qAnswer.question, qQuestion)
             .select(Projections.constructor(AnswerDetailRes.class,
                 qMember.userNo, qQuestion.questionNo, qQuestion.content,
-                qAnswer.answer_no, qAnswer.content, qAnswer.createdAt));
+                qAnswer.answerNo, qAnswer.content, qAnswer.createdAt));
     }
 
 }

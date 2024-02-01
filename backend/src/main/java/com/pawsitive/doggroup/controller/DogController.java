@@ -42,7 +42,7 @@ public class DogController {
                                                   @RequestPart(required = false)
                                                   MultipartFile video,
                                                   @RequestPart(required = false)
-                                                  MultipartFile[] images) throws Exception {
+                                                  MultipartFile[] images) {
 
         return ResponseEntity.status(CREATED).body(dogService.createDog(req, video, images));
     }

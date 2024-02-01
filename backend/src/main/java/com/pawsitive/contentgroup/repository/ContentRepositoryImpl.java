@@ -12,8 +12,8 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 
 public class ContentRepositoryImpl extends QuerydslRepositorySupport
     implements ContentRepositoryCustom {
-    private final QContent qContent = QContent.content1;
-    private final QContentCategory qContentCategory = QContentCategory.contentCategory;
+    private static final QContent qContent = QContent.content1;
+    private static final QContentCategory qContentCategory = QContentCategory.contentCategory;
 
     public ContentRepositoryImpl() {
         super(Content.class);
