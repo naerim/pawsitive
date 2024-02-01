@@ -39,9 +39,9 @@ const KakaoMap = (props: { dummyData: CommunityItemType[] }) => {
       map.setZoomable(false)
 
       dummyData.forEach(data => {
-        const dataLat = data.board.latitude
-        const dataLng = data.board.longitude
-        const dataTitle = data.board.title
+        const dataLat = data.latitude
+        const dataLng = data.longitude
+        const dataTitle = data.title
 
         const marker = new kakao.maps.Marker({
           position: new kakao.maps.LatLng(dataLat, dataLng),
@@ -87,8 +87,8 @@ const KakaoMap = (props: { dummyData: CommunityItemType[] }) => {
           {dummyData.map(
             data =>
               // 예제: 마커의 타이틀이 게시글의 제목과 일치하면 렌더링
-              selectedMarker.getTitle() === data.board.title && (
-                <Link key={data.board.boardNo} to={`${data.board.boardNo}`}>
+              selectedMarker.getTitle() === data.title && (
+                <Link key={data.boardNo} to={`${data.boardNo}`}>
                   <CommunityCard data={data} />
                 </Link>
               ),

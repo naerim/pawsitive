@@ -13,7 +13,7 @@ const CommunityList: React.FC<CommunityListProps> = props => {
   return (
     <c.Box>
       {data?.map(item => (
-        <Link key={item.board.boardNo} to={`${item.board.boardNo}`}>
+        <Link key={item.boardNo} to={`${item.boardNo}`}>
           <CommunityCard data={item} />
         </Link>
       ))}
