@@ -4,12 +4,14 @@ import com.pawsitive.common.util.S3BucketUtil;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.entity.Dog;
+import com.pawsitive.doggroup.entity.DogKindEnum;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.exception.DogNotSavedException;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -48,7 +50,7 @@ public class DogServiceImpl implements DogService {
         Dog dog = Dog.builder()
             .user(user)
             .name(req.getName())
-            .kind(req.getKind())
+            .kind(DogKindEnum.stringToEnum(req.getKind()))
             .isNeutralized(req.getIsNaturalized())
             .color(req.getColor())
             .note(req.getNote())
@@ -86,8 +88,11 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
-    public Page<DogDetailRes> getDogList(Pageable pageable) {
-        return dogRepository.getDogList(pageable);
+    public Page<DogDetailRes> getDogList(Pageable pageable, String kind) {
+        if (Objects.isNull(kind)) {
+            return dogRepository.getDogList(pageable);
+        }
+        return dogRepository.getDogListByKindNo(pageable, kind);
     }
 
     private String getMbti(DogCreateReq req) {
