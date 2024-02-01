@@ -1,17 +1,20 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  width: 325.806px;
-  height: 68.861px;
-  border-radius: 12.333px;
-  background: #fff2e8;
   display: flex;
+  cursor: pointer;
   padding: 13px 18px;
   align-items: center;
+  justify-content: space-between;
+  background: #fff2e8;
+  width: 86%;
+  margin: 0 auto;
+  border-radius: 12px;
+  color: #fff;
 `
 
 export const Title = styled.div`
-  font-size: 0.8em;
+  font-size: 0.9em;
   font-style: normal;
   font-weight: 500;
   display: flex;
@@ -20,7 +23,7 @@ export const Title = styled.div`
   margin-left: 10px;
 `
 
-export const DogBone = styled.img`
+export const Letter = styled.img`
   width: 30px;
   height: 25px;
 `
