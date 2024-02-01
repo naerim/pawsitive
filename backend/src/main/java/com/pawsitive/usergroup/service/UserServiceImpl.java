@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Member getMemberByUserNo(int userNo) {
-        return memberRepository.findMemberByMemberNo(userNo)
+        return memberRepository.findMemberByUserNo(userNo)
             .orElseThrow(UserNotFoundException::new);
     }
 
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
     public void updateField(UserTypeStagePatchReq req, int userNo) {
 
         Member member =
-            memberRepository.findMemberByMemberNo(userNo).orElseThrow(UserNotFoundException::new);
+            memberRepository.findMemberByUserNo(userNo).orElseThrow(UserNotFoundException::new);
 
         if ("type".equals(req.getField())) {
             // TODO 나중에

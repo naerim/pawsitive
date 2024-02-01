@@ -27,7 +27,7 @@ public class QuestionRepositoryImpl extends QuerydslRepositorySupport implements
             .where(qQuestion.questionNo.notIn(
                 JPAExpressions.select(qAnswer.question.questionNo)
                     .from(qAnswer)
-                    .where(qAnswer.member.memberNo.eq(userNo))))
+                    .where(qAnswer.member.userNo.eq(userNo))))
             .fetchFirst();
         return Optional.ofNullable(questionDetailRes);
     }
