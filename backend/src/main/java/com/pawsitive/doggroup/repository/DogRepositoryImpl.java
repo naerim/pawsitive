@@ -42,7 +42,7 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
     @Override
     public List<String> getDogImagesByDogNo(int dogNo) {
         return from(qDogImage)
-            .select(qDogImage.url)
+            .select(qDogImage.image)
             .where(qDogImage.dog.dogNo.eq(dogNo))
             .fetch();
     }

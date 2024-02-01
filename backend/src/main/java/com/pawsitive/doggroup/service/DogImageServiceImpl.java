@@ -38,7 +38,7 @@ public class DogImageServiceImpl implements DogImageService {
             // DogImage 객체 생성 후 dog와 url 지정한 뒤 List에 저장
             DogImage dogImage = new DogImage();
             dogImage.setDog(dog);
-            dogImage.setUrl(s3BucketUtil.getFileUrl(imageKey));
+            dogImage.setImage(s3BucketUtil.getFileUrl(imageKey));
             dogImageList.add(dogImage);
         }
 

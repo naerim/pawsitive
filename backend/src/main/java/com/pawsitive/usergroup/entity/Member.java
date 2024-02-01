@@ -22,11 +22,11 @@ import lombok.Setter;
 public class Member {
 
     @Id
-    private int memberNo;
+    private int userNo;
 
     @MapsId("memberNo")
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no")
+    @JoinColumn(name = "user_no")
     private User user;
 
     @Column(name = "birth")
