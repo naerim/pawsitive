@@ -1,7 +1,7 @@
 package com.pawsitive.communitygroup.repository;
 
-import com.pawsitive.communitygroup.response.CommunityBoardDetailRes;
-import com.pawsitive.communitygroup.response.CommunityCommentDetailRes;
+import com.pawsitive.communitygroup.dto.response.CommunityBoardDetailRes;
+import com.pawsitive.communitygroup.dto.response.CommunityCommentDetailRes;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.repository.NoRepositoryBean;

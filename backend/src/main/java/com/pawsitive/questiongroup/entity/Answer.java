@@ -28,7 +28,7 @@ public class Answer {
     private int answer_no;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no")
+    @JoinColumn(name = "user_no")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
