@@ -10,11 +10,15 @@ export const Item = styled.div`
   cursor: pointer;
   justify-content: center;
   font-size: 0.9em;
-  padding: 6px 12px;
+  padding: 6px 8px;
   border-radius: 28px;
   margin-right: 6px;
   border: 1px solid #eaeaea;
-  label {
+  img {
+    width: 12px;
+    height: 12px;
+  }
+  span {
     font-weight: 500;
     margin-left: 4px;
   }

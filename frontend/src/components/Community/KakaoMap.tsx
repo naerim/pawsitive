@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react'
 import Locations from '@src/components/Community/Locations'
-import CommunityCard from '@src/components/Community/CommunityCard'
+import CommunityCard from '@src/components/CommunityList/CommunityListItem.tsx'
 import { LocationType } from '@src/types/propsType'
 import { CommunityItemType } from '@src/types/components/CommunityType'
 import { Link } from 'react-router-dom'
