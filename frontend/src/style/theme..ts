@@ -1,5 +1,5 @@
 export const lightTheme = {
-  bgColor: '#f7f7f7',
+  bgColor: '#f5f5f5',
   textColor: '#333333',
   borderColor: '#ede7f7',
   toggleColor: '#cbb5dc',
