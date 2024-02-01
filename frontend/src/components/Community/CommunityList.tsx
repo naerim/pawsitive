@@ -7,7 +7,7 @@ import {
 import CommunityCard from '@src/components/Community/CommunityCard'
 import CategoryButton from '@src/components/Community/CategoryButton'
 import * as c from '@src/components/style/CommunityListStyle'
-import * as ca from '@src/components/style/CategoryButtonStyle'
+import * as ca from '@src/components/style/CategoryStyle'
 
 interface CommunityListProps {
   data: CommunityItemType[]
@@ -51,7 +51,7 @@ const CommunityList: React.FC<CommunityListProps> = props => {
   return (
     <c.Box>
       {/* 카테고리 */}
-      <c.Category>
+      <c.CategoryList>
         <ca.Button type="button" onClick={handleAllCategoriesClick}>
           전체보기
         </ca.Button>
@@ -59,7 +59,7 @@ const CommunityList: React.FC<CommunityListProps> = props => {
           categories={allCategories}
           onCategoryClick={handleCategoryClick}
         />
-      </c.Category>
+      </c.CategoryList>
       {/* 커뮤니티 리스트 */}
       {filteredData &&
         filteredData.map(item => (

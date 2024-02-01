@@ -2,11 +2,11 @@ import * as h from '@src/components/style/HomePopularCommunityStyle'
 import LightColorMoveCard from '@src/common/LightColorMoveCard'
 import { useQuery } from '@tanstack/react-query'
 import { fetchPopularCommunity } from '@src/apis/community'
-import { CommunityPopularType } from '@src/types/components/CommunityType'
+import { CommunityItemType } from '@src/types/components/CommunityType'
 import { Link } from 'react-router-dom'
 
 const HomePopularCommunity = () => {
-  const { data, isLoading } = useQuery<CommunityPopularType[]>({
+  const { data, isLoading } = useQuery<CommunityItemType[]>({
     queryKey: ['popularCommunity'],
     queryFn: () => fetchPopularCommunity(2),
   })
