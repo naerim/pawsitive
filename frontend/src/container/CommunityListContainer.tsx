@@ -8,25 +8,6 @@ import * as c from '@src/container/style/CommunityListContainerStyle'
 import CommunityCategorySection from '@src/components/CommunityList/CommunityCategorySection'
 import CommunityListSection from '@src/components/CommunityList/CommunityListSection'
 
-// const allCategories: CategoryType[] = [
-//   {
-//     communityCategoryNo: 1,
-//     communityCategoryName: '지식쌓개',
-//   },
-//   {
-//     communityCategoryNo: 2,
-//     communityCategoryName: '자랑하개',
-//   },
-//   {
-//     communityCategoryNo: 3,
-//     communityCategoryName: '영양있개',
-//   },
-//   {
-//     communityCategoryNo: 4,
-//     communityCategoryName: '쇼핑하개',
-//   },
-// ]
-
 const Index: React.FC = () => {
   const { isLoading, data } = useQuery<CommunityListType[]>({
     queryKey: ['communityList'],
