@@ -27,6 +27,16 @@ pipeline {
       }
     }
 
+     stage('SonarQube analysis') {
+        steps {
+            withSonarQubeEnv('SonarQube-server') {
+                dir('./backend') {
+                    sh './gradlew sonarqube'
+                }
+            }
+        }
+     }
+
     stage('Build image') {
       steps {
         script {
