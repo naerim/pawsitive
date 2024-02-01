@@ -52,7 +52,7 @@ public class CommunityBoard {
     @Column(name = "longitude")
     private double longitude;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "hit")

@@ -12,5 +12,4 @@ export const Container = styled.div`
 `
 export const Title = styled.div`
   color: #ff9232;
-  font-size: 13px;
 `

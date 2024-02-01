@@ -1,4 +1,4 @@
-package com.pawsitive.question.entity;
+package com.pawsitive.questiongroup.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -6,30 +6,31 @@ export const Container = styled.div`
 
 export const TopWrap = styled.div`
   display: flex;
-  width: 86%;
+  width: 90%;
   margin: 40px auto 0 auto;
 `
 
 export const Title = styled.div`
-  font-size: 20px;
+  font-size: 1.8em;
   margin-bottom: 15px;
   font-weight: 600;
 `
 
 export const SubTitle = styled.div`
-  font-size: 14px;
+  font-size: 1em;
   font-style: normal;
   line-height: 22px;
+  font-weight: 500;
 `
 
 export const HomeImage = styled.img`
-  width: 160px;
-  height: 165px;
+  width: 170px;
+  height: 175px;
   transform: translate(30px, -45px);
 `
 
 export const BottomWrap = styled.div`
   display: flex;
   flex-direction: column;
-  transform: translateY(-75px);
+  transform: translateY(-45px);
 `
