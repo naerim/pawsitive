@@ -15,7 +15,6 @@ export const ImageWrap = styled.div`
   img {
     width: 231px;
     height: 231px;
-    background-color: #747bff;
     border-radius: 100%;
   }
 `
