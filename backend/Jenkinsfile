@@ -29,7 +29,7 @@ pipeline {
 
      stage('SonarQube analysis') {
         steps {
-            withSonarQubeEnv('SonarQube-server') {
+            withSonarQubeEnv('SonarQube-Server') {
                 dir('./backend') {
                     sh './gradlew sonarqube'
                 }
