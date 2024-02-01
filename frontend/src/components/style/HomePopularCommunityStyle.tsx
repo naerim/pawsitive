@@ -30,6 +30,9 @@ export const Item = styled.div`
   margin: 6px 0;
   align-items: center;
   line-height: 1.1;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 10px;
 
   img {
     background-color: #fff3e9;
@@ -42,7 +45,7 @@ export const Item = styled.div`
 `
 
 export const ItemTitle = styled.div`
-  width: 250px;
+  width: 240px;
   margin-bottom: 10px;
   color: black;
   overflow: hidden;
@@ -52,7 +55,7 @@ export const ItemTitle = styled.div`
 `
 
 export const ItemDesc = styled.div`
-  width: 250px;
+  width: 240px;
   font-size: 0.9em;
   color: #7b7b7b;
   overflow: hidden;

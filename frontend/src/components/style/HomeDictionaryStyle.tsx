@@ -34,11 +34,12 @@ export const Item = styled.div`
   border: 1px solid #ebebeb;
   border-radius: 11px;
   padding: 18px;
+  align-items: center;
 
   img {
-    width: 50px;
-    height: 50px;
-    margin-top: 20px;
+    width: 62px;
+    height: 62px;
+    margin-top: 10px;
   }
 `
 
