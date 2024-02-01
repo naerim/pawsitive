@@ -3,6 +3,7 @@ package com.pawsitive.doggroup.repository;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -18,6 +19,6 @@ public interface DogRepositoryCustom {
 
     List<String> getDogImagesByDogNo(int dogNo);
 
-    List<DogDetailRes> getDogList(Pageable pageable);
+    Page<DogDetailRes> getDogList(Pageable pageable);
 
 }

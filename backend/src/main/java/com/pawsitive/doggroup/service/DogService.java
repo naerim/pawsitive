@@ -2,9 +2,10 @@ package com.pawsitive.doggroup.service;
 
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
-import com.pawsitive.doggroup.dto.response.DogPageRes;
 import com.pawsitive.doggroup.entity.Dog;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -44,7 +45,7 @@ public interface DogService {
      * @param pageNo 조회할 유기견 리스트 페이지 수
      * @return 해당 페이지 유기견 리스트
      */
-    DogPageRes getDogList(int pageNo);
+    Page<DogDetailRes> getDogList(Pageable pageable);
 
 
 }

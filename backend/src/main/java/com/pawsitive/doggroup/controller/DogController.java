@@ -14,6 +14,8 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -95,14 +97,20 @@ public class DogController {
         }
 
     )
-    public ResponseEntity<DogPageRes> getDogList(@RequestParam int pageNo) {
-
-        DogPageRes dogPageRes = dogService.getDogList(pageNo);
-        log.info("dogPageRes content : " + dogPageRes.getContent().size());
+    public ResponseEntity<DogPageRes> getDogList(Pageable pageable) {
+        Page<DogDetailRes> dogPage = dogService.getDogList(pageable);
 
         return ResponseEntity
             .status(OK)
-            .body(dogService.getDogList(pageNo));
+            .body(DogPageRes.builder()
+                .content(dogPage.getContent())
+                .pageNumber(dogPage.getPageable().getPageNumber())
+                .pageSize(dogPage.getPageable().getPageSize())
+                .totalPages(dogPage.getTotalPages())
+                .totalElements((int) dogPage.getTotalElements())
+                .build()
+            );
+        
     }
 
 
