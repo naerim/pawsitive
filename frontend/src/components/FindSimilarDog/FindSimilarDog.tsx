@@ -18,7 +18,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 const FindSimilarDog = () => {
   const navigate = useNavigate()
   const handleNextButtonClick = () => {
-    navigate('/findSimilarDog/result')
+    navigate('/mypage/findSimilarDog/result')
   }
   const URL = 'https://teachablemachine.withgoogle.com/models/EYgf6bU6pf/'
 
