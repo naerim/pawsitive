@@ -5,8 +5,10 @@ const Navbar = () => {
   const locationNow = useLocation()
 
   // if (locationNow.pathname.match(/^\/chat\/\d+$/)) return null
-  if (locationNow.pathname === '/confirm/pawsitive') return null
   if (locationNow.pathname === '/mypage/survey') return null
+  if (locationNow.pathname === '/mypage/survey/done') return null
+  if (locationNow.pathname === '/confirm/pawsitive') return null
+
   return (
     <n.Container>
       <n.MenuWrap>
@@ -23,8 +25,8 @@ const Navbar = () => {
           <n.Label>공고</n.Label>
         </n.MenuItem>
         <n.MenuItem to="/community">
-          <n.Image src="/icon/icon_community.png" alt="" />
-          <n.Label>커뮤니티</n.Label>
+          <n.Image src="/icon/icon_footprint.png" alt="" />
+          <n.Label>발자국</n.Label>
         </n.MenuItem>
         <n.MenuItem to="/mypage">
           <n.Image src="/icon/icon_mypage.png" alt="" />

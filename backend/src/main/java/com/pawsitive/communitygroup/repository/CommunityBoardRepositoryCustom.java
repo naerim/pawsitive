@@ -4,17 +4,19 @@ import com.pawsitive.communitygroup.dto.response.CommunityBoardDetailRes;
 import com.pawsitive.communitygroup.dto.response.CommunityCommentDetailRes;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
-public interface CommunityRepositoryCustom {
+public interface CommunityBoardRepositoryCustom {
 
     /**
      * 커뮤니티 글을 최근에 작성한 순으로 전체 조회합니다.
      *
      * @return 모든 커뮤니티 글
      */
-    List<CommunityBoardDetailRes> getBoardList();
+    Page<CommunityBoardDetailRes> getBoardList(Pageable pageable);
 
     /**
      * 커뮤니티 인기글을 전체 조회합니다.
@@ -26,12 +28,13 @@ public interface CommunityRepositoryCustom {
     /**
      * 카테고리별 커뮤니티 글을 조회합니다.
      *
+     * @param pageable
      * @param communityCategoryNo 조회할 커뮤니티 글 카테고리 고유번호
      * @return 카테고리별 커뮤니티 글
      */
 
-    List<CommunityBoardDetailRes> getBoardListByCategoryNo(
-        int communityCategoryNo);
+    Page<CommunityBoardDetailRes> getBoardListByCategoryNo(
+        Pageable pageable, int communityCategoryNo);
 
     /**
      * 커뮤니티 글 고유번호로 커뮤니티 글을 상세 조회합니다.
@@ -50,4 +53,6 @@ public interface CommunityRepositoryCustom {
      * @return
      */
     List<CommunityCommentDetailRes> getCommentsByBoardNo(int boardNo);
+
+    List<String> getCommunityImagesByDogNo(int boardNo);
 }

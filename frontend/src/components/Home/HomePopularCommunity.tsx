@@ -10,6 +10,7 @@ const HomePopularCommunity = () => {
     queryKey: ['popularCommunity'],
     queryFn: () => fetchPopularCommunity(2),
   })
+
   return (
     <h.Container>
       <h.SubTitle>커뮤니티 TOP 게시글</h.SubTitle>
@@ -18,15 +19,12 @@ const HomePopularCommunity = () => {
         {!isLoading ? (
           data &&
           data.map(item => (
-            <Link
-              key={item.board.boardNo}
-              to={`community/${item.board.boardNo}`}
-            >
+            <Link key={item.boardNo} to={`community/${item.boardNo}`}>
               <h.Item>
                 <img alt="" src="/img/img_popular_community.png" />
                 <div>
-                  <h.ItemTitle>{item.board.title}</h.ItemTitle>
-                  <h.ItemDesc>{item.board.content}</h.ItemDesc>
+                  <h.ItemTitle>{item.title}</h.ItemTitle>
+                  <h.ItemDesc>{item.content}</h.ItemDesc>
                 </div>
               </h.Item>
             </Link>

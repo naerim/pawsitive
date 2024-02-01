@@ -9,6 +9,7 @@ import com.pawsitive.usergroup.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author 이하늬
@@ -16,12 +17,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AnswerServiceImpl implements AnswerService {
     private final UserService userService;
     private final QuestionService questionService;
     private final AnswerRepository answerRepository;
 
     @Override
+    @Transactional
     public AnswerDetailRes createQuestionAnswer(int userNo, QuestionCreateReq req) {
         Answer answer = new Answer();
         answer.setMember(userService.getMemberByUserNo(userNo));

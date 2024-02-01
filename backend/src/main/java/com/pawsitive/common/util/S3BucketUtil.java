@@ -5,7 +5,6 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +26,6 @@ public class S3BucketUtil {
     private String region;
 
     public String uploadFile(MultipartFile file) {
-
-        if (Objects.isNull(file)) {
-            return "";
-        }
 
         try {
             String key = UUID.randomUUID().toString();

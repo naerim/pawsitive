@@ -7,7 +7,7 @@ export const Container = styled.div`
 export const TopWrap = styled.div`
   display: flex;
   width: 90%;
-  margin: 40px auto 0 auto;
+  margin: 70px auto 0 auto;
 `
 
 export const Title = styled.div`

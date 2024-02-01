@@ -21,34 +21,36 @@ export const Title = styled.div`
   font-size: 1.2em;
 `
 export const Wrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
   margin-top: 20px;
 `
 
 export const Item = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   background: #ffffff;
-  box-sizing: border-box;
-  border: 1px solid #ebebeb;
   border-radius: 11px;
-  width: 23%;
-  height: 125px;
-  margin: 3px 0 6px;
-  padding: 10px;
+  padding: 18px;
+  align-items: center;
+  border: 1px solid #ebebeb;
+  box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.1);
 
   img {
     width: 62px;
     height: 62px;
-    padding: 6px;
-    margin: 5px 0 10px;
+    margin-top: 10px;
   }
 `
 
 export const ItemTitle = styled.div`
   font-weight: 500;
-  font-size: 0.9em;
+  font-size: 1.1em;
+`
+
+export const ItemSubTitle = styled.div`
+  font-size: 0.8em;
+  margin-top: 10px;
+  or: #5f5f5;
 `

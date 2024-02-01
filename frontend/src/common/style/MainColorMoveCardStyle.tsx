@@ -11,6 +11,8 @@ export const Container = styled.div`
   margin: 0 auto;
   border-radius: 12px;
   color: #fff;
+  border: 1px solid #ebebeb;
+  box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.1);
 `
 export const Title = styled.div`
   font-size: 1.1em;

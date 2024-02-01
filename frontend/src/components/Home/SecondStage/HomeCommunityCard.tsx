@@ -1,6 +1,6 @@
 import Lottie from 'react-lottie'
 import mainCommunity from '@src/assets/lotties/main_community.json'
-import * as h from '@src/components/style/HomeCommunityCard'
+import * as h from '@src/components/style/HomeCommunityCardStyle'
 import MainColorMoveCard from '@src/common/MainColorMoveCard.tsx'
 
 const HomeCommunityCard = () => {
