@@ -9,6 +9,7 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: space-around;
   padding: 0 11px;
+  margin-left: 6px;
 `
 
 export const BoneBowl = styled.img`
