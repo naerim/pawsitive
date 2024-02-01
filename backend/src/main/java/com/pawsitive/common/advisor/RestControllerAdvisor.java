@@ -13,6 +13,7 @@ import com.pawsitive.usergroup.exception.InvalidPasswordException;
 import com.pawsitive.usergroup.exception.UserNotFoundException;
 import com.pawsitive.usergroup.exception.UserNotLoginException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 @RestControllerAdvice
 @RequiredArgsConstructor
+@Slf4j
 public class RestControllerAdvisor {
     private final ErrorMessageUtil errorMessageUtil;
 
@@ -91,7 +93,7 @@ public class RestControllerAdvisor {
      * @return 에러메세지를 response entity 에 담아서 전송합니다.
      */
     @ExceptionHandler(value = {UserNotFoundException.class})
-    public ResponseEntity<BaseResponseBody> NotFoundException404(RuntimeException e) {
+    public ResponseEntity<BaseResponseBody> notFoundException404(RuntimeException e) {
 
         return ResponseEntity.status(NOT_FOUND)
             .body(BaseResponseBody.of(NOT_FOUND, e.getMessage()));
@@ -104,7 +106,7 @@ public class RestControllerAdvisor {
      * @return 에러메세지를 response entity 에 담아서 전송합니다.
      */
     @ExceptionHandler(value = {DuplicateIdException.class})
-    public ResponseEntity<BaseResponseBody> ConflictException409(RuntimeException e) {
+    public ResponseEntity<BaseResponseBody> conflictException409(RuntimeException e) {
 
         return ResponseEntity.status(CONFLICT).body(BaseResponseBody.of(CONFLICT, e.getMessage()));
     }
@@ -118,7 +120,7 @@ public class RestControllerAdvisor {
     @ExceptionHandler(value = {RuntimeException.class, Exception.class})
     public ResponseEntity<BaseResponseBody> internalErrorException500(Exception e) {
 
-        e.printStackTrace();
+        log.warn(e.getMessage());
 
         return ResponseEntity.status(INTERNAL_SERVER_ERROR)
             .body(BaseResponseBody.of(INTERNAL_SERVER_ERROR, e.getMessage()));

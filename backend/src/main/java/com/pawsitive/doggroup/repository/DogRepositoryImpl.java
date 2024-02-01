@@ -20,9 +20,9 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
  * @since 1.0
  */
 public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogRepositoryCustom {
-    private final QDog qDog = QDog.dog;
-    private final QUser qUser = QUser.user;
-    private final QDogImage qDogImage = QDogImage.dogImage;
+    private static final QDog qDog = QDog.dog;
+    private static final QUser qUser = QUser.user;
+    private static final QDogImage qDogImage = QDogImage.dogImage;
 
     public DogRepositoryImpl() {
         super(Dog.class);

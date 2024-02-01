@@ -25,13 +25,5 @@ public class UserRes {
 
     @Schema(name = "이름")
     private String name;
-
-//    public static UserRes of(User user) {
-//        UserRes res = new UserRes();
-//        res.setDepartment(user.getDepartment());
-//        res.setPosition(user.getPosition());
-//        res.setName(user.getName());
-//        res.setUserId(user.getUserId());
-//        return res;
-//    }
+    
 }

@@ -21,11 +21,11 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 
 public class CommunityBoardRepositoryImpl extends QuerydslRepositorySupport
     implements CommunityBoardRepositoryCustom {
-    private final QCommunityBoard qBoard = QCommunityBoard.communityBoard;
-    private final QCommunityComment qComment = QCommunityComment.communityComment;
-    private final QMember qMember = QMember.member;
-    private final QUser qUser = QUser.user;
-    private final QCommunityCategory qCategory = QCommunityCategory.communityCategory;
+    private static final QCommunityBoard qBoard = QCommunityBoard.communityBoard;
+    private static final QCommunityComment qComment = QCommunityComment.communityComment;
+    private static final QMember qMember = QMember.member;
+    private static final QUser qUser = QUser.user;
+    private static final QCommunityCategory qCategory = QCommunityCategory.communityCategory;
 
     private final QCommunityImage qBoardImage = QCommunityImage.communityImage;
 
@@ -82,7 +82,7 @@ public class CommunityBoardRepositoryImpl extends QuerydslRepositorySupport
             .innerJoin(qMember.user, qUser)
             .select(
                 Projections.constructor(CommunityCommentDetailRes.class, qBoard.communityBoardNo,
-                    qComment.CommunityCommentNo, qUser.email, qUser.name, qComment.content,
+                    qComment.commentNo, qUser.email, qUser.name, qComment.content,
                     qComment.createdAt))
             .where(qComment.board.communityBoardNo.eq(boardNo))
             .fetch();
