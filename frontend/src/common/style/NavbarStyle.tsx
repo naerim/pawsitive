@@ -34,5 +34,6 @@ export const Image = styled.img`
 
 export const Label = styled.div`
   margin-top: 10px;
-  font-size: 0.7em;
+  font-size: 0.8em;
+  font-weight: 500;
 `

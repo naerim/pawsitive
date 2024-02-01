@@ -16,9 +16,7 @@ const Header = () => {
       <h.Wrap>
         <h.Logo onClick={homeClick} />
         <div>
-          <h.MenuItem to="/dictionary">
-            <img src="/icon/icon_book.png" alt="" />
-          </h.MenuItem>
+          <h.MenuItem to="/dictionary">펫과사전</h.MenuItem>
         </div>
       </h.Wrap>
     </h.Container>

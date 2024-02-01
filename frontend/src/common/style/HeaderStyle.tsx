@@ -8,7 +8,7 @@ export const Container = styled.header`
   width: 390px;
   height: 40px;
   z-index: 100;
-  background-color: #fff;
+  background-color: #f7f7f7;
 `
 
 export const Wrap = styled.div`
@@ -25,6 +25,7 @@ export const Logo = styled.div`
 
 export const MenuItem = styled(Link)`
   margin-left: 10px;
+  color: #000;
 
   img {
     width: 24px;
