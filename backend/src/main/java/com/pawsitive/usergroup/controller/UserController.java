@@ -3,8 +3,9 @@ package com.pawsitive.usergroup.controller;
 import static org.springframework.http.HttpStatus.OK;
 
 import com.pawsitive.common.dto.BaseResponseBody;
+import com.pawsitive.doggroup.dto.response.AdoptedDogRes;
+import com.pawsitive.doggroup.service.AdoptDogService;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
-import com.pawsitive.usergroup.dto.response.AdoptedDogRes;
 import com.pawsitive.usergroup.exception.UserNotLoginException;
 import com.pawsitive.usergroup.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
+    private final AdoptDogService adoptDogService;
 
 //    private final UserService userService;
 //
@@ -124,8 +126,8 @@ public class UserController {
 
         AdoptedDogRes response = AdoptedDogRes.builder()
             .adoptedDays(290)
-            .answerCount(10)
-            .memoryCount(9)
+//            .answerCount(10)
+//            .memoryCount(9)
             .build();
 
         return ResponseEntity
@@ -159,6 +161,20 @@ public class UserController {
             .body(BaseResponseBody.of(OK, "수정 완료"));
     }
 
+    @GetMapping("/dogs/{userNo}")
+    @Operation(summary = "로그인 한 회원의 입양한 유기견 조회",
+        description = "<strong>로그인 한 회원이 입양한 유기견</strong>을 조회한다.",
+        tags = {"03.User"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "로그인 한 회원의 입양한 유기견 조회에 성공하였습니다."),
+            @ApiResponse(responseCode = "401", description = "현재 로그인 한 회원의 계정이 유효하지 않습니다."),
+        }
+    )
+    public ResponseEntity<AdoptedDogRes> getAdoptedDogByUserNo(@PathVariable Integer userNo) {
+        return ResponseEntity
+            .status(OK)
+            .body(adoptDogService.getAdoptedDogByUserNo(userNo));
+    }
 
 //    @PatchMapping("/{userId}")
 //    public ResponseEntity<UserUpdateRes> modifyUser(@PathVariable String userId,
