@@ -2,9 +2,9 @@ package com.pawsitive.doggroup.service;
 
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
-import com.pawsitive.doggroup.dto.response.DogPageRes;
-import com.pawsitive.doggroup.entity.Dog;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -18,9 +18,9 @@ public interface DogService {
      * @param req    유기견 등록을 위한 입력 정보
      * @param video  유기견 영상
      * @param images 유기견 사진들
-     * @return 유기견 등록 성공 여부
+     * @return 등록 성공한 유기견 상세 조회
      */
-    Dog createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images) throws Exception;
+    DogDetailRes createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images);
 
     /**
      * 유기견을 유기견 고유 번호로 상세조회하는 메서드입니다.
@@ -41,10 +41,10 @@ public interface DogService {
     /**
      * 유기견 공고 목록을 조회하는 메서드입니다.
      *
-     * @param pageNo 조회할 유기견 리스트 페이지 수
+     * @param pageable 조회할 유기견 리스트 페이지 정보
      * @return 해당 페이지 유기견 리스트
      */
-    DogPageRes getDogList(int pageNo);
+    Page<DogDetailRes> getDogList(Pageable pageable);
 
 
 }

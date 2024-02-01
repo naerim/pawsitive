@@ -1,9 +1,9 @@
 package com.pawsitive.doggroup.service;
 
+import com.pawsitive.common.exeption.NotSavedException;
 import com.pawsitive.common.util.S3BucketUtil;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.entity.DogImage;
-import com.pawsitive.doggroup.exception.DogNotSavedException;
 import com.pawsitive.doggroup.repository.DogImageRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-@Service("dogImageService")
+@Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Slf4j
@@ -23,7 +23,7 @@ public class DogImageServiceImpl implements DogImageService {
     private final S3BucketUtil s3BucketUtil;
 
     @Override
-    public Dog createDogImage(Dog dog, MultipartFile[] images) throws DogNotSavedException {
+    public Dog createDogImage(Dog dog, MultipartFile[] images) {
 
         List<DogImage> dogImageList = new ArrayList<>();
         List<String> imageKeys = new ArrayList<>();
@@ -38,7 +38,7 @@ public class DogImageServiceImpl implements DogImageService {
             // DogImage 객체 생성 후 dog와 url 지정한 뒤 List에 저장
             DogImage dogImage = new DogImage();
             dogImage.setDog(dog);
-            dogImage.setUrl(s3BucketUtil.getFileUrl(imageKey));
+            dogImage.setImage(s3BucketUtil.getFileUrl(imageKey));
             dogImageList.add(dogImage);
         }
 
@@ -48,8 +48,7 @@ public class DogImageServiceImpl implements DogImageService {
             for (String key : imageKeys) {
                 s3BucketUtil.deleteFile(key);
             }
-
-            throw new DogNotSavedException();
+            throw new NotSavedException();
         }
 
         return dog;

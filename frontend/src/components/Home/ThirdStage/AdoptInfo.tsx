@@ -6,21 +6,23 @@ import * as a from '@src/components/style/AdoptInfoStyle'
 const AdoptInfo = () => {
   const { isLoading } = useQuery<AfterAdoptionUserInfo>({
     queryKey: ['afterAdoptionUser'],
-    queryFn: () => fetchAfterAdoptionUser(),
+    queryFn: fetchAfterAdoptionUser,
   })
 
-  return isLoading ? (
-    <p>Loading</p>
-  ) : (
+  return (
     <a.Container>
-      <a.DogImage src="img/image_sample_dog.png" />
-      <a.TextContainer>
-        <a.TogetherContainer>
-          <a.DogName>머꾸꾸</a.DogName>
-          <a.Together>와 함께한지</a.Together>
-        </a.TogetherContainer>
-        <a.Day> 290일</a.Day>
-      </a.TextContainer>
+      {!isLoading && (
+        <>
+          <a.DogImage src="img/image_sample_dog.png" />
+          <a.TextContainer>
+            <a.TogetherContainer>
+              <a.DogName>머꾸꾸</a.DogName>
+              <a.Together>와 함께한지</a.Together>
+            </a.TogetherContainer>
+            <a.Day> 290일</a.Day>
+          </a.TextContainer>
+        </>
+      )}
     </a.Container>
   )
 }

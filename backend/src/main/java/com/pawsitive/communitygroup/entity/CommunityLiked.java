@@ -27,7 +27,7 @@ public class CommunityLiked {
     private int communityLikedNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no")
+    @JoinColumn(name = "user_no")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)

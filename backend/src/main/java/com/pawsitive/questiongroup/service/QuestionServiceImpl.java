@@ -6,9 +6,11 @@ import com.pawsitive.questiongroup.exception.QuestionNotFoundException;
 import com.pawsitive.questiongroup.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
 

@@ -9,6 +9,8 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
@@ -43,17 +45,24 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
     @Override
     public List<String> getDogImagesByDogNo(int dogNo) {
         return from(qDogImage)
-            .select(qDogImage.url)
+            .select(qDogImage.image)
             .where(qDogImage.dog.dogNo.eq(dogNo))
             .fetch();
     }
 
     @Override
-    public List<DogDetailRes> getDogList(Pageable pageable) {
-        return getQueryDogList()
+    public Page<DogDetailRes> getDogList(Pageable pageable) {
+
+        List<DogDetailRes> content = getQueryDogList()
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
+
+        Long count = from(qDog)
+            .select(qDog.count())
+            .fetchOne();
+
+        return new PageImpl<>(content, pageable, count);
     }
 
     private JPQLQuery<DogDetailRes> getQueryDogList() {

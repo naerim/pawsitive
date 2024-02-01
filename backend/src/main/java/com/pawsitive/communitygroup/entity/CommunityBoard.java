@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,7 +32,7 @@ public class CommunityBoard {
     private int communityBoardNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no")
+    @JoinColumn(name = "user_no")
     private Member member;
 
     @Column(name = "title")
@@ -39,9 +40,6 @@ public class CommunityBoard {
 
     @Column(name = "content")
     private String content;
-
-    @Column(name = "image")
-    private String image;
 
     @Column(name = "is_public")
     private boolean isPublic;
@@ -55,7 +53,7 @@ public class CommunityBoard {
     @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "hit")
+    @Column(name = "hit", insertable = false)
     private int hit;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -64,4 +62,18 @@ public class CommunityBoard {
 
     @OneToMany(mappedBy = "board")
     private List<CommunityComment> comments = new ArrayList<>();
+
+    @Builder
+    public CommunityBoard(Member member, String title, String content, boolean isPublic,
+                          double latitude, double longitude, CommunityCategory communityCategory) {
+        this.member = member;
+        this.title = title;
+        this.content = content;
+        this.isPublic = isPublic;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.communityCategory = communityCategory;
+    }
+
+
 }
