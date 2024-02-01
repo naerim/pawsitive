@@ -1,11 +1,11 @@
 package com.pawsitive.doggroup.controller;
 
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogPageRes;
-import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.service.DogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -48,11 +48,9 @@ public class DogController {
                                                   @RequestPart(required = false)
                                                   MultipartFile[] images) throws Exception {
 
-        Dog dog = dogService.createDog(req, video, images);
-
         return ResponseEntity
-            .status(OK)
-            .body(dogService.getDogByDogNo(dog.getDogNo()));
+            .status(CREATED)
+            .body(dogService.createDog(req, video, images));
     }
 
     @GetMapping("/{dogNo}")
@@ -110,7 +108,7 @@ public class DogController {
                 .totalElements((int) dogPage.getTotalElements())
                 .build()
             );
-        
+
     }
 
 

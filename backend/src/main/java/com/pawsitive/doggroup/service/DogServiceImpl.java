@@ -1,11 +1,11 @@
 package com.pawsitive.doggroup.service;
 
+import com.pawsitive.common.exeption.NotSavedException;
 import com.pawsitive.common.util.S3BucketUtil;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
-import com.pawsitive.doggroup.exception.DogNotSavedException;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
@@ -39,8 +39,7 @@ public class DogServiceImpl implements DogService {
 
     @Override
     @Transactional
-    public Dog createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images)
-        throws Exception {
+    public DogDetailRes createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images) {
         User user = userService.getUserByUserNo(req.getUserNo());
 
         String videoKey = s3BucketUtil.uploadFile(video);
@@ -56,17 +55,17 @@ public class DogServiceImpl implements DogService {
             .video(s3BucketUtil.getFileUrl(videoKey))
             .build();
 
+        Dog savedDog;
         try {
-            dog = dogRepository.save(dog);
-            log.info(dog.toString());
+            savedDog = dogRepository.save(dog);
         } catch (Exception e) {
             s3BucketUtil.deleteFile(videoKey);
-            throw new DogNotSavedException();
+            throw new NotSavedException();
         }
 
-        log.info(dog.toString());
+        dogImageService.createDogImage(savedDog, images);
 
-        return dogImageService.createDogImage(dog, images);
+        return getDogByDogNo(savedDog.getDogNo());
     }
 
     @Override
