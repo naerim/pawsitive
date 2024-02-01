@@ -8,7 +8,7 @@ export const Container = styled.header`
   width: 390px;
   height: 40px;
   z-index: 100;
-  background-color: #f7f7f7;
+  background-color: #fff;
 `
 
 export const Wrap = styled.div`

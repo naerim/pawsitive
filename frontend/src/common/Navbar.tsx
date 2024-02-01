@@ -5,8 +5,10 @@ const Navbar = () => {
   const locationNow = useLocation()
 
   // if (locationNow.pathname.match(/^\/chat\/\d+$/)) return null
-  if (locationNow.pathname === '/confirm/pawsitive') return null
   if (locationNow.pathname === '/mypage/survey') return null
+  if (locationNow.pathname === '/mypage/survey/done') return null
+  if (locationNow.pathname === '/confirm/pawsitive') return null
+
   return (
     <n.Container>
       <n.MenuWrap>
