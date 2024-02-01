@@ -4,27 +4,35 @@ import CommunityListContainer from '@src/container/CommunityListContainer'
 import * as c from '@src/components/style/CategoryButtonStyle'
 import { useAtomValue } from 'jotai'
 import { CommunityListAtom } from '@src/stores/atoms/community'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const CommunityInfoContainer = () => {
-  const [isMapValue, setIsMap] = useState(true)
+  const [isMapValue, setIsMap] = useState(false)
   const communityListValue = useAtomValue(CommunityListAtom)
+  const [communityContents, setCommunityContents] = useState([])
 
   const isMapChange = () => {
     setIsMap(!isMapValue)
   }
 
+  useEffect(() => {
+    // communityListValue가 비어있지 않은 경우에만 로직을 수행
+    if (communityListValue && communityListValue.content) {
+      setCommunityContents(communityListValue.content)
+    }
+  }, [communityListValue, CommunityListAtom])
+
   return (
     <div>
       <c.Button type="button" onClick={isMapChange}>
-        바꾸는 버튼
+        {isMapValue ? '목록 보기' : '지도 보기'}
       </c.Button>
       <Link to="/community/create">
         <c.Button>커뮤니티 글 작성하기</c.Button>
       </Link>
       {isMapValue ? (
         <div>
-          <KakaoMap dummyData={communityListValue} />
+          <KakaoMap dummyData={communityContents} />
         </div>
       ) : (
         <div>
