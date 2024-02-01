@@ -33,6 +33,8 @@ export const Item = styled.div`
   background-color: #fff;
   border-radius: 10px;
   padding: 10px;
+  border: 1px solid #ebebeb;
+  box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.1);
 
   img {
     background-color: #fff3e9;

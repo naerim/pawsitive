@@ -31,10 +31,11 @@ export const Item = styled.div`
   display: flex;
   flex-direction: column;
   background: #ffffff;
-  border: 1px solid #ebebeb;
   border-radius: 11px;
   padding: 18px;
   align-items: center;
+  border: 1px solid #ebebeb;
+  box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.1);
 
   img {
     width: 62px;
@@ -51,12 +52,5 @@ export const ItemTitle = styled.div`
 export const ItemSubTitle = styled.div`
   font-size: 0.8em;
   margin-top: 10px;
-  color: #5f5f5f;
-`
-export const Button = styled.button`
-  margin-top: 20px;
-  padding: 13px;
-  border-radius: 7px;
-  background-color: #f5f5f5;
-  border: 2px solid #ebebeb;
+  or: #5f5f5;
 `

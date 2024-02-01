@@ -1,5 +1,6 @@
 import * as h from '@src/components/style/HomeDictionaryStyle'
 import { useNavigate } from 'react-router-dom'
+import LightColorMoveCard from '@src/common/LightColorMoveCard.tsx'
 
 const HomeDictionary = () => {
   const navigate = useNavigate()
@@ -7,8 +8,6 @@ const HomeDictionary = () => {
   const cardClick = (num: number) => {
     navigate(`/dictionary/${num}`)
   }
-
-  const goDictionary = () => navigate('/dictionary')
 
   return (
     <h.Container>
@@ -36,9 +35,7 @@ const HomeDictionary = () => {
           <img alt="" src="/img/img_dog_medication.png" />
         </h.Item>
       </h.Wrap>
-      <h.Button type="button" onClick={goDictionary}>
-        더 많은 펫과사전 찾아보기
-      </h.Button>
+      <LightColorMoveCard title="더 많은 펫과사전 찾아보기" url="/dictionary" />
     </h.Container>
   )
 }

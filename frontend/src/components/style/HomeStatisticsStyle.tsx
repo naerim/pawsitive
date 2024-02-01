@@ -3,10 +3,10 @@ import styled from 'styled-components'
 export const Container = styled.div`
   display: flex;
   width: 90%;
-  margin: 24px auto;
+  margin: 16px auto;
   justify-content: space-between;
   background-color: #fff;
-  padding: 26px 20px;
+  padding: 16px 20px;
   border-radius: 10px;
 `
 

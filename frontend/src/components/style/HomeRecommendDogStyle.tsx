@@ -32,10 +32,11 @@ export const Item = styled.div`
   flex-direction: column;
   align-items: center;
   background: #ffffff;
-  border: 1px solid #ebebeb;
   border-radius: 10px;
   width: 158px;
   padding: 9px 0;
+  border: 1px solid #ebebeb;
+  box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.1);
 
   img {
     width: 140px;
