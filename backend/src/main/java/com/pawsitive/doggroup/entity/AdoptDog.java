@@ -38,12 +38,12 @@ public class AdoptDog {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "weight")
     private int weight;
-    
+
     @Column(name = "age")
     private int age;
 }

@@ -7,20 +7,20 @@ export const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   background-color: #ff9232;
-  width: 86%;
+  width: 90%;
   margin: 0 auto;
   border-radius: 12px;
   color: #fff;
 `
 export const Title = styled.div`
-  font-size: 15px;
+  font-size: 1.1em;
   margin-bottom: 6px;
   font-weight: 500;
   line-height: normal;
 `
 
 export const SubTitle = styled.div`
-  font-size: 12px;
+  font-size: 0.9em;
   font-weight: 300;
 `
 

@@ -38,7 +38,7 @@ public class Chat {
     @Column(name = "message")
     private String message;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
 

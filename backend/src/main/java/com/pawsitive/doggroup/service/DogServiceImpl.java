@@ -12,6 +12,8 @@ import com.pawsitive.usergroup.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +35,8 @@ public class DogServiceImpl implements DogService {
 
     private final S3BucketUtil s3BucketUtil;
 
+    private final Integer PAGE_SIZE = 20;
+
     @Override
     @Transactional
     public Dog createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images)
@@ -45,7 +49,7 @@ public class DogServiceImpl implements DogService {
             .user(user)
             .name(req.getName())
             .kind(req.getKind())
-            .isNaturalized(req.getIsNaturalized())
+            .isNeutralized(req.getIsNaturalized())
             .color(req.getColor())
             .note(req.getNote())
             .mbti(getMbti(req))
@@ -79,6 +83,11 @@ public class DogServiceImpl implements DogService {
             dog.setImages(dogRepository.getDogImagesByDogNo(dog.getDogNo()));
         }
         return dogList;
+    }
+
+    @Override
+    public Page<DogDetailRes> getDogList(Pageable pageable) {
+        return dogRepository.getDogList(pageable);
     }
 
     private String getMbti(DogCreateReq req) {

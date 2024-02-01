@@ -9,6 +9,9 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 /**
@@ -47,13 +50,28 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
             .fetch();
     }
 
+    @Override
+    public Page<DogDetailRes> getDogList(Pageable pageable) {
+
+        List<DogDetailRes> content = getQueryDogList()
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+
+        Long count = from(qDog)
+            .select(qDog.count())
+            .fetchOne();
+
+        return new PageImpl<>(content, pageable, count);
+    }
+
     private JPQLQuery<DogDetailRes> getQueryDogList() {
         return from(qDog)
             .innerJoin(qDog.user, qUser)
             .select(Projections.fields(DogDetailRes.class, qDog.dogNo,
                 qUser.userNo, qUser.name.as("userName"), qDog.name, qDog.kind, qDog.createdAt,
-                qDog.isNaturalized, qDog.age, qDog.color, qDog.video, qDog.note, qDog.hit,
-                qDog.mbti, qDog.isAdopted
+                qDog.isNeutralized, qDog.age, qDog.color, qDog.video, qDog.note, qDog.hit,
+                qDog.mbti, qDog.isAdopted, qDog.sex
             ));
     }
 }

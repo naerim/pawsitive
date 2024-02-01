@@ -2,13 +2,13 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   display: flex;
-  width: 80%;
-  margin: 25px auto 25px auto;
+  width: 85%;
+  margin: 30px auto;
   justify-content: space-between;
 `
 
 export const Text = styled.div`
-  font-size: 13px;
+  font-size: 1em;
   color: #5f5f5f;
 
   b {

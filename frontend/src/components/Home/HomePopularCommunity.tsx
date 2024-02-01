@@ -3,6 +3,7 @@ import LightColorMoveCard from '@src/common/LightColorMoveCard'
 import { useQuery } from '@tanstack/react-query'
 import { fetchPopularCommunity } from '@src/apis/community'
 import { CommunityItemType } from '@src/types/components/CommunityType'
+import { Link } from 'react-router-dom'
 
 const HomePopularCommunity = () => {
   const { data, isLoading } = useQuery<CommunityItemType[]>({
@@ -17,19 +18,24 @@ const HomePopularCommunity = () => {
         {!isLoading ? (
           data &&
           data.map(item => (
-            <h.Item key={item.board.boardNo}>
-              <img alt="" src="/img/img_popular_community.png" />
-              <div>
-                <h.ItemTitle>{item.board.title}</h.ItemTitle>
-                <h.ItemDesc>{item.board.content}</h.ItemDesc>
-              </div>
-            </h.Item>
+            <Link
+              key={item.board.boardNo}
+              to={`community/${item.board.boardNo}`}
+            >
+              <h.Item>
+                <img alt="" src="/img/img_popular_community.png" />
+                <div>
+                  <h.ItemTitle>{item.board.title}</h.ItemTitle>
+                  <h.ItemDesc>{item.board.content}</h.ItemDesc>
+                </div>
+              </h.Item>
+            </Link>
           ))
         ) : (
           <div>로딩중</div>
         )}
       </h.Wrap>
-      <LightColorMoveCard title="더 많은 게시글 살펴보기" url="/" />
+      <LightColorMoveCard title="더 많은 게시글 살펴보기" url="/community" />
     </h.Container>
   )
 }

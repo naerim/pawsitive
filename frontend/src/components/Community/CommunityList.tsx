@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import React from 'react'
 import { CommunityItemType } from '@src/types/components/CommunityType'
+import CommunityCard from '@src/components/Community/CommunityCard'
 import * as c from '@src/components/style/CommunityListStyle'
 
 interface CommunityListProps {
@@ -13,16 +14,7 @@ const CommunityList: React.FC<CommunityListProps> = props => {
     <c.Box>
       {data?.map(item => (
         <Link key={item.board.boardNo} to={`${item.board.boardNo}`}>
-          <c.Container>
-            <c.Col>
-              <c.H1>{item.board.title}</c.H1>
-              <c.Category>{item.board.communityCategoryName}</c.Category>
-            </c.Col>
-            <c.Col>
-              <c.P>{item.board.content}</c.P>
-              <c.P>{item.board.memberName}</c.P>
-            </c.Col>
-          </c.Container>
+          <CommunityCard data={item} />
         </Link>
       ))}
     </c.Box>

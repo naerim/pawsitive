@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export const Container = styled.nav`
   position: fixed;
-  width: 375px;
+  width: 390px;
   bottom: 0;
   z-index: 100;
   border-top: 1px solid #f7f7f7;
@@ -13,13 +13,26 @@ export const Container = styled.nav`
 export const MenuWrap = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  width: 100%;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
   height: 89px;
 `
 
 export const MenuItem = styled(Link)`
-  font-size: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   color: #000;
-  margin-right: 10px;
+  width: 16%;
+`
+
+export const Image = styled.img`
+  width: 18px;
+  height: 18px;
+`
+
+export const Label = styled.div`
+  margin-top: 10px;
+  font-size: 0.8em;
 `

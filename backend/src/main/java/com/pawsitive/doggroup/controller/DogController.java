@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
+import com.pawsitive.doggroup.dto.response.DogPageRes;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.service.DogService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +13,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/v1/dogs")
 @RequiredArgsConstructor
+@Slf4j
 public class DogController {
     private final DogService dogService;
 
@@ -66,10 +71,11 @@ public class DogController {
     }
 
     @GetMapping("/recommendation")
-    @Operation(summary = "추천 강아지 조회", description = "<strong>유기견 목록을 파라미터로 전달 받은 조회할 갯수만큼 조회</strong> 한다.",
+    @Operation(summary = "추천 강아지 조회", description = "전달받은 페이지에 해당하는 <strong>유기견 목록</strong>을 반환한다.",
         tags = {"04.Dog"},
         responses = {
             @ApiResponse(responseCode = "200", description = "추천 강아지 목록을 정상적으로 반환한다."),
+            @ApiResponse(responseCode = "400", description = "전달받은 페이지 값에 해당하는 추천 강아지가 없음.")
         }
     )
     public ResponseEntity<List<DogDetailRes>> getRecommendationDogList(@RequestParam int num) {
@@ -77,6 +83,34 @@ public class DogController {
         return ResponseEntity
             .status(OK)
             .body(dogService.getRecommendationDogList(num));
+    }
+
+
+    @GetMapping("/list")
+    @Operation(
+        summary = "유기견 공고 전체 조회",
+        description = "전달받은 페이지 번호에 해당하는 유기견 공고를 반환한다.",
+        tags = {"04.Dog"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "해당하는 페이지의 유기견 공고 목록을 정상적으로 반환한다."),
+            @ApiResponse(responseCode = "400", description = "해당 페이지에 유기견 공고가 없음.")
+        }
+
+    )
+    public ResponseEntity<DogPageRes> getDogList(Pageable pageable) {
+        Page<DogDetailRes> dogPage = dogService.getDogList(pageable);
+
+        return ResponseEntity
+            .status(OK)
+            .body(DogPageRes.builder()
+                .content(dogPage.getContent())
+                .pageNumber(dogPage.getPageable().getPageNumber())
+                .pageSize(dogPage.getPageable().getPageSize())
+                .totalPages(dogPage.getTotalPages())
+                .totalElements((int) dogPage.getTotalElements())
+                .build()
+            );
+        
     }
 
 
