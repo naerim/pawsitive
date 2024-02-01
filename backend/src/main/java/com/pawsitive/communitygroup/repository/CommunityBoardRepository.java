@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CommunityRepository
-    extends JpaRepository<CommunityBoard, Integer>, CommunityRepositoryCustom {
+public interface CommunityBoardRepository
+    extends JpaRepository<CommunityBoard, Integer>, CommunityBoardRepositoryCustom {
 
 
 }

@@ -3,9 +3,9 @@ package com.pawsitive.doggroup.controller;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
+import com.pawsitive.common.dto.response.PageResponse;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
-import com.pawsitive.doggroup.dto.response.DogPageRes;
 import com.pawsitive.doggroup.service.DogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -35,79 +35,50 @@ public class DogController {
     private final DogService dogService;
 
     @PostMapping
-    @Operation(summary = "유기견 등록", description = "전달받은 입력 정보를 유기견 테이블에 등록합니다.",
-        tags = {"04.Dog"},
-        responses = {
-            @ApiResponse(responseCode = "201", description = "유기견 등록 성공"),
-            @ApiResponse(responseCode = "400", description = "유기견 등록에 필요한 정보가 유효하지 않음")
-        }
-    )
+    @Operation(summary = "유기견 등록", description = "전달받은 입력 정보를 유기견 테이블에 등록합니다.", tags = {
+        "04.Dog"}, responses = {@ApiResponse(responseCode = "201", description = "유기견 등록 성공"),
+        @ApiResponse(responseCode = "400", description = "유기견 등록에 필요한 정보가 유효하지 않음")})
     public ResponseEntity<DogDetailRes> createDog(@Valid @RequestPart DogCreateReq req,
                                                   @RequestPart(required = false)
                                                   MultipartFile video,
                                                   @RequestPart(required = false)
                                                   MultipartFile[] images) throws Exception {
 
-        return ResponseEntity
-            .status(CREATED)
-            .body(dogService.createDog(req, video, images));
+        return ResponseEntity.status(CREATED).body(dogService.createDog(req, video, images));
     }
 
     @GetMapping("/{dogNo}")
-    @Operation(summary = "유기견 상세 조회", description = "전달받은 유기견 번호에 대한 상세 조회 정보를 반환합니다.",
-        tags = {"04.Dog"},
-        responses = {
-            @ApiResponse(responseCode = "200", description = "유기견 고유 번호에 해당하는 강아지 상세 조회 성공"),
-            @ApiResponse(responseCode = "400", description = "유기견 고유 번호에 해당하는 강아지가 없음"),
-        }
-    )
+    @Operation(summary = "유기견 상세 조회", description = "전달받은 유기견 번호에 대한 상세 조회 정보를 반환합니다.", tags = {
+        "04.Dog"}, responses = {
+        @ApiResponse(responseCode = "200", description = "유기견 고유 번호에 해당하는 강아지 상세 조회 성공"),
+        @ApiResponse(responseCode = "400", description = "유기견 고유 번호에 해당하는 강아지가 없음"),})
     public ResponseEntity<DogDetailRes> getDogByDogNo(@PathVariable int dogNo) {
 
-        return ResponseEntity
-            .status(OK)
-            .body(dogService.getDogByDogNo(dogNo));
+        return ResponseEntity.status(OK).body(dogService.getDogByDogNo(dogNo));
     }
 
     @GetMapping("/recommendation")
-    @Operation(summary = "추천 강아지 조회", description = "전달받은 페이지에 해당하는 <strong>유기견 목록</strong>을 반환한다.",
-        tags = {"04.Dog"},
-        responses = {
-            @ApiResponse(responseCode = "200", description = "추천 강아지 목록을 정상적으로 반환한다."),
-            @ApiResponse(responseCode = "400", description = "전달받은 페이지 값에 해당하는 추천 강아지가 없음.")
-        }
-    )
+    @Operation(summary = "추천 강아지 조회", description = "전달받은 페이지에 해당하는 <strong>유기견 목록</strong>을 반환한다.", tags = {
+        "04.Dog"}, responses = {
+        @ApiResponse(responseCode = "200", description = "추천 강아지 목록을 정상적으로 반환한다."),
+        @ApiResponse(responseCode = "400", description = "전달받은 페이지 값에 해당하는 추천 강아지가 없음.")})
     public ResponseEntity<List<DogDetailRes>> getRecommendationDogList(@RequestParam int num) {
 
-        return ResponseEntity
-            .status(OK)
-            .body(dogService.getRecommendationDogList(num));
+        return ResponseEntity.status(OK).body(dogService.getRecommendationDogList(num));
     }
 
 
-    @GetMapping("/list")
-    @Operation(
-        summary = "유기견 공고 전체 조회",
-        description = "전달받은 페이지 번호에 해당하는 유기견 공고를 반환한다.",
-        tags = {"04.Dog"},
-        responses = {
-            @ApiResponse(responseCode = "200", description = "해당하는 페이지의 유기견 공고 목록을 정상적으로 반환한다."),
-            @ApiResponse(responseCode = "400", description = "해당 페이지에 유기견 공고가 없음.")
-        }
+    @GetMapping
+    @Operation(summary = "유기견 공고 전체 조회", description = "전달받은 페이지 번호에 해당하는 유기견 공고를 반환한다.", tags = {
+        "04.Dog"}, responses = {
+        @ApiResponse(responseCode = "200", description = "해당하는 페이지의 유기견 공고 목록을 정상적으로 반환한다."),
+        @ApiResponse(responseCode = "400", description = "해당 페이지에 유기견 공고가 없음.")}
 
     )
-    public ResponseEntity<DogPageRes> getDogList(Pageable pageable) {
+    public ResponseEntity<PageResponse<DogDetailRes>> getDogList(Pageable pageable) {
         Page<DogDetailRes> dogPage = dogService.getDogList(pageable);
 
-        return ResponseEntity
-            .status(OK)
-            .body(DogPageRes.builder()
-                .content(dogPage.getContent())
-                .pageNumber(dogPage.getPageable().getPageNumber())
-                .pageSize(dogPage.getPageable().getPageSize())
-                .totalPages(dogPage.getTotalPages())
-                .totalElements((int) dogPage.getTotalElements())
-                .build()
-            );
+        return ResponseEntity.status(OK).body(new PageResponse<DogDetailRes>(dogPage));
 
     }
 

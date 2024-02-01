@@ -70,8 +70,10 @@ public class DogServiceImpl implements DogService {
 
     @Override
     public DogDetailRes getDogByDogNo(int dogNo) {
-        return dogRepository.getDogByDogNo(dogNo)
+        DogDetailRes dog = dogRepository.getDogByDogNo(dogNo)
             .orElseThrow(DogNotFoundException::new);
+        dog.setImages(dogRepository.getDogImagesByDogNo(dog.getDogNo()));
+        return dog;
     }
 
     // TODO [Yi] 추천로직 작성 (추천기준도 정해야댐)
