@@ -1,5 +1,5 @@
 import CommunityDetail from '@src/components/Community/CommunityDetail'
-import { CommunityItemType } from '@src/types/components/CommunityType'
+import { CommunityDetailType } from '@src/types/components/CommunityType'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { fetchCommunityDetail } from '@src/apis/community'
@@ -9,7 +9,7 @@ const CommunityDetailContainer = () => {
   const { contentNo } = useParams<{ contentNo: string }>()
 
   // useQuery로 데이터 받아오기
-  const { isLoading, data } = useQuery<CommunityItemType>({
+  const { isLoading, data } = useQuery<CommunityDetailType>({
     queryKey: ['Detail'],
     queryFn: () => fetchCommunityDetail(Number(contentNo)),
   })
@@ -22,7 +22,6 @@ const CommunityDetailContainer = () => {
   //     setCommunityDetail(data)
   //   }
   // }, [data, setCommunityDetail])
-
   return (
     <div>
       {/* {isLoading || !CommunityDetailValue ? (      */}

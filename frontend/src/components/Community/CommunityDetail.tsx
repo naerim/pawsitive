@@ -1,9 +1,9 @@
 import React from 'react'
-import { CommunityItemType } from '@src/types/components/CommunityType'
 import * as c from '@src/components/style/CommunityDetailStyle'
+import { CommunityDetailType } from '@src/types/components/CommunityType'
 
 interface CommunityDetailProps {
-  data: CommunityItemType
+  data: CommunityDetailType
 }
 
 const CommunityDetail: React.FC<CommunityDetailProps> = props => {
