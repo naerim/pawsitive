@@ -32,13 +32,13 @@ public class CommunityComment {
     private CommunityBoard board;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no")
+    @JoinColumn(name = "user_no")
     private Member member;
 
     @Column(name = "content")
     private String content;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
 }

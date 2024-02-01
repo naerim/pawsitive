@@ -28,16 +28,13 @@ public class MemberDog {
     private int memberDogNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no")
+    @JoinColumn(name = "user_no")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dog_no")
     private Dog dog;
 
-    @Column(name = "type")
-    private char type;
-
-    @Column(name = "created_at")
+    @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 }

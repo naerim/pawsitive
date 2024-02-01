@@ -26,7 +26,7 @@ public class ChatRoom {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
 }

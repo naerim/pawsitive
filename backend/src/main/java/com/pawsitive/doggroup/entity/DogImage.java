@@ -29,6 +29,6 @@ public class DogImage {
     @JoinColumn(name = "dog_no")
     private Dog dog;
 
-    @Column(name = "url")
-    private String url;
+    @Column(name = "image")
+    private String image;
 }

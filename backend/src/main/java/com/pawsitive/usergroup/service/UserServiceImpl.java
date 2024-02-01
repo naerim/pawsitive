@@ -69,15 +69,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUserNo(int userNo) {
-        // 디비에 유저 정보 조회 (userId 를 통한 조회).
-        return userRepository.findUserByUserNo(userNo).orElseThrow(UserNotFoundException::new);
+        return userRepository.findUserByUserNo(userNo)
+            .orElseThrow(UserNotFoundException::new);
+    }
+
+    @Override
+    public Member getMemberByUserNo(int userNo) {
+        return memberRepository.findMemberByUserNo(userNo)
+            .orElseThrow(UserNotFoundException::new);
     }
 
     @Override
     public void updateField(UserTypeStagePatchReq req, int userNo) {
 
         Member member =
-            memberRepository.findMemberByMemberNo(userNo).orElseThrow(UserNotFoundException::new);
+            memberRepository.findMemberByUserNo(userNo).orElseThrow(UserNotFoundException::new);
 
         if ("type".equals(req.getField())) {
             // TODO 나중에
