@@ -8,7 +8,6 @@ import HomePage from '@src/pages/HomePage'
 import LoginPage from '@src/pages/LoginPage'
 import SignUpPage from '@src/pages/SignUpPage'
 import ShelterSignUpPage from '@src/pages/ShelterSignUpPage'
-import Header from '@src/common/Header'
 import MeetingPage from '@src/pages/MeetingPage'
 import BroadcastPage from '@src/pages/BroadcastPage'
 import MyPage from '@src/pages/MyPage'
@@ -27,6 +26,7 @@ import ConfirmPawsitivePage from '@src/pages/ConfirmPawsitivePage'
 import DictionaryListPage from '@src/pages/DictionaryListPage'
 import DictionaryDetailPage from '@src/pages/DictionaryDetailPage'
 import DogListPage from '@src/pages/DogListPage'
+import AdoptionSurveyDonePage from '@src/pages/AdoptionSurveyDonePage'
 import DailyDiaryPage from '@src/pages/DailyDiaryPage'
 
 // 로그인된 경우 접근할 수 있는 url
@@ -46,6 +46,7 @@ const AuthRoutes = () => (
     <Route path="/dogs" element={<DogListPage />} />
     <Route path="/dogDetail" element={<DogDetailPage />} />
     <Route path="/mypage/survey" element={<AdoptionSurveyPage />} />
+    <Route path="/mypage/survey/done" element={<AdoptionSurveyDonePage />} />
     <Route path="/chat" element={<ChattingPage />} />
     <Route path="/chat/1" element={<ChattingPage />} />
     <Route path="/confirm/pawsitive" element={<ConfirmPawsitivePage />} />
@@ -77,7 +78,6 @@ const App = () => {
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyle />
       <BrowserRouter>
-        <Header />
         {user ? <AuthRoutes /> : <HomeRoutes />}
         <Navbar />
         <ReactQueryDevtools initialIsOpen={false} />

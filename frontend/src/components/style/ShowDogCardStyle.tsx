@@ -9,6 +9,8 @@ export const Container = styled.div`
   width: 90%;
   margin: 0 auto;
   padding: 17px;
+  border: 1px solid #ebebeb;
+  box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.1);
 `
 
 export const Image = styled.img`

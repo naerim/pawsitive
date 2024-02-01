@@ -9,38 +9,14 @@ export const Container = styled.div`
 
 export const Wrap = styled.div`
   display: flex;
-  flex-direction: column;
   width: 90%;
-  height: 90%;
   margin: 20px auto 0 auto;
-`
-
-export const TopWrap = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1.1em;
-  font-weight: 600;
-  margin-bottom: 20px;
-
-  .right {
-    width: 20px;
-  }
-`
-
-export const CloseButton = styled.button`
-  width: 26px;
-  height: 26px;
-  background-color: #ffffff;
-
-  img {
-    width: 100%;
-    height: 100%;
-    padding: 4px;
-  }
+  flex-direction: column;
+  height: 90%;
 `
 
 export const DoneButton = styled.div`
+  display: flex;
   margin-top: auto;
 
   button {
@@ -49,4 +25,15 @@ export const DoneButton = styled.div`
     padding: 11px;
     color: #fff;
   }
+`
+export const Title = styled.div`
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.3em;
+  line-height: 1.2;
+  margin-top: 10px;
+`
+
+export const SubTitle = styled.div`
+  text-align: center;
 `
