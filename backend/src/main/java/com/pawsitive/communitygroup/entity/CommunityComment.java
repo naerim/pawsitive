@@ -32,7 +32,7 @@ public class CommunityComment {
     private CommunityBoard board;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no")
+    @JoinColumn(name = "user_no")
     private Member member;
 
     @Column(name = "content")

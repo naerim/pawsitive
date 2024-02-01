@@ -1,4 +1,4 @@
-package com.pawsitive.communitygroup.response;
+package com.pawsitive.communitygroup.dto.response;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;

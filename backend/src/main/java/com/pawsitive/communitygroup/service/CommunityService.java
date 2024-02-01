@@ -1,6 +1,6 @@
 package com.pawsitive.communitygroup.service;
 
-import com.pawsitive.communitygroup.response.CommunityDetailRes;
+import com.pawsitive.communitygroup.dto.response.CommunityDetailRes;
 import java.util.List;
 
 public interface CommunityService {

@@ -1,11 +1,11 @@
 package com.pawsitive.communitygroup.repository;
 
+import com.pawsitive.communitygroup.dto.response.CommunityBoardDetailRes;
+import com.pawsitive.communitygroup.dto.response.CommunityCommentDetailRes;
 import com.pawsitive.communitygroup.entity.CommunityBoard;
 import com.pawsitive.communitygroup.entity.QCommunityBoard;
 import com.pawsitive.communitygroup.entity.QCommunityCategory;
 import com.pawsitive.communitygroup.entity.QCommunityComment;
-import com.pawsitive.communitygroup.response.CommunityBoardDetailRes;
-import com.pawsitive.communitygroup.response.CommunityCommentDetailRes;
 import com.pawsitive.usergroup.entity.QMember;
 import com.pawsitive.usergroup.entity.QUser;
 import com.querydsl.core.types.Projections;

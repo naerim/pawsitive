@@ -1,4 +1,4 @@
-package com.pawsitive.communitygroup.response;
+package com.pawsitive.communitygroup.dto.response;
 
 import java.util.List;
 import lombok.AllArgsConstructor;

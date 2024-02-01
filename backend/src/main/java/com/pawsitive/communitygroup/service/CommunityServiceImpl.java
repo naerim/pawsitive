@@ -1,10 +1,10 @@
 package com.pawsitive.communitygroup.service;
 
+import com.pawsitive.communitygroup.dto.response.CommunityBoardDetailRes;
+import com.pawsitive.communitygroup.dto.response.CommunityCommentDetailRes;
+import com.pawsitive.communitygroup.dto.response.CommunityDetailRes;
 import com.pawsitive.communitygroup.exception.CommunityBoardNotFoundException;
 import com.pawsitive.communitygroup.repository.CommunityRepository;
-import com.pawsitive.communitygroup.response.CommunityBoardDetailRes;
-import com.pawsitive.communitygroup.response.CommunityCommentDetailRes;
-import com.pawsitive.communitygroup.response.CommunityDetailRes;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
