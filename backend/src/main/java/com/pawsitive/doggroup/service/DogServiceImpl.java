@@ -13,7 +13,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,10 +86,7 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
-    public Page<DogDetailRes> getDogList(int pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE);
-        log.info("DogService - Page offset : " + pageable.getOffset());
-
+    public Page<DogDetailRes> getDogList(Pageable pageable) {
         return dogRepository.getDogList(pageable);
     }
 
