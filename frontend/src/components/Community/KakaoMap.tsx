@@ -14,7 +14,6 @@ import { Link } from 'react-router-dom'
 
 const KakaoMap = (props: { dummyData: CommunityItemType[] }) => {
   const { dummyData } = props
-
   const mapRef = useRef<kakao.maps.Map>(null)
   const location: LocationType | string = Locations()
   const [selectedMarker, setSelectedMarker] =
@@ -29,14 +28,15 @@ const KakaoMap = (props: { dummyData: CommunityItemType[] }) => {
       const container = document.getElementById('map')
       const options = {
         center: new kakao.maps.LatLng(location.latitude, location.longitude),
-        disableDoubleClick: true,
+        // 더블클릭시 크기 조정
+        // disableDoubleClick: true,
         level: 3,
       }
 
       const map = new kakao.maps.Map(container as HTMLElement, options)
       ;(mapRef as unknown as MutableRefObject<kakao.maps.Map>).current = map
       // 확대, 축소 막기
-      map.setZoomable(false)
+      // map.setZoomable(false)
 
       dummyData.forEach(data => {
         const dataLat = data.latitude
@@ -69,7 +69,7 @@ const KakaoMap = (props: { dummyData: CommunityItemType[] }) => {
       const map = new kakao.maps.Map(container as HTMLElement, options)
       ;(mapRef as unknown as MutableRefObject<kakao.maps.Map>).current = map
     }
-  }, [dummyData, location.latitude, location.longitude])
+  }, [dummyData, handleMarkerClick, location.latitude, location.longitude])
 
   useEffect(() => {
     kakao.maps.load(() => initMap())

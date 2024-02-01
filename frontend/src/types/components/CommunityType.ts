@@ -1,4 +1,7 @@
-export type CommunityPopularType = {
+export type CommunityItemType = {
+  map(
+    arg0: (item: any) => import('react/jsx-runtime').JSX.Element,
+  ): import('react').ReactNode
   boardNo: number
   memberEmail: string
   memberName: string
@@ -15,8 +18,8 @@ export type CommunityPopularType = {
 }
 
 // 디테일은 이거
-export type CommunityItemType = {
-  board: CommunityPopularType
+export type CommunityDetailType = {
+  board: CommunityItemType
   comments: {
     boardNo: number
     commentNo: number
@@ -29,7 +32,7 @@ export type CommunityItemType = {
 
 // 커뮤니티 리스트
 export type CommunityListType = {
-  content: CommunityPopularType[]
+  content: CommunityItemType[]
   totalPages: number
   number: number
   previous: boolean
