@@ -9,6 +9,9 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+/**
+ * Cookie를 이용하여 인증 정보를 관리하는 Repository 입니다.
+ */
 @RequiredArgsConstructor
 @Component
 public class HttpCookieOAuth2AuthorizationRequestRepository
@@ -64,6 +67,12 @@ public class HttpCookieOAuth2AuthorizationRequestRepository
         return this.loadAuthorizationRequest(request);
     }
 
+    /**
+     * 인증 완료 후 사용했던 Cookie를 삭제하는 메서드입니다.
+     *
+     * @param request  요청 객체
+     * @param response 응답 객체
+     */
     public void removeAuthorizationRequestCookies(HttpServletRequest request,
                                                   HttpServletResponse response) {
         CookieUtils.deleteCookie(request, response, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME);

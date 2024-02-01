@@ -9,6 +9,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+/**
+ * OAuth2 유저의 인증
+ */
 @Getter
 public class OAuth2UserPrincipal implements OAuth2User, UserDetails {
 

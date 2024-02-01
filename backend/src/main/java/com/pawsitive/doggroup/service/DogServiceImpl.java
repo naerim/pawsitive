@@ -1,6 +1,6 @@
 package com.pawsitive.doggroup.service;
 
-import com.pawsitive.common.exeption.NotSavedException;
+import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.common.util.S3BucketUtil;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;

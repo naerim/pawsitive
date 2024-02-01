@@ -17,6 +17,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * OAuth2 인증 실패 시 호출되는 핸들러입니다.
+ *
+ * @author 천세진, 이하늬
+ * @since 1.0
  */
 @RequiredArgsConstructor
 @Component
@@ -25,6 +28,13 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
     private final HttpCookieOAuth2AuthorizationRequestRepository
         httpCookieOAuth2AuthorizationRequestRepository;
 
+    /**
+     * 인증 실패 시 처리할 로직을 정의한 메서드입니다.
+     *
+     * @param request   요청 객체
+     * @param response  응답 객체
+     * @param exception 예외 객체
+     */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {

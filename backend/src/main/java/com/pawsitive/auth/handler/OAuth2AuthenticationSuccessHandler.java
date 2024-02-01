@@ -13,13 +13,17 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Slf4j
+/**
+ * OAuth2 인증 성긍 시 호출되는 핸들러입니다.
+ *
+ * @author 천세진, 이하늬
+ * @since 1.0
+ */
 @RequiredArgsConstructor
 @Component
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -28,6 +32,13 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         httpCookieOAuth2AuthorizationRequestRepository;
     private final OAuth2UserUnlinkManager oAuth2UserUnlinkManager;
 
+    /**
+     * 인증 성공 시 처리할 로직을 정의한 메서드입니다.
+     *
+     * @param request        요청 객체
+     * @param response       응답 객체
+     * @param authentication 인증 객체
+     */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
@@ -45,6 +56,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 
+    @Override
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) {
 
@@ -72,12 +84,12 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             // TODO: DB 저장
             // TODO: 액세스 토큰, 리프레시 토큰 발급
             // TODO: 리프레시 토큰 DB 저장
-            log.info("email={}, name={}, nickname={}, accessToken={}",
-                principal.getUserInfo().getEmail(),
-                principal.getUserInfo().getName(),
-                principal.getUserInfo().getNickname(),
-                principal.getUserInfo().getAccessToken()
-            );
+//            log.info("email={}, name={}, nickname={}, accessToken={}",
+//                principal.getUserInfo().getEmail(),
+//                principal.getUserInfo().getName(),
+//                principal.getUserInfo().getNickname(),
+//                principal.getUserInfo().getAccessToken()
+//            );
 
             // TODO 토큰 발급 로직 생성
             String accessToken = "test_access_token";
