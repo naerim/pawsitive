@@ -1,6 +1,11 @@
 import * as d from '@src/components/style/DailyQuestionStyle'
+import { useNavigate } from 'react-router-dom'
 
 const DailyQuestion = () => {
+  const navigate = useNavigate()
+
+  const handleContainerClick = () => navigate('/dailyDiary')
+
   return (
     <d.Container onClick={handleContainerClick}>
       <d.DogBone src="img/img_dog_bones.png" alt="Dog Bone" />
