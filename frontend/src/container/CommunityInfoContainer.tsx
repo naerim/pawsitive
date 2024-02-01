@@ -1,7 +1,7 @@
 import KakaoMap from '@src/components/Community/KakaoMap'
 import { Link } from 'react-router-dom'
 import CommunityListContainer from '@src/container/CommunityListContainer'
-import * as c from '@src/components/style/CategoryButtonStyle'
+import * as c from '@src/components/style/CategoryStyle'
 import { useAtomValue } from 'jotai'
 import { CommunityListAtom } from '@src/stores/atoms/community'
 import { useEffect, useState } from 'react'
@@ -26,13 +26,16 @@ const CommunityInfoContainer = () => {
   }, [communityListValue, CommunityListAtom])
 
   return (
-    <div>
-      <c.Button type="button" onClick={isMapChange}>
-        {isMapValue ? '목록 보기' : '지도 보기'}
-      </c.Button>
-      <Link to="/community/create">
-        <c.Button>커뮤니티 글 작성하기</c.Button>
-      </Link>
+    <c.Container>
+      <c.Header>
+        <c.HeaderButton type="button" onClick={isMapChange}>
+          {isMapValue ? '목록 보기' : '지도 보기'}
+        </c.HeaderButton>
+        <Link to="/community/create">
+          <c.HeaderButton>커뮤니티 글 작성하기</c.HeaderButton>
+        </Link>
+      </c.Header>
+
       {isMapValue ? (
         <div>
           <KakaoMap dummyData={communityContents} />
@@ -42,7 +45,7 @@ const CommunityInfoContainer = () => {
           <CommunityListContainer />
         </div>
       )}
-    </div>
+    </c.Container>
   )
 }
 
