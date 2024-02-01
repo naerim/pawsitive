@@ -11,9 +11,7 @@ const AdoptInfo = () => {
 
   return (
     <a.Container>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
+      {!isLoading && (
         <>
           <a.DogImage src="img/image_sample_dog.png" />
           <a.TextContainer>
