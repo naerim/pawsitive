@@ -1,18 +1,16 @@
-//package com.pawsitive.dummy;
-//
-//import com.pawsitive.usergroup.entity.User;
-//
-//public class UserDummy {
-//    public static User getUserSuccess() {
-//
-//        User user = new User();
-//
-//        user.setUserId("ssafy");
-//        user.setDepartment("11");
-//        user.setName("pawsitive");
-//        user.setPassword("ssafy");
-//        user.setPosition("부장");
-//
-//        return user;
-//    }
-//}
+package com.pawsitive.dummy;
+
+import com.pawsitive.usergroup.entity.User;
+
+public class UserDummy {
+    public static User getSuccessEntity() {
+
+        User user = new User();
+        user.setEmail("pawsitive@test.com");
+        user.setName("pawsitive");
+        user.setPassword("1234");
+        user.setAddress("광주광역시");
+        user.setRole("USER");
+        return user;
+    }
+}
