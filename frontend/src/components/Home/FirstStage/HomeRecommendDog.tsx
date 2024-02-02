@@ -34,7 +34,7 @@ const HomeRecommendDog = () => {
           <div>로딩중</div>
         )}
       </h.Wrap>
-      <LightColorMoveCard title="더 많은 강아지 찾아보기" url="/" />
+      <LightColorMoveCard title="더 많은 강아지 찾아보기" url="/dogs" />
     </h.Container>
   )
 }
