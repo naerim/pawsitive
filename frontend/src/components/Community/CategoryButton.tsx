@@ -1,6 +1,6 @@
 import React from 'react'
 import { CategoryType } from '@src/types/components/CommunityType'
-import * as c from '@src/components/style/CategoryStyle.tsx'
+import * as c from '@src/components/style/CategoryStyle'
 
 interface CategoryButtonProps {
   categories: CategoryType[]

@@ -79,7 +79,9 @@ const KakaoMap = (props: { dummyData: CommunityItemType[] }) => {
     <m.Container>
       <m.MapContainer>
         <m.Map id="map" />
-        <m.CurrentButton onClick={() => initMap()}>⊙</m.CurrentButton>
+        <m.CurrentButton onClick={() => initMap()}>
+          <img className="img" src="public/icon/icon_locate.png" alt="locate" />
+        </m.CurrentButton>
       </m.MapContainer>
       {selectedMarker && (
         <m.InfoWindow>

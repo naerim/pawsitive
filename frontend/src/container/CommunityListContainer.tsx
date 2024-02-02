@@ -12,7 +12,7 @@ import CommunityCategorySection from '@src/components/CommunityList/CommunityCat
 import CommunityListSection from '@src/components/CommunityList/CommunityListSection'
 
 const Index: React.FC = () => {
-  const { isLoading, data } = useQuery<CommunityListType[]>({
+  const { isLoading, data } = useQuery<CommunityListType>({
     queryKey: ['communityList'],
     queryFn: () => fetchCommunityList(),
   })
@@ -21,7 +21,7 @@ const Index: React.FC = () => {
 
   useEffect(() => {
     if (data && data.content) {
-      setCommunityList(data.content as CommunityListType[])
+      setCommunityList(data.content)
     }
   }, [data, setCommunityList])
   // const handleCategoryClick = (categoryNo: number) => {

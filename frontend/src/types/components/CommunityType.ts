@@ -1,7 +1,4 @@
 export type CommunityItemType = {
-  map(
-    arg0: (item: any) => import('react/jsx-runtime').JSX.Element,
-  ): import('react').ReactNode
   boardNo: number
   memberEmail: string
   memberName: string
