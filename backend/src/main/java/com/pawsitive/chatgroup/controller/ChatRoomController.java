@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "06.ChatRoom")
@@ -24,16 +25,16 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
     @GetMapping
-    @Operation(summary = "채팅방 전체 조회", description = "채팅방을 전체 조회합니다.",
+    @Operation(summary = "채팅방 전체 조회", description = "회원 고유번호로 채팅방을 전체 조회합니다.",
         tags = {"06.ChatRoom"},
         responses = {
             @ApiResponse(responseCode = "200", description = "채팅 전체 조회 성공"),
         }
     )
-    public ResponseEntity<List<ChatRoom>> getRooms() {
+    public ResponseEntity<List<ChatRoom>> getRooms(@RequestParam int userNo) {
         return ResponseEntity
             .status(OK)
-            .body(chatRoomService.getChatRooms());
+            .body(chatRoomService.getChatRooms(userNo));
     }
 
     @PostMapping

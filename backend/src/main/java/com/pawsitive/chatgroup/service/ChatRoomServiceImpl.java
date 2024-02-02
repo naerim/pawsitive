@@ -49,8 +49,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
      * @return 최근에 생성된 순으로 조회한 채팅방 목록
      */
     @Override
-    public List<ChatRoom> getChatRooms() {
-        return chatRoomRepository.findChatRoomsByOrderByCreatedAtDesc();
+    public List<ChatRoom> getChatRooms(int userNo) {
+        return chatRoomRepository.getChatRoomsByOrderByCreatedAtDesc(userNo);
     }
 
 }
