@@ -24,7 +24,7 @@ const FindSimilarDog = () => {
 
   let model: tmImage.CustomMobileNet | null = null
   let webcam: tmImage.Webcam | null = null
-  let labelContainer: HTMLDivElement | null = null
+  let labelContainer: HTMLElement | null = null
   let maxPredictions: number | null = null
 
   const isPredictingRef = useRef<boolean>(false) // stop 기능을 추가하기 위해
@@ -34,12 +34,20 @@ const FindSimilarDog = () => {
   const labels: string[] = ['말티즈', '비숑', '치와와', '푸들', '리트리버']
 
   async function predict() {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     const prediction = await model.predict(webcam.canvas)
     setChartData(prediction.map(item => item.probability))
-    for (let i = 0; i < maxPredictions; i++) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    for (let i = 0; i < maxPredictions; i += 1) {
       const classPrediction: string = prediction[i].className
       const probability: number = Math.round(prediction[i].probability * 100)
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       if (labelContainer.childNodes[i] instanceof HTMLDivElement) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         labelContainer.childNodes[i].innerHTML =
           `<div>${classPrediction}</div><div>${probability}%</div>`
       }
@@ -56,6 +64,8 @@ const FindSimilarDog = () => {
 
   async function loop() {
     if (isPredictingRef.current) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       webcam.update()
       await predict()
       window.requestAnimationFrame(loop)
@@ -77,10 +87,14 @@ const FindSimilarDog = () => {
     isPredictingRef.current = true
     window.requestAnimationFrame(loop)
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     document.getElementById('webcam-container').appendChild(webcam.canvas)
     labelContainer = document.getElementById('label-container')
 
-    for (let i = 0; i < maxPredictions; i++) {
+    for (let i = 0; i < maxPredictions; i += 1) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       labelContainer.appendChild(document.createElement('div'))
     }
   }
