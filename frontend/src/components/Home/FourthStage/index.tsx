@@ -6,11 +6,11 @@ import * as t from '@src/components/style/FourthStageIndexStyle'
 const Index = () => {
   return (
     <>
+      <DailyQuestion />
       <t.CenterContainer>
         <AdoptInfo />
         <DogDiary />
       </t.CenterContainer>
-      <DailyQuestion />
     </>
   )
 }
