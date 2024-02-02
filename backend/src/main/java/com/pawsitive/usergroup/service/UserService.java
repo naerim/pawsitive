@@ -7,7 +7,10 @@ import com.pawsitive.usergroup.entity.Member;
 import com.pawsitive.usergroup.entity.User;
 
 /**
- * 유저 관련 비즈니스 로직 처리를 위한 서비스 인터페이스 정의.
+ * 유저 관련 비즈니스 로직 처리를 위한 서비스를 정의한 인터페이스 입니다.
+ *
+ * @author 천세진, 이하늬
+ * @since 1.0
  */
 public interface UserService {
 
@@ -20,15 +23,5 @@ public interface UserService {
     Member getMemberByUserNo(int userNo);
 
     void updateField(UserTypeStagePatchReq req, int userNo);
-
-//    User createUser(UserRegisterPostReq userRegisterInfo);
-//
-//    User getUserByUserId(String userId);
-//
-//    User updateUser(String userId, UserUpdatePatchReq userUpdateInfo);
-//
-//    void deleteUserByUserId(String userId);
-//
-//    void doSocialLogin(String code, String registrationId);
 
 }

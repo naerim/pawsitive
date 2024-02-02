@@ -3,6 +3,9 @@ package com.pawsitive.auth.info;
 import com.pawsitive.auth.OAuth2Provider;
 import java.util.Map;
 
+/**
+ * Google 기반 OAuth2 유저 정보 클래스입니다.
+ */
 public class GoogleOAuth2UserInfo implements OAuth2UserInfo {
 
     private final Map<String, Object> attributes;
@@ -15,6 +18,12 @@ public class GoogleOAuth2UserInfo implements OAuth2UserInfo {
     private final String nickName;
     private final String profileImageUrl;
 
+    /**
+     * GoogleOAuth2UserInfo 생성자 입니다.
+     *
+     * @param accessToken 액세스 토큰
+     * @param attributes  받아올 값
+     */
     public GoogleOAuth2UserInfo(String accessToken, Map<String, Object> attributes) {
         this.accessToken = accessToken;
         this.attributes = attributes;

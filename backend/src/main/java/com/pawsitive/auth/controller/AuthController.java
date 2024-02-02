@@ -3,27 +3,25 @@ package com.pawsitive.auth.controller;
 import static org.springframework.http.HttpStatus.OK;
 
 import com.pawsitive.auth.jwt.JwtToken;
-import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
 import com.pawsitive.usergroup.dto.request.UserLoginPostReq;
-import com.pawsitive.usergroup.dto.response.UserLoginPostRes;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 인증 관련 API 요청 처리를 위한 컨트롤러 정의.
+ * 인증 관련 API 요청 처리를 위한 컨트롤러입니다.
+ *
+ * @author 천세진, 이하늬
+ * @since 1.0
  */
 @Tag(name = "02.Auth")
 @RestController
@@ -34,8 +32,8 @@ public class AuthController {
     private final UserService userService;
 
     /**
-     * @param loginInfo
-     * @return
+     * @param loginInfo 로그인 정보
+     * @return 로그인 후 생성된 Token 정보
      */
     @PostMapping("/login")
     @Operation(
@@ -57,28 +55,17 @@ public class AuthController {
         // JWT Token을 반환하기
         JwtToken userToken = userService.signIn(userId, password);
 
-
-        // 로그인 시도하려는 회원이 존재하지 않는 경우
-//        if (Objects.isNull(user)) {
-//            throw new UserNotFoundException();
-//        }
-//
-//        // 로그인 요청한 유저로부터 입력된 패스워드 와 디비에 저장된 유저의 암호화된 패스워드가 같은지 확인.(유효한 패스워드인지 여부 확인)
-//        if (passwordEncoder.matches(password, user.getPassword())) {
-//            // 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
-//            return ResponseEntity.status(OK)
-//                .body(UserLoginPostRes.of(OK, "Success", JwtTokenUtil.getToken(userId)));
-//        }
-//
-//        // 유효하지 않는 패스워드인 경우, 로그인 실패로 응답.
-//        throw new InvalidPasswordException();
-
         return ResponseEntity
             .status(OK)
             .body(userToken);
-
     }
 
+    /**
+     * 회원가입을 처리하는 컨트롤러 메서드입니다.
+     *
+     * @param userJoinPostReq 회원가입 요청 객체
+     * @return 유저 정보 클래스
+     */
     @PostMapping("/join")
     @Operation(
         summary = "회원가입",

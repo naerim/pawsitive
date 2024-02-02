@@ -21,6 +21,13 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private final JwtTokenProvider jwtTokenProvider;
 
+    /**
+     * JWT 인증 로직을 수행하는 필터 메서드입니다.
+     *
+     * @param servletRequest  Servlet 요청 객체
+     * @param servletResponse Servlet 응답 객체
+     * @param filterChain     필터체인 객체
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {

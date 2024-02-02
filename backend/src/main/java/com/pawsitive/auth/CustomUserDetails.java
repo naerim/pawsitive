@@ -1,16 +1,10 @@
 package com.pawsitive.auth;
 
 import com.pawsitive.usergroup.entity.User;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,6 +20,11 @@ public class CustomUserDetails implements UserDetails {
     private final User user;
     private List<String> roles;
 
+    /**
+     * User 정보를 기반으로 하여 CustomUserDetails를 만드는 생성자 입니다.
+     *
+     * @param user User 객체
+     */
     public CustomUserDetails(User user) {
 
         this.user = user;

@@ -44,7 +44,7 @@ public class CommunityController {
             communityService.getCommunityList(pageable, categoryNo);
 
         return ResponseEntity.status(OK)
-            .body(new PageResponse<CommunityBoardDetailRes>(communityList));
+            .body(new PageResponse<>(communityList));
     }
 
     @GetMapping("/recommendation")

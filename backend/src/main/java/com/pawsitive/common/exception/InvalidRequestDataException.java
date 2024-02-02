@@ -1,4 +1,4 @@
-package com.pawsitive.common.exeption;
+package com.pawsitive.common.exception;
 
 /**
  * @author 이하늬

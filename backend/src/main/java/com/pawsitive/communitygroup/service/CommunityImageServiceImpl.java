@@ -1,6 +1,6 @@
 package com.pawsitive.communitygroup.service;
 
-import com.pawsitive.common.exeption.NotSavedException;
+import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.common.util.S3BucketUtil;
 import com.pawsitive.communitygroup.entity.CommunityBoard;
 import com.pawsitive.communitygroup.entity.CommunityImage;
