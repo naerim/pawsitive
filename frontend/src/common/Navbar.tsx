@@ -8,6 +8,8 @@ const Navbar = () => {
   if (locationNow.pathname === '/mypage/survey') return null
   if (locationNow.pathname === '/mypage/survey/done') return null
   if (locationNow.pathname === '/confirm/pawsitive') return null
+  if (locationNow.pathname === '/mypage/findSimilarDog/result') return null
+  if (locationNow.pathname === '/mypage/findSimilarDog') return null
 
   return (
     <n.Container>
