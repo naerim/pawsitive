@@ -21,6 +21,7 @@ public class DogImageServiceImpl implements DogImageService {
 
     private final DogImageRepository dogImageRepository;
     private final S3BucketUtil s3BucketUtil;
+    private final String FOLDER_NAME = "dogs";
 
     @Override
     public Dog createDogImage(Dog dog, MultipartFile[] images) {
@@ -30,7 +31,7 @@ public class DogImageServiceImpl implements DogImageService {
 
         for (MultipartFile image : images) {
             // 버킷에 업로드한 뒤 파일 명 가져오기
-            String imageKey = s3BucketUtil.uploadFile(image);
+            String imageKey = s3BucketUtil.uploadFile(image, FOLDER_NAME);
 
             // 엔티티 저장 실패 시 Transaction 처리를 위해 파일명 List에 저장
             imageKeys.add(imageKey);
@@ -38,7 +39,7 @@ public class DogImageServiceImpl implements DogImageService {
             // DogImage 객체 생성 후 dog와 url 지정한 뒤 List에 저장
             DogImage dogImage = new DogImage();
             dogImage.setDog(dog);
-            dogImage.setImage(s3BucketUtil.getFileUrl(imageKey));
+            dogImage.setImage(s3BucketUtil.getFileUrl(imageKey, FOLDER_NAME));
             dogImageList.add(dogImage);
         }
 
@@ -46,7 +47,7 @@ public class DogImageServiceImpl implements DogImageService {
             dogImageRepository.saveAll(dogImageList);
         } catch (Exception e) {
             for (String key : imageKeys) {
-                s3BucketUtil.deleteFile(key);
+                s3BucketUtil.deleteFile(key, FOLDER_NAME);
             }
             throw new NotSavedException();
         }

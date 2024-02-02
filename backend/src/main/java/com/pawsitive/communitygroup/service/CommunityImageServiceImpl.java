@@ -21,6 +21,7 @@ public class CommunityImageServiceImpl implements CommunityImageService {
 
     private final CommunityImageRepository communityImageRepository;
     private final S3BucketUtil s3BucketUtil;
+    private final String FOLDER_NAME = "community";
 
     @Override
     public CommunityBoard createCommunityImage(CommunityBoard communityBoard,
@@ -29,12 +30,12 @@ public class CommunityImageServiceImpl implements CommunityImageService {
         List<String> urlList = new ArrayList<>();
 
         for (MultipartFile image : images) {
-            String url = s3BucketUtil.uploadFile(image);
+            String url = s3BucketUtil.uploadFile(image, FOLDER_NAME);
             urlList.add(url);
 
             CommunityImage communityImage = new CommunityImage();
             communityImage.setCommunityBoard(communityBoard);
-            communityImage.setImage(s3BucketUtil.getFileUrl(url));
+            communityImage.setImage(s3BucketUtil.getFileUrl(url, FOLDER_NAME));
             imageList.add(communityImage);
         }
 
@@ -42,7 +43,7 @@ public class CommunityImageServiceImpl implements CommunityImageService {
             communityImageRepository.saveAll(imageList);
         } catch (Exception e) {
             for (String url : urlList) {
-                s3BucketUtil.deleteFile(url);
+                s3BucketUtil.deleteFile(url, FOLDER_NAME);
             }
             throw new NotSavedException();
         }

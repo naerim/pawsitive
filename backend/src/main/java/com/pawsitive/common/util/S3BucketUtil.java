@@ -25,7 +25,7 @@ public class S3BucketUtil {
     @Value("${cloud.aws.region.static}")
     private String region;
 
-    public String uploadFile(MultipartFile file) {
+    public String uploadFile(MultipartFile file, String folderName) {
 
         try {
             String key = UUID.randomUUID().toString();
@@ -35,7 +35,8 @@ public class S3BucketUtil {
             metadata.setContentLength(file.getSize());
 
             PutObjectRequest request =
-                new PutObjectRequest(bucket, key, file.getInputStream(), metadata);
+                new PutObjectRequest(bucket + addSlash(folderName),
+                    key, file.getInputStream(), metadata);
 
             request.withCannedAcl(CannedAccessControlList.AuthenticatedRead);
 //            PutObjectResult result = amazonS3Client.putObject(request);
@@ -49,12 +50,17 @@ public class S3BucketUtil {
 
     }
 
-    public void deleteFile(String fileName) {
-        amazonS3Client.deleteObject(bucket, fileName);
+    public void deleteFile(String fileName, String folderName) {
+        amazonS3Client.deleteObject(bucket + addSlash(folderName), fileName);
     }
 
-    public String getFileUrl(String key) {
-        return "https://" + bucket + ".s3." + region + ".amazonaws.com/" + key;
+    public String getFileUrl(String key, String folderName) {
+        return "https://" + bucket + ".s3." + region + ".amazonaws.com"
+            + addSlash(folderName) + key;
+    }
+
+    private String addSlash(String folderName) {
+        return "/" + folderName + "/";
     }
 
 }

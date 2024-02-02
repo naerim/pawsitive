@@ -36,6 +36,7 @@ public class DogServiceImpl implements DogService {
     private final DogImageService dogImageService;
 
     private final S3BucketUtil s3BucketUtil;
+    private final String FOLDER_NAME = "dogs";
 
     private static final Integer PAGE_SIZE = 20;
 
@@ -44,7 +45,7 @@ public class DogServiceImpl implements DogService {
     public DogDetailRes createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images) {
         User user = userService.getUserByUserNo(req.getUserNo());
 
-        String videoKey = s3BucketUtil.uploadFile(video);
+        String videoKey = s3BucketUtil.uploadFile(video, FOLDER_NAME);
 
         Dog dog = Dog.builder()
             .user(user)
@@ -54,14 +55,14 @@ public class DogServiceImpl implements DogService {
             .color(req.getColor())
             .note(req.getNote())
             .mbti(getMbti(req))
-            .video(s3BucketUtil.getFileUrl(videoKey))
+            .video(s3BucketUtil.getFileUrl(videoKey, FOLDER_NAME))
             .build();
 
         Dog savedDog;
         try {
             savedDog = dogRepository.save(dog);
         } catch (Exception e) {
-            s3BucketUtil.deleteFile(videoKey);
+            s3BucketUtil.deleteFile(videoKey, FOLDER_NAME);
             throw new NotSavedException();
         }
 
@@ -99,13 +100,13 @@ public class DogServiceImpl implements DogService {
     private String getMbti(DogCreateReq req) {
         StringBuilder sb = new StringBuilder();
         String tmp;
-        tmp = req.getEq() ? "E" : "Q";
+        tmp = Boolean.TRUE.equals(req.getEq()) ? "E" : "Q";
         sb.append(tmp);
-        tmp = req.getSi() ? "S" : "I";
+        tmp = Boolean.TRUE.equals(req.getSi()) ? "S" : "I";
         sb.append(tmp);
-        tmp = req.getAw() ? "A" : "W";
+        tmp = Boolean.TRUE.equals(req.getAw()) ? "A" : "W";
         sb.append(tmp);
-        tmp = req.getFc() ? "F" : "C";
+        tmp = Boolean.TRUE.equals(req.getFc()) ? "F" : "C";
         sb.append(tmp);
         return sb.toString();
     }
