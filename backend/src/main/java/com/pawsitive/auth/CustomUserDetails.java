@@ -30,7 +30,7 @@ public class CustomUserDetails implements UserDetails {
         this.user = user;
 
         roles = new ArrayList<>();
-        roles.add(user.getRole());
+        roles.add(user.getRole().getKey());
     }
 
     @Override

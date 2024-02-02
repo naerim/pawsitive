@@ -77,7 +77,7 @@ public class SecurityConfig {
                 configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/v3/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
-                .requestMatchers("/api/v1/users/me").authenticated()
+                .requestMatchers("/api/v1/users/me").authenticated() // TODO : 나중에 users/** 로 바꾸기
                 .anyRequest().permitAll()
             )
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),

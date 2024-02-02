@@ -1,5 +1,6 @@
 package com.pawsitive.usergroup.service;
 
+import com.pawsitive.auth.Role;
 import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.auth.jwt.JwtTokenProvider;
 import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService {
             .password(encryptedPassword)
             .name(userJoinPostReq.getName())
             .address(userJoinPostReq.getAddress())
-            .role(userJoinPostReq.getRole())
+            .role(Role.valueOf(userJoinPostReq.getRole()))
             .build());
 
     }
@@ -96,8 +97,13 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findUserByEmail(email).orElseThrow(UserNotFoundException::new);
+    }
 
-//
+
+    //
 //    @Override
 //    public User updateUser(String userId, UserUpdatePatchReq userUpdateInfo) {
 //        // 존재하지 않는 회원일경우 예외처리

@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.Length;
 @Getter
 @AllArgsConstructor
 public class DogCreateReq {
-    
+
     @NotNull(message = "userNo can't be null")
     private int userNo;
 
@@ -42,5 +42,8 @@ public class DogCreateReq {
 
     @NotNull(message = "fc can't be null")
     private Boolean fc;
+
+    @NotNull(message = "sex can't be null")
+    private String sex;
 
 }
