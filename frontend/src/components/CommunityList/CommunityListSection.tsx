@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom'
-// import React from 'react'
+import { Link } from 'react-router-dom' // import React from 'react'
 import CommunityListItem from '@src/components/CommunityList/CommunityListItem'
 import * as c from '@src/components/style/CommunityListSectionStyle'
 import { CommunityItemType } from '@src/types/components/CommunityType'
+import React from 'react'
 
 // const allCategories: CategoryType[] = [
 //   {
@@ -23,10 +23,14 @@ import { CommunityItemType } from '@src/types/components/CommunityType'
 //   },
 // ]
 
-const CommunityListSection = (props: CommunityItemType[]) => {
+interface CommunityListProps {
+  data: CommunityItemType[]
+}
+
+const CommunityListSection: React.FC<CommunityListProps> = props => {
   const { data } = props
   // const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
-  //
+
   // const handleCategoryClick = (categoryNo: number) => {
   //   setSelectedCategory(categoryNo)
   // }
@@ -43,7 +47,8 @@ const CommunityListSection = (props: CommunityItemType[]) => {
     <c.Container>
       <c.Wrap>
         {data &&
-          data.content.map(item => (
+          Array.isArray(data) &&
+          data.map(item => (
             <Link key={item.boardNo} to={`${item.boardNo}`}>
               <CommunityListItem data={item} />
             </Link>
