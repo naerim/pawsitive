@@ -9,8 +9,6 @@
 //import com.pawsitive.questiongroup.entity.Question;
 //import com.pawsitive.usergroup.entity.Member;
 //import com.pawsitive.usergroup.entity.User;
-//import com.pawsitive.usergroup.repository.MemberRepository;
-//import com.pawsitive.usergroup.repository.UserRepository;
 //import java.util.Optional;
 //import org.assertj.core.api.Assertions;
 //import org.junit.jupiter.api.BeforeEach;
@@ -24,19 +22,10 @@
 //class AnswerRepositoryImplTest {
 //
 //    @Autowired
-//    AnswerRepository answerRepository;
-//
-//    @Autowired
-//    UserRepository userRepository;
-//
-//    @Autowired
-//    MemberRepository memberRepository;
-//
-//    @Autowired
-//    QuestionRepository questionRepository;
-//
-//    @Autowired
 //    TestEntityManager entityManager;
+//
+//    @Autowired
+//    AnswerRepository answerRepository;
 //
 //    Question question;
 //    User user;
@@ -46,13 +35,13 @@
 //    @BeforeEach
 //    void setUp() {
 //        user = UserDummy.getSuccessEntity();
-//        userRepository.save(user);
+//        entityManager.merge(user);
 //        member = MemberDummy.getSuccessEntity(user);
-//        memberRepository.save(member);
+//        entityManager.merge(member);
 //        question = QuestionDummy.getSuccessEntity();
-//        questionRepository.save(question);
+//        entityManager.merge(question);
 //        answer = AnswerDummy.getSuccessEntity(member, question);
-//        answerRepository.save(answer);
+//        entityManager.merge(answer);
 //        entityManager.flush();
 //        entityManager.clear();
 //    }
