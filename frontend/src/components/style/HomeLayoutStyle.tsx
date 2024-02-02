@@ -26,7 +26,7 @@ export const SubTitle = styled.div`
 export const HomeImage = styled.img`
   width: 170px;
   height: 175px;
-  transform: translate(30px, -45px);
+  transform: rotate(15deg) translate(10px, -25px);
 `
 
 export const BottomWrap = styled.div`
