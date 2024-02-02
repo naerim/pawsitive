@@ -18,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -32,7 +32,7 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "password")
+    @Column(name = "pw")
     private String password;
 
     @Column(name = "address")
@@ -45,7 +45,8 @@ public class User {
     private String role;
 
     @Builder
-    public User(String email, String name, String password, String address, String image, String role) {
+    public User(String email, String name, String password, String address, String image,
+                String role) {
         this.email = email;
         this.name = name;
         this.password = password;
