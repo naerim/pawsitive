@@ -14,6 +14,12 @@ export const Top = styled.div`
 export const CloseButton = styled.button`
   background-color: white;
   margin-top: 2px;
+  outline: none;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
 
   .img {
     width: 25px;
@@ -31,11 +37,17 @@ export const SubmitButton = styled.button`
   font-weight: bolder;
   font-size: 18px;
   padding-right: 5px;
+  outline: none;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
 `
 
 // 이미지
 export const ImgContainer = styled.div`
-  background-color: antiquewhite;
+  //background-color: antiquewhite;
   display: flex;
   padding: 20px 0px;
 `
@@ -130,12 +142,6 @@ export const Label = styled.label`
     height: 30px;
   }
 `
-export const Map = styled.div`
-  width: 300px;
-  height: 300px;
-  border: 2px solid gray;
-  border-radius: 40px;
-`
 
 export const CheckBox = styled.input`
   display: none;
@@ -146,11 +152,11 @@ export const CheckBox = styled.input`
 `
 
 export const Select = styled.select`
-  width: 100%;
+  width: 80%;
   padding: 10px;
   font-size: 16px;
   text-align: right;
-  border: 1px solid #ccc;
+  border: 1px solid #ffffff;
   border-radius: 5px;
   background-color: #fff;
   color: #c8c8c8;
@@ -159,8 +165,8 @@ export const Select = styled.select`
 
   &:focus {
     outline: none;
-    border-color: rgba(100, 100, 100, 0.5);
-    box-shadow: #c8c8c8;
+    border-color: #ffffff;
+    box-shadow: #ffffff;
   }
 
   option {
@@ -178,4 +184,34 @@ export const ContentInput = styled.input`
   font-size: 15px;
   border: 0px;
   outline: none;
+  color: #c8c8c8;
+`
+
+export const MapCloseButton = styled.div`
+  color: #c8c8c8;
+`
+
+export const MapDiv = styled.div`
+  width: auto;
+  height: auto;
+`
+export const Map = styled.div`
+  width: auto;
+  height: 300px;
+  border: 2px solid #c8c8c8;
+  border-radius: 30px;
+`
+
+export const MapContentInput = styled.input`
+  width: 360px;
+  height: 30px;
+  margin-bottom: 2px;
+  font-size: 15px;
+  border: 0px;
+  outline: none;
+  color: #c8c8c8;
+
+  &::placeholder {
+    color: #c8c8c8;
+  }
 `

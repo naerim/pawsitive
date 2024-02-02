@@ -262,7 +262,7 @@ const CreateForm = () => {
           onChange={handleCategoryChange}
         >
           <option selected hidden>
-            카테고리 선택
+            카테고리 선택 ∨
           </option>
           {categoryList.map(categoryItem => (
             <option value={categoryItem.index} key={categoryItem.index}>
@@ -270,9 +270,9 @@ const CreateForm = () => {
             </option>
           ))}
         </c.Select>
-        <c.Label htmlFor="category">
-          <img className="img" src="/icon/icon_black_arrow_bottom.png" alt="" />
-        </c.Label>
+        {/* <c.Label htmlFor="category"> */}
+        {/*  <img className="img" src="/icon/icon_black_arrow_bottom.png" alt="" /> */}
+        {/* </c.Label> */}
       </c.Tag>
       <c.DivLine />
 
@@ -287,32 +287,27 @@ const CreateForm = () => {
       </c.Tag>
       <c.DivLine />
 
-      <c.Tag>
-        <div>
-          {isDaumPostcodeOpenValue && (
-            <div>
-              <button
-                type="button"
-                onClick={() => setIsDaumPostcodeOpen(false)}
-              >
-                닫기
-              </button>
-              <DaumPostcode
-                onComplete={handleAddressComplete}
-                style={{ position: 'absolute', zIndex: 400 }}
-              />
-            </div>
-          )}
-          <c.ContentInput
-            placeholder="주소를 검색해주세요"
-            onClick={handleDaumPostcodeOpen}
-            id="address"
-            value={addressValue}
-            readOnly
-          />
-          <c.Map ref={containerRef} />
-        </div>
-      </c.Tag>
+      <c.MapDiv>
+        {isDaumPostcodeOpenValue && (
+          <c.MapCloseButton>
+            <button type="button" onClick={() => setIsDaumPostcodeOpen(false)}>
+              닫기
+            </button>
+            <DaumPostcode
+              onComplete={handleAddressComplete}
+              style={{ position: 'absolute', zIndex: 400 }}
+            />
+          </c.MapCloseButton>
+        )}
+        <c.MapContentInput
+          placeholder="주소를 검색해주세요"
+          onClick={handleDaumPostcodeOpen}
+          id="address"
+          value={addressValue}
+          readOnly
+        />
+        <c.Map ref={containerRef} />
+      </c.MapDiv>
 
       <br />
       <br />
