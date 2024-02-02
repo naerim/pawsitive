@@ -23,9 +23,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws/chat")   //SockJS 연결 주소
-//            .setAllowedOrigins("*")
+            .setAllowedOrigins("*")
 //            .setAllowedOrigins("http://localhost:8080")
-            .setAllowedOrigins("https://i10c111.p.ssafy.io:8081", "https://i10c111.p.ssafy.io:8090")
+//            .setAllowedOrigins("https://i10c111.p.ssafy.io:8081", "https://i10c111.p.ssafy.io:8090")
             .withSockJS(); //버전 낮은 브라우저에서도 적용 가능
         // 주소 : ws://localhost:8080/ws-stomp
     }
