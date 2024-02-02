@@ -1,4 +1,3 @@
-import CommunityList from '@src/components/Community/CommunityList'
 import {
   CommunityItemType,
   CommunityListType,
@@ -8,8 +7,11 @@ import { fetchCommunityList } from '@src/apis/community'
 import { CommunityListAtom } from '@src/stores/atoms/community'
 import { useAtom } from 'jotai'
 import React, { useEffect } from 'react'
+import * as c from '@src/container/style/CommunityListContainerStyle'
+import CommunityCategorySection from '@src/components/CommunityList/CommunityCategorySection'
+import CommunityListSection from '@src/components/CommunityList/CommunityListSection'
 
-const CommunityListContainer: React.FC = () => {
+const Index: React.FC = () => {
   const { isLoading, data } = useQuery<CommunityListType[]>({
     queryKey: ['communityList'],
     queryFn: () => fetchCommunityList(),
@@ -22,18 +24,46 @@ const CommunityListContainer: React.FC = () => {
       setCommunityList(data.content as CommunityListType[])
     }
   }, [data, setCommunityList])
+  // const handleCategoryClick = (categoryNo: number) => {
+  //   setSelectedCategory(categoryNo)
+  // }
+  //
+  // const handleAllCategoriesClick = () => {
+  //   setSelectedCategory(null)
+  // }
+  //
+  // const filteredData: CommunityListType[] = selectedCategory
+  //   ? CommunityListValue.filter(
+  //       item => item.content.communityCategoryNo === selectedCategory,
+  //     )
+  //   : CommunityListValue
 
   return (
-    <div>
-      {isLoading || !CommunityListValue || CommunityListValue.length === 0 ? (
-        <p>Loading...</p>
-      ) : (
-        <div>
-          <CommunityList data={CommunityListValue} />
-        </div>
-      )}
-    </div>
+    <c.Container>
+      <c.Wrap>
+        <CommunityCategorySection />
+        {isLoading || !CommunityListValue ? (
+          <p>Loading...</p>
+        ) : (
+          <div>
+            {/* 카테고리 */}
+            {/* <c.Category> */}
+            {/*  <Button type="button" onClick={handleAllCategoriesClick}> */}
+            {/*    전체보기 */}
+            {/*  </Button> */}
+            {/*  <CategoryButton */}
+            {/*    categories={allCategories} */}
+            {/*    onCategoryClick={handleCategoryClick} */}
+            {/*  /> */}
+            {/* </c.Category> */}
+            {/* 커뮤니티 리스트 */}
+            <CommunityListSection data={CommunityListValue} />
+            {/* <CommunityList data={filteredData} /> */}
+          </div>
+        )}
+      </c.Wrap>
+    </c.Container>
   )
 }
 
-export default CommunityListContainer
+export default Index
