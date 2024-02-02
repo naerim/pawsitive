@@ -8,5 +8,5 @@ public interface ChatRoomService {
 
     ChatRoom getChatRoomByChatRoomNo(String chatRoomNo);
 
-    List<ChatRoom> getChatRooms();
+    List<ChatRoom> getChatRooms(int userNo);
 }

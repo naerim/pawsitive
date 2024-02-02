@@ -16,10 +16,6 @@ import * as f from '@src/components/style/FindSimilarDogStyle'
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const FindSimilarDog = () => {
-  const navigate = useNavigate()
-  const handleNextButtonClick = () => {
-    navigate('/mypage/findSimilarDog/result')
-  }
   const URL = 'https://teachablemachine.withgoogle.com/models/EYgf6bU6pf/'
 
   let model: tmImage.CustomMobileNet | null = null
@@ -30,8 +26,14 @@ const FindSimilarDog = () => {
   const isPredictingRef = useRef<boolean>(false) // stop 기능을 추가하기 위해
   const [started, setStarted] = useState<boolean>(false) // start 전/후의 화면 구성을 위해
 
-  const [chartData, setChartData] = useState<number[]>([])
   const labels: string[] = ['말티즈', '비숑', '치와와', '푸들', '리트리버']
+  const [chartData, setChartData] = useState<number[]>([])
+  const [resultData, setResultData] = useState([])
+
+  const navigate = useNavigate()
+  const handleNextButtonClick = () => {
+    navigate('/mypage/findSimilarDog/result', { state: { resultData } })
+  }
 
   async function predict() {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -60,6 +62,11 @@ const FindSimilarDog = () => {
       webcam.stop()
       webcam = null
     }
+    const updatedResultData = chartData.map((item, index) => ({
+      label: labels[index],
+      probability: Math.round(item * 100),
+    }))
+    setResultData(updatedResultData)
   }
 
   async function loop() {
