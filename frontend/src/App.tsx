@@ -26,8 +26,13 @@ import ConfirmPawsitivePage from '@src/pages/ConfirmPawsitivePage'
 import DictionaryListPage from '@src/pages/DictionaryListPage'
 import DictionaryDetailPage from '@src/pages/DictionaryDetailPage'
 import DogListPage from '@src/pages/DogListPage'
+import CommunityInfoPage from '@src/pages/CommunityInfoPage'
+import CommunityDetailPage from '@src/pages/CommunityDetailPage'
+import CommunityCreatePage from '@src/pages/CommunityCreatePage'
 import AdoptionSurveyDonePage from '@src/pages/AdoptionSurveyDonePage'
 import DailyDiaryPage from '@src/pages/DailyDiaryPage'
+import FindSimilarDogResultPage from '@src/pages/FindSimilarDogResultPage'
+import FillAdoptInfoPage from '@src/pages/FillAdoptInfoPage'
 
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
@@ -38,11 +43,15 @@ const AuthRoutes = () => (
     <Route path="/mypage/profile" element={<ProfilePage />} />
     <Route path="/mypage/setting" element={<SettingPage />} />
     <Route path="*" element={<NotFoundPage />} />
-    {/* <Route path="/community" element={<CommunityInfoPage />} /> */}
-    {/* <Route path="/community/:contentNo" element={<CommunityDetailPage />} /> */}
-    {/* <Route path="/community/create" element={<CommunityCreatePage />} /> */}
+    <Route path="/community" element={<CommunityInfoPage />} />
+    <Route path="/community/:contentNo" element={<CommunityDetailPage />} />
+    <Route path="/community/create" element={<CommunityCreatePage />} />
     <Route path="/new/dog" element={<CreateDogPage />} />
     <Route path="/mypage/findSimilarDog" element={<FindSimilarDogPage />} />
+    <Route
+      path="/mypage/findSimilarDog/result"
+      element={<FindSimilarDogResultPage />}
+    />
     <Route path="/dogs" element={<DogListPage />} />
     <Route path="/dogDetail" element={<DogDetailPage />} />
     <Route path="/mypage/survey" element={<AdoptionSurveyPage />} />
@@ -54,6 +63,7 @@ const AuthRoutes = () => (
     <Route path="/dictionary" element={<DictionaryListPage />} />
     <Route path="/dictionary/:contentNo" element={<DictionaryDetailPage />} />
     <Route path="/dailyDiary" element={<DailyDiaryPage />} />
+    <Route path="/fill-adopt-info" element={<FillAdoptInfoPage />} />
   </Routes>
 )
 

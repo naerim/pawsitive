@@ -14,7 +14,6 @@ import { Link } from 'react-router-dom'
 
 const KakaoMap = (props: { dummyData: CommunityItemType[] }) => {
   const { dummyData } = props
-
   const mapRef = useRef<kakao.maps.Map>(null)
   const location: LocationType | string = Locations()
   const [selectedMarker, setSelectedMarker] =
@@ -29,19 +28,20 @@ const KakaoMap = (props: { dummyData: CommunityItemType[] }) => {
       const container = document.getElementById('map')
       const options = {
         center: new kakao.maps.LatLng(location.latitude, location.longitude),
-        disableDoubleClick: true,
+        // 더블클릭시 크기 조정
+        // disableDoubleClick: true,
         level: 3,
       }
 
       const map = new kakao.maps.Map(container as HTMLElement, options)
       ;(mapRef as unknown as MutableRefObject<kakao.maps.Map>).current = map
       // 확대, 축소 막기
-      map.setZoomable(false)
+      // map.setZoomable(false)
 
       dummyData.forEach(data => {
-        const dataLat = data.board.latitude
-        const dataLng = data.board.longitude
-        const dataTitle = data.board.title
+        const dataLat = data.latitude
+        const dataLng = data.longitude
+        const dataTitle = data.title
 
         const marker = new kakao.maps.Marker({
           position: new kakao.maps.LatLng(dataLat, dataLng),
@@ -69,7 +69,7 @@ const KakaoMap = (props: { dummyData: CommunityItemType[] }) => {
       const map = new kakao.maps.Map(container as HTMLElement, options)
       ;(mapRef as unknown as MutableRefObject<kakao.maps.Map>).current = map
     }
-  }, [dummyData, location.latitude, location.longitude])
+  }, [dummyData, handleMarkerClick, location.latitude, location.longitude])
 
   useEffect(() => {
     kakao.maps.load(() => initMap())
@@ -87,8 +87,8 @@ const KakaoMap = (props: { dummyData: CommunityItemType[] }) => {
           {dummyData.map(
             data =>
               // 예제: 마커의 타이틀이 게시글의 제목과 일치하면 렌더링
-              selectedMarker.getTitle() === data.board.title && (
-                <Link key={data.board.boardNo} to={`${data.board.boardNo}`}>
+              selectedMarker.getTitle() === data.title && (
+                <Link key={data.boardNo} to={`${data.boardNo}`}>
                   <CommunityCard data={data} />
                 </Link>
               ),

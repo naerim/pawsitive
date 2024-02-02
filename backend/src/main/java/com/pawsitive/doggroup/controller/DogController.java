@@ -42,7 +42,7 @@ public class DogController {
                                                   @RequestPart(required = false)
                                                   MultipartFile video,
                                                   @RequestPart(required = false)
-                                                  MultipartFile[] images) throws Exception {
+                                                  MultipartFile[] images) {
 
         return ResponseEntity.status(CREATED).body(dogService.createDog(req, video, images));
     }
@@ -69,14 +69,16 @@ public class DogController {
 
 
     @GetMapping
-    @Operation(summary = "유기견 공고 전체 조회", description = "전달받은 페이지 번호에 해당하는 유기견 공고를 반환한다.", tags = {
+    @Operation(summary = "유기견 공고 전체 조회", description = "전달받은 페이지 번호에 해당하는 유기견 공고를 반환한다. 유기견 품종 입력 시 품종별 유기견 조회를 한다.", tags = {
         "04.Dog"}, responses = {
         @ApiResponse(responseCode = "200", description = "해당하는 페이지의 유기견 공고 목록을 정상적으로 반환한다."),
         @ApiResponse(responseCode = "400", description = "해당 페이지에 유기견 공고가 없음.")}
 
     )
-    public ResponseEntity<PageResponse<DogDetailRes>> getDogList(Pageable pageable) {
-        Page<DogDetailRes> dogPage = dogService.getDogList(pageable);
+    public ResponseEntity<PageResponse<DogDetailRes>> getDogList(Pageable pageable,
+                                                                 @RequestParam(required = false)
+                                                                 String kind) {
+        Page<DogDetailRes> dogPage = dogService.getDogList(pageable, kind);
 
         return ResponseEntity.status(OK).body(new PageResponse<DogDetailRes>(dogPage));
 

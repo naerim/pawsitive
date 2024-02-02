@@ -37,7 +37,7 @@ public class DogServiceImpl implements DogService {
 
     private final S3BucketUtil s3BucketUtil;
 
-    private final Integer PAGE_SIZE = 20;
+    private static final Integer PAGE_SIZE = 20;
 
     @Override
     @Transactional

@@ -23,7 +23,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     public ChatRoom createChatRoom() {
         ChatRoom room = new ChatRoom();
         String roomNo = UUID.randomUUID().toString();
-        roomNo = roomNo.replaceAll("-", "");
+        roomNo = roomNo.replace("-", "");
         roomNo = roomNo.substring(0, 16);
         room.setChatRoomNo(roomNo);
         room.setName("채팅방" + roomNo);

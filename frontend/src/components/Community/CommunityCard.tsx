@@ -11,12 +11,12 @@ const CommunityCard: React.FC<CommunityProps> = props => {
   return (
     <c.Container>
       <c.Col>
-        <c.H1>{data.board.title}</c.H1>
-        <c.Category>{data.board.communityCategoryName}</c.Category>
+        <c.H1>{data.title}</c.H1>
+        <c.CategorySingle>{data.communityCategoryName}</c.CategorySingle>
       </c.Col>
       <c.Col>
-        <c.P>{data.board.content}</c.P>
-        <c.P>{data.board.memberName}</c.P>
+        <c.P>{data.content}</c.P>
+        <c.P>{data.memberName}</c.P>
       </c.Col>
     </c.Container>
   )

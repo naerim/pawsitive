@@ -61,7 +61,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    AuthenticationManager authenticationManager() throws Exception {
+    AuthenticationManager authenticationManager() {
         // DAO 기반의 Authentication Provider가 적용되도록 설정
         return new ProviderManager(authenticationProvider());
     }

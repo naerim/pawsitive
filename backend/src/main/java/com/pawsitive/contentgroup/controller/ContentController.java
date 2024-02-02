@@ -23,35 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ContentController {
     private final ContentService contentService;
 
-    /*@GetMapping(params = {"!categoryNo"})
-    @Operation(summary = "컨텐츠 전체 조회",
-        description = "컨텐츠 <strong>전체 조회</strong>를 한다.",
-        tags = {"05.Content"},
-        responses = {
-            @ApiResponse(responseCode = "200", description = "전체 컨텐츠 목록을 정상적으로 반환한다."),
-        }
-    )
-    public ResponseEntity<List<ContentDetailRes>> getContentList() {
-        return ResponseEntity
-            .status(OK)
-            .body(contentService.getContentList());
-    }
-
-    @GetMapping(params = "categoryNo")
-    @Operation(summary = "컨텐츠 카테고리별 전체 조회",
-        description = "컨텐츠 <strong>전체 조회</strong>를 <strong>카테고리별로</strong> 한다.",
-        tags = {"05.Content"},
-        responses = {
-            @ApiResponse(responseCode = "200", description = "카테고리에 해당되는 전체 컨텐츠 목록을 정상적으로 반환한다."),
-        }
-    )
-    public ResponseEntity<List<ContentDetailRes>> getContentListByCategory(
-        @RequestParam int categoryNo) {
-        return ResponseEntity
-            .status(OK)
-            .body(contentService.getContentListByContentCategoryNo(categoryNo));
-    }*/
-
     @GetMapping
     @Operation(summary = "컨텐츠 전체 조회",
         description = "컨텐츠 <strong>전체 조회</strong>를 한다. 파라미터로 카테고리 번호가 넘어온다면 <strong>카테고리별 컨텐츠 목록을 조회</strong> 한다.",

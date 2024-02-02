@@ -25,7 +25,7 @@ public class CommunityComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "community_comment_no")
-    private int CommunityCommentNo;
+    private int commentNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "community_board_no")
