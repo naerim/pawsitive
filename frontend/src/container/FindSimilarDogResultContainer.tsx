@@ -1,9 +1,14 @@
+import { useNavigate } from 'react-router-dom'
 import ResultDogTopSection from '@src/components/FindSimilarDogResult/ResultDogTopSection'
 import * as r from '@src/container/style/FindSimilarDogResultContainerStyle'
 import ResultDogInfoSection from '@src/components/FindSimilarDogResult/ResultDogInfoSection'
 import ResultDogRecommend from '@src/components/FindSimilarDogResult/ResultDogRecommend'
 
 const FindSimilarDogResultContainer = () => {
+  const navigate = useNavigate()
+  const handleButtonClick = () => {
+    navigate('/mypage/findSimilarDog')
+  }
   return (
     <r.Container>
       <r.Wrap>
@@ -11,7 +16,9 @@ const FindSimilarDogResultContainer = () => {
         <ResultDogInfoSection />
         <ResultDogRecommend />
         <r.ButtonWrap>
-          <button type="button">재촬영하기</button>
+          <button type="button" onClick={handleButtonClick}>
+            재촬영하기
+          </button>
           <button type="button">공유하기</button>
         </r.ButtonWrap>
       </r.Wrap>
