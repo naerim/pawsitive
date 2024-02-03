@@ -10,9 +10,13 @@ const CommunityCard = (props: CommunityProps) => {
 
   const setImageSrc = (category: string) => {
     switch (category) {
+      case '지식쌓개':
+        return '/img/img_dog_food.png'
       case '자랑하개':
-        return '/img/img_bone_bowl.png'
+        return '/img/img_dog_house.png'
       case '영양있개':
+        return '/img/img_bone_bowl.png'
+      case '쇼핑하개':
         return '/img/img_dog_medication.png'
       default:
         return '/img/img_main_house.png'
