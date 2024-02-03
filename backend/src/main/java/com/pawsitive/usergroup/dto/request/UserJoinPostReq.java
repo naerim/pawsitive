@@ -17,18 +17,27 @@ import lombok.Setter;
 public class UserJoinPostReq {
 
     @Schema(name = "email", example = "ssafy_web@ssafy.com")
-    String email;
-
-    @Schema(name = "password", example = "your_password")
-    String password;
+    private String email;
 
     @Schema(name = "name", example = "김싸피")
-    String name;
+    private String name;
+
+    @Schema(name = "pw", example = "your_password")
+    private String pw;
 
     @Schema(name = "address", example = "서울특별시 광진구 능동로 120")
-    String address;
+    private String address;
 
     @Schema(name = "role", example = "USER 또는 SHELTER")
-    String role;
+    private String role;
+
+    @Schema(name = "birth", example = "1998-04-21")
+    private String birth;
+
+    @Schema(name = "type", example = "1")
+    private int type;
+
+    @Schema(name = "gender", example = "M/F")
+    private char gender;
 
 }

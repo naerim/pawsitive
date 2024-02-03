@@ -4,7 +4,9 @@ import com.pawsitive.auth.OAuth2UserPrincipal;
 import com.pawsitive.auth.exception.OAuth2AuthenticationProcessingException;
 import com.pawsitive.auth.info.OAuth2UserInfo;
 import com.pawsitive.auth.info.OAuth2UserInfoFactory;
+import com.pawsitive.usergroup.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -19,7 +21,10 @@ import org.springframework.util.StringUtils;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
+
+//    private final UserService userService;
 
     /**
      * 요청에 따른 유저 정보를 불러옵니다.
@@ -51,12 +56,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
      * @return 유저 Principal
      */
     private OAuth2User processOAuth2User(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
+
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         String userNameAttributeName =
             userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint()
                 .getUserNameAttributeName();
         String accessToken = userRequest.getAccessToken().getTokenValue();
 
+        log.info("CustomOAuth2UserService - userNameAttributeName = {}, attributes = {}",
+            userNameAttributeName, oAuth2User.getAttributes());
 
         OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(registrationId,
             accessToken, oAuth2User.getAttributes());
@@ -67,8 +75,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 "Email not found from OAuth2 provider");
         }
 
-//        User user = userService.getUserByUserId(oAuth2UserInfo.getEmail());
-
+//        User user = userService.getUserByEmail(oAuth2UserInfo.getEmail());
 
         return new OAuth2UserPrincipal(oAuth2UserInfo);
     }

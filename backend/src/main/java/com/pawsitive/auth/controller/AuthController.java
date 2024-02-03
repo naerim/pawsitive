@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.OK;
 import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
 import com.pawsitive.usergroup.dto.request.UserLoginPostReq;
+import com.pawsitive.usergroup.dto.response.UserJoinRes;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -76,14 +77,10 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "실패")
         }
     )
-    public ResponseEntity<User> join(@RequestBody UserJoinPostReq userJoinPostReq) {
-
-        User joinUser = userService.joinUser(userJoinPostReq);
-
+    public ResponseEntity<UserJoinRes> join(@RequestBody UserJoinPostReq userJoinPostReq) {
         return ResponseEntity
             .status(OK)
-            .body(joinUser);
-
+            .body(userService.joinUser(userJoinPostReq));
     }
 
 //    @PostMapping("/oauth2/google")

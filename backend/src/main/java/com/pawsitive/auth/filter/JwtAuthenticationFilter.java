@@ -50,6 +50,8 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
             return bearerToken.substring(7);
         }
+
+        // TODO : 냄시 제거로 인해 Optional로 바꾸기
         return null;
     }
 
