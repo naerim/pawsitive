@@ -35,8 +35,8 @@ const ChattingRoomContainer = () => {
   }
 
   const connectHandler = (mockId: string, mockName?: string) => {
-    const SockJs = SockJS('https://i10c111.p.ssafy.io:8090/ws/chat')
-    client.current = Stomp.over(SockJs)
+    const SockJs = SockJS('/ws/chat')
+    client.current = Stomp.over(() => SockJs)
     setChatMessageList([])
 
     client.current.connect(
