@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
+    "types": ["@types/stompjs"],
     "paths": {
       "@src/*": [
         "./src/*"
