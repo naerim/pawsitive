@@ -1,5 +1,6 @@
 package com.pawsitive.config;
 
+import com.pawsitive.chatgroup.handler.StompHandshakeInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -23,10 +24,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws/chat")   //SockJS 연결 주소
-            .setAllowedOrigins("*")
-//            .setAllowedOrigins("http://localhost:8080")
-//            .setAllowedOrigins("https://i10c111.p.ssafy.io:8081", "https://i10c111.p.ssafy.io:8090")
-            .withSockJS(); //버전 낮은 브라우저에서도 적용 가능
-        // 주소 : ws://localhost:8080/ws-stomp
+            .addInterceptors(new StompHandshakeInterceptor())
+            .setAllowedOriginPatterns("*")
+            .withSockJS()
+            .setDisconnectDelay(30 * 1000)
+            .setClientLibraryUrl(
+                "https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.4/sockjs.min.js");
     }
 }
