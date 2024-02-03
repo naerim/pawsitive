@@ -3,6 +3,7 @@ package com.pawsitive.usergroup.service;
 import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
+import com.pawsitive.usergroup.dto.response.UserJoinRes;
 import com.pawsitive.usergroup.entity.Member;
 import com.pawsitive.usergroup.entity.User;
 
@@ -16,7 +17,7 @@ public interface UserService {
 
     JwtToken signIn(String userName, String password);
 
-    User joinUser(UserJoinPostReq userJoinPostReq);
+    UserJoinRes joinUser(UserJoinPostReq userJoinPostReq);
 
     User getUserByUserNo(int userNo);
 

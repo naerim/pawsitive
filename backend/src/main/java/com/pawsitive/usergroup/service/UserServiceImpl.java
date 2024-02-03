@@ -3,8 +3,10 @@ package com.pawsitive.usergroup.service;
 import com.pawsitive.auth.Role;
 import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.auth.jwt.JwtTokenProvider;
+import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
+import com.pawsitive.usergroup.dto.response.UserJoinRes;
 import com.pawsitive.usergroup.entity.Member;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.exception.UserNotFoundException;
@@ -18,6 +20,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 /**
  * 유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -48,7 +52,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User joinUser(UserJoinPostReq userJoinPostReq) throws IllegalArgumentException {
+    public UserJoinRes joinUser(UserJoinPostReq userJoinPostReq) throws IllegalArgumentException {
 
         // 이미 등록된 유저라면 예외 던지기
         if (!userRepository.findUserByEmail(userJoinPostReq.getEmail()).isEmpty()) {
@@ -56,16 +60,60 @@ public class UserServiceImpl implements UserService {
         }
 
         // 비밀번호 암호화
-        String encryptedPassword = passwordEncoder.encode(userJoinPostReq.getPassword());
+        String encryptedPassword = passwordEncoder.encode(userJoinPostReq.getPw());
 
-        return userRepository.save(User.builder()
-            .email(userJoinPostReq.getEmail())
-            .password(encryptedPassword)
-            .name(userJoinPostReq.getName())
-            .address(userJoinPostReq.getAddress())
-            .role(Role.valueOf(userJoinPostReq.getRole()))
-            .build());
+        // 유저인지
+        String role = userJoinPostReq.getRole();
 
+        if ("USER".equals(role)) { // User일 때
+
+            User user = userRepository.save(User.builder()
+                .email(userJoinPostReq.getEmail())
+                .name(userJoinPostReq.getName())
+                .pw(encryptedPassword)
+                .address(userJoinPostReq.getAddress())
+                .role(Role.valueOf(userJoinPostReq.getRole()))
+                .build());
+
+            Member member = memberRepository.save(Member.builder()
+                .user(user)
+                .birth(LocalDateTime.parse(userJoinPostReq.getBirth() + "T00:00:00"))
+                .stage(0)
+                .type(userJoinPostReq.getType())
+                .gender(userJoinPostReq.getGender())
+                .build());
+
+            return UserJoinRes.builder()
+                .userNo(user.getUserNo())
+                .email(user.getEmail())
+                .name(user.getName())
+                .address(user.getAddress())
+                .role(user.getRole().getTitle())
+                .birth(member.getBirth().toString())
+                .stage(member.getStage())
+                .type(member.getType())
+                .gender(member.getGender())
+                .build();
+        }
+
+        if ("SHELTER".equals(role)) {
+            User user = userRepository.save(User.builder()
+                .email(userJoinPostReq.getEmail())
+                .name(userJoinPostReq.getName())
+                .pw(encryptedPassword)
+                .address(userJoinPostReq.getAddress())
+                .role(Role.valueOf(userJoinPostReq.getRole()))
+                .build());
+
+            return UserJoinRes.builder()
+                .email(user.getEmail())
+                .name(user.getName())
+                .address(user.getAddress())
+                .role(user.getRole().getTitle())
+                .build();
+        }
+
+        throw new NotSavedException();
     }
 
     @Override
@@ -101,7 +149,6 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmail(String email) {
         return userRepository.findUserByEmail(email).orElseThrow(UserNotFoundException::new);
     }
-
 
     //
 //    @Override

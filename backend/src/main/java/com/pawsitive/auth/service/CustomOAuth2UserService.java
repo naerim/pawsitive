@@ -24,7 +24,7 @@ import org.springframework.util.StringUtils;
 @Slf4j
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
-    private final UserService userService;
+//    private final UserService userService;
 
     /**
      * 요청에 따른 유저 정보를 불러옵니다.
