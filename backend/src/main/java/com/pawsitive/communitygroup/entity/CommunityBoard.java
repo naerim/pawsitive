@@ -42,7 +42,7 @@ public class CommunityBoard {
     private String content;
 
     @Column(name = "is_public")
-    private boolean isPublic;
+    private Boolean isPublic;
 
     @Column(name = "latitude")
     private double latitude;

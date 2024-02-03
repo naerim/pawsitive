@@ -38,3 +38,14 @@ export type JoinUserResponseType = {
   type: number
   stage: number
 }
+
+export type LoginUserType = {
+  id: string
+  password: string
+}
+
+export type LoginUserResponseType = {
+  grantType: string
+  accessToken: string
+  refreshToken: string
+}

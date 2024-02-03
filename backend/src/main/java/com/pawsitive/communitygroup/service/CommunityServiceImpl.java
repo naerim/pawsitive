@@ -1,7 +1,6 @@
 package com.pawsitive.communitygroup.service;
 
 import com.pawsitive.common.exception.NotSavedException;
-import com.pawsitive.common.util.S3BucketUtil;
 import com.pawsitive.communitygroup.dto.request.CommunityCreateReq;
 import com.pawsitive.communitygroup.dto.response.CommunityBoardDetailRes;
 import com.pawsitive.communitygroup.dto.response.CommunityCommentDetailRes;
@@ -27,7 +26,6 @@ public class CommunityServiceImpl implements CommunityService {
     private final CommunityCategoryService categoryService;
     private final CommunityImageService communityImageService;
     private final UserService userService;
-    private final S3BucketUtil s3BucketUtil;
 
 
     @Override
@@ -47,9 +45,7 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Override
     public CommunityDetailRes getCommunity(int boardNo) {
-        CommunityBoardDetailRes board = communityBoardRepository.getBoardByBoardNo(boardNo)
-            .orElseThrow(CommunityBoardNotFoundException::new);
-
+        CommunityBoardDetailRes board = getCommunityBoard(boardNo);
         return getCommunityByBoard(board);
     }
 

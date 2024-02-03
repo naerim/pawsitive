@@ -1,5 +1,11 @@
+import LoginContainer from '@src/container/LoginContainer'
+
 const LoginPage = () => {
-  return <div>로그인 페이지</div>
+  return (
+    <div>
+      <LoginContainer />
+    </div>
+  )
 }
 
 export default LoginPage

@@ -27,7 +27,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         roomNo = roomNo.substring(0, 16);
         room.setChatRoomNo(roomNo);
         room.setName("채팅방" + roomNo);
-        return chatRoomRepository.save(room);
+        chatRoomRepository.save(room);
+        return getChatRoomByChatRoomNo(roomNo);
     }
 
     /**
@@ -48,8 +49,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
      * @return 최근에 생성된 순으로 조회한 채팅방 목록
      */
     @Override
-    public List<ChatRoom> getChatRooms() {
-        return chatRoomRepository.findChatRoomsByOrderByCreatedAtDesc();
+    public List<ChatRoom> getChatRooms(int userNo) {
+        return chatRoomRepository.getChatRoomsByOrderByCreatedAtDesc(userNo);
     }
 
 }

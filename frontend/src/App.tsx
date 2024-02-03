@@ -34,6 +34,7 @@ import DailyDiaryPage from '@src/pages/DailyDiaryPage'
 import FindSimilarDogResultPage from '@src/pages/FindSimilarDogResultPage'
 import FillAdoptInfoPage from '@src/pages/FillAdoptInfoPage'
 import SaveDogsListPage from '@src/pages/SaveDogsListPage'
+import ChattingRoomContainer from '@src/components/Chat/ChattingRoomContainer'
 
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
@@ -58,7 +59,7 @@ const AuthRoutes = () => (
     <Route path="/mypage/survey" element={<AdoptionSurveyPage />} />
     <Route path="/mypage/survey/done" element={<AdoptionSurveyDonePage />} />
     <Route path="/chat" element={<ChattingPage />} />
-    <Route path="/chat/1" element={<ChattingPage />} />
+    <Route path="/chat/:no" element={<ChattingRoomContainer />} />
     <Route path="/confirm/pawsitive" element={<ConfirmPawsitivePage />} />
     <Route path="/mypage/adoptionSurvey" element={<AdoptionSurveyPage />} />
     <Route path="/dictionary" element={<DictionaryListPage />} />

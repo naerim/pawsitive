@@ -6,6 +6,8 @@ import com.pawsitive.auth.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.pawsitive.auth.OAuth2Provider;
 import com.pawsitive.auth.OAuth2UserPrincipal;
 import com.pawsitive.auth.OAuth2UserUnlinkManager;
+import com.pawsitive.auth.jwt.JwtToken;
+import com.pawsitive.auth.jwt.JwtTokenProvider;
 import com.pawsitive.common.util.CookieUtils;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -26,11 +29,13 @@ import org.springframework.web.util.UriComponentsBuilder;
  */
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final HttpCookieOAuth2AuthorizationRequestRepository
         httpCookieOAuth2AuthorizationRequestRepository;
     private final OAuth2UserUnlinkManager oAuth2UserUnlinkManager;
+    private final JwtTokenProvider jwtTokenProvider;
 
     /**
      * 인증 성공 시 처리할 로직을 정의한 메서드입니다.
@@ -92,12 +97,11 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 //            );
 
             // TODO 토큰 발급 로직 생성
-            String accessToken = "test_access_token";
-            String refreshToken = "test_refresh_token";
+            JwtToken jwtToken = jwtTokenProvider.generateToken(authentication);
 
             return UriComponentsBuilder.fromUriString(targetUrl)
-                .queryParam("access_token", accessToken)
-                .queryParam("refresh_token", refreshToken)
+                .queryParam("access_token", jwtToken.getAccessToken())
+                .queryParam("refresh_token", jwtToken.getRefreshToken())
                 .build().toUriString();
 
         } else if ("unlink".equalsIgnoreCase(mode)) {
