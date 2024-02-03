@@ -76,7 +76,8 @@ public class SecurityConfig {
             .sessionManagement(
                 configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/v3/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
+                .requestMatchers("/v3/**", "/swagger-ui/**", "/swagger-resources/**", "ws/chat")
+                .permitAll()
                 .requestMatchers("/pub/**", "/sub/**").permitAll()
                 .requestMatchers("/api/v1/users/me").authenticated()
                 .anyRequest().permitAll()
