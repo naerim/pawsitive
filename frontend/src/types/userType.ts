@@ -33,3 +33,14 @@ export type JoinUserResponseType = {
   role: string
   userNo: number
 }
+
+export type LoginUserType = {
+  id: string
+  password: string
+}
+
+export type LoginUserResponseType = {
+  grantType: string
+  accessToken: string
+  refreshToken: string
+}
