@@ -14,7 +14,7 @@ export const fetchAfterAdoptionUser = async () => {
 export const joinUser = async (
   userData: JoinUserType,
 ): Promise<JoinUserResponseType> => {
-  return publicRequest.post('auth/join', userData).then(res => res.data)
+  return publicRequest.post('/auth/join', userData).then(res => res.data)
 }
 
 // 로그인 api
