@@ -1,7 +1,7 @@
 import { atom, useAtom } from 'jotai'
 import * as c from '@src/components/style/CommunityCreateFormStyle'
 import React, { useEffect, useRef } from 'react'
-import { DaumPostData } from '@src/types/container/SignUpType'
+import { DaumPostData } from '@src/types/components/SignUpType'
 import DaumPostcode from 'react-daum-postcode'
 import { useNavigate } from 'react-router-dom'
 
