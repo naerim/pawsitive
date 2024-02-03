@@ -41,5 +41,4 @@ export const InfoWindow = styled.div`
   padding: 10px;
   background-color: #fffaf7;
   border-radius: 10px;
-  color: #ff984f;
 `
