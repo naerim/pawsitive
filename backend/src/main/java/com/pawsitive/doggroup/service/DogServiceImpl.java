@@ -56,6 +56,7 @@ public class DogServiceImpl implements DogService {
             .note(req.getNote())
             .mbti(getMbti(req))
             .video(s3BucketUtil.getFileUrl(videoKey, FOLDER_NAME))
+            .sex(req.getSex())
             .build();
 
         Dog savedDog;

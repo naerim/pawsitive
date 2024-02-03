@@ -24,4 +24,6 @@ public interface UserService {
 
     void updateField(UserTypeStagePatchReq req, int userNo);
 
+    User getUserByEmail(String email);
+
 }
