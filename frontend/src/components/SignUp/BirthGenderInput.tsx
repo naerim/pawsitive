@@ -3,7 +3,7 @@ import { useAtom } from 'jotai'
 import { signUpDataAtom, signUpErrorAtom } from '@src/stores/atoms/user'
 import * as s from '@src/components/style/SignUpStyle'
 
-const BirthInput = () => {
+const BirthGenderInput = () => {
   const [signUpData, setSignUpData] = useAtom(signUpDataAtom)
   const [error, setError] = useAtom(signUpErrorAtom)
 
@@ -56,6 +56,11 @@ const BirthInput = () => {
     }
   }
 
+  const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const genderInput = e.target.value
+    setSignUpData(prevData => ({ ...prevData, gender: genderInput }))
+  }
+
   return (
     <s.InputContainer>
       <s.InputLabel htmlFor="name">생년월일을 입력해주세요.</s.InputLabel>
@@ -69,8 +74,29 @@ const BirthInput = () => {
         required
       />
       <s.ErrorText>{error.birth}</s.ErrorText>
+      <s.InputLabel>성별을 선택하세요.</s.InputLabel>
+      <s.InputLabel>
+        <input
+          type="radio"
+          name="gender"
+          value="M"
+          checked={signUpData.gender === 'M'}
+          onChange={handleGenderChange}
+        />
+        남성
+      </s.InputLabel>
+      <s.InputLabel>
+        <input
+          type="radio"
+          name="gender"
+          value="F"
+          checked={signUpData.gender === 'F'}
+          onChange={handleGenderChange}
+        />
+        여성
+      </s.InputLabel>
     </s.InputContainer>
   )
 }
 
-export default BirthInput
+export default BirthGenderInput
