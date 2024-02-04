@@ -51,7 +51,7 @@ const SignUpContainer = () => {
       isDisabled = !pwCheck || !!error.pwCheck
       break
     case 6:
-      isDisabled = !signUpData.birth || !signUpData.gender || !!error.birth
+      isDisabled = !signUpData.birth || !signUpData.gender || !!error.dob
       break
     case 7:
       isDisabled = !signUpData.address
@@ -65,8 +65,8 @@ const SignUpContainer = () => {
         console.log('회원가입 성공:', data)
         navigate('/login')
       },
-      onError: error => {
-        console.error('회원가입 실패:', error)
+      onError: err => {
+        console.error('회원가입 실패:', err)
       },
     })
   }
