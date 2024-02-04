@@ -33,5 +33,6 @@ export const signUpStepAtom = atom<number>(1)
 export const signUpErrorAtom = atom<JoinUserErrorType>({
   name: '',
   dob: '',
+  emailVerify: '',
   pwCheck: '',
 })
