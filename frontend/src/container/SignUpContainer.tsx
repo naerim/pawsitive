@@ -6,6 +6,7 @@ import { JoinUserType } from '@src/types/userType'
 import {
   signUpDataAtom,
   signUpErrorAtom,
+  signUpPwCheckAtom,
   signUpStepAtom,
 } from '@src/stores/atoms/user'
 import NameInput from '@src/components/SignUp/NameInput'
@@ -20,6 +21,7 @@ import * as s from '@src/container/style/SignUpContainerStyle'
 
 const SignUpContainer = () => {
   const [signUpData] = useAtom(signUpDataAtom)
+  const [pwCheck] = useAtom(signUpPwCheckAtom)
   const [signUpStep, setSignUpStep] = useAtom(signUpStepAtom)
   const [error] = useAtom(signUpErrorAtom)
 
@@ -47,7 +49,7 @@ const SignUpContainer = () => {
       isDisabled = !signUpData.pw
       break
     case 5:
-      isDisabled = !!error.pwCheck
+      isDisabled = !pwCheck || !!error.pwCheck
       break
     case 6:
       isDisabled = !signUpData.birth || !!error.birth
