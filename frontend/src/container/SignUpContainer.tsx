@@ -3,11 +3,17 @@ import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 import { joinUser } from '@src/apis/user'
 import { JoinUserType } from '@src/types/userType'
-import { signUpDataAtom, signUpStepAtom } from '@src/stores/atoms/user'
+import {
+  signUpDataAtom,
+  signUpErrorAtom,
+  signUpPwCheckAtom,
+  signUpStepAtom,
+} from '@src/stores/atoms/user'
 import NameInput from '@src/components/SignUp/NameInput'
 import RoleInput from '@src/components/SignUp/RoleInput'
 import EmailInput from '@src/components/SignUp/EmailInput'
 import PasswordInput from '@src/components/SignUp/PasswordInput'
+import PasswordCheckInput from '@src/components/SignUp/PasswordCheckInput'
 import BirthInput from '@src/components/SignUp/BirthInput'
 import GenderInput from '@src/components/SignUp/GenderInput'
 import AddressInput from '@src/components/SignUp/AddressInput'
@@ -15,7 +21,9 @@ import * as s from '@src/container/style/SignUpContainerStyle'
 
 const SignUpContainer = () => {
   const [signUpData] = useAtom(signUpDataAtom)
+  const [pwCheck] = useAtom(signUpPwCheckAtom)
   const [signUpStep, setSignUpStep] = useAtom(signUpStepAtom)
+  const [error] = useAtom(signUpErrorAtom)
 
   const navigate = useNavigate()
   const { mutate } = useMutation({
@@ -26,6 +34,35 @@ const SignUpContainer = () => {
     setSignUpStep(prevStep => prevStep + 1)
   }
 
+  let isDisabled: boolean = false
+  switch (signUpStep) {
+    case 1:
+      isDisabled = !signUpData.name || !!error.name
+      break
+    case 2:
+      isDisabled = !signUpData.role
+      break
+    case 3:
+      isDisabled = !signUpData.email
+      break
+    case 4:
+      isDisabled = !signUpData.pw
+      break
+    case 5:
+      isDisabled = !pwCheck || !!error.pwCheck
+      break
+    case 6:
+      isDisabled = !signUpData.birth || !!error.birth
+      break
+    case 7:
+      isDisabled = !signUpData.gender
+      break
+    case 8:
+      isDisabled = !signUpData.address
+      break
+    default:
+      break
+  }
   const handleSignUp = () => {
     mutate(signUpData, {
       onSuccess: data => {
@@ -49,11 +86,14 @@ const SignUpContainer = () => {
       case 4:
         return <PasswordInput />
       case 5:
-        return <BirthInput />
+        return <PasswordCheckInput />
       case 6:
-        return <GenderInput />
+        return <BirthInput />
       case 7:
+        return <GenderInput />
+      case 8:
         return <AddressInput />
+
       default:
         return null
     }
@@ -63,9 +103,15 @@ const SignUpContainer = () => {
     <s.Container>
       {renderStepComponent()}
       <div>
-        {signUpStep < 7 && <s.Button onClick={handleNextStep}>다음</s.Button>}
-        {signUpStep === 7 && (
-          <s.Button onClick={handleSignUp}>회원가입</s.Button>
+        {signUpStep < 8 && (
+          <s.Button onClick={handleNextStep} disabled={isDisabled}>
+            다음
+          </s.Button>
+        )}
+        {signUpStep === 8 && (
+          <s.Button onClick={handleSignUp} disabled={isDisabled}>
+            회원가입
+          </s.Button>
         )}
       </div>
     </s.Container>
