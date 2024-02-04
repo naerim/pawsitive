@@ -9,7 +9,7 @@ export const InputContainer = styled.div`
 
   label {
     display: block;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 
     input {
       margin-right: 5px;
@@ -19,7 +19,6 @@ export const InputContainer = styled.div`
 
 export const InputLabel = styled.label`
   display: block;
-  margin-bottom: 8px;
   font-size: 18px;
   color: #333;
 `
@@ -39,4 +38,9 @@ export const InputField = styled.input`
   &::placeholder {
     color: #999;
   }
+`
+
+export const ErrorText = styled.div`
+  margin-top: 10px;
+  color: #ff9232;
 `

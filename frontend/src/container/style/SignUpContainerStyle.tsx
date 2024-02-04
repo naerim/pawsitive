@@ -18,4 +18,9 @@ export const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
   margin-top: 400px;
+
+  &:disabled {
+    background-color: #bebebe;
+    cursor: not-allowed;
+  }
 `

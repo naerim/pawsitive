@@ -39,6 +39,12 @@ export type JoinUserResponseType = {
   stage: number
 }
 
+export type JoinUserErrorType = {
+  name: string
+  birth: string
+  pwCheck: string
+}
+
 export type LoginUserType = {
   id: string
   password: string
