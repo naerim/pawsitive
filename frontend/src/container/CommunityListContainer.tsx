@@ -16,18 +16,17 @@ const Index: React.FC = () => {
   const [CommunityCategoryValue, setCommunityCategory] = useAtom(
     CommunityCategoryAtom,
   )
+  const [CommunityListValue, setCommunityList] =
+    useAtom<CommunityItemType[]>(CommunityListAtom)
   const [LoadList, setLoadList] = useState(true)
   const isMounted = useRef(false)
   const location = useLocation()
 
-  const { isLoading, data } = useQuery({
+  const { isLoading, data, refetch } = useQuery({
     queryKey: ['communityList'],
     queryFn: () => fetchCommunityList(setCommunityList),
     enabled: LoadList,
   })
-
-  const [CommunityListValue, setCommunityList] =
-    useAtom<CommunityItemType[]>(CommunityListAtom)
 
   const { mutate } = useMutation({
     mutationKey: ['communityCategory'],
@@ -39,17 +38,15 @@ const Index: React.FC = () => {
       const result = await fetchCommunityList(setCommunityList)
       return result
     },
-    onSuccess(): void {
-      console.log('mutate 성공')
-    },
+    onSuccess(): void {},
   })
 
   useEffect(() => {
     if (isMounted.current) {
       setCommunityCategory(0)
-      setLoadList(true)
+      refetch()
     }
-  }, [])
+  }, [refetch, setCommunityCategory])
 
   useEffect(() => {
     isMounted.current = true
@@ -57,16 +54,16 @@ const Index: React.FC = () => {
 
   useEffect(() => {
     mutate(CommunityCategoryValue)
-  }, [CommunityCategoryValue, isMounted, setLoadList])
+  }, [CommunityCategoryValue, isMounted, mutate, setLoadList])
 
   useEffect(() => {
-    if (data && data.content) {
+    if (data) {
       setCommunityList(data.content)
     }
   }, [data, setCommunityList, mutate])
 
+  // url 들어오면 전체목록 조회
   useEffect(() => {
-    // Check if the route changed to '/community' and set LoadList to true
     if (location.pathname === '/community') {
       setLoadList(true)
     }

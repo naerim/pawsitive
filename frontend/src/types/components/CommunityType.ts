@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react'
+
 export type CommunityItemType = {
   boardNo: number
   memberEmail: string
@@ -39,4 +41,9 @@ export type CommunityListType = {
 export type CategoryType = {
   communityCategoryNo: number
   communityCategoryName: string
+}
+
+export type CommunityFileType = {
+  imageFilesValue: File[]
+  setImageFiles: Dispatch<SetStateAction<File[]>>
 }
