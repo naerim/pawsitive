@@ -7,7 +7,7 @@ export const MapContainer = styled.div`
 
 export const Map = styled.div`
   width: auto;
-  height: 580px;
+  height: 450px;
   //border: 3px solid #fbefe6;
   border-radius: 10px;
 `
