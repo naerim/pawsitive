@@ -36,7 +36,7 @@ const ChatArea = () => {
     client.current = new Client({
       webSocketFactory: () =>
         new SockJS(
-          'http://localhost:8080/ws/chat',
+          'http://i10c111.p.ssafy.io:8081/ws/chat',
           {},
           {
             // webSocketFactory: () => new SockJS('https://i10c111.p.ssafy.io/ws/chat', {}, {
