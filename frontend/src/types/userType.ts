@@ -16,6 +16,7 @@ export type AfterAdoptionUserInfo = {
   memoryCount: number
 }
 
+// 회원가입
 export type JoinUserType = {
   name: string
   role: string
@@ -42,9 +43,22 @@ export type JoinUserResponseType = {
 export type JoinUserErrorType = {
   name: string
   dob: string
+  emailVerify: string
   pwCheck: string
 }
 
+// 이메일 인증
+export type EmailCodeVerifyType = {
+  email: string
+  authCode: string
+}
+
+export type EmailCodeVerifyResponseType = {
+  email: string
+  result: boolean
+}
+
+// 로그인
 export type LoginUserType = {
   id: string
   password: string
