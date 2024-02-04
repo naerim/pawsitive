@@ -13,7 +13,7 @@ const AuthRoutes = () => (
   <Routes>
     <Route path="/" element={<ChatPage />} />
     <Route path="/chat" element={<ChatPage />} />
-    <Route path="/chat/:roomId" element={<ChatRoomPage />} />
+    <Route path="/chat/:id" element={<ChatRoomPage />} />
   </Routes>
 )
 
