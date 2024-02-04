@@ -9,12 +9,16 @@ import { useAtomValue } from 'jotai'
 import ChatPage from '@pages/Chat'
 import ChatRoomPage from '@pages/ChatRoom'
 import HomePage from '@pages/Home'
+import MyPage from '@pages/MyPage'
+import FindSimilarDogPage from '@pages/FindSimilarDog'
 
 const AuthRoutes = () => (
   <Routes>
     <Route path="/" element={<HomePage />} />
     <Route path="/chat" element={<ChatPage />} />
     <Route path="/chat/:id" element={<ChatRoomPage />} />
+    <Route path="/mypage" element={<MyPage />} />
+    <Route path="/mypage/find-similar-dog" element={<FindSimilarDogPage />} />
   </Routes>
 )
 
