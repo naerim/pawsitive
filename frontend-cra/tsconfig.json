@@ -27,5 +27,6 @@
   "include": [
     "src",
     ".eslintrc.cjs"
-  ]
+  ],
+  "extends": "./tsconfig.paths.json"
 }
