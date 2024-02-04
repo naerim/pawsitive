@@ -8,6 +8,7 @@ import NameInput from '@src/components/SignUp/NameInput'
 import RoleInput from '@src/components/SignUp/RoleInput'
 import EmailInput from '@src/components/SignUp/EmailInput'
 import PasswordInput from '@src/components/SignUp/PasswordInput'
+import PasswordCheckInput from '@src/components/SignUp/PasswordCheckInput'
 import BirthInput from '@src/components/SignUp/BirthInput'
 import GenderInput from '@src/components/SignUp/GenderInput'
 import AddressInput from '@src/components/SignUp/AddressInput'
@@ -49,11 +50,14 @@ const SignUpContainer = () => {
       case 4:
         return <PasswordInput />
       case 5:
-        return <BirthInput />
+        return <PasswordCheckInput />
       case 6:
-        return <GenderInput />
+        return <BirthInput />
       case 7:
+        return <GenderInput />
+      case 8:
         return <AddressInput />
+
       default:
         return null
     }
@@ -63,8 +67,8 @@ const SignUpContainer = () => {
     <s.Container>
       {renderStepComponent()}
       <div>
-        {signUpStep < 7 && <s.Button onClick={handleNextStep}>다음</s.Button>}
-        {signUpStep === 7 && (
+        {signUpStep < 8 && <s.Button onClick={handleNextStep}>다음</s.Button>}
+        {signUpStep === 8 && (
           <s.Button onClick={handleSignUp}>회원가입</s.Button>
         )}
       </div>
