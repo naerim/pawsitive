@@ -42,6 +42,8 @@ class JasyptConfigAESTest {
 
         System.out.println("s3AccessPublicKey: " + jasyptEncoding(s3AccessPublicKey));
         System.out.println("s3AccessPrivateKey: " + jasyptEncoding(s3AccessPrivateKey));
+
+        System.out.println("SMTP Password : " + jasyptEncoding("vuymtelvazixgudh"));
     }
 
     @Test

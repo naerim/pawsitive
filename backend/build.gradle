@@ -118,8 +118,8 @@ dependencies {
     // AWS S3
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
-
-
+    // Google SMTP
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.0.5'
 
 }
 

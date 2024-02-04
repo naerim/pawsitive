@@ -3,9 +3,13 @@ package com.pawsitive.usergroup.service;
 import com.pawsitive.auth.Role;
 import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.auth.jwt.JwtTokenProvider;
+import com.pawsitive.auth.service.MailService;
 import com.pawsitive.common.exception.NotSavedException;
+import com.pawsitive.common.service.RedisService;
+import com.pawsitive.usergroup.dto.request.EmailVerificationReq;
 import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
+import com.pawsitive.usergroup.dto.response.EmailVerificationRes;
 import com.pawsitive.usergroup.dto.response.UserJoinRes;
 import com.pawsitive.usergroup.entity.Member;
 import com.pawsitive.usergroup.entity.User;
@@ -14,6 +18,7 @@ import com.pawsitive.usergroup.repository.MemberRepository;
 import com.pawsitive.usergroup.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -21,7 +26,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Random;
 
 /**
  * 유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -37,6 +46,15 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+
+    private final MailService mailService;
+
+    @Value("${spring.mail.auth-code-expiration-millis}")
+    private long authCodeExpirationMillis;
+
+    private final RedisService redisService;
+
+    private final String AUTH_CODE_PREFIX = "Authcode ";
 
     @Transactional
     @Override
@@ -55,7 +73,7 @@ public class UserServiceImpl implements UserService {
     public UserJoinRes joinUser(UserJoinPostReq userJoinPostReq) throws IllegalArgumentException {
 
         // 이미 등록된 유저라면 예외 던지기
-        if (!userRepository.findUserByEmail(userJoinPostReq.getEmail()).isEmpty()) {
+        if (userRepository.findUserByEmail(userJoinPostReq.getEmail()).isPresent()) {
             throw new IllegalArgumentException("이미 등록된 사용자 아이디입니다.");
         }
 
@@ -148,6 +166,45 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByEmail(String email) {
         return userRepository.findUserByEmail(email).orElseThrow(UserNotFoundException::new);
+    }
+
+    @Override
+    public void sendVerifyingEmail(String email) {
+        if (userRepository.findUserByEmail(email).isPresent()) {
+            throw new RuntimeException();
+        }
+
+        String title = "Pawsitive 회원가입 이메일 인증 번호입니다.";
+        String authCode = createVerifyCode();
+        mailService.sendEmail(email, title, authCode);
+
+        // 이메일 인증 요청 시 인증 번호 Redis에 저장 ( key = "AuthCode " + Email / value = AuthCode )
+        redisService.setValues(AUTH_CODE_PREFIX + email,
+            authCode, Duration.ofMillis(this.authCodeExpirationMillis));
+    }
+
+    private String createVerifyCode() {
+        try {
+            Random random = SecureRandom.getInstanceStrong();
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < 6; i++) {
+                builder.append(random.nextInt(10));
+            }
+            return builder.toString();
+        } catch (NoSuchAlgorithmException e) {
+            log.debug("MemberService.createCode() exception occur");
+            throw new RuntimeException();
+        }
+    }
+
+    public EmailVerificationRes verifyCode(EmailVerificationReq req) {
+        String redisAuthCode = redisService.getValues(AUTH_CODE_PREFIX + req.getEmail());
+        boolean authResult = redisService.checkExistsValue(redisAuthCode) && redisAuthCode.equals(req.getAuthCode());
+
+        return EmailVerificationRes.builder()
+            .email(req.getEmail())
+            .result(authResult)
+            .build();
     }
 
     //
