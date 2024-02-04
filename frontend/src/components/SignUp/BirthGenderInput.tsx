@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useAtom } from 'jotai'
 import { signUpDataAtom, signUpErrorAtom } from '@src/stores/atoms/user'
 import * as s from '@src/components/style/SignUpStyle'
@@ -6,95 +6,93 @@ import * as s from '@src/components/style/SignUpStyle'
 const BirthGenderInput = () => {
   const [signUpData, setSignUpData] = useAtom(signUpDataAtom)
   const [error, setError] = useAtom(signUpErrorAtom)
+  const [inputValue, setInputValue] = useState('')
 
-  const handleDobChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let dobInput = e.target.value
+  const convertToYYYYMMDD = (yyMMdd, genderInput) => {
+    const year = yyMMdd.slice(0, 2)
+    const month = yyMMdd.slice(2, 4)
+    const day = yyMMdd.slice(4, 6)
 
-    dobInput = dobInput.replace(/[^\d-]/g, '')
-    dobInput = dobInput.slice(0, 10)
+    let century
 
-    if (dobInput.length > 4 && dobInput[4] !== '-') {
-      dobInput = `${dobInput.substring(0, 4)}-${dobInput.substring(4)}`
+    if (genderInput === '1' || genderInput === '2') {
+      century = '19'
+    } else if (genderInput === '3' || genderInput === '4') {
+      century = '20'
     }
-    if (dobInput.length > 7 && dobInput[7] !== '-') {
-      dobInput = `${dobInput.substring(0, 7)}-${dobInput.substring(7)}`
-    }
-    setSignUpData(prevData => ({ ...prevData, birth: dobInput }))
 
-    const isNumberDobInput = () => /^\d{4}\.\d{2}\.\d{2}$/.test(dobInput)
+    return `${century}${year}-${month}-${day}`
+  }
+  const handleInputChange = e => {
+    const { value } = e.target
 
-    if (!isNumberDobInput()) {
+    if (!/^[0-9-]+$/.test(value)) {
       setError(prevError => ({
         ...prevError,
-        birth: '8자리 숫자로 입력해주세요.',
+        dob: '올바른 형식으로 입력하세요.',
       }))
+    } else if (value.length === 7) {
+      const yy = value.slice(0, 2)
+      const mm = value.slice(2, 4)
+      const dd = value.slice(4, 6)
+      const genderInput = value.slice(6)
+
+      if (value[6] !== '-' || !/[1-4]/.test(genderInput)) {
+        setError(prevError => ({
+          ...prevError,
+          dob: '올바른 형식으로 입력하세요.',
+        }))
+      } else {
+        const fullDate = convertToYYYYMMDD(value.replace('-', ''), genderInput)
+        const currentYear = new Date().getFullYear().toString().slice(2)
+        const currentDate = new Date()
+
+        if (
+          (yy > currentYear && [3, 4].includes(parseInt(genderInput, 10))) ||
+          ![1, 2, 3, 4].includes(parseInt(genderInput, 10)) ||
+          new Date(fullDate) > currentDate ||
+          mm < 1 ||
+          mm > 12 ||
+          dd < 1 ||
+          dd > 31
+        ) {
+          setError(prevError => ({
+            ...prevError,
+            dob: '올바른 형식으로 입력하세요.',
+          }))
+        } else {
+          setSignUpData(prevData => ({
+            ...prevData,
+            birth: fullDate,
+            gender: genderInput === '1' || genderInput === '3' ? 'M' : 'F',
+          }))
+          setInputValue(value)
+          setError(prevError => ({ ...prevError, dob: '' }))
+        }
+      }
     } else {
-      setError(prevError => ({
-        ...prevError,
-        birth: '',
-      }))
-    }
-
-    const [year, month, day] = dobInput.split('-').map(Number)
-
-    const isValidYear = year >= 1900 && year <= new Date().getFullYear()
-    const isValidMonth = month >= 1 && month <= 12
-    const isValidDay = day >= 1 && day <= 31
-
-    const isValidDobInput = isValidYear && isValidMonth && isValidDay
-
-    if (!isValidDobInput) {
-      setError(prevError => ({
-        ...prevError,
-        birth: '올바른 날짜 형식이 아닙니다.',
-      }))
-    } else {
-      setError(prevError => ({
-        ...prevError,
-        birth: '',
-      }))
+      setInputValue(value)
+      setError(prevError => ({ ...prevError, dob: '' }))
     }
   }
 
-  const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const genderInput = e.target.value
-    setSignUpData(prevData => ({ ...prevData, gender: genderInput }))
-  }
+  console.log(signUpData.birth, signUpData.gender)
 
   return (
     <s.InputContainer>
-      <s.InputLabel htmlFor="name">생년월일을 입력해주세요.</s.InputLabel>
+      <s.InputLabel htmlFor="jumin">
+        주민등록번호 앞 6자리와 성별코드 1자리를 붙여주세요.
+      </s.InputLabel>
       <s.InputField
         type="text"
-        id="dob"
-        name="dob"
-        value={signUpData.birth}
-        onChange={handleDobChange}
-        placeholder="YYYY-MM-DD"
-        required
+        id="jumin"
+        name="jumin"
+        defaultValue={inputValue}
+        onChange={handleInputChange}
+        maxLength={8}
+        placeholder="YYMMDD-S"
       />
-      <s.ErrorText>{error.birth}</s.ErrorText>
-      <s.InputLabel>성별을 선택하세요.</s.InputLabel>
-      <s.InputLabel>
-        <input
-          type="radio"
-          name="gender"
-          value="M"
-          checked={signUpData.gender === 'M'}
-          onChange={handleGenderChange}
-        />
-        남성
-      </s.InputLabel>
-      <s.InputLabel>
-        <input
-          type="radio"
-          name="gender"
-          value="F"
-          checked={signUpData.gender === 'F'}
-          onChange={handleGenderChange}
-        />
-        여성
-      </s.InputLabel>
+      <s.ErrorText>{error.dob}</s.ErrorText>
     </s.InputContainer>
   )
 }
