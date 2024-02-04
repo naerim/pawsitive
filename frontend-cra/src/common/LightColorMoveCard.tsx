@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import * as m from './style/LightColorMoveCardStyle'
+import * as m from './_style/LightColorMoveCardStyle'
 import { LightColorMoveCardType } from '@/types/common'
 
 const LightColorMoveCard = (props: LightColorMoveCardType) => {

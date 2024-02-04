@@ -7,6 +7,7 @@ import FirstStage from '@components/Home/FirstStage'
 import SecondStage from '@components/Home/SecondStage'
 import ThirdStage from '@components/Home/ThirdStage'
 import FourthStage from '@components/Home/FourthStage'
+import Navbar from '@common/Navbar'
 
 const Index = () => {
   const user = useAtomValue(userAtom)
@@ -34,10 +35,13 @@ const Index = () => {
   }
 
   return (
-    <HomeLayout>
-      <div>{currentStageComponent}</div>
-      <HomePopularCommunity />
-    </HomeLayout>
+    <>
+      <HomeLayout>
+        <div>{currentStageComponent}</div>
+        <HomePopularCommunity />
+      </HomeLayout>
+      <Navbar />
+    </>
   )
 }
 
