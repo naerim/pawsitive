@@ -1,25 +1,20 @@
 import { atom, useAtom } from 'jotai'
 import * as c from '@src/components/style/CommunityCreateFormStyle'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { DaumPostData } from '@src/types/components/SignUpType'
 import DaumPostcode from 'react-daum-postcode'
 import { useNavigate } from 'react-router-dom'
+import { LocationType } from '@src/types/propsType'
+import Locations from '@src/components/Community/Locations'
+import { useMutation } from '@tanstack/react-query'
+import { fetchCommunityCreate } from '@src/apis/community'
+import ImageUpload from '@src/components/Community/ImageUpload'
 
 declare global {
   interface Window {
     kakao: any
   }
 }
-
-const titleAtom = atom('')
-const categoryAtom = atom('0')
-const contentAtom = atom('')
-const imageFileAtom = atom('')
-const isPublicAtom = atom(true)
-const addressAtom = atom('')
-const latitudeAtom = atom(0)
-const longitudeAtom = atom(0)
-const isDaumPostcodeOpenAtom = atom(false)
 
 const defaultMap = new window.kakao.maps.Map(document.createElement('div'), {
   center: new window.kakao.maps.LatLng(33.450701, 126.570667),
@@ -32,28 +27,27 @@ const mapAtom = atom<kakao.maps.Map>(defaultMap)
 const markerAtom = atom<kakao.maps.Marker>(defaultMarker)
 
 const categoryList = [
-  { value: '쇼핑하개', index: 1 },
-  { value: '지식쌓개', index: 2 },
-  { value: '자랑하개', index: 3 },
-  { value: '영양있개', index: 4 },
+  { value: '지식쌓개', index: 1 },
+  { value: '자랑하개', index: 2 },
+  { value: '영양있개', index: 3 },
+  { value: '쇼핑하개', index: 4 },
 ]
 
 const CreateForm = () => {
-  const [categoryValue, setCategory] = useAtom(categoryAtom)
-  const [titleValue, setTitle] = useAtom(titleAtom)
-  const [contentValue, setContent] = useAtom(contentAtom)
-  const [imageFileValue, setImageFile] = useAtom(imageFileAtom)
-  const [isPublicValue, setIsPublic] = useAtom(isPublicAtom)
+  const [titleValue, setTitle] = useState('')
+  const [contentValue, setContent] = useState('')
+  const [isPublicValue, setIsPublic] = useState(true)
+  const [latitudeValue, setLatitude] = useState(0)
+  const [longitudeValue, setLongitude] = useState(0)
+  const [categoryValue, setCategory] = useState('')
+  const [imageFilesValue, setImageFiles] = useState<File[]>([])
+
   const [mapValue, setMap] = useAtom(mapAtom)
   const [markerValue, setMarker] = useAtom(markerAtom)
-  const [latitudeValue, setLatitude] = useAtom(latitudeAtom)
-  const [longitudeValue, setLongitude] = useAtom(longitudeAtom)
-  const [addressValue, setAddress] = useAtom(addressAtom)
-  const [isDaumPostcodeOpenValue, setIsDaumPostcodeOpen] = useAtom(
-    isDaumPostcodeOpenAtom,
-  )
+  const [addressValue, setAddress] = useState('')
+  const [isDaumPostcodeOpenValue, setIsDaumPostcodeOpen] = useState(false)
+  const location: LocationType | string = Locations()
   const navigate = useNavigate()
-
   const containerRef = useRef<HTMLDivElement>(null)
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -66,18 +60,6 @@ const CreateForm = () => {
   const handleContentChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setContent(e.target.value)
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { files } = e.target
-    const uploadFile = files && files[0]
-    if (uploadFile) {
-      const reader = new FileReader()
-      reader.readAsDataURL(uploadFile)
-      reader.onloadend = () => {
-        setImageFile(reader.result as string)
-      }
-    }
-  }
-
   const handleIsPublicChange = () => setIsPublic(!isPublicValue)
 
   const handleDaumPostcodeOpen = () => {
@@ -89,9 +71,9 @@ const CreateForm = () => {
   useEffect(() => {
     window.kakao.maps.load(() => {
       const container = containerRef.current
-      if (container) {
+      if (container && location.latitude !== 0) {
         const options = {
-          center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+          center: new kakao.maps.LatLng(location.latitude, location.longitude),
           level: 3,
         }
         const newMap = new window.kakao.maps.Map(
@@ -102,17 +84,17 @@ const CreateForm = () => {
         setMarker(new window.kakao.maps.Marker())
       }
     })
-  }, [setMap, setMarker])
+  }, [setMap, setMarker, location.latitude, location.longitude])
 
-  const handleAddressComplete = (data: DaumPostData) => {
-    setAddress(data.address)
+  const handleAddressComplete = (datas: DaumPostData) => {
+    setAddress(datas.address)
     setIsDaumPostcodeOpen(false)
 
     // 검색된 주소 위치 표시
     if (window.kakao.maps && window.kakao.maps.services) {
       const geocoder = new window.kakao.maps.services.Geocoder()
       geocoder.addressSearch(
-        data.address,
+        datas.address,
         (result: any[], status: kakao.maps.services.Status) => {
           if (status === window.kakao.maps.services.Status.OK) {
             const currentPos = new window.kakao.maps.LatLng(
@@ -173,15 +155,43 @@ const CreateForm = () => {
     }
   }, [mapValue, markerValue, setAddress, setLatitude, setLongitude])
 
-  const handleSubmit = () => {
-    console.log('title:', titleValue)
-    console.log('category:', categoryValue)
-    console.log('content:', contentValue)
-    console.log('imageFile:', imageFileValue)
-    console.log('isPublic:', isPublicValue)
-    console.log('latitude:', latitudeValue)
-    console.log('longitude:', longitudeValue)
+  const { mutate } = useMutation({
+    mutationKey: ['communityCreateForm'],
+    mutationFn: fetchCommunityCreate,
+    onSuccess(responseData) {
+      console.log('mutate 사용을 성공했습니다')
+      navigate(`/community/${responseData.boardNo}`)
+    },
+    onError() {
+      console.log('에러남')
+    },
+  })
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData: FormData = new FormData()
+    const ArticleData = {
+      userNo: 1,
+      title: titleValue,
+      content: contentValue,
+      isPublic: isPublicValue,
+      latitude: latitudeValue,
+      longitude: longitudeValue,
+      categoryNo: categoryValue,
+    }
+    for (let i = 0; i < imageFilesValue.length; i += 1) {
+      formData.append('images', imageFilesValue[i])
+    }
+    formData.append(
+      'req',
+      new Blob([JSON.stringify(ArticleData)], { type: 'application/json' }),
+    )
+    mutate(formData)
   }
+
+  // useEffect(() => {
+  //   navigate(`/community/${res.data.boardNo}`)
+  // }, [data, navigate])
 
   // 뒤로가기 버튼 로직
   const closeClick = () => {
@@ -190,131 +200,99 @@ const CreateForm = () => {
 
   return (
     <c.Container>
-      <c.Top>
-        <c.CloseButton type="button" onClick={closeClick}>
-          <img className="img" src="/icon/icon_close.png" alt="" />
-        </c.CloseButton>
-        <c.H1>글쓰기</c.H1>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
+        <c.Top>
+          <c.CloseButton type="button" onClick={closeClick}>
+            <img className="img" src="/icon/icon_close.png" alt="" />
+          </c.CloseButton>
+          <c.H1>글쓰기</c.H1>
 
-        <c.SubmitButton type="submit" onClick={handleSubmit}>
-          완료
-        </c.SubmitButton>
-      </c.Top>
-
-      <c.ImgContainer>
-        <c.ImgLabel htmlFor="image">
-          <c.ImgBox>
-            <img className="img" src="/icon/icon_camera.png" alt="" />
-            <p className="p">0/10</p>
-          </c.ImgBox>
-        </c.ImgLabel>
-        <c.ImageInput
-          id="image"
-          type="file"
-          accept="image/*"
-          onChange={handleFileUpload}
+          <c.SubmitButton type="submit">완료</c.SubmitButton>
+        </c.Top>
+        <ImageUpload
+          imageFilesValue={imageFilesValue}
+          setImageFiles={setImageFiles}
         />
-        {imageFileValue && (
-          <c.ImagePreview>
-            <img
-              src={imageFileValue}
-              alt="upload img"
-              style={{ height: '70px', width: '70px' }}
+        <c.DivLine />
+
+        <c.Top>
+          <c.Tag>
+            <c.Label htmlFor="title">글 제목</c.Label>
+            <c.ContentInput
+              id="title"
+              value={titleValue}
+              onChange={handleTitleChange}
             />
-          </c.ImagePreview>
-        )}
-        {/* <c.ImagePreview> */}
-        {/*  {imageFileValue ? ( */}
-        {/*    <img */}
-        {/*      src={imageFileValue} */}
-        {/*      alt="upload img" */}
-        {/*      style={{ height: '70px', width: 'auto' }} */}
-        {/*    /> */}
-        {/*  ) : ( */}
-        {/*    <p>파일이 추가되지 않았습니다.</p> */}
-        {/*  )} */}
-        {/* </c.ImagePreview> */}
-      </c.ImgContainer>
-      <c.DivLine />
+          </c.Tag>
 
-      <c.Top>
-        <c.Tag>
-          <c.Label htmlFor="title">글 제목</c.Label>
-          <c.ContentInput
-            id="title"
-            value={titleValue}
-            onChange={handleTitleChange}
-          />
-        </c.Tag>
+          <c.Tag>
+            <c.Label htmlFor="isPublic">비공개</c.Label>
+            <c.CheckBox
+              type="checkbox"
+              id="isPublic"
+              defaultChecked={false}
+              onChange={handleIsPublicChange}
+            />
+            <label className="label" htmlFor="isPublic" />
+          </c.Tag>
+        </c.Top>
+        <c.DivLine />
 
         <c.Tag>
-          <c.Label htmlFor="isPublic">비공개</c.Label>
-          <c.CheckBox
-            type="checkbox"
-            id="isPublic"
-            defaultChecked={false}
-            onChange={handleIsPublicChange}
-          />
-          <label className="label" htmlFor="isPublic" />
-        </c.Tag>
-      </c.Top>
-      <c.DivLine />
-
-      <c.Tag>
-        <c.Label htmlFor="category">카테고리</c.Label>
-        <c.Select
-          id="category"
-          value={categoryValue}
-          onChange={handleCategoryChange}
-        >
-          <option selected hidden>
-            카테고리 선택 ∨
-          </option>
-          {categoryList.map(categoryItem => (
-            <option value={categoryItem.index} key={categoryItem.index}>
-              {categoryItem.value}
+          <c.Label htmlFor="category">카테고리</c.Label>
+          <c.Select
+            id="category"
+            value={categoryValue}
+            onChange={handleCategoryChange}
+          >
+            <option value="" hidden>
+              카테고리 선택 ∨
             </option>
-          ))}
-        </c.Select>
-        {/* <c.Label htmlFor="category"> */}
-        {/*  <img className="img" src="/icon/icon_black_arrow_bottom.png" alt="" /> */}
-        {/* </c.Label> */}
-      </c.Tag>
-      <c.DivLine />
+            {categoryList.map(categoryItem => (
+              <option value={categoryItem.index} key={categoryItem.index}>
+                {categoryItem.value}
+              </option>
+            ))}
+          </c.Select>
+        </c.Tag>
+        <c.DivLine />
 
-      <c.Tag>
-        <c.Label htmlFor="content">내 용 :</c.Label>
-        <c.ContentInput
-          id="content"
-          value={contentValue}
-          onChange={handleContentChange}
-        />
-        <br />
-      </c.Tag>
-      <c.DivLine />
+        <c.Tag>
+          <c.Label htmlFor="content">내 용 :</c.Label>
+          <c.ContentInput
+            id="content"
+            value={contentValue}
+            onChange={handleContentChange}
+          />
+          <br />
+        </c.Tag>
+        <c.DivLine />
 
-      <c.MapDiv>
-        {isDaumPostcodeOpenValue && (
-          <c.MapCloseButton>
-            <button type="button" onClick={() => setIsDaumPostcodeOpen(false)}>
-              닫기
-            </button>
-            <DaumPostcode
-              onComplete={handleAddressComplete}
-              style={{ position: 'absolute', zIndex: 400 }}
-            />
-          </c.MapCloseButton>
-        )}
-        <c.MapContentInput
-          placeholder="주소를 검색해주세요"
-          onClick={handleDaumPostcodeOpen}
-          id="address"
-          value={addressValue}
-          readOnly
-        />
-        <c.Map ref={containerRef} />
-      </c.MapDiv>
-
+        <c.MapDiv>
+          {isDaumPostcodeOpenValue && (
+            <c.MapCloseButton>
+              <button
+                type="button"
+                onClick={() => setIsDaumPostcodeOpen(false)}
+              >
+                닫기
+              </button>
+              <DaumPostcode
+                onComplete={handleAddressComplete}
+                style={{ position: 'absolute', zIndex: 400 }}
+              />
+            </c.MapCloseButton>
+          )}
+          <c.MapContentInput
+            placeholder="주소를 검색해주세요"
+            onClick={handleDaumPostcodeOpen}
+            id="address"
+            value={addressValue}
+            readOnly
+          />
+          <c.Map ref={containerRef} />
+        </c.MapDiv>
+      </form>
       <br />
       <br />
       <br />

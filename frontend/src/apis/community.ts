@@ -1,5 +1,5 @@
 import { publicRequest } from '@src/hooks/requestMethods'
-import { CommunityItemType } from '@src/types/components/CommunityType.ts'
+import { CommunityListType } from '@src/types/components/CommunityType'
 import React from 'react'
 // import { CommunityItemType } from '@src/types/components/CommunityType'
 
@@ -15,25 +15,35 @@ export const fetchPopularCommunity = async (num: number) => {
 }
 
 export const fetchCommunityList = async (
-  setCommunityList: React.Dispatch<React.SetStateAction<CommunityItemType[]>>,
+  setCommunityList: React.Dispatch<React.SetStateAction<CommunityListType[]>>,
 ): Promise<void> => {
   return publicRequest.get('/community').then(res => {
-    res.data
     setCommunityList(res.data.content)
   })
 }
 
 export const fetchCommunityByFilter = async (
   num: number,
-  setCommunityList: any,
+  setCommunityList: React.Dispatch<React.SetStateAction<CommunityListType[]>>,
 ) => {
   return publicRequest
     .get(`/community?categoryNo=${num}`)
     .then(res => {
-      res.data
       setCommunityList(res.data.content)
     })
     .catch(error => {
       console.log(error)
+    })
+}
+
+export const fetchCommunityCreate = async (createFormData: FormData) => {
+  return publicRequest
+    .post(`/community`, createFormData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+    .then(res => res.data)
+    .catch(error => {
+      console.log(error)
+      throw new Error('로그인 에러')
     })
 }
