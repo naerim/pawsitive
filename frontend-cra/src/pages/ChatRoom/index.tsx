@@ -1,9 +1,7 @@
-import ChatRoomList from '@components/Chat/ChatRoomList'
-
 const Index = () => {
   return (
     <div>
-      <ChatRoomList />
+      <div>chat 상세 페이지</div>
     </div>
   )
 }
