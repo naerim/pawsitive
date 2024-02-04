@@ -49,6 +49,8 @@ export const SubmitButton = styled.button`
 export const ImgContainer = styled.div`
   //background-color: antiquewhite;
   display: flex;
+  white-space: nowrap;
+  overflow-x: auto;
   padding: 20px 0px;
 `
 
@@ -91,6 +93,15 @@ export const ImagePreview = styled.div`
     width: 70px;
     height: 70px;
   }
+`
+
+export const Delete = styled.button`
+  margin-left: -15px;
+  z-index: 3;
+  width: 15px;
+  height: 17px;
+  background-color: white;
+  border-radius: 0px;
 `
 
 export const DivLine = styled.div`
