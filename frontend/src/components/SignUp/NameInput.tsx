@@ -27,7 +27,7 @@ const NameInput = () => {
         onChange={handleNameChange}
         placeholder="이름"
       />
-      <div>{nameError}</div>
+      <s.ErrorText>{nameError}</s.ErrorText>
     </s.InputContainer>
   )
 }

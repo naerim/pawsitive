@@ -54,7 +54,7 @@ const BirthInput = () => {
         placeholder="YYYY-MM-DD"
         required
       />
-      <div>{dobError}</div>
+      <s.ErrorText>{dobError}</s.ErrorText>
     </s.InputContainer>
   )
 }
