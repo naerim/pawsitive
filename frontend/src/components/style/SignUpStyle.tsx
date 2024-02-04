@@ -40,3 +40,8 @@ export const InputField = styled.input`
     color: #999;
   }
 `
+
+export const ErrorText = styled.div`
+  margin-top: 10px;
+  color: #ff9232;
+`
