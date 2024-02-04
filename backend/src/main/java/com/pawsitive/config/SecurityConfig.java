@@ -17,7 +17,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -73,8 +72,8 @@ public class SecurityConfig {
         http
             .httpBasic(HttpBasicConfigurer::disable)
             .csrf(CsrfConfigurer::disable) // csrf 설정 disable
-            .cors(CorsConfigurer::disable)
-//            .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource))
+//            .cors(CorsConfigurer::disable)
+            .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource))
             .sessionManagement(
                 configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
