@@ -1,24 +1,32 @@
-import logo from './logo.svg'
 import './App.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { ThemeProvider } from 'styled-components'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { useAtomValue } from 'jotai'
+import { GlobalStyle } from './style/GlobalStyles'
+import { themeAtom } from './stores/theme'
+import { darkTheme, lightTheme } from './style/theme.'
+import ChatPage from './pages/Chat'
 
-function App() {
+const AuthRoutes = () => (
+  <Routes>
+    <Route path="/" element={<ChatPage />} />
+    <Route path="/chat" element={<ChatPage />} />
+  </Routes>
+)
+
+const App = () => {
+  const user = true
+  const theme = useAtomValue(themeAtom)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+      <GlobalStyle />
+      <BrowserRouter>
+        {user && <AuthRoutes />}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </BrowserRouter>
+    </ThemeProvider>
   )
 }
 
