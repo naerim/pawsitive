@@ -8,7 +8,7 @@ export const Container = styled.div`
   margin: 20px 0;
 `
 
-export const Item = styled.div`
+export const Item = styled.div<{ isSelected: boolean }>`
   display: flex;
   cursor: pointer;
   justify-content: center;
@@ -17,6 +17,8 @@ export const Item = styled.div`
   border-radius: 28px;
   margin-right: 6px;
   border: 1px solid #eaeaea;
+  background-color: ${({ isSelected }) =>
+    isSelected ? '#EFEFEF' : 'transparent'};
 
   img {
     width: 12px;
