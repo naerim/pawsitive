@@ -1,9 +1,11 @@
 package com.pawsitive.auth;
 
 import com.pawsitive.usergroup.entity.User;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,7 +32,7 @@ public class CustomUserDetails implements UserDetails {
         this.user = user;
 
         roles = new ArrayList<>();
-        roles.add(user.getRole());
+        roles.add(user.getRole().getKey());
     }
 
     @Override
@@ -42,7 +44,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return user.getPw();
     }
 
     @Override

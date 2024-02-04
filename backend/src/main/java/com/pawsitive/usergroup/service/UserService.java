@@ -1,8 +1,11 @@
 package com.pawsitive.usergroup.service;
 
 import com.pawsitive.auth.jwt.JwtToken;
+import com.pawsitive.usergroup.dto.request.EmailVerificationReq;
 import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
+import com.pawsitive.usergroup.dto.response.EmailVerificationRes;
+import com.pawsitive.usergroup.dto.response.UserJoinRes;
 import com.pawsitive.usergroup.entity.Member;
 import com.pawsitive.usergroup.entity.User;
 
@@ -16,12 +19,18 @@ public interface UserService {
 
     JwtToken signIn(String userName, String password);
 
-    User joinUser(UserJoinPostReq userJoinPostReq);
+    UserJoinRes joinUser(UserJoinPostReq userJoinPostReq);
 
     User getUserByUserNo(int userNo);
 
     Member getMemberByUserNo(int userNo);
 
     void updateField(UserTypeStagePatchReq req, int userNo);
+
+    User getUserByEmail(String email);
+
+    void sendVerifyingEmail(String email);
+
+    EmailVerificationRes verifyCode(EmailVerificationReq req);
 
 }

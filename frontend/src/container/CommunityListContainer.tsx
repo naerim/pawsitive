@@ -1,42 +1,76 @@
+import { CommunityItemType } from '@src/types/components/CommunityType'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { fetchCommunityByFilter, fetchCommunityList } from '@src/apis/community'
 import {
-  CommunityItemType,
-  CommunityListType,
-} from '@src/types/components/CommunityType'
-import { useQuery } from '@tanstack/react-query'
-import { fetchCommunityList } from '@src/apis/community'
-import { CommunityListAtom } from '@src/stores/atoms/community'
+  CommunityCategoryAtom,
+  CommunityListAtom,
+} from '@src/stores/atoms/community'
 import { useAtom } from 'jotai'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import * as c from '@src/container/style/CommunityListContainerStyle'
 import CommunityCategorySection from '@src/components/CommunityList/CommunityCategorySection'
 import CommunityListSection from '@src/components/CommunityList/CommunityListSection'
+import { useLocation } from 'react-router-dom'
 
 const Index: React.FC = () => {
-  const { isLoading, data } = useQuery<CommunityListType>({
+  const [CommunityCategoryValue, setCommunityCategory] = useAtom(
+    CommunityCategoryAtom,
+  )
+  const [LoadList, setLoadList] = useState(true)
+  const isMounted = useRef(false)
+  const location = useLocation()
+
+  const { isLoading, data } = useQuery({
     queryKey: ['communityList'],
-    queryFn: () => fetchCommunityList(),
+    queryFn: () => fetchCommunityList(setCommunityList),
+    enabled: LoadList,
   })
+
   const [CommunityListValue, setCommunityList] =
     useAtom<CommunityItemType[]>(CommunityListAtom)
+
+  const { mutate } = useMutation({
+    mutationKey: ['communityCategory'],
+    mutationFn: async num => {
+      if (num !== 0) {
+        const result = await fetchCommunityByFilter(num, setCommunityList)
+        return result
+      }
+      const result = await fetchCommunityList(setCommunityList)
+      return result
+    },
+    onSuccess(): void {
+      console.log('mutate 성공')
+    },
+  })
+
+  useEffect(() => {
+    if (isMounted.current) {
+      setCommunityCategory(0)
+      setLoadList(true)
+    }
+  }, [])
+
+  useEffect(() => {
+    isMounted.current = true
+  }, [])
+
+  useEffect(() => {
+    mutate(CommunityCategoryValue)
+  }, [CommunityCategoryValue, isMounted, setLoadList])
 
   useEffect(() => {
     if (data && data.content) {
       setCommunityList(data.content)
     }
-  }, [data, setCommunityList])
-  // const handleCategoryClick = (categoryNo: number) => {
-  //   setSelectedCategory(categoryNo)
-  // }
-  //
-  // const handleAllCategoriesClick = () => {
-  //   setSelectedCategory(null)
-  // }
-  //
-  // const filteredData: CommunityListType[] = selectedCategory
-  //   ? CommunityListValue.filter(
-  //       item => item.content.communityCategoryNo === selectedCategory,
-  //     )
-  //   : CommunityListValue
+  }, [data, setCommunityList, mutate])
+
+  useEffect(() => {
+    // Check if the route changed to '/community' and set LoadList to true
+    if (location.pathname === '/community') {
+      setLoadList(true)
+    }
+  }, [location.pathname])
 
   return (
     <c.Container>
@@ -46,19 +80,7 @@ const Index: React.FC = () => {
           <p>Loading...</p>
         ) : (
           <div>
-            {/* 카테고리 */}
-            {/* <c.Category> */}
-            {/*  <Button type="button" onClick={handleAllCategoriesClick}> */}
-            {/*    전체보기 */}
-            {/*  </Button> */}
-            {/*  <CategoryButton */}
-            {/*    categories={allCategories} */}
-            {/*    onCategoryClick={handleCategoryClick} */}
-            {/*  /> */}
-            {/* </c.Category> */}
-            {/* 커뮤니티 리스트 */}
             <CommunityListSection data={CommunityListValue} />
-            {/* <CommunityList data={filteredData} /> */}
           </div>
         )}
       </c.Wrap>

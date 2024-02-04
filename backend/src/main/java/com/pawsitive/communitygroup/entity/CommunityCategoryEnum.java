@@ -5,7 +5,11 @@ import lombok.Getter;
 
 @Getter
 public enum CommunityCategoryEnum {
-    SHOPPING("쇼핑하개"), ETC("기타");
+    SHOPPING("쇼핑하개"),
+    WALKING("산책하개"),
+    HEALTHY("건강하개"),
+    PROUD("자랑하개"),
+    ETC("기타");
 
     private final String communityCategory;
 

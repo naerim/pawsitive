@@ -1,9 +1,15 @@
 import { atom, useAtom } from 'jotai'
 import * as c from '@src/components/style/CommunityCreateFormStyle'
 import React, { useEffect, useRef } from 'react'
-import { DaumPostData } from '@src/types/container/SignUpType'
+import { DaumPostData } from '@src/types/components/SignUpType'
 import DaumPostcode from 'react-daum-postcode'
 import { useNavigate } from 'react-router-dom'
+
+declare global {
+  interface Window {
+    kakao: any
+  }
+}
 
 const titleAtom = atom('')
 const categoryAtom = atom('0')
@@ -199,7 +205,7 @@ const CreateForm = () => {
         <c.ImgLabel htmlFor="image">
           <c.ImgBox>
             <img className="img" src="/icon/icon_camera.png" alt="" />
-            <p className="p">0/1</p>
+            <p className="p">0/10</p>
           </c.ImgBox>
         </c.ImgLabel>
         <c.ImageInput

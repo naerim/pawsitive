@@ -46,6 +46,5 @@ public interface DogService {
      * @return 해당 페이지 유기견 리스트
      */
     Page<DogDetailRes> getDogList(Pageable pageable, String kind);
-
-
+    
 }

@@ -1,5 +1,6 @@
+import { atom } from 'jotai'
 import { atomWithStorage } from 'jotai/utils'
-import { UserType } from '@src/types/userType'
+import { JoinUserErrorType, JoinUserType, UserType } from '@src/types/userType'
 
 const currentUser = {
   user_id: 0,
@@ -14,3 +15,23 @@ const currentUser = {
 }
 
 export const userAtom = atomWithStorage<UserType>('currentUser', currentUser)
+
+export const signUpDataAtom = atom<JoinUserType>({
+  name: '',
+  role: '',
+  email: '',
+  pw: '',
+  birth: '',
+  gender: '',
+  address: '',
+  type: 0,
+})
+
+export const signUpPwCheckAtom = atom<string>('')
+export const signUpStepAtom = atom<number>(1)
+
+export const signUpErrorAtom = atom<JoinUserErrorType>({
+  name: '',
+  birth: '',
+  pwCheck: '',
+})

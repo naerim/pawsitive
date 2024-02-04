@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import DaumPostcode from 'react-daum-postcode'
-import { DaumPostData } from '@src/types/container/SignUpType'
+import { DaumPostData } from '@src/types/components/SignUpType'
 
 const ShelterSignUpContainer = () => {
   const [name, setName] = useState('')

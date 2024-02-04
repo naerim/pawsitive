@@ -78,7 +78,7 @@ public class Dog {
 
     @Builder
     public Dog(User user, String name, DogKindEnum kind, boolean isNeutralized, int age,
-               String color, String video, String note, String mbti) {
+               String color, String video, String note, String mbti, String sex) {
         this.user = user;
         this.name = name;
         this.kind = kind;
@@ -88,6 +88,7 @@ public class Dog {
         this.video = video;
         this.note = note;
         this.mbti = mbti;
+        this.sex = sex;
     }
 
 }

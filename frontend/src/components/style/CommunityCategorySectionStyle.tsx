@@ -2,6 +2,9 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   display: flex;
+  overflow-x: auto;
+  width: 100%;
+  white-space: nowrap;
   margin: 20px 0;
 `
 
@@ -14,10 +17,12 @@ export const Item = styled.div`
   border-radius: 28px;
   margin-right: 6px;
   border: 1px solid #eaeaea;
+
   img {
     width: 12px;
     height: 12px;
   }
+
   span {
     font-weight: 500;
     margin-left: 4px;
