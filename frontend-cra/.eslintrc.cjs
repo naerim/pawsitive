@@ -18,6 +18,7 @@ module.exports = {
   },
   plugins: ['react-refresh', 'react', '@typescript-eslint', 'prettier'],
   rules: {
+    'linebreak-style': 0,
     'import/extensions': [
       'error',
       'ignorePackages',
