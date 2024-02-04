@@ -8,6 +8,9 @@
       "@components/*": [
         "components/*"
       ],
+      "@hooks/*": [
+        "hooks/*"
+      ],
       "@apis/*": [
         "apis/*"
       ],
