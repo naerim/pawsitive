@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { useAtom } from 'jotai'
-import { signUpDataAtom } from '@src/stores/atoms/user'
+import { signUpDataAtom, signUpErrorAtom } from '@src/stores/atoms/user'
 import * as s from '@src/components/style/SignUpStyle'
 
 const PasswordCheckInput = () => {
   const [signUpData] = useAtom(signUpDataAtom)
+  const [error, setError] = useAtom(signUpErrorAtom)
   const [pwCheck, setPwCheck] = useState('')
-  const [pwError, setPwError] = useState('')
 
   const handlePasswordCheckChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -15,9 +15,15 @@ const PasswordCheckInput = () => {
     setPwCheck(pwCheckInput)
 
     if (pwCheckInput !== signUpData.pw) {
-      setPwError('비밀번호가 일치하지 않습니다.')
+      setError(prevError => ({
+        ...prevError,
+        pwCheck: '비밀번호가 일치하지 않습니다.',
+      }))
     } else {
-      setPwError('')
+      setError(prevError => ({
+        ...prevError,
+        pwCheck: '',
+      }))
     }
   }
 
@@ -34,7 +40,7 @@ const PasswordCheckInput = () => {
         onChange={handlePasswordCheckChange}
         placeholder="비밀번호 확인"
       />
-      <s.ErrorText>{pwError}</s.ErrorText>
+      <s.ErrorText>{error.pwCheck}</s.ErrorText>
     </s.InputContainer>
   )
 }

@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useAtom } from 'jotai'
-import { signUpDataAtom } from '@src/stores/atoms/user'
+import { signUpDataAtom, signUpErrorAtom } from '@src/stores/atoms/user'
 import * as s from '@src/components/style/SignUpStyle'
 
 const BirthInput = () => {
   const [signUpData, setSignUpData] = useAtom(signUpDataAtom)
-  const [dobError, setDobError] = useState('')
+  const [error, setError] = useAtom(signUpErrorAtom)
 
   const handleDobChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let dobInput = e.target.value
@@ -24,8 +24,16 @@ const BirthInput = () => {
     const isNumberDobInput = () => /^\d{4}\.\d{2}\.\d{2}$/.test(dobInput)
 
     if (!isNumberDobInput()) {
-      setDobError('8자리 숫자로 입력해주세요.')
-    } else setDobError('')
+      setError(prevError => ({
+        ...prevError,
+        birth: '8자리 숫자로 입력해주세요.',
+      }))
+    } else {
+      setError(prevError => ({
+        ...prevError,
+        birth: '',
+      }))
+    }
 
     const [year, month, day] = dobInput.split('-').map(Number)
 
@@ -36,9 +44,15 @@ const BirthInput = () => {
     const isValidDobInput = isValidYear && isValidMonth && isValidDay
 
     if (!isValidDobInput) {
-      setDobError('올바른 날짜 형식이 아닙니다.')
+      setError(prevError => ({
+        ...prevError,
+        birth: '올바른 날짜 형식이 아닙니다.',
+      }))
     } else {
-      setDobError('')
+      setError(prevError => ({
+        ...prevError,
+        birth: '',
+      }))
     }
   }
 
@@ -54,7 +68,7 @@ const BirthInput = () => {
         placeholder="YYYY-MM-DD"
         required
       />
-      <s.ErrorText>{dobError}</s.ErrorText>
+      <s.ErrorText>{error.birth}</s.ErrorText>
     </s.InputContainer>
   )
 }
