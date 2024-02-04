@@ -14,8 +14,7 @@ import RoleInput from '@src/components/SignUp/RoleInput'
 import EmailInput from '@src/components/SignUp/EmailInput'
 import PasswordInput from '@src/components/SignUp/PasswordInput'
 import PasswordCheckInput from '@src/components/SignUp/PasswordCheckInput'
-import BirthInput from '@src/components/SignUp/BirthInput'
-import GenderInput from '@src/components/SignUp/GenderInput'
+import BirthGenderInput from '@src/components/SignUp/BirthGenderInput'
 import AddressInput from '@src/components/SignUp/AddressInput'
 import * as s from '@src/container/style/SignUpContainerStyle'
 
@@ -52,12 +51,9 @@ const SignUpContainer = () => {
       isDisabled = !pwCheck || !!error.pwCheck
       break
     case 6:
-      isDisabled = !signUpData.birth || !!error.birth
+      isDisabled = !signUpData.birth || !signUpData.gender || !!error.dob
       break
     case 7:
-      isDisabled = !signUpData.gender
-      break
-    case 8:
       isDisabled = !signUpData.address
       break
     default:
@@ -69,8 +65,8 @@ const SignUpContainer = () => {
         console.log('회원가입 성공:', data)
         navigate('/login')
       },
-      onError: error => {
-        console.error('회원가입 실패:', error)
+      onError: err => {
+        console.error('회원가입 실패:', err)
       },
     })
   }
@@ -88,12 +84,9 @@ const SignUpContainer = () => {
       case 5:
         return <PasswordCheckInput />
       case 6:
-        return <BirthInput />
+        return <BirthGenderInput />
       case 7:
-        return <GenderInput />
-      case 8:
         return <AddressInput />
-
       default:
         return null
     }
@@ -103,12 +96,12 @@ const SignUpContainer = () => {
     <s.Container>
       {renderStepComponent()}
       <div>
-        {signUpStep < 8 && (
+        {signUpStep < 7 && (
           <s.Button onClick={handleNextStep} disabled={isDisabled}>
             다음
           </s.Button>
         )}
-        {signUpStep === 8 && (
+        {signUpStep === 7 && (
           <s.Button onClick={handleSignUp} disabled={isDisabled}>
             회원가입
           </s.Button>

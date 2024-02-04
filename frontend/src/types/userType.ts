@@ -41,7 +41,7 @@ export type JoinUserResponseType = {
 
 export type JoinUserErrorType = {
   name: string
-  birth: string
+  dob: string
   pwCheck: string
 }
 
