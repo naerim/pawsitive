@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useAtom } from 'jotai'
-import { signUpDataAtom, signUpErrorAtom } from '@src/stores/atoms/user'
+import {
+  signUpDataAtom,
+  signUpErrorAtom,
+  signUpPwCheckAtom,
+} from '@src/stores/atoms/user'
 import * as s from '@src/components/style/SignUpStyle'
 
 const PasswordCheckInput = () => {
   const [signUpData] = useAtom(signUpDataAtom)
   const [error, setError] = useAtom(signUpErrorAtom)
-  const [pwCheck, setPwCheck] = useState('')
+  const [pwCheck, setPwCheck] = useAtom(signUpPwCheckAtom)
 
   const handlePasswordCheckChange = (
     e: React.ChangeEvent<HTMLInputElement>,
