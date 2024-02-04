@@ -25,11 +25,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws/chat")   //SockJS 연결 주소
             .addInterceptors(new StompHandshakeInterceptor())
-            .setAllowedOriginPatterns("http://localhost:3000", "https://localhost:3000",
-                "https://i10c111.p.ssafy.io:8090")
+//            .setAllowedOriginPatterns("http://localhost:3000", "https://localhost:3000",
+//                "https://i10c111.p.ssafy.io")
+            .setAllowedOrigins("*")
             .withSockJS()
             .setDisconnectDelay(30 * 1000)
             .setClientLibraryUrl(
                 "https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.4/sockjs.min.js");
     }
+
 }
