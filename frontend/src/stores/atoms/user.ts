@@ -24,8 +24,10 @@ export const signUpDataAtom = atom<JoinUserType>({
   birth: '',
   gender: '',
   address: '',
-  type: 1,
+  type: 0,
 })
+
+export const signUpPwCheckAtom = atom<string>('')
 export const signUpStepAtom = atom<number>(1)
 
 export const signUpErrorAtom = atom<JoinUserErrorType>({
