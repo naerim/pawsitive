@@ -25,9 +25,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws/chat")   //SockJS 연결 주소
             .addInterceptors(new StompHandshakeInterceptor())
-//            .setAllowedOriginPatterns("http://localhost:3000", "https://localhost:3000",
-//                "https://i10c111.p.ssafy.io")
-            .setAllowedOrigins("*")
+            .setAllowedOriginPatterns("http://localhost:3000", "https://localhost:3000",
+                "https://i10c111.p.ssafy.io")
+//            .setAllowedOriginPatterns("*")
             .withSockJS()
             .setDisconnectDelay(30 * 1000)
             .setClientLibraryUrl(
