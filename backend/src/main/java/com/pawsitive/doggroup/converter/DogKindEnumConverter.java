@@ -9,6 +9,7 @@ public class DogKindEnumConverter
     implements AttributeConverter<DogKindEnum, String> {
     @Override
     public String convertToDatabaseColumn(DogKindEnum dogKindEnum) {
+
         return dogKindEnum.getName();
     }
 

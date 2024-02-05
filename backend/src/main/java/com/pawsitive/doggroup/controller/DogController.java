@@ -6,6 +6,7 @@ import static org.springframework.http.HttpStatus.OK;
 import com.pawsitive.common.dto.response.PageResponse;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
+import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.service.DogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -75,12 +76,12 @@ public class DogController {
         @ApiResponse(responseCode = "400", description = "해당 페이지에 유기견 공고가 없음.")}
 
     )
-    public ResponseEntity<PageResponse<DogDetailRes>> getDogList(Pageable pageable,
-                                                                 @RequestParam(required = false)
-                                                                 String kind) {
-        Page<DogDetailRes> dogPage = dogService.getDogList(pageable, kind);
+    public ResponseEntity<PageResponse<DogListRes>> getDogList(Pageable pageable,
+                                                               @RequestParam(required = false)
+                                                               String kind) {
+        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind);
 
-        return ResponseEntity.status(OK).body(new PageResponse<DogDetailRes>(dogPage));
+        return ResponseEntity.status(OK).body(new PageResponse<DogListRes>(dogPage));
 
     }
 
