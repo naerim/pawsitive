@@ -1,7 +1,11 @@
 package com.pawsitive.chatgroup.controller;
 
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
+import com.pawsitive.chatgroup.dto.request.ChatRoomCreateReq;
+import com.pawsitive.chatgroup.dto.response.ChatRes;
+import com.pawsitive.chatgroup.dto.response.ChatRoomRes;
 import com.pawsitive.chatgroup.entity.ChatRoom;
 import com.pawsitive.chatgroup.service.ChatRoomService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,9 +14,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,25 +50,25 @@ public class ChatRoomController {
             @ApiResponse(responseCode = "201", description = "채팅방 등록 성공"),
         }
     )
-    public ResponseEntity<ChatRoom> createRoom() {
+    public ResponseEntity<ChatRoomRes> createRoom(
+        @RequestBody ChatRoomCreateReq chatRoomCreateReq, Authentication authentication) {
         return ResponseEntity
-            .status(OK)
-            .body(chatRoomService.createChatRoom());
+            .status(CREATED)
+            .body(chatRoomService.createChatRoom(chatRoomCreateReq, authentication));
     }
 
     @GetMapping("/{chatRoomNo}")
-    @Operation(summary = "채팅방 상세 조회", description = "채팅방을 상세 조회합니다.",
+    @Operation(summary = "채팅방 채팅 이력 조회", description = "채팅방을 상세 조회합니다.",
         tags = {"06.ChatRoom"},
         responses = {
-            @ApiResponse(responseCode = "200", description = "채팅방 고유 번호에 해당하는 채팅방 상세 조회 성공"),
-            @ApiResponse(responseCode = "400", description = "전달받은 " +
-                "채팅방 고유 번호에 해당하는 채팅방이 없음"),
+            @ApiResponse(responseCode = "200", description = "채팅방 고유 번호에 해당하는 채팅 이력 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "전달받은 채팅방 고유 번호에 해당하는 채팅방이 없음"),
         }
     )
-    public ResponseEntity<ChatRoom> getChatRoomByChatRoomNo(@PathVariable String chatRoomNo) {
+    public ResponseEntity<List<ChatRes>> getChatRoomByChatRoomNo(@PathVariable String chatRoomNo) {
         return ResponseEntity
             .status(OK)
-            .body(chatRoomService.getChatRoomByChatRoomNo(chatRoomNo));
+            .body(chatRoomService.getChatHistoryByChatRoomNo(chatRoomNo));
     }
 
 }

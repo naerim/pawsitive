@@ -23,7 +23,7 @@ const ChattingContainer = () => {
   const { createRoomHandler } = useCreateRoom()
 
   // 메세지 보내기
-  const sendHandler = () => {}
+  // const sendHandler = () => {}
 
   return (
     <div>

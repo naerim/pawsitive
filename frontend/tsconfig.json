@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "types": ["@types/stompjs"],
+    "types": [
+      "@types/stompjs",
+      "kakao.maps.d.ts"
+    ],
     "paths": {
       "@src/*": [
         "./src/*"

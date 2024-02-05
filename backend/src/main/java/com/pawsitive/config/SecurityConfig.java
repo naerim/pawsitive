@@ -17,7 +17,10 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -66,29 +69,39 @@ public class SecurityConfig {
         return new ProviderManager(authenticationProvider());
     }
 
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return (web -> web.ignoring()
+//            .requestMatchers("/api/v1/auth/**", "/api/v1/dogs/**", "/api/v1/community/**", "/api/v1/contents/**", "/ws/chat",
+//                "/pub/**", "/sub/**", "v3/**", "/swagger-ui/**", "/swagger-resources/**"));
+//    }
+
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
             .httpBasic(HttpBasicConfigurer::disable)
             .csrf(CsrfConfigurer::disable) // csrf 설정 disable
-//            .cors(CorsConfigurer::disable)
+            .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer.loginPage("/api/v1/auth/no-auth"))
             .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource))
             .sessionManagement(
                 configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/v3/**", "/swagger-ui/**", "/swagger-resources/**")
-                .permitAll()
-                .requestMatchers("/ws/chat", "/pub/**", "/sub/**").permitAll()
-                .requestMatchers("/api/v1/users/me").authenticated()
-                .anyRequest().permitAll()
+                    .requestMatchers("/v3/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
+                    .requestMatchers("/ws/chat", "/pub/**", "/sub/**").permitAll()
+                    .requestMatchers("/api/v1/auth/no-auth").permitAll()
+                    .requestMatchers("/api/v1/users/**").authenticated()
+                    .anyRequest().permitAll()
+//                .anyRequest().authenticated()
             )
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                 UsernamePasswordAuthenticationFilter.class);
 
         http
             .oauth2Login(configurer ->
-                configurer.authorizationEndpoint(config -> config.authorizationRequestRepository(
+                configurer
+                    .loginPage("/api/v1/auth/no-auth")
+                    .authorizationEndpoint(config -> config.authorizationRequestRepository(
                         httpCookieOAuth2AuthorizationRequestRepository))
                     .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
                     .successHandler(oAuth2AuthenticationSuccessHandler)

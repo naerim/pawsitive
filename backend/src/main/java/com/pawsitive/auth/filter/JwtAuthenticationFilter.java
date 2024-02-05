@@ -6,7 +6,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.IOException;
+import java.util.Objects;
+import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,7 +39,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         String token = resolveToken((HttpServletRequest) servletRequest);
 
         // validateToken 메서드로 유효성 검사
-        if (token != null && jwtTokenProvider.validateToken(token)) {
+        if (!Objects.isNull(token) && jwtTokenProvider.validateToken(token)) {
             // 유효하다면 Token에서 Authentication 정보를 가져와 SecurityContext에 저장
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -51,7 +55,6 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             return bearerToken.substring(7);
         }
 
-        // TODO : 냄시 제거로 인해 Optional로 바꾸기
         return null;
     }
 

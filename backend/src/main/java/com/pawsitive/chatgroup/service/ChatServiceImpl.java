@@ -22,7 +22,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public Chat createChat(ChatCreateReq chatReq) {
         Chat chat = new Chat();
-        chat.setRoom(chatRoomService.getChatRoomByChatRoomNo(chatReq.getChatRoomNo()));
+        chat.setRoom(chatRoomService.getChatRoomEntityByChatRoomNo(chatReq.getChatRoomNo()));
         chat.setUser(userService.getUserByUserNo(chatReq.getUserNo()));
         chat.setMessage(chatReq.getMessage());
         return chatRepository.save(chat);
