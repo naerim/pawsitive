@@ -51,7 +51,7 @@ public class DogServiceImpl implements DogService {
 
         Dog dog = Dog.builder().user(user).name(req.getName())
             .kind(DogKindEnum.stringToEnum(req.getKind())).isNeutralized(req.getIsNaturalized())
-            .color(req.getColor()).note(req.getNote()).mbti(getMbti(req))
+            .note(req.getNote()).mbti(getMbti(req))
             .video(s3BucketUtil.getFileUrl(videoKey, FOLDER_NAME)).sex(req.getSex())
             .age(req.getAge()).build();
 
@@ -74,6 +74,12 @@ public class DogServiceImpl implements DogService {
             dogRepository.getDogByDogNo(dogNo).orElseThrow(DogNotFoundException::new);
         dog.setImages(dogRepository.getDogImagesByDogNo(dog.getDogNo()));
         return dog;
+    }
+
+    @Override
+    public Dog getDogEntityByDogNo(int dogNo) {
+        return dogRepository.findByDogNo(dogNo)
+            .orElseThrow(DogNotFoundException::new);
     }
 
     // TODO [Yi] 추천로직 작성 (추천기준도 정해야댐)
