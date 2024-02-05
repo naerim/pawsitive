@@ -27,4 +27,5 @@ public class ChatServiceImpl implements ChatService {
         chat.setMessage(chatReq.getMessage());
         return chatRepository.save(chat);
     }
+
 }

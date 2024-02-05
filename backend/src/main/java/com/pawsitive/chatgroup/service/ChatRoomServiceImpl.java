@@ -8,15 +8,12 @@ import com.pawsitive.chatgroup.entity.ChatRoom;
 import com.pawsitive.chatgroup.exception.ChatRoomNotFoundException;
 import com.pawsitive.chatgroup.repository.ChatRoomRepository;
 import com.pawsitive.chatgroup.transfer.ChatGroupTransfer;
-import com.pawsitive.common.exception.InvalidRequestException;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.service.DogService;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,13 +30,13 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     @Override
     public ChatRoomRes createChatRoom(ChatRoomCreateReq req, Authentication authentication) {
         ChatRoom room = new ChatRoom();
-        String authority = authentication.getAuthorities().stream()
-            .map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
-
-        // 개인회원이 아닌 사람이 채팅방 생성 요청 시 잘못된 요청
-        if (!"USER".equals(authority)) {
-            throw new InvalidRequestException();
-        }
+//        String authority = authentication.getAuthorities().stream()
+//            .map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
+//
+//        // 개인회원이 아닌 사람이 채팅방 생성 요청 시 잘못된 요청
+//        if (!"USER".equals(authority)) {
+//            throw new InvalidRequestException();
+//        }
 
         Dog dog = dogService.getDogEntityByDogNo(req.getDogNo());
 

@@ -14,11 +14,12 @@ public class ChatRes {
 
     private int chatNo;
     private int userNo;
-    
+
     private String userName;
     private String userImage;
     private String message;
     private LocalDateTime createdAt;
+    private boolean isRead;
 
 
 }
