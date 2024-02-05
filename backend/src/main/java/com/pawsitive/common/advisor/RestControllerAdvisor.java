@@ -7,6 +7,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import com.pawsitive.common.dto.BaseResponseBody;
+import com.pawsitive.common.exception.InvalidRequestException;
 import com.pawsitive.common.util.ErrorMessageUtil;
 import com.pawsitive.usergroup.exception.DuplicateIdException;
 import com.pawsitive.usergroup.exception.InvalidPasswordException;
@@ -34,7 +35,7 @@ public class RestControllerAdvisor {
      * @param e 실제 발생한 예외객체입니다.
      * @return 에러메세지를 response entity 에 담아서 전송합니다.
      */
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler({MethodArgumentNotValidException.class, InvalidRequestException.class})
     public ResponseEntity<BaseResponseBody> badRequestException400(
         MethodArgumentNotValidException e) {
 
