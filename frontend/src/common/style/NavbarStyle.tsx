@@ -9,6 +9,7 @@ export const Container = styled.nav`
   border-top: 1px solid #f7f7f7;
   background-color: #fff;
   border-radius: 16px 16px 0 0;
+  height: 8vh;
 `
 
 export const MenuWrap = styled.div`
