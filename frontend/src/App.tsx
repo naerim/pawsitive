@@ -16,7 +16,6 @@ import ProfilePage from '@src/pages/ProfilePage'
 import NotFoundPage from '@src/pages/NotFoundPage'
 import { useAtomValue } from 'jotai'
 import { themeAtom } from '@src/stores/atoms/theme'
-import Navbar from '@src/common/Navbar'
 import DogDetailPage from '@src/pages/DogDetailPage'
 import CreateDogPage from '@src/pages/CreateDogPage'
 import FindSimilarDogPage from '@src/pages/FindSimilarDogPage'
@@ -55,7 +54,7 @@ const AuthRoutes = () => (
       element={<FindSimilarDogResultPage />}
     />
     <Route path="/dogs" element={<DogListPage />} />
-    <Route path="/dogDetail" element={<DogDetailPage />} />
+    <Route path="/dog/:id" element={<DogDetailPage />} />
     <Route path="/mypage/survey" element={<AdoptionSurveyPage />} />
     <Route path="/mypage/survey/done" element={<AdoptionSurveyDonePage />} />
     <Route path="/chat" element={<ChattingPage />} />
@@ -92,7 +91,6 @@ const App = () => {
       <GlobalStyle />
       <BrowserRouter>
         {user ? <AuthRoutes /> : <HomeRoutes />}
-        <Navbar />
         <ReactQueryDevtools initialIsOpen={false} />
       </BrowserRouter>
     </ThemeProvider>

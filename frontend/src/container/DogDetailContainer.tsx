@@ -1,9 +1,9 @@
-import DogDetailInfo from '@src/components/DogDetail/DogDetailInfo'
+import DogFileSection from '@src/components/DogDetail/DogFileSection'
 
 const DogDetailContainer = () => {
   return (
     <div>
-      <DogDetailInfo />
+      <DogFileSection />
     </div>
   )
 }
