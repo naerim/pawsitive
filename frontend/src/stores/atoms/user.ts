@@ -3,13 +3,13 @@ import { atomWithStorage } from 'jotai/utils'
 import { JoinUserErrorType, JoinUserType, UserType } from '@src/types/userType'
 
 const currentUser = {
-  user_id: 0,
-  email: 'ssafy@gmail.com',
-  name: '김싸피',
-  password: '1234',
-  address: '광주광역시 광산구 장덕동 1160-11',
-  birth: '991119',
-  gender: '여성',
+  userNo: 0,
+  email: '',
+  name: '',
+  password: '',
+  address: '',
+  birth: '',
+  gender: '',
   type: 0,
   stage: 0,
 }
