@@ -1,7 +1,9 @@
+import BasicDogInfoCard from '@src/common/BasicDogInfoCard'
+
 const DogListContainer = () => {
   return (
     <div>
-      <div>유기견 공고 리스트 페이지</div>
+      <BasicDogInfoCard />
     </div>
   )
 }
