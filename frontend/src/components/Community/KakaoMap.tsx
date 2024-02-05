@@ -12,6 +12,12 @@ import { LocationType } from '@src/types/propsType'
 import { CommunityItemType } from '@src/types/components/CommunityType'
 import { Link } from 'react-router-dom'
 
+declare global {
+  interface Window {
+    kakao: never
+  }
+}
+
 const KakaoMap = (props: { dummyData: CommunityItemType[] }) => {
   const { dummyData } = props
   const mapRef = useRef<kakao.maps.Map>(null)
