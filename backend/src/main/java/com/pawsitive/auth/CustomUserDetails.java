@@ -28,7 +28,6 @@ public class CustomUserDetails implements UserDetails {
      * @param user User 객체
      */
     public CustomUserDetails(User user) {
-
         this.user = user;
 
         roles = new ArrayList<>();
