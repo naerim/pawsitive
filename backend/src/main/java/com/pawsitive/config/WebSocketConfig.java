@@ -1,8 +1,11 @@
 package com.pawsitive.config;
 
+import com.pawsitive.chatgroup.handler.ChatErrorHandler;
+import com.pawsitive.chatgroup.handler.ChatPreHandler;
 import com.pawsitive.chatgroup.handler.StompHandshakeInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -12,6 +15,8 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @RequiredArgsConstructor
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+    private final ChatPreHandler chatPreHandler;
+    private final ChatErrorHandler chatErrorHandler;
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
@@ -25,13 +30,18 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws/chat")   //SockJS 연결 주소
             .addInterceptors(new StompHandshakeInterceptor())
-            .setAllowedOriginPatterns("http://localhost:3000", "https://localhost:3000",
-                "https://i10c111.p.ssafy.io")
-//            .setAllowedOriginPatterns("*")
+            .setAllowedOriginPatterns("http://localhost:3000",
+                "https://i10c111.p.ssafy.io:9000", "http://i10c111.p.ssafy.io:9000")
             .withSockJS()
             .setDisconnectDelay(30 * 1000)
             .setClientLibraryUrl(
                 "https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.4/sockjs.min.js");
+
+//        registry.setErrorHandler(chatErrorHandler);
     }
 
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+//        registration.interceptors(chatPreHandler);
+    }
 }
