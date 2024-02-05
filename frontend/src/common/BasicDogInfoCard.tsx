@@ -1,14 +1,29 @@
 import * as b from '@src/common/style/BasicDogInfoCardStyle'
+import { BasicDogType } from '@src/types/dogType'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
-const BasicDogInfoCard = () => {
+const BasicDogInfoCard: React.FC<{ dogInfo: BasicDogType }> = ({ dogInfo }) => {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate(`/dogs/${dogInfo.dogNo}`)
+  }
   return (
-    <b.Container>
-      <b.AdoptStatus>공고중</b.AdoptStatus>
-      <b.Dogimg src="/img/img_dog1.png" />
+    <b.Container onClick={handleClick}>
+      <b.AdoptStatus>{dogInfo.statusName}</b.AdoptStatus>
+      <b.ImgContainer>
+        <b.Dogimg src={dogInfo.image} />
+      </b.ImgContainer>
       <b.DogTextInfoContainer>
-        <b.DogName>까미</b.DogName>
-        <b.SubInfo>암컷 ∙ 중성화X</b.SubInfo>
-        <b.SubInfo>2023(년생) ∙ 믹스</b.SubInfo>
+        <b.DogName>{dogInfo.name}</b.DogName>
+        <b.SubInfo>
+          {dogInfo.sex === 'f' ? '암컷' : '수컷'} ∙ 중성화
+          {dogInfo.neutralized ? '0' : 'X'}
+        </b.SubInfo>
+        <b.SubInfo>
+          {dogInfo.age}(년생) ∙ {dogInfo.kind}
+        </b.SubInfo>
       </b.DogTextInfoContainer>
     </b.Container>
   )

@@ -26,6 +26,7 @@
     "chart.js": "^4.4.1",
     "jotai": "^2.6.2",
     "openvidu-browser": "^2.29.1",
+    "query-string": "^8.2.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-daum-postcode": "^3.1.3",

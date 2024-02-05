@@ -10,7 +10,13 @@ export const Container = styled.div`
   margin: 1% 4%;
   position: relative;
   align-items: center;
-  height: fit-content;
+  height: 244px;
+  justify-content: center;
+`
+
+export const ImgContainer = styled.div`
+  height: 160px;
+  display: flex;
   justify-content: center;
 `
 
@@ -36,7 +42,7 @@ export const DogTextInfoContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 5% 2% 3% 2%;
+  padding: 5% 2% 3% 4%;
 `
 
 export const DogName = styled.div`
