@@ -16,7 +16,7 @@ const ChattingRoomContainerHj = () => {
     // const stompClient = Stomp.over(socket)
 
     const socket = new SockJS(
-      'http://i10c111.p.ssafy.io:8081/ws/chat',
+      'https://i10c111.p.ssafy.io/ws/chat',
       {},
       {
         transports: ['xhr-polling'],
