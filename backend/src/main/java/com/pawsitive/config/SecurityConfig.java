@@ -87,11 +87,12 @@ public class SecurityConfig {
             .sessionManagement(
                 configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/v3/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
-                .requestMatchers("/ws/chat", "/pub/**", "/sub/**").permitAll()
-                .requestMatchers("/api/v1/auth/no-auth").permitAll()
-                .requestMatchers("/api/v1/users/**").authenticated()
-                .anyRequest().authenticated()
+                    .requestMatchers("/v3/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
+                    .requestMatchers("/ws/chat", "/pub/**", "/sub/**").permitAll()
+                    .requestMatchers("/api/v1/auth/no-auth").permitAll()
+                    .requestMatchers("/api/v1/users/**").authenticated()
+                    .anyRequest().permitAll()
+//                .anyRequest().authenticated()
             )
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                 UsernamePasswordAuthenticationFilter.class);
