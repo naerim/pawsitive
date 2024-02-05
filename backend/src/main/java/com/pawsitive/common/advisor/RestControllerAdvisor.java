@@ -6,12 +6,14 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
+import com.pawsitive.auth.exception.JwtAuthenticationProcessingException;
 import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.common.util.ErrorMessageUtil;
 import com.pawsitive.usergroup.exception.DuplicateIdException;
 import com.pawsitive.usergroup.exception.InvalidPasswordException;
 import com.pawsitive.usergroup.exception.UserNotFoundException;
 import com.pawsitive.usergroup.exception.UserNotLoginException;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -65,7 +67,8 @@ public class RestControllerAdvisor {
      * @param e 실제 발생한 예외객체입니다.
      * @return 에러메세지를 response entity 에 담아서 전송합니다.
      */
-    @ExceptionHandler(value = {InvalidPasswordException.class, UserNotLoginException.class})
+    @ExceptionHandler(value = {InvalidPasswordException.class, UserNotLoginException.class,
+        ExpiredJwtException.class, JwtAuthenticationProcessingException.class})
     public ResponseEntity<BaseResponseBody> unauthorizedException401(Exception e) {
 
         return ResponseEntity.status(UNAUTHORIZED)
