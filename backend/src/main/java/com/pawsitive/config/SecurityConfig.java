@@ -17,6 +17,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -67,6 +68,14 @@ public class SecurityConfig {
     }
 
     @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web -> web.ignoring()
+            .requestMatchers("/api/v1/auth/**", "/api/v1/dogs", "/api/v1/contents/**", "/ws/chat",
+                "/pub/**", "/sub/**",
+                "v3/**", "/swagger-ui/**", "/swagger-resources/**"));
+    }
+
+    @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
@@ -77,10 +86,9 @@ public class SecurityConfig {
             .sessionManagement(
                 configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/v3/**", "/swagger-ui/**", "/swagger-resources/**")
-                .permitAll()
+                .requestMatchers("/v3/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
                 .requestMatchers("/ws/chat", "/pub/**", "/sub/**").permitAll()
-                .requestMatchers("/api/v1/users/me").authenticated()
+                .requestMatchers("/api/v1/users/**").authenticated()
                 .anyRequest().permitAll()
             )
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),

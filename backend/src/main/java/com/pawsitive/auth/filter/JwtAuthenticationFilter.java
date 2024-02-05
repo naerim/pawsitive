@@ -7,6 +7,7 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,10 +33,11 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
         // Request Header에서 토큰 추출
-        String token = resolveToken((HttpServletRequest) servletRequest);
+        String token =
+            resolveToken((HttpServletRequest) servletRequest).orElseThrow(RuntimeException::new);
 
         // validateToken 메서드로 유효성 검사
-        if (token != null && jwtTokenProvider.validateToken(token)) {
+        if (jwtTokenProvider.validateToken(token)) {
             // 유효하다면 Token에서 Authentication 정보를 가져와 SecurityContext에 저장
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -45,14 +47,13 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     }
 
     // Request Header에서 토큰 정보 추출
-    private String resolveToken(HttpServletRequest request) {
+    private Optional<String> resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
-            return bearerToken.substring(7);
+            return Optional.of(bearerToken.substring(7));
         }
 
-        // TODO : 냄시 제거로 인해 Optional로 바꾸기
-        return null;
+        return Optional.empty();
     }
 
 }
