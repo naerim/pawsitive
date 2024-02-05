@@ -1,12 +1,12 @@
 import ChattingContainer from '@src/container/ChattingContainer'
+import Navbar from '@src/common/Navbar'
 
 const ChattingPage = () => {
   return (
-    <div>
-      <div>
-        <ChattingContainer />
-      </div>
-    </div>
+    <>
+      <ChattingContainer />
+      <Navbar />
+    </>
   )
 }
 

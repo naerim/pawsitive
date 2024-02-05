@@ -39,14 +39,6 @@ const HomeContainer = () => {
       <HomePopularCommunity />
     </HomeLayout>
   )
-  // return (
-  //   <div>
-  //     {user.stage > 1 && <HomeProgressBar currentStage={user.stage} />}
-  //     <Link to="/dogDetail">강아지 세부사항</Link>
-  //     <br />
-  //     <Link to="/new/dog">유기견 추가</Link>
-  //   </div>
-  // )
 }
 
 export default HomeContainer
