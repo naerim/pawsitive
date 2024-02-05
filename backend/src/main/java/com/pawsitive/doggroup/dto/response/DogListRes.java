@@ -1,7 +1,5 @@
 package com.pawsitive.doggroup.dto.response;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,23 +11,16 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DogDetailRes {
+public class DogListRes {
 
     private int dogNo;
-    private int userNo;
-    private String userName;
     private String name;
     private String kind;
-    private LocalDateTime createdAt;
     private boolean isNeutralized;
     private int age;
-    private String color;
-    private String video;
-    private String note;
-    private int hit;
-    private String mbti;
+    private String statusName;
     private int statusNo;
-    private List<String> images;
+    private String image;
     private String sex;
 
 }

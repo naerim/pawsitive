@@ -46,4 +46,6 @@ public class DogCreateReq {
     @NotNull(message = "sex can't be null")
     private String sex;
 
+    private int age;
+
 }
