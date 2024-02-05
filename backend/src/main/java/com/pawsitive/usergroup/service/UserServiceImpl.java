@@ -1,21 +1,29 @@
 package com.pawsitive.usergroup.service;
 
 import com.pawsitive.auth.Role;
-import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.auth.jwt.JwtTokenProvider;
 import com.pawsitive.auth.service.MailService;
 import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.common.service.RedisService;
 import com.pawsitive.usergroup.dto.request.EmailVerificationReq;
 import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
+import com.pawsitive.usergroup.dto.request.UserLoginPostReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
 import com.pawsitive.usergroup.dto.response.EmailVerificationRes;
 import com.pawsitive.usergroup.dto.response.UserJoinRes;
+import com.pawsitive.usergroup.dto.response.UserLoginRes;
 import com.pawsitive.usergroup.entity.Member;
 import com.pawsitive.usergroup.entity.User;
+import com.pawsitive.usergroup.exception.InvalidPasswordException;
 import com.pawsitive.usergroup.exception.UserNotFoundException;
 import com.pawsitive.usergroup.repository.MemberRepository;
 import com.pawsitive.usergroup.repository.UserRepository;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,12 +33,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.Random;
 
 /**
  * 유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -58,14 +60,52 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public JwtToken signIn(String userEmail, String password) {
-        UsernamePasswordAuthenticationToken authenticationToken =
-            new UsernamePasswordAuthenticationToken(userEmail, password);
+    public UserLoginRes signIn(UserLoginPostReq req) {
+        // Email에 해당하는 유저 정보를 가져오기 (없다면 예외 발생)
+        User user =
+            userRepository.findUserByEmail(req.getId()).orElseThrow(UserNotFoundException::new);
 
+        // 비밀번호 일치 여부 확인 (일치하지 않으면 예외 발생)
+        if (!passwordEncoder.matches(req.getPassword(), user.getPw())) {
+            throw new InvalidPasswordException();
+        }
+
+        // Authentication 객체 생성
+        UsernamePasswordAuthenticationToken authenticationToken =
+            new UsernamePasswordAuthenticationToken(req.getId(), req.getPassword());
+
+        // 인증 후 인증객체 가져오기
         Authentication authentication =
             authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-        return jwtTokenProvider.generateToken(authentication);
+        // 개인회원인지 체크하기
+        Optional<Member> memberOptional = memberRepository.findMemberByUserNo(user.getUserNo());
+
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+
+            return UserLoginRes.builder()
+                .jwtToken(jwtTokenProvider.generateToken(authentication))
+                .userNo(user.getUserNo())
+                .email(user.getEmail())
+                .name(user.getName())
+                .address(user.getAddress())
+                .role(user.getRole().getTitle())
+                .birth(member.getBirth().toString())
+                .stage(member.getStage())
+                .type(member.getType())
+                .gender(member.getGender())
+                .build();
+        }
+
+        return UserLoginRes.builder()
+            .jwtToken(jwtTokenProvider.generateToken(authentication))
+            .userNo(user.getUserNo())
+            .email(user.getEmail())
+            .name(user.getName())
+            .address(user.getAddress())
+            .role(user.getRole().getTitle())
+            .build();
     }
 
     @Transactional
@@ -94,7 +134,7 @@ public class UserServiceImpl implements UserService {
                 .build());
 
             Member member = memberRepository.save(Member.builder()
-                .user(user)
+                .userNo(user.getUserNo())
                 .birth(LocalDateTime.parse(userJoinPostReq.getBirth() + "T00:00:00"))
                 .stage(0)
                 .type(userJoinPostReq.getType())
@@ -199,7 +239,8 @@ public class UserServiceImpl implements UserService {
 
     public EmailVerificationRes verifyCode(EmailVerificationReq req) {
         String redisAuthCode = redisService.getValues(AUTH_CODE_PREFIX + req.getEmail());
-        boolean authResult = redisService.checkExistsValue(redisAuthCode) && redisAuthCode.equals(req.getAuthCode());
+        boolean authResult =
+            redisService.checkExistsValue(redisAuthCode) && redisAuthCode.equals(req.getAuthCode());
 
         return EmailVerificationRes.builder()
             .email(req.getEmail())
