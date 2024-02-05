@@ -28,3 +28,9 @@ export type BasicDogType = {
   sex: string
   neutralized: boolean
 }
+
+export type BasicDogListParamsType = {
+  page: number
+  size: number
+  sort: string[]
+}
