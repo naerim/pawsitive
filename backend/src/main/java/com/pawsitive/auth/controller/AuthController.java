@@ -1,6 +1,7 @@
 package com.pawsitive.auth.controller;
 
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.usergroup.dto.request.EmailVerificationReq;
@@ -123,6 +124,13 @@ public class AuthController {
         return ResponseEntity
             .status(OK)
             .body(userService.verifyCode(req));
+    }
+
+    @GetMapping("no-auth")
+    public ResponseEntity<BaseResponseBody> noAuth() {
+        return ResponseEntity
+            .status(UNAUTHORIZED)
+            .body(BaseResponseBody.of(UNAUTHORIZED, "권한 없음"));
     }
 
 
