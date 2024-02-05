@@ -2,22 +2,25 @@ package com.pawsitive.auth.controller;
 
 import static org.springframework.http.HttpStatus.OK;
 
-import com.pawsitive.auth.jwt.JwtToken;
-import com.pawsitive.auth.service.MailService;
 import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.usergroup.dto.request.EmailVerificationReq;
 import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
 import com.pawsitive.usergroup.dto.request.UserLoginPostReq;
 import com.pawsitive.usergroup.dto.response.EmailVerificationRes;
 import com.pawsitive.usergroup.dto.response.UserJoinRes;
-import com.pawsitive.usergroup.entity.User;
+import com.pawsitive.usergroup.dto.response.UserLoginRes;
 import com.pawsitive.usergroup.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 인증 관련 API 요청 처리를 위한 컨트롤러입니다.
@@ -49,17 +52,10 @@ public class AuthController {
             @ApiResponse(responseCode = "500", description = "서버 오류")
         }
     )
-    public ResponseEntity<JwtToken> login(@RequestBody UserLoginPostReq loginInfo) {
-
-        String userId = loginInfo.getId();
-        String password = loginInfo.getPassword();
-
-        // JWT Token을 반환하기
-        JwtToken userToken = userService.signIn(userId, password);
-
+    public ResponseEntity<UserLoginRes> login(@RequestBody UserLoginPostReq loginInfo) {
         return ResponseEntity
             .status(OK)
-            .body(userToken);
+            .body(userService.signIn(loginInfo));
     }
 
     @GetMapping("/email/verify")
