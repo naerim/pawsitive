@@ -67,14 +67,18 @@ public class SecurityConfig {
         return new ProviderManager(authenticationProvider());
     }
 
+    /**
+     * Jwt
+     *
+     * @return
+     */
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web -> web.ignoring()
-            .requestMatchers("/api/v1/auth/**", "/api/v1/dogs", "/api/v1/contents/**", "/ws/chat",
-                "/pub/**", "/sub/**",
-                "v3/**", "/swagger-ui/**", "/swagger-resources/**"));
+            .requestMatchers("/api/v1/auth/**", "/api/v1/dogs/**", "/api/v1/community/**", "/api/v1/contents/**", "/ws/chat",
+                "/pub/**", "/sub/**", "v3/**", "/swagger-ui/**", "/swagger-resources/**"));
     }
-
+    
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
