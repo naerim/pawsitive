@@ -1,9 +1,11 @@
-import SelfLoginForm from '@src/components/Login/SelfLoginForm'
+import LoginHeader from '@src/components/Login/LoginHeader'
+import LoginForm from '@src/components/Login/LoginForm'
 
 const LoginContainer = () => {
   return (
     <div>
-      <SelfLoginForm />
+      <LoginHeader />
+      <LoginForm />
     </div>
   )
 }

@@ -83,9 +83,30 @@ const HomeRoutes = () => (
 )
 
 const App = () => {
-  const user = true
   const theme = useAtomValue(themeAtom)
+  // const [userValue] = useAtom(userAtom)
 
+  // const user = userValue.email
+  const user = true
+  // const handleLogin = (user: UserType) => {
+  //   localStorage.setItem('currentUser', JSON.stringify(user))
+  // }
+  // handleLogin(userValue)
+  //
+  // // // 로그인 하면 스토리지에 추가된 email을 확인하여 접근 다르게 함
+  // // const currentUser: Partial<UserType> = JSON.parse(
+  // //   localStorage.getItem('currentUser'),
+  // // )
+  // // const user = currentUser.email
+  //
+  // useEffect(() => {
+  //   const currentUser: Partial<UserType> = JSON.parse(
+  //     localStorage.getItem('currentUser'),
+  //   )
+  //   const user = currentUser.email
+  // }, [])
+
+  // const user = true
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyle />
