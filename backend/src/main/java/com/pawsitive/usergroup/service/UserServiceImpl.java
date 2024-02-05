@@ -1,11 +1,14 @@
 package com.pawsitive.usergroup.service;
 
 import com.pawsitive.auth.Role;
+import com.pawsitive.auth.exception.JwtAuthenticationProcessingException;
+import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.auth.jwt.JwtTokenProvider;
 import com.pawsitive.auth.service.MailService;
 import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.common.service.RedisService;
 import com.pawsitive.usergroup.dto.request.EmailVerificationReq;
+import com.pawsitive.usergroup.dto.request.SilentRefreshReq;
 import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
 import com.pawsitive.usergroup.dto.request.UserLoginPostReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
@@ -57,6 +60,7 @@ public class UserServiceImpl implements UserService {
     private final RedisService redisService;
 
     private final String AUTH_CODE_PREFIX = "Authcode ";
+    private final String REFRESH_TOKEN_PREFIX = "RefreshToken ";
 
     @Transactional
     @Override
@@ -78,14 +82,28 @@ public class UserServiceImpl implements UserService {
         Authentication authentication =
             authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
+        // JWT 토큰 발급
+        JwtToken jwtToken = jwtTokenProvider.generateToken(authentication);
+
+        // Redis에 Refresh Token 값을 저장하기 (기존 값이 있으면 지우고 저장)
+        // ( key = "RefreshToken " + Email / value = refreshToken / Duration = 24시간 )
+        String jwtRedisKey = REFRESH_TOKEN_PREFIX + req.getId();
+
+        if (redisService.checkExistsValue(jwtRedisKey)) {
+            redisService.deleteValues(jwtRedisKey);
+        }
+
+        redisService.setValues(jwtRedisKey, jwtToken.getRefreshToken(), Duration.ofHours(24));
+
         // 개인회원인지 체크하기
         Optional<Member> memberOptional = memberRepository.findMemberByUserNo(user.getUserNo());
 
+        // 개인회원이라면 Response DTO에 개인정보까지 포함해서 반환
         if (memberOptional.isPresent()) {
             Member member = memberOptional.get();
 
             return UserLoginRes.builder()
-                .jwtToken(jwtTokenProvider.generateToken(authentication))
+                .jwtToken(jwtToken)
                 .userNo(user.getUserNo())
                 .email(user.getEmail())
                 .name(user.getName())
@@ -99,7 +117,7 @@ public class UserServiceImpl implements UserService {
         }
 
         return UserLoginRes.builder()
-            .jwtToken(jwtTokenProvider.generateToken(authentication))
+            .jwtToken(jwtToken)
             .userNo(user.getUserNo())
             .email(user.getEmail())
             .name(user.getName())
@@ -246,6 +264,28 @@ public class UserServiceImpl implements UserService {
             .email(req.getEmail())
             .result(authResult)
             .build();
+    }
+
+    @Override
+    public JwtToken reissueJwtToken(SilentRefreshReq req, Authentication authentication) {
+        String jwtRedisKey = REFRESH_TOKEN_PREFIX + req.getEmail();
+
+        if (!redisService.checkExistsValue(jwtRedisKey)) {
+            throw new JwtAuthenticationProcessingException("없거나 만료된 RefreshToken 입니다.");
+        }
+
+        if (!redisService.getValues(jwtRedisKey).equals(req.getRefreshToken())) {
+            throw new JwtAuthenticationProcessingException("refreshToken 값이 일치하지 않습니다.");
+        }
+
+        JwtToken newToken = jwtTokenProvider.generateToken(authentication);
+
+        if (redisService.checkExistsValue(jwtRedisKey)) {
+            redisService.deleteValues(jwtRedisKey);
+        }
+        redisService.setValues(jwtRedisKey, newToken.getRefreshToken(), Duration.ofHours(24));
+
+        return newToken;
     }
 
     //
