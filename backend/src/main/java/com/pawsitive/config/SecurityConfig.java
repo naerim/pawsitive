@@ -17,6 +17,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -64,6 +65,14 @@ public class SecurityConfig {
     AuthenticationManager authenticationManager() {
         // DAO 기반의 Authentication Provider가 적용되도록 설정
         return new ProviderManager(authenticationProvider());
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web -> web.ignoring()
+            .requestMatchers("/api/v1/auth/**", "/api/v1/dogs", "/api/v1/contents/**", "/ws/chat",
+                "/pub/**", "/sub/**",
+                "v3/**", "/swagger-ui/**", "/swagger-resources/**"));
     }
 
     @Bean
