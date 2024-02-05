@@ -2,9 +2,11 @@ package com.pawsitive.usergroup.controller;
 
 import static org.springframework.http.HttpStatus.OK;
 
+import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.doggroup.dto.response.AdoptedDogRes;
 import com.pawsitive.doggroup.service.AdoptDogService;
+import com.pawsitive.usergroup.dto.request.SilentRefreshReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
 import com.pawsitive.usergroup.exception.UserNotLoginException;
 import com.pawsitive.usergroup.service.UserService;
@@ -17,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -174,6 +177,24 @@ public class UserController {
         return ResponseEntity
             .status(OK)
             .body(adoptDogService.getAdoptedDogByUserNo(userNo));
+    }
+
+    @PostMapping("/silent-refresh")
+    @Operation(
+        summary = "JWT 토큰 재발급",
+        description = "전달된 RefreshToken 값을 확인하여 JWT Token을 재발급한다.",
+        tags = {"03.User"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "401", description = "권한 없음"),
+            @ApiResponse(responseCode = "500", description = "서버 오류")
+        }
+    )
+    public ResponseEntity<JwtToken> silentRefresh(@RequestBody SilentRefreshReq req,
+                                                  Authentication authentication) {
+        return ResponseEntity
+            .status(OK)
+            .body(userService.reissueJwtToken(req, authentication));
     }
 
 //    @PatchMapping("/{userId}")
