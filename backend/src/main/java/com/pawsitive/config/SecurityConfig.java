@@ -86,8 +86,8 @@ public class SecurityConfig {
         http
             .httpBasic(HttpBasicConfigurer::disable)
             .csrf(CsrfConfigurer::disable) // csrf 설정 disable
-            .cors(CorsConfigurer::disable)
-//            .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource))
+//            .cors(CorsConfigurer::disable)
+            .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource))
             .sessionManagement(
                 configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
