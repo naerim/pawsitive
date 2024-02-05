@@ -1,6 +1,9 @@
 import * as d from '@src/components/DogDetail/_style/DogFileSectionStyle'
+import { useNavigate } from 'react-router-dom'
 
 const DogFileSection = () => {
+  const navigate = useNavigate()
+
   const settings = {
     dots: true,
     speed: 500,
@@ -14,6 +17,8 @@ const DogFileSection = () => {
     ),
     dotsClass: 'dots_custom',
   }
+
+  const goDogList = () => navigate('/dogs')
 
   return (
     <d.Container>
@@ -41,7 +46,7 @@ const DogFileSection = () => {
         <img src="/icon/icon_eye.png" alt="" />
         <span>22</span>
       </d.EyeWrap>
-      <d.ArrowWrap>
+      <d.ArrowWrap onClick={goDogList} role="presentation">
         <img src="/icon/icon_white_arrow_left.png" alt="" />
       </d.ArrowWrap>
     </d.Container>
