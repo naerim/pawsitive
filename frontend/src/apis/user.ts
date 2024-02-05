@@ -43,9 +43,10 @@ export const loginUser = async (
   return publicRequest
     .post('auth/login', loginData)
     .then(res => {
-      const { accessToken, grantType } = res.data
-      axios.defaults.headers.common.Authorization = `${grantType} ${accessToken}`
-      return res.data
+      const reqData = res.data
+      const tokenData = res.data.jwtToken
+      axios.defaults.headers.common.Authorization = `${tokenData.grantType} ${tokenData.accessToken}`
+      return reqData
     })
     .catch(error => {
       console.log(error)

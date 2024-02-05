@@ -1,23 +1,42 @@
-import * as c from '@src/components/style/SelfLoginFormStyle'
+import * as c from '@src/components/style/LoginFormStyle'
 import React, { useState } from 'react'
-import { LoginUserType } from '@src/types/userType'
+import { LoginUserType, UserType } from '@src/types/userType'
 import { loginUser } from '@src/apis/user'
 import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
+import { useSetAtom } from 'jotai/index'
+import { userAtom } from '@src/stores/atoms/user'
 
-const SelfLoginForm = () => {
+const LoginForm = () => {
   const [LoginError, setLoginError] = useState('')
   const [loginFormValue, setLoginForm] = useState<LoginUserType>({
     id: '',
     password: '',
   })
+  const setUser = useSetAtom(userAtom)
   const navigate = useNavigate()
+
+  const SaveLoginUser = (data: UserType) => {
+    setUser(user => ({
+      ...user,
+      userNo: data.userNo,
+      email: data.email,
+      name: data.name,
+      password: data.password,
+      address: data.address,
+      birth: data.birth,
+      gender: data.gender,
+      type: data.type,
+      stage: data.stage,
+    }))
+  }
 
   const { mutate } = useMutation({
     mutationKey: [loginUser],
     mutationFn: loginUser,
-    onSuccess() {
+    onSuccess(reqData: UserType) {
       console.log('mutate 사용을 성공했습니다')
+      SaveLoginUser(reqData)
       navigate('/')
     },
     onError() {
@@ -54,11 +73,6 @@ const SelfLoginForm = () => {
 
   return (
     <c.Container>
-      <c.Header>
-        <c.ReturnButton>&lt;</c.ReturnButton>
-        <c.H1>로그인</c.H1>
-      </c.Header>
-
       <c.Form onSubmit={handleSubmit}>
         <c.InputForm>
           <c.Input
@@ -88,4 +102,4 @@ const SelfLoginForm = () => {
   )
 }
 
-export default SelfLoginForm
+export default LoginForm
