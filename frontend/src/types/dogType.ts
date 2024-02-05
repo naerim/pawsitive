@@ -16,3 +16,15 @@ export type DogType = {
   userNo: number
   video: string
 }
+
+export type BasicDogType = {
+  dogNo: number
+  name: string
+  kind: string
+  age: number
+  statusName: string
+  statusNo: number
+  image: string
+  sex: string
+  neutralized: boolean
+}
