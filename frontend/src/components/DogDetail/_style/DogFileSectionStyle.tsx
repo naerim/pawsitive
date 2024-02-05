@@ -8,7 +8,7 @@ export const Container = styled.div`
 `
 
 export const StyledSlider = styled(Slider)`
-  height: 512px;
+  height: 522px;
   width: 100%;
 
   .slick-list {
@@ -54,12 +54,57 @@ export const StyledSlider = styled(Slider)`
 
 export const SliderBottom = styled.div`
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   bottom: 0;
   width: 100%;
-  height: 200px;
+  height: 110px;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.63));
+  padding: 29px;
 `
 
-export const Text = styled.div`
+export const Title = styled.div`
   color: #fff;
+  font-weight: 500;
+  font-size: 1.3em;
+`
+
+export const Desc = styled.div`
+  color: #fff;
+  font-weight: 400;
+  margin-top: 12px;
+  font-size: 0.9em;
+`
+
+export const EyeWrap = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  bottom: 32px;
+  right: 32px;
+
+  img {
+    width: 21px;
+    height: 13px;
+  }
+
+  span {
+    color: #fff;
+    margin-top: 7px;
+    font-size: 0.7em;
+  }
+`
+
+export const ArrowWrap = styled.div`
+  display: flex;
+  position: absolute;
+  left: 30px;
+  top: 52px;
+
+  img {
+    width: 11px;
+    height: 19px;
+  }
 `

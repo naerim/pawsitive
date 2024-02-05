@@ -18,6 +18,7 @@ const DogFileSection = () => {
   return (
     <d.Container>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+
       <d.StyledSlider {...settings}>
         <div>
           <img
@@ -33,8 +34,16 @@ const DogFileSection = () => {
         </div>
       </d.StyledSlider>
       <d.SliderBottom>
-        <d.Text>ss</d.Text>
+        <d.Title>단풍이</d.Title>
+        <d.Desc>암컷 ∙ 중성화X ∙ 2023(년생) ∙ 믹스</d.Desc>
       </d.SliderBottom>
+      <d.EyeWrap>
+        <img src="/icon/icon_eye.png" alt="" />
+        <span>22</span>
+      </d.EyeWrap>
+      <d.ArrowWrap>
+        <img src="/icon/icon_white_arrow_left.png" alt="" />
+      </d.ArrowWrap>
     </d.Container>
   )
 }
