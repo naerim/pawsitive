@@ -1,10 +1,12 @@
 package com.pawsitive.chatgroup.repository;
 
+import com.pawsitive.chatgroup.dto.response.ChatRes;
 import com.pawsitive.chatgroup.entity.Chat;
 import com.pawsitive.chatgroup.entity.ChatRoom;
 import com.pawsitive.chatgroup.entity.QChat;
 import com.pawsitive.chatgroup.entity.QChatRoom;
 import com.pawsitive.usergroup.entity.QUser;
+import com.querydsl.core.types.Projections;
 import java.util.List;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
@@ -28,6 +30,18 @@ public class ChatRoomRepositoryImpl extends QuerydslRepositorySupport
             .where(qChat.user.userNo.eq(userNo))
             .groupBy(qChat.room)
             .orderBy(qChatRoom.createdAt.desc())
+            .fetch();
+    }
+
+    @Override
+    public List<ChatRes> getChatHistoryByChatRoomNo(String roomNo) {
+        return from(qChat)
+            .innerJoin(qChat.room, qChatRoom)
+            .innerJoin(qChat.user, qUser)
+            .select(Projections.constructor(ChatRes.class, qChat.chatNo, qUser.name,
+                qUser.image, qChat.message, qChat.createdAt))
+            .where(qChatRoom.chatRoomNo.eq(roomNo))
+            .orderBy(qChat.createdAt.desc())
             .fetch();
     }
 }

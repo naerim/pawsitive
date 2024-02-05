@@ -26,4 +26,7 @@ public class ChatRoom {
     @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "dog_no")
+    private int dogNo;
+
 }
