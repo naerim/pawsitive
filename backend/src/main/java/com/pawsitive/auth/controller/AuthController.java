@@ -47,7 +47,7 @@ public class AuthController {
         tags = {"02.Auth"},
         responses = {
             @ApiResponse(responseCode = "200", description = "성공"),
-            @ApiResponse(responseCode = "401", description = "인증 실패 (JWT Access Token 만료)"),
+            @ApiResponse(responseCode = "401", description = "비밀번호 불일치"),
             @ApiResponse(responseCode = "404", description = "사용자 없음"),
             @ApiResponse(responseCode = "500", description = "서버 오류")
         }
@@ -57,40 +57,6 @@ public class AuthController {
             .status(OK)
             .body(userService.signIn(loginInfo));
     }
-
-    @GetMapping("/email/verify")
-    @Operation(
-        summary = "인증 메일 요청",
-        description = "해당 이메일로 인증 메일을 보낸다.",
-        tags = {"02.Auth"},
-        responses = {
-            @ApiResponse(responseCode = "200", description = "성공"),
-            @ApiResponse(responseCode = "500", description = "서버 오류")
-        }
-    )
-    public ResponseEntity<BaseResponseBody> emailRequest(@RequestParam String email) {
-        userService.sendVerifyingEmail(email);
-        return ResponseEntity
-            .status(OK)
-            .body(BaseResponseBody.of(OK, "이메일 요청 완료"));
-    }
-
-    @PostMapping("/email/verify")
-    @Operation(
-        summary = "인증 코드 검증",
-        description = "해당 이메일로 보낸 인증 메일과 실제 사용자가 보낸 검증 값이 같은지 확인한다.",
-        tags = {"02.Auth"},
-        responses = {
-            @ApiResponse(responseCode = "200", description = "성공"),
-            @ApiResponse(responseCode = "500", description = "서버 오류")
-        }
-    )
-    public ResponseEntity<EmailVerificationRes> verifyEmail(@RequestBody EmailVerificationReq req) {
-        return ResponseEntity
-            .status(OK)
-            .body(userService.verifyCode(req));
-    }
-
 
     /**
      * 회원가입을 처리하는 컨트롤러 메서드입니다.
@@ -113,6 +79,52 @@ public class AuthController {
             .status(OK)
             .body(userService.joinUser(userJoinPostReq));
     }
+
+    /**
+     * 인증 메일 요청을 처리하는 컨트롤러 메서드입니다.
+     *
+     * @param email 대상 E-mail
+     * @return BaseResponseBody
+     */
+    @GetMapping("/email/verify")
+    @Operation(
+        summary = "인증 메일 요청",
+        description = "해당 이메일로 인증 메일을 보낸다.",
+        tags = {"02.Auth"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "500", description = "서버 오류")
+        }
+    )
+    public ResponseEntity<BaseResponseBody> emailRequest(@RequestParam String email) {
+        userService.sendVerifyingEmail(email);
+        return ResponseEntity
+            .status(OK)
+            .body(BaseResponseBody.of(OK, "이메일 요청 완료"));
+    }
+
+    /**
+     * 인증 메일 값 확인 요청을 처리하는 컨트롤러 메서드입니다.
+     *
+     * @param req 요청 객체
+     * @return 응답 결과
+     */
+    @PostMapping("/email/verify")
+    @Operation(
+        summary = "인증 코드 검증",
+        description = "해당 이메일로 보낸 인증 메일과 실제 사용자가 보낸 검증 값이 같은지 확인한다.",
+        tags = {"02.Auth"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "500", description = "서버 오류")
+        }
+    )
+    public ResponseEntity<EmailVerificationRes> verifyEmail(@RequestBody EmailVerificationReq req) {
+        return ResponseEntity
+            .status(OK)
+            .body(userService.verifyCode(req));
+    }
+
 
 //    @PostMapping("/oauth2/google")
 //    public ResponseEntity<UserLoginPostRes> doSocialLogin(@RequestBody
