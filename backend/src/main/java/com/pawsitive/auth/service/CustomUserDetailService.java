@@ -20,7 +20,6 @@ import org.springframework.stereotype.Component;
 public class CustomUserDetailService implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final MemberRepository memberRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -29,5 +28,5 @@ public class CustomUserDetailService implements UserDetailsService {
 
         return new CustomUserDetails(user);
     }
-    
+
 }
