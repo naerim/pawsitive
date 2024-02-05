@@ -1,10 +1,16 @@
 import * as b from '@src/common/style/BasicDogInfoCardStyle'
 import { BasicDogType } from '@src/types/dogType'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const BasicDogInfoCard: React.FC<{ dogInfo: BasicDogType }> = ({ dogInfo }) => {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate(`/dogs/${dogInfo.dogNo}`)
+  }
   return (
-    <b.Container>
+    <b.Container onClick={handleClick}>
       <b.AdoptStatus>{dogInfo.statusName}</b.AdoptStatus>
       <b.ImgContainer>
         <b.Dogimg src={dogInfo.image} />
