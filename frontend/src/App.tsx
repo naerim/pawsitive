@@ -55,7 +55,7 @@ const AuthRoutes = () => (
       element={<FindSimilarDogResultPage />}
     />
     <Route path="/dogs" element={<DogListPage />} />
-    <Route path="/dogDetail" element={<DogDetailPage />} />
+    <Route path="/dogs/:dogNo" element={<DogDetailPage />} />
     <Route path="/mypage/survey" element={<AdoptionSurveyPage />} />
     <Route path="/mypage/survey/done" element={<AdoptionSurveyDonePage />} />
     <Route path="/chat" element={<ChattingPage />} />
