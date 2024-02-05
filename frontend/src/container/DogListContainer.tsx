@@ -1,10 +1,21 @@
 import BasicDogInfoCard from '@src/common/BasicDogInfoCard'
+import * as b from '@src/components/style/DogListContainer'
 
 const DogListContainer = () => {
   return (
-    <div>
+    <b.Container>
       <BasicDogInfoCard />
-    </div>
+      <BasicDogInfoCard />
+      <BasicDogInfoCard />
+      <BasicDogInfoCard />
+      <BasicDogInfoCard />
+      <BasicDogInfoCard />
+      <BasicDogInfoCard />
+      <BasicDogInfoCard />
+      <BasicDogInfoCard />
+      <BasicDogInfoCard />
+      <BasicDogInfoCard />
+    </b.Container>
   )
 }
 
