@@ -3,18 +3,19 @@ import { useParams } from 'react-router-dom'
 import { Client, Stomp, StompSubscription } from '@stomp/stompjs'
 import SockJS from 'sockjs-client'
 
+export type IChatDetail = {
+  message: string
+}
+
 const ChattingRoomContainerHj = () => {
   const { no } = useParams()
   const [client, setClient] = useState<Client | null>(null)
   const subscriptionRef = useRef<StompSubscription | null>(null)
 
-  const [messages, setMessages] = useState([])
-  const [newMessage, setNewMessage] = useState('')
+  const [messages, setMessages] = useState<IChatDetail[]>([])
+  const [newMessage, setNewMessage] = useState<IChatDetail>({ message: '' })
 
   const setupWebSocket = () => {
-    // const socket = new WebSocket('ws://i10c111.p.ssafy.io/ws/chat')
-    // const stompClient = Stomp.over(socket)
-
     const socket = new SockJS(
       'https://i10c111.p.ssafy.io/ws/chat',
       {},
@@ -64,7 +65,7 @@ const ChattingRoomContainerHj = () => {
       })
       setMessages(prevMessages => [...prevMessages, newMessage])
     }
-    setNewMessage('')
+    setNewMessage({ message: '' })
   }
 
   return (
@@ -76,13 +77,13 @@ const ChattingRoomContainerHj = () => {
 
       <div>
         {messages.map((message, index) => (
-          <div key={index}>{message}</div>
+          <div key={index}>{message.message}</div>
         ))}
       </div>
       <input
         type="text"
-        value={newMessage}
-        onChange={e => setNewMessage(e.target.value)}
+        value={newMessage.message}
+        onChange={e => setNewMessage({ message: e.target.value })}
       />
       <button onClick={sendMessage}>전송</button>
     </div>
