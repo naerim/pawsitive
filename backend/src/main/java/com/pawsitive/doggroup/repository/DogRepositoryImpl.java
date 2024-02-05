@@ -49,7 +49,9 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
     public Page<DogListRes> getDogList(Pageable pageable) {
 
         List<DogListRes> content =
-            getQueryDogList().offset(pageable.getOffset()).limit(pageable.getPageSize())
+            getQueryDogList()
+                .orderBy(qDog.createdAt.desc())
+                .offset(pageable.getOffset()).limit(pageable.getPageSize())
                 .fetch();
 
         Long count = from(qDog).select(qDog.count()).fetchOne();
@@ -60,7 +62,9 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
     @Override
     public Page<DogListRes> getDogListByKindNo(Pageable pageable, String kind) {
         List<DogListRes> content =
-            getQueryDogList().where(qDog.kind.stringValue().eq(kind))
+            getQueryDogList()
+                .orderBy(qDog.createdAt.desc())
+                .where(qDog.kind.stringValue().eq(kind))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize()).fetch();
 
@@ -74,7 +78,7 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
             Projections.fields(DogDetailRes.class, qDog.dogNo, qUser.userNo,
                 qUser.name.as("userName"), qDog.name,
                 ExpressionUtils.as(qDog.kind.stringValue(), "kind"), qDog.createdAt,
-                qDog.isNeutralized, qDog.age, qDog.color, qDog.video, qDog.note, qDog.hit,
+                qDog.isNeutralized, qDog.age, qDog.video, qDog.note, qDog.hit,
                 qDog.mbti,
                 ExpressionUtils.as(qDog.status.stringValue().castToNum(Integer.class), "statusNo"),
                 qDog.sex));
