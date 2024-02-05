@@ -1,7 +1,11 @@
 import * as c from '@src/components/style/LoginFormStyle'
 import React, { useState } from 'react'
-import { LoginUserType, UserType } from '@src/types/userType'
-import { loginUser } from '@src/apis/user'
+import {
+  LoginUserResponseType,
+  LoginUserType,
+  UserType,
+} from '@src/types/userType'
+import { loginData, loginUser } from '@src/apis/user'
 import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { useSetAtom } from 'jotai/index'
@@ -14,6 +18,7 @@ const LoginForm = () => {
     password: '',
   })
   const setUser = useSetAtom(userAtom)
+
   const navigate = useNavigate()
 
   const SaveLoginUser = (data: UserType) => {
@@ -31,10 +36,19 @@ const LoginForm = () => {
     }))
   }
 
-  const { mutate } = useMutation({
-    mutationKey: [loginUser],
+  const loginTokenMutation = useMutation({
+    mutationKey: ['loginUser'],
     mutationFn: loginUser,
-    onSuccess(reqData: UserType) {
+    onSuccess() {},
+    onError() {
+      console.log('토큰갱신 api 에러')
+    },
+  })
+
+  const loginDataMutation = useMutation({
+    mutationKey: ['loginData'],
+    mutationFn: loginData,
+    onSuccess(reqData: LoginUserResponseType) {
       console.log('mutate 사용을 성공했습니다')
       SaveLoginUser(reqData)
       navigate('/')
@@ -68,7 +82,8 @@ const LoginForm = () => {
   // 유효성 검증 및 로그인 폼 제출
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    mutate(loginFormValue)
+    loginTokenMutation.mutate(loginFormValue)
+    loginDataMutation.mutate(loginFormValue)
   }
 
   return (
