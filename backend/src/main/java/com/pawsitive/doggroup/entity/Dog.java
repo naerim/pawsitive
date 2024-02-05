@@ -53,9 +53,6 @@ public class Dog {
     @Column(name = "age")
     private int age;
 
-    @Column(name = "color")
-    private String color;
-
     @Column(name = "video")
     private String video;
 
@@ -80,15 +77,13 @@ public class Dog {
 
     @Builder
     public Dog(User user, String name, DogKindEnum kind, DogStatusEnum status,
-               boolean isNeutralized, int age,
-               String color, String video, String note, String mbti, String sex) {
+               boolean isNeutralized, int age, String video, String note, String mbti, String sex) {
         this.user = user;
         this.name = name;
         this.kind = kind;
         this.status = status;
         this.isNeutralized = isNeutralized;
         this.age = age;
-        this.color = color;
         this.video = video;
         this.note = note;
         this.mbti = mbti;
