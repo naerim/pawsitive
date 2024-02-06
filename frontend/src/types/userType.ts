@@ -81,6 +81,10 @@ export type LoginUserResponseType = {
   stage: number
 }
 export type LoginRefreshType = {
-  email: string
-  refreshToken: string
+  postData: {
+    email: string
+    refreshToken: string
+  }
+  grantType: string
+  accessToken: string
 }

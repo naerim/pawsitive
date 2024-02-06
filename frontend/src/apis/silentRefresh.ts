@@ -4,7 +4,11 @@ import { LoginRefreshType } from '@src/types/userType'
 
 export const onSilentRefresh = async (data: LoginRefreshType) => {
   return publicRequest
-    .post('/users/silent-refresh', data)
+    .post('/users/silent-refresh', data.postData, {
+      headers: {
+        Authorization: `${data.grantType} ${data.accessToken}`,
+      },
+    })
     .then(res => {
       onLoginSuccess(res.data)
     })
