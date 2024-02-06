@@ -40,7 +40,7 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
                                         AuthenticationException exception) throws IOException {
         String targetUrl =
             CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME).map(Cookie::getValue)
-                .orElse(("/"));
+                .orElse(("/api/v1/auth/no-auth"));
 
         targetUrl = UriComponentsBuilder
             .fromUriString(targetUrl)
