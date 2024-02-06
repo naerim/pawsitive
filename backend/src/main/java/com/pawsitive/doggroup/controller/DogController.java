@@ -33,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @Slf4j
 public class DogController {
+    
     private final DogService dogService;
 
     @PostMapping
