@@ -39,11 +39,11 @@ const CreateDogContainer = () => {
     )
 
     for (let i = 0; i < file.length; i += 1) {
-      formData.append('images', file[i])
+      formData.append('files', file[i])
     }
 
     mutate(formData)
-    console.log(formData.get('images'))
+    console.log(formData.get('files'))
   }
 
   const renderStepComponent = () => {
