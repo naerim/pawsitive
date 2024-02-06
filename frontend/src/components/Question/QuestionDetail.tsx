@@ -1,11 +1,11 @@
-import * as c from '@src/components/style/QuestionDetailAfterStyle'
+import * as c from '@src/components/style/QuestionDetailStyle'
 import { useQuery } from '@tanstack/react-query'
 import { useAtomValue } from 'jotai/index'
 import { userAtom } from '@src/stores/atoms/user'
 import { fetchQuestionDetail } from '@src/apis/question'
 import { useParams } from 'react-router-dom'
 
-const QuestionDetailAfter = () => {
+const QuestionDetail = () => {
   const { questionNo } = useParams()
   const no = Number(questionNo)
   const userValue = useAtomValue(userAtom)
@@ -36,4 +36,4 @@ const QuestionDetailAfter = () => {
   )
 }
 
-export default QuestionDetailAfter
+export default QuestionDetail
