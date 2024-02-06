@@ -21,13 +21,11 @@ const CommunityListContainer = () => {
           categoryNo: category,
         }),
       getNextPageParam: lastPage => {
-        console.log('lastPage', lastPage)
         const num = lastPage.number
         if (lastPage.totalPages === num) return false
         return num + 1
       },
       select: item => {
-        console.log('item은', item)
         return {
           pages: item.pages[0],
           pageParams: item.pageParams,
@@ -36,28 +34,13 @@ const CommunityListContainer = () => {
     })
 
   useEffect(() => {
-    refetch()
+    refetch().then(r => r)
   }, [category, refetch])
 
   const { setTarget } = useIntersectionObserver({
     hasNextPage,
     fetchNextPage,
   })
-
-  console.log(data)
-  // const { isLoading, data, refetch } = useQuery({
-  //   queryKey: ['communityList'],
-  //   queryFn: async () => {
-  //     const res = await fetchCommunityList({
-  //       page: 0,
-  //       size: 1,
-  //       sort: ['string'],
-  //       categoryNo: 2,
-  //     })
-  //     console.log('res', res)
-  //     return res
-  //   },
-  // })
 
   return (
     <c.Container>
@@ -71,6 +54,7 @@ const CommunityListContainer = () => {
         ) : (
           <div>
             <CommunityListSection data={data.pages.content} />
+            <c.Box ref={setTarget} className="box" />
           </div>
         )}
       </c.Wrap>

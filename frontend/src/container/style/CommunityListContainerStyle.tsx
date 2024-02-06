@@ -7,4 +7,9 @@ export const Wrap = styled.div`
   flex-direction: column;
   width: 90%;
   margin: 0 auto;
+  padding-bottom: 100px;
+`
+
+export const Box = styled.div`
+  height: 40px;
 `
