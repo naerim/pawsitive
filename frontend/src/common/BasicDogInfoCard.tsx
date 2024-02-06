@@ -9,9 +9,12 @@ const BasicDogInfoCard: React.FC<{ dogInfo: BasicDogType }> = ({ dogInfo }) => {
   const handleClick = () => {
     navigate(`/dogs/${dogInfo.dogNo}`)
   }
+
   return (
     <b.Container onClick={handleClick}>
-      <b.AdoptStatus>{dogInfo.statusName}</b.AdoptStatus>
+      <b.AdoptStatus status={dogInfo.statusName}>
+        {dogInfo.statusName}
+      </b.AdoptStatus>
       <b.ImgContainer>
         <b.Dogimg src={dogInfo.image} />
       </b.ImgContainer>
