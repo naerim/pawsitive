@@ -30,34 +30,54 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Override
     public Page<CommunityBoardDetailRes> getCommunityList(Pageable pageable, Integer categoryNo) {
+        Page<CommunityBoardDetailRes> communityList;
         if (categoryNo == null || categoryNo.equals(0)) {
-            return communityBoardRepository.getBoardList(pageable);
+            communityList = communityBoardRepository.getBoardList(pageable);
+        } else {
+            communityList =
+                getCommunityListByCommunityCategoryNo(pageable, categoryNo);
         }
-        return getCommunityListByCommunityCategoryNo(pageable, categoryNo);
+        for (CommunityBoardDetailRes board : communityList) {
+            setAddress(board);
+        }
+        return communityList;
     }
 
 
     @Override
     public Page<CommunityBoardDetailRes> getCommunityListByCommunityCategoryNo(Pageable pageable,
                                                                                int categoryNo) {
-        return communityBoardRepository.getBoardListByCategoryNo(pageable, categoryNo);
+        Page<CommunityBoardDetailRes> communityList =
+            communityBoardRepository.getBoardListByCategoryNo(pageable, categoryNo);
+        for (CommunityBoardDetailRes board : communityList) {
+            setAddress(board);
+        }
+        return communityList;
     }
 
     @Override
     public CommunityDetailRes getCommunity(int boardNo) {
         CommunityBoardDetailRes board = getCommunityBoard(boardNo);
+        setAddress(board);
         return getCommunityByBoard(board);
     }
 
     @Override
     public CommunityBoardDetailRes getCommunityBoard(int boardNo) {
-        return communityBoardRepository.getBoardByBoardNo(boardNo)
+        CommunityBoardDetailRes board = communityBoardRepository.getBoardByBoardNo(boardNo)
             .orElseThrow(CommunityBoardNotFoundException::new);
+        setAddress(board);
+        return board;
     }
 
     @Override
     public List<CommunityBoardDetailRes> getRecommendationCommunityList(int num) {
-        return communityBoardRepository.getRecommendationBoardListLimitNum(num);
+        List<CommunityBoardDetailRes> communityList =
+            communityBoardRepository.getRecommendationBoardListLimitNum(num);
+        for (CommunityBoardDetailRes board : communityList) {
+            setAddress(board);
+        }
+        return communityList;
     }
 
     @Override
@@ -87,10 +107,16 @@ public class CommunityServiceImpl implements CommunityService {
         List<String> images =
             communityBoardRepository.getCommunityImagesByDogNo(board.getBoardNo());
         board.setImages(images);
+        setAddress(board);
         List<CommunityCommentDetailRes> commentList =
             communityBoardRepository.getCommentsByBoardNo(board.getBoardNo());
 
         return new CommunityDetailRes(board, commentList);
+    }
+
+    private void setAddress(CommunityBoardDetailRes board) {
+        String address = board.getMemberAddress().split(" ")[0];
+        board.setMemberAddress(address);
     }
 
     private List<CommunityDetailRes> getCommunityListByBoardList(

@@ -102,9 +102,10 @@ public class CommunityBoardRepositoryImpl extends QuerydslRepositorySupport
             .innerJoin(qBoard.communityCategory, qCategory).select(
                 Projections.fields(CommunityBoardDetailRes.class,
                     qBoard.communityBoardNo.as("boardNo"), qUser.email.as("memberEmail"),
-                    qUser.name.as("memberName"), qBoard.title, qBoard.content, qBoard.isPublic,
-                    qBoard.latitude, qBoard.longitude, qBoard.createdAt, qBoard.hit,
-                    qCategory.communityCategoryNo,
+                    qUser.name.as("memberName"), qMember.stage.as("memberStage"),
+                    qUser.address.as("memberAddress"), qBoard.title, qBoard.content,
+                    qBoard.isPublic, qBoard.latitude, qBoard.longitude, qBoard.createdAt,
+                    qBoard.hit, qCategory.communityCategoryNo,
                     ExpressionUtils.as(qCategory.communityCategoryEnum.stringValue(),
                         "communityCategoryName")
                 )
