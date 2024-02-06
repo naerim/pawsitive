@@ -46,16 +46,24 @@ public interface DogService {
      * @param num 조회할 유기견 마리 수
      * @return 추천 강아지 목록
      */
-    List<DogDetailRes> getRecommendationDogList(int num);
+    List<DogListRes> getRecommendationDogList(Integer num);
 
     /**
      * 유기견 공고 목록을 조회하는 메서드입니다.
      *
-     * @param pageable  조회할 유기견 리스트 페이지 정보
-     * @param kind      조회할 유기견 품종
-     * @param shelterNo 조회할 유기견 보호소 번호
+     * @param pageable 조회할 유기견 리스트 페이지 정보
+     * @param kind     조회할 유기견 품종
      * @return 해당 페이지 유기견 리스트
      */
-    Page<DogListRes> getDogList(Pageable pageable, String kind, Integer shelterNo);
+    Page<DogListRes> getDogList(Pageable pageable, String kind);
+
+    /**
+     * 보호소 기준 유기견 공고 목록을 조회하는 메서드입니다.
+     *
+     * @param shelterNo 조회할 유기견 보호소 고유번호
+     * @param num
+     * @return 유기견 리스트
+     */
+    List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num);
 
 }

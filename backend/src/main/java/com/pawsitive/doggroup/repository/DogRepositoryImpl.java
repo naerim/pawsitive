@@ -36,8 +36,13 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
     }
 
     @Override
-    public List<DogDetailRes> getRecommendationDogList(int num) {
-        return getQueryDogDetailList().limit(num).fetch();
+    public List<DogListRes> getRecommendationDogList() {
+        return getQueryDogList().fetch();
+    }
+
+    @Override
+    public List<DogListRes> getRecommendationDogList(int num) {
+        return getQueryDogList().limit(num).fetch();
     }
 
     @Override
@@ -74,18 +79,22 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
     }
 
     @Override
-    public Page<DogListRes> getDogListByShelterNo(Pageable pageable, Integer shelterNo) {
-        List<DogListRes> content =
-            getQueryDogList()
-                .orderBy(qDog.createdAt.desc())
-                .where(qUser.userNo.eq(shelterNo))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize()).fetch();
-
-        Long count = from(qDog).select(qDog.count()).fetchOne();
-
-        return new PageImpl<>(content, pageable, count);
+    public List<DogListRes> getDogListByShelterNo(int shelterNo) {
+        return getQueryDogList()
+            .orderBy(qDog.createdAt.desc())
+            .where(qDog.user.userNo.eq(shelterNo))
+            .fetch();
     }
+
+    @Override
+    public List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num) {
+        return getQueryDogList()
+            .orderBy(qDog.createdAt.desc())
+            .where(qDog.user.userNo.eq(shelterNo))
+            .limit(num)
+            .fetch();
+    }
+
 
     private JPQLQuery<DogDetailRes> getQueryDogDetailList() {
         return from(qDog).innerJoin(qDog.user, qUser).select(

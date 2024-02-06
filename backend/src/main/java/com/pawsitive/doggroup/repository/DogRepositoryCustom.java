@@ -16,7 +16,9 @@ import org.springframework.data.repository.NoRepositoryBean;
 public interface DogRepositoryCustom {
     Optional<DogDetailRes> getDogByDogNo(int dogNo);
 
-    List<DogDetailRes> getRecommendationDogList(int num);
+    List<DogListRes> getRecommendationDogList();
+
+    List<DogListRes> getRecommendationDogList(int num);
 
     List<String> getDogImagesByDogNo(int dogNo);
 
@@ -24,6 +26,8 @@ public interface DogRepositoryCustom {
 
     Page<DogListRes> getDogListByKindNo(Pageable pageable, String kind);
 
-    Page<DogListRes> getDogListByShelterNo(Pageable pageable, Integer shelterNo);
+    List<DogListRes> getDogListByShelterNo(int shelterNo);
+
+    List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num);
 
 }

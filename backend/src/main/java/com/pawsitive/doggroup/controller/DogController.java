@@ -63,7 +63,8 @@ public class DogController {
         "04.Dog"}, responses = {
         @ApiResponse(responseCode = "200", description = "추천 강아지 목록을 정상적으로 반환한다."),
         @ApiResponse(responseCode = "400", description = "전달받은 페이지 값에 해당하는 추천 강아지가 없음.")})
-    public ResponseEntity<List<DogDetailRes>> getRecommendationDogList(@RequestParam int num) {
+    public ResponseEntity<List<DogListRes>> getRecommendationDogList(
+        @RequestParam(required = false) Integer num) {
 
         return ResponseEntity.status(OK).body(dogService.getRecommendationDogList(num));
     }
@@ -78,14 +79,25 @@ public class DogController {
     )
     public ResponseEntity<PageResponse<DogListRes>> getDogList(Pageable pageable,
                                                                @RequestParam(required = false)
-                                                               String kind,
-                                                               @RequestParam(required = false)
-                                                               Integer shelterNo) {
-        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind, shelterNo);
+                                                               String kind) {
+        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind);
 
         return ResponseEntity.status(OK).body(new PageResponse<DogListRes>(dogPage));
 
     }
 
 
+    @GetMapping("/shelters/{shelterNo}")
+    @Operation(summary = "유기견 공고 보호소 기준 전체 조회", description = "전달받은 보호소 고유번호 기준으로 유기견 공고를 반환한다", tags = {
+        "04.Dog"}, responses = {
+        @ApiResponse(responseCode = "200", description = "보호소 기준 유기견 공고 목록을 정상적으로 반환한다."),
+        @ApiResponse(responseCode = "400", description = "유기견 공고가 없음.")}
+
+    )
+    public ResponseEntity<List<DogListRes>> getDogList(@PathVariable int shelterNo,
+                                                       @RequestParam(required = false)
+                                                       Integer num) {
+        return ResponseEntity.status(OK).body(dogService.getDogListByShelterNo(shelterNo, num));
+
+    }
 }
