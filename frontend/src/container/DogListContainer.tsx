@@ -8,8 +8,8 @@ import { fetchBasicDogList } from '@src/apis/dog'
 const DogListContainer = () => {
   const [basicDogListParams, setBasicDogListParams] =
     useState<BasicDogListParamsType>({
-      page: 0,
-      size: 12,
+      page: 1,
+      size: 8,
       sort: ['string'],
     })
   const [basicDogList, setBasicDogList] = useState<BasicDogType[]>([])
