@@ -37,7 +37,9 @@ public class CommunityBoardRepositoryImpl extends QuerydslRepositorySupport
     @Override
     public Page<CommunityBoardDetailRes> getBoardList(Pageable pageable) {
         List<CommunityBoardDetailRes> content =
-            getQueryBoardList().orderBy(qBoard.createdAt.desc()).fetch();
+            getQueryBoardList().orderBy(qBoard.createdAt.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize()).fetch();
 
         Long count = from(qBoard)
             .select(qBoard.count())
@@ -56,7 +58,9 @@ public class CommunityBoardRepositoryImpl extends QuerydslRepositorySupport
                                                                   int categoryNo) {
         List<CommunityBoardDetailRes> content =
             getQueryBoardList().where(qCategory.communityCategoryNo.eq(categoryNo))
-                .orderBy(qBoard.createdAt.desc()).fetch();
+                .orderBy(qBoard.createdAt.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize()).fetch();
 
         Long count = from(qBoard)
             .innerJoin(qBoard.communityCategory, qCategory)

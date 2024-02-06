@@ -20,7 +20,7 @@ public interface DogRepositoryCustom {
 
     List<DogListRes> getRecommendationDogList(int num);
 
-    List<String> getDogImagesByDogNo(int dogNo);
+    List<String> getDogFilesByDogNo(int dogNo);
 
     Page<DogListRes> getDogList(Pageable pageable);
 

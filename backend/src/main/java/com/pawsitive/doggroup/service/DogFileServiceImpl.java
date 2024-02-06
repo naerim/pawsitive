@@ -3,8 +3,8 @@ package com.pawsitive.doggroup.service;
 import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.common.util.S3BucketUtil;
 import com.pawsitive.doggroup.entity.Dog;
-import com.pawsitive.doggroup.entity.DogImage;
-import com.pawsitive.doggroup.repository.DogImageRepository;
+import com.pawsitive.doggroup.entity.DogFile;
+import com.pawsitive.doggroup.repository.DogFileRepository;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -17,19 +17,19 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Slf4j
-public class DogImageServiceImpl implements DogImageService {
+public class DogFileServiceImpl implements DogFileService {
 
-    private final DogImageRepository dogImageRepository;
+    private final DogFileRepository dogFileRepository;
     private final S3BucketUtil s3BucketUtil;
     private final String FOLDER_NAME = "dogs";
 
     @Override
-    public Dog createDogImage(Dog dog, MultipartFile[] images) {
+    public Dog createDogImage(Dog dog, MultipartFile[] files) {
 
-        List<DogImage> dogImageList = new ArrayList<>();
+        List<DogFile> dogFileList = new ArrayList<>();
         List<String> imageKeys = new ArrayList<>();
 
-        for (MultipartFile image : images) {
+        for (MultipartFile image : files) {
             // 버킷에 업로드한 뒤 파일 명 가져오기
             String imageKey = s3BucketUtil.uploadFile(image, FOLDER_NAME);
 
@@ -37,14 +37,14 @@ public class DogImageServiceImpl implements DogImageService {
             imageKeys.add(imageKey);
 
             // DogImage 객체 생성 후 dog와 url 지정한 뒤 List에 저장
-            DogImage dogImage = new DogImage();
-            dogImage.setDog(dog);
-            dogImage.setImage(s3BucketUtil.getFileUrl(imageKey, FOLDER_NAME));
-            dogImageList.add(dogImage);
+            DogFile dogFile = new DogFile();
+            dogFile.setDog(dog);
+            dogFile.setFile(s3BucketUtil.getFileUrl(imageKey, FOLDER_NAME));
+            dogFileList.add(dogFile);
         }
 
         try {
-            dogImageRepository.saveAll(dogImageList);
+            dogFileRepository.saveAll(dogFileList);
         } catch (Exception e) {
             for (String key : imageKeys) {
                 s3BucketUtil.deleteFile(key, FOLDER_NAME);

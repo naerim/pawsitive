@@ -4,7 +4,7 @@ import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.entity.QDog;
-import com.pawsitive.doggroup.entity.QDogImage;
+import com.pawsitive.doggroup.entity.QDogFile;
 import com.pawsitive.usergroup.entity.QUser;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
@@ -23,7 +23,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogRepositoryCustom {
     private static final QDog qDog = QDog.dog;
     private static final QUser qUser = QUser.user;
-    private static final QDogImage qDogImage = QDogImage.dogImage;
+    private static final QDogFile qDogFile = QDogFile.dogFile;
 
     public DogRepositoryImpl() {
         super(Dog.class);
@@ -46,8 +46,8 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
     }
 
     @Override
-    public List<String> getDogImagesByDogNo(int dogNo) {
-        return from(qDogImage).select(qDogImage.image).where(qDogImage.dog.dogNo.eq(dogNo)).fetch();
+    public List<String> getDogFilesByDogNo(int dogNo) {
+        return from(qDogFile).select(qDogFile.file).where(qDogFile.dog.dogNo.eq(dogNo)).fetch();
     }
 
     @Override
@@ -101,7 +101,7 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
             Projections.fields(DogDetailRes.class, qDog.dogNo, qUser.userNo,
                 qUser.name.as("userName"), qDog.name,
                 ExpressionUtils.as(qDog.kind.stringValue(), "kind"), qDog.createdAt,
-                qDog.isNeutralized, qDog.age, qDog.video, qDog.note, qDog.hit,
+                qDog.isNeutralized, qDog.age, qDog.note, qDog.hit,
                 qDog.mbti,
                 ExpressionUtils.as(qDog.status.stringValue().castToNum(Integer.class), "statusNo"),
                 qDog.sex));

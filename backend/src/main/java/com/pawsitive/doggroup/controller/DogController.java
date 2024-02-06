@@ -44,10 +44,8 @@ public class DogController {
         })
     public ResponseEntity<DogDetailRes> createDog(@Valid @RequestPart DogCreateReq req,
                                                   @RequestPart(required = false)
-                                                  MultipartFile video,
-                                                  @RequestPart(required = false)
-                                                  MultipartFile[] images) {
-        return ResponseEntity.status(CREATED).body(dogService.createDog(req, video, images));
+                                                  MultipartFile[] files) {
+        return ResponseEntity.status(CREATED).body(dogService.createDog(req, files));
     }
 
     @GetMapping("/{dogNo}")
