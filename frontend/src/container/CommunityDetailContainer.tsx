@@ -34,7 +34,11 @@ const CommunityDetailContainer = () => {
             hit={data.board.hit}
           />
           {/* TODO 여기에 단계별 이미지랑 주소 넣기 */}
-          <UserName memberName={data.board.memberName} />
+          <UserName
+            memberName={data.board.memberName}
+            memberStage={data.board.memberStage}
+            memberAddress={data.board.memberAddress}
+          />
           <CommunityContent content={data.board.content} />
           <CommunityDetailMap
             latitude={data.board.latitude}
@@ -48,20 +52,4 @@ const CommunityDetailContainer = () => {
     </Container>
   )
 }
-
-//   return (
-//     <div>
-//       {isLoading ? (
-//         <p>Loading...</p>
-//       ) : (
-//         <div>
-//           {data ? (
-//             <CommunityDetail data={data} />
-//           ) : (
-//             '상세 데이터를 불러올 수 없습니다'
-//           )}
-//         </div>
-//       )}
-//     </div>
-//   )
 export default CommunityDetailContainer
