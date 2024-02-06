@@ -23,6 +23,8 @@ public interface UserService {
 
     UserLoginRes signIn(UserLoginPostReq userLoginPostReq);
 
+    void signOut(String email);
+
     UserJoinRes joinUser(UserJoinPostReq userJoinPostReq);
 
     User getUserByUserNo(int userNo);
