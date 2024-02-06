@@ -27,9 +27,13 @@ const DogListContainer = () => {
   useEffect(() => {
     if (data) {
       console.log(data)
-      setBasicDogList(prevList => [...prevList, ...data])
+      if (basicDogListParams.page === 0) {
+        setBasicDogList(data)
+      } else {
+        setBasicDogList(prevList => [...prevList, ...data])
+      }
     }
-  }, [isFetching, data])
+  }, [isFetching, data, basicDogListParams.page])
 
   const handleScroll = () => {
     if (
