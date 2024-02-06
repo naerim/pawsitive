@@ -20,8 +20,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
         CorsConfiguration configuration = new CorsConfiguration();
         // configuration.addAllowedOrigin("*");
 //        configuration.addAllowedOriginPattern("*");
+        configuration.setAllowedOrigins(
+            List.of("http://localhost:3000", "http://localhost:8080",
+                "https://i10c111.p.ssafy.io"));
         configuration.setAllowedOriginPatterns(
-            List.of("http://localhost:3000/**", "https://i10c111.p.ssafy.io/**"));
+            List.of("http://localhost:3000/**", "http://localhost:8080/**",
+                "https://i10c111.p.ssafy.io/**"));
         configuration.setAllowedMethods(Collections.singletonList("*"));
         configuration.setAllowedHeaders(Collections.singletonList("*"));
 //        configuration.addExposedHeader(JwtTokenUtil.HEADER_STRING);
