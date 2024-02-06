@@ -13,7 +13,7 @@ const DogListContainer = () => {
       sort: ['string'],
     })
   const [basicDogList, setBasicDogList] = useState<BasicDogType[]>([])
-  const [totalPageCnt, setTotalPageCnt] = useState(0)
+  const [totalPageCnt, setTotalPageCnt] = useState(1)
 
   const { data, isLoading, isFetching } = useQuery<BasicDogType[]>({
     queryKey: ['basicDogList', basicDogListParams],
@@ -25,35 +25,41 @@ const DogListContainer = () => {
   })
 
   useEffect(() => {
-    if (data) {
-      console.log(data)
+    if (!isFetching && data) {
       if (basicDogListParams.page === 0) {
         setBasicDogList(data)
       } else {
         setBasicDogList(prevList => [...prevList, ...data])
       }
     }
-  }, [isFetching, data, basicDogListParams.page])
-
-  const handleScroll = () => {
-    if (
-      totalPageCnt > basicDogListParams.page + 1 &&
-      window.innerHeight + document.documentElement.scrollTop ===
-        document.documentElement.offsetHeight
-    ) {
-      setBasicDogListParams(prevParams => ({
-        ...prevParams,
-        page: prevParams.page + 1,
-      }))
-    }
-  }
+  }, [isFetching, basicDogListParams, data])
 
   useEffect(() => {
+    const handleScroll = () => {
+      if (
+        totalPageCnt > basicDogListParams.page &&
+        Math.ceil(window.innerHeight + window.scrollY) >=
+          document.documentElement.offsetHeight
+      ) {
+        setBasicDogListParams(prevParams => {
+          const newParams = {
+            ...prevParams,
+            page: prevParams.page + 1,
+          }
+
+          if (newParams.page <= totalPageCnt) {
+            return newParams
+          }
+          return prevParams
+        })
+      }
+    }
+
     window.addEventListener('scroll', handleScroll)
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  }, [basicDogListParams, totalPageCnt])
 
   if (isLoading && basicDogList.length === 0) {
     return (
