@@ -29,7 +29,7 @@ export const Name = styled.div`
 
 export const Address = styled.div`
   font-size: 0.9em;
-  padding: 0 29px 19px 29px;
+  padding: 10px 29px 19px 29px;
 
   b {
     font-size: 0.8em;

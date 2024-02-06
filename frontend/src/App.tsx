@@ -7,7 +7,6 @@ import { GlobalStyle } from '@src/style/GlobalStyles'
 import HomePage from '@src/pages/HomePage'
 import LoginPage from '@src/pages/LoginPage'
 import SignUpPage from '@src/pages/SignUpPage'
-import ShelterSignUpPage from '@src/pages/ShelterSignUpPage'
 import MeetingPage from '@src/pages/MeetingPage'
 import BroadcastPage from '@src/pages/BroadcastPage'
 import MyPage from '@src/pages/MyPage'
@@ -77,7 +76,6 @@ const HomeRoutes = () => (
     <Route path="/openvidu" element={<MeetingPage />} />
     <Route path="/broadcast" element={<BroadcastPage />} />
     <Route path="/signUp" element={<SignUpPage />} />
-    <Route path="/shelterSignUp" element={<ShelterSignUpPage />} />
     <Route path="*" element={<NotFoundPage />} />
     <Route path="/dogs" element={<DogListPage />} />
     <Route path="/dogs/:dogNo" element={<DogDetailPage />} />

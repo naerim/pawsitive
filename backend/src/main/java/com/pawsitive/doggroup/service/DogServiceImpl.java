@@ -37,42 +37,45 @@ public class DogServiceImpl implements DogService {
     private final DogFileService dogFileService;
 
     private final S3BucketUtil s3BucketUtil;
-    private final String FOLDER_NAME = "dogs";
-
-    private static final Integer PAGE_SIZE = 20;
 
     @Override
     @Transactional
     public DogDetailRes createDog(DogCreateReq req, MultipartFile[] files) {
         User user = userService.getUserByUserNo(req.getUserNo());
 
-
         Dog dog = Dog.builder().user(user).name(req.getName())
             .kind(req.getKind()).isNeutralized(req.getIsNaturalized())
             .note(req.getNote()).mbti(getMbti(req))
             .sex(req.getSex()).age(req.getAge()).build();
 
-//        String videoKey = null;
-//        if (Objects.nonNull(video)) {
-//            videoKey = s3BucketUtil.uploadFile(video, FOLDER_NAME);
-//            log.info("DogService : videoKey = {}", videoKey);
-//            dog.setVideo((s3BucketUtil.getFileUrl(videoKey, FOLDER_NAME)));
-//        }
-
         Dog savedDog;
         try {
             savedDog = dogRepository.save(dog);
         } catch (Exception e) {
-            log.info(e.getMessage());
-//            if (Objects.isNull(videoKey)) {
-//                s3BucketUtil.deleteFile(videoKey, FOLDER_NAME);
-//            }
+            log.error(e.getMessage());
             throw new NotSavedException();
         }
 
-        dogFileService.createDogImage(savedDog, files);
+        List<String> fileKeys = dogFileService.createDogFiles(savedDog, files);
 
-        return getDogByDogNo(savedDog.getDogNo());
+        log.warn("dogService : savedDog = {}, {}", savedDog.getDogNo(), savedDog.getStatus());
+
+        return DogDetailRes.builder()
+            .dogNo(savedDog.getDogNo())
+            .userNo(user.getUserNo())
+            .userName(user.getName())
+            .name(savedDog.getName())
+            .kind(savedDog.getKind())
+            .createdAt(savedDog.getCreatedAt())
+            .isNeutralized(savedDog.isNeutralized())
+            .age(savedDog.getAge())
+            .note(savedDog.getNote())
+            .hit(savedDog.getHit())
+            .mbti(savedDog.getMbti())
+            .statusNo(savedDog.getStatus().getNo())
+            .sex(savedDog.getSex())
+            .files(fileKeys)
+            .build();
     }
 
     @Override

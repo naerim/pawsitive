@@ -36,10 +36,10 @@ const SignUpContainer = () => {
   let isDisabled: boolean = false
   switch (signUpStep) {
     case 1:
-      isDisabled = !signUpData.name || !!error.name
+      isDisabled = !signUpData.role
       break
     case 2:
-      isDisabled = !signUpData.role
+      isDisabled = !signUpData.name || !!error.name
       break
     case 3:
       isDisabled = !signUpData.email
@@ -59,6 +59,7 @@ const SignUpContainer = () => {
     default:
       break
   }
+
   const handleSignUp = () => {
     mutate(signUpData, {
       onSuccess: data => {
@@ -74,9 +75,9 @@ const SignUpContainer = () => {
   const renderStepComponent = () => {
     switch (signUpStep) {
       case 1:
-        return <NameInput />
-      case 2:
         return <RoleInput />
+      case 2:
+        return <NameInput />
       case 3:
         return <EmailInput />
       case 4:

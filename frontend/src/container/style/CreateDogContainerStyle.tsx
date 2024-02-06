@@ -12,6 +12,7 @@ export const TopContainer = styled.div`
   margin-bottom: 50px;
   font-size: 15px;
   font-weight: 500;
+  position: relative;
 `
 
 export const Button = styled.button`
@@ -28,4 +29,19 @@ export const Button = styled.button`
     background-color: #bebebe;
     cursor: not-allowed;
   }
+`
+
+export const BackButton = styled.div`
+  text-align: center;
+  width: 20%;
+  font-size: 15px;
+  font-weight: 600;
+`
+
+export const Title = styled.div`
+  text-align: center;
+  width: 80%;
+  font-size: 15px;
+  font-weight: 600;
+  margin-right: 20%;
 `

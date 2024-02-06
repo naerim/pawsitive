@@ -13,7 +13,7 @@ const RoleInput = () => {
 
   return (
     <s.InputContainer>
-      <s.InputLabel>어떤 회원이신가요?</s.InputLabel>
+      <s.InputLabel>회원 구분을 선택해주세요.</s.InputLabel>
       <s.InputLabel>
         <input
           type="radio"
