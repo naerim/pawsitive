@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+interface AdoptStatusProps {
+  status: string
+}
+
 export const Container = styled.div`
   width: 92%;
   display: flex;
@@ -27,16 +31,20 @@ export const Dogimg = styled.img`
   margin-top: 2%;
 `
 
-export const AdoptStatus = styled.div`
+export const AdoptStatus = styled.div<AdoptStatusProps>`
   position: absolute;
   width: fit-content;
-  background-color: #ff9232;
-  color: #ffffff;
   border-radius: 3px;
   font-size: 11px;
   padding: 2%;
   top: 6%;
   left: 8%;
+  ${props =>
+    props.status === ' 공고중'
+      ? `background-color: #5B5B5B;
+  color: #EAEAEA;`
+      : ` background-color: #ff9232;
+  color: #ffffff;`}
 `
 export const DogTextInfoContainer = styled.div`
   width: 100%;
