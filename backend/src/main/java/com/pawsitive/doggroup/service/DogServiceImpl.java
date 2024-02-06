@@ -56,9 +56,24 @@ public class DogServiceImpl implements DogService {
             throw new NotSavedException();
         }
 
-        dogFileService.createDogFiles(savedDog, files);
+        List<String> fileKeys = dogFileService.createDogFiles(savedDog, files);
 
-        return getDogByDogNo(savedDog.getDogNo());
+        return DogDetailRes.builder()
+            .dogNo(savedDog.getDogNo())
+            .userNo(user.getUserNo())
+            .userName(user.getName())
+            .name(savedDog.getName())
+            .kind(savedDog.getKind())
+            .createdAt(savedDog.getCreatedAt())
+            .isNeutralized(savedDog.isNeutralized())
+            .age(savedDog.getAge())
+            .note(savedDog.getNote())
+            .hit(savedDog.getHit())
+            .mbti(savedDog.getMbti())
+            .statusNo(savedDog.getStatus().getNo())
+            .sex(savedDog.getSex())
+            .files(fileKeys)
+            .build();
     }
 
     @Override

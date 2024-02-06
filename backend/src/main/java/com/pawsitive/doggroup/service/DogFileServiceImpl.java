@@ -24,7 +24,7 @@ public class DogFileServiceImpl implements DogFileService {
     private final String FOLDER_NAME = "dogs";
 
     @Override
-    public void createDogFiles(Dog dog, MultipartFile[] files) {
+    public List<String> createDogFiles(Dog dog, MultipartFile[] files) {
 
         List<DogFile> dogFileList = new ArrayList<>();
         List<String> fileKeys = new ArrayList<>();
@@ -52,6 +52,7 @@ public class DogFileServiceImpl implements DogFileService {
             throw new NotSavedException();
         }
 
+        return fileKeys;
     }
 
 }
