@@ -1,33 +1,32 @@
+import { useAtom } from 'jotai'
+import { createDogInfoAtom } from '@src/stores/atoms/dog'
 import * as c from '@src/components/style/CreateDogMbtiStyle'
-import { CreateDogMbtiType } from '@src/types/components/CreateDogType'
 
-const CreateDogMbti = (props: CreateDogMbtiType) => {
-  const { mbti, setMbti } = props
+const CreateDogMbti = () => {
+  const [, setCreateDogData] = useAtom(createDogInfoAtom)
+
   const handleRadio = (category: string, value: boolean) => {
-    const updatedMbti = [...mbti]
     switch (category) {
       case 'e':
-        updatedMbti[0] = value
+        setCreateDogData(prevData => ({ ...prevData, eq: value }))
         break
       case 's':
-        updatedMbti[1] = value
+        setCreateDogData(prevData => ({ ...prevData, si: value }))
         break
       case 'a':
-        updatedMbti[2] = value
+        setCreateDogData(prevData => ({ ...prevData, aw: value }))
         break
       case 'f':
-        updatedMbti[3] = value
+        setCreateDogData(prevData => ({ ...prevData, fc: value }))
         break
       default:
         break
     }
-    // console.log(mbtiArr)
-    setMbti(updatedMbti)
   }
 
   return (
     <c.Container>
-      <c.Title>유기견 추가 정보 ESAF QIWC</c.Title>
+      <c.Title>유기견 성격 추가 정보</c.Title>
       <c.RadioWrap>
         <div>
           <input
