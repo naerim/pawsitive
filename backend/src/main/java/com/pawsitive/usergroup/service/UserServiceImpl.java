@@ -5,6 +5,7 @@ import com.pawsitive.auth.exception.JwtAuthenticationProcessingException;
 import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.auth.jwt.JwtTokenProvider;
 import com.pawsitive.auth.service.MailService;
+import com.pawsitive.common.exception.NotFoundException;
 import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.common.service.RedisService;
 import com.pawsitive.usergroup.dto.request.EmailVerificationReq;
@@ -124,6 +125,17 @@ public class UserServiceImpl implements UserService {
             .address(user.getAddress())
             .role(user.getRole().getTitle())
             .build();
+    }
+
+    @Override
+    public void signOut(String email) {
+        String jwtRedisKey = REFRESH_TOKEN_PREFIX + email;
+        if (redisService.checkExistsValue(jwtRedisKey)) {
+            redisService.deleteValues(jwtRedisKey);
+            return;
+        }
+
+        throw new NotFoundException("로그아웃 실패 (RefreshToken이 존재하지 않습니다.)");
     }
 
     @Transactional
@@ -259,6 +271,10 @@ public class UserServiceImpl implements UserService {
         String redisAuthCode = redisService.getValues(AUTH_CODE_PREFIX + req.getEmail());
         boolean authResult =
             redisService.checkExistsValue(redisAuthCode) && redisAuthCode.equals(req.getAuthCode());
+
+        if (authResult) {
+            redisService.deleteValues(AUTH_CODE_PREFIX + req.getEmail());
+        }
 
         return EmailVerificationRes.builder()
             .email(req.getEmail())
