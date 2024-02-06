@@ -13,7 +13,7 @@ import MyPage from '@src/pages/MyPage'
 import SettingPage from '@src/pages/SettingPage'
 import ProfilePage from '@src/pages/ProfilePage'
 import NotFoundPage from '@src/pages/NotFoundPage'
-import { useAtomValue } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import { themeAtom } from '@src/stores/atoms/theme'
 import DogDetailPage from '@src/pages/DogDetailPage'
 import CreateDogPage from '@src/pages/CreateDogPage'
@@ -33,6 +33,10 @@ import FindSimilarDogResultPage from '@src/pages/FindSimilarDogResultPage'
 import FillAdoptInfoPage from '@src/pages/FillAdoptInfoPage'
 import SaveDogsListPage from '@src/pages/SaveDogsListPage'
 import ChattingRoomContainerHj from '@src/components/Chat/ChattingRoomContainerHJ'
+import { userAtom } from '@src/stores/atoms/user'
+import QuestionCreatePage from '@src/pages/QuestionCreatePage'
+import QuestionDetailPage from '@src/pages/QuestionDetailPage'
+import QuestionListPage from '@src/pages/QuestionListPage'
 
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
@@ -65,6 +69,9 @@ const AuthRoutes = () => (
     <Route path="/dailyDiary" element={<DailyDiaryPage />} />
     <Route path="/fill-adopt-info" element={<FillAdoptInfoPage />} />
     <Route path="/save-dogs-list" element={<SaveDogsListPage />} />
+    <Route path="/questions" element={<QuestionListPage />} />
+    <Route path="/questions/new" element={<QuestionCreatePage />} />
+    <Route path="/questions/:questionNo" element={<QuestionDetailPage />} />
   </Routes>
 )
 
@@ -84,29 +91,11 @@ const HomeRoutes = () => (
 
 const App = () => {
   const theme = useAtomValue(themeAtom)
-  // const [userValue] = useAtom(userAtom)
+  const [userValue] = useAtom(userAtom)
 
-  // const user = userValue.email
-  const user = true
-  // const handleLogin = (user: UserType) => {
-  //   localStorage.setItem('currentUser', JSON.stringify(user))
-  // }
-  // handleLogin(userValue)
-  //
-  // // // 로그인 하면 스토리지에 추가된 email을 확인하여 접근 다르게 함
-  // // const currentUser: Partial<UserType> = JSON.parse(
-  // //   localStorage.getItem('currentUser'),
-  // // )
-  // // const user = currentUser.email
-  //
-  // useEffect(() => {
-  //   const currentUser: Partial<UserType> = JSON.parse(
-  //     localStorage.getItem('currentUser'),
-  //   )
-  //   const user = currentUser.email
-  // }, [])
-
+  const user = userValue.email
   // const user = true
+
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyle />
