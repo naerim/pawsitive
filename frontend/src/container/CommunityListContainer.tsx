@@ -1,83 +1,76 @@
-import { CommunityItemType } from '@src/types/components/CommunityType'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { fetchCommunityByFilter, fetchCommunityList } from '@src/apis/community'
-import {
-  CommunityCategoryAtom,
-  CommunityListAtom,
-} from '@src/stores/atoms/community'
-import { useAtom } from 'jotai'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as c from '@src/container/style/CommunityListContainerStyle'
 import CommunityCategorySection from '@src/components/CommunityList/CommunityCategorySection'
 import CommunityListSection from '@src/components/CommunityList/CommunityListSection'
-import { useLocation } from 'react-router-dom'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { fetchCommunityList } from '@src/apis/community'
+import { useIntersectionObserver } from '@src/hooks/useIntersectionObserver'
 
-const Index: React.FC = () => {
-  const [CommunityCategoryValue, setCommunityCategory] = useAtom(
-    CommunityCategoryAtom,
-  )
-  const [CommunityListValue, setCommunityList] =
-    useAtom<CommunityItemType[]>(CommunityListAtom)
-  const [LoadList, setLoadList] = useState(true)
-  const isMounted = useRef(false)
-  const location = useLocation()
+const CommunityListContainer = () => {
+  const [category, setCategory] = useState(0)
 
-  const { isLoading, data, refetch } = useQuery({
-    queryKey: ['communityList'],
-    queryFn: () => fetchCommunityList(setCommunityList),
-    enabled: LoadList,
+  const { data, fetchNextPage, hasNextPage, status, refetch } =
+    useInfiniteQuery({
+      queryKey: ['communityList', { category }],
+      initialPageParam: 0,
+      queryFn: () =>
+        fetchCommunityList({
+          page: 0,
+          size: 8,
+          sort: ['string'],
+          categoryNo: category,
+        }),
+      getNextPageParam: lastPage => {
+        console.log('lastPage', lastPage)
+        const num = lastPage.number
+        if (lastPage.totalPages === num) return false
+        return num + 1
+      },
+      select: item => {
+        console.log('item은', item)
+        return {
+          pages: item.pages[0],
+          pageParams: item.pageParams,
+        }
+      },
+    })
+
+  useEffect(() => {
+    refetch()
+  }, [category, refetch])
+
+  const { setTarget } = useIntersectionObserver({
+    hasNextPage,
+    fetchNextPage,
   })
 
-  const { mutate } = useMutation({
-    mutationKey: ['communityCategory'],
-    mutationFn: async num => {
-      if (num !== 0) {
-        const result = await fetchCommunityByFilter(num, setCommunityList)
-        return result
-      }
-      const result = await fetchCommunityList(setCommunityList)
-      return result
-    },
-    onSuccess(): void {},
-  })
-
-  useEffect(() => {
-    if (isMounted.current) {
-      setCommunityCategory(0)
-      refetch()
-    }
-  }, [refetch, setCommunityCategory])
-
-  useEffect(() => {
-    isMounted.current = true
-  }, [])
-
-  useEffect(() => {
-    mutate(CommunityCategoryValue)
-  }, [CommunityCategoryValue, isMounted, mutate, setLoadList])
-
-  useEffect(() => {
-    if (data) {
-      setCommunityList(data.content)
-    }
-  }, [data, setCommunityList, mutate])
-
-  // url 들어오면 전체목록 조회
-  useEffect(() => {
-    if (location.pathname === '/community') {
-      setLoadList(true)
-    }
-  }, [location.pathname])
+  console.log(data)
+  // const { isLoading, data, refetch } = useQuery({
+  //   queryKey: ['communityList'],
+  //   queryFn: async () => {
+  //     const res = await fetchCommunityList({
+  //       page: 0,
+  //       size: 1,
+  //       sort: ['string'],
+  //       categoryNo: 2,
+  //     })
+  //     console.log('res', res)
+  //     return res
+  //   },
+  // })
 
   return (
     <c.Container>
       <c.Wrap>
-        <CommunityCategorySection />
-        {isLoading || !CommunityListValue ? (
+        <CommunityCategorySection
+          category={category}
+          setCategory={setCategory}
+        />
+        {status === 'pending' || !data ? (
           <p>Loading...</p>
         ) : (
           <div>
-            <CommunityListSection data={CommunityListValue} />
+            <CommunityListSection data={data.pages.content} />
           </div>
         )}
       </c.Wrap>
@@ -85,4 +78,4 @@ const Index: React.FC = () => {
   )
 }
 
-export default Index
+export default CommunityListContainer
