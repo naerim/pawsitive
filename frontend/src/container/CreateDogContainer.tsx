@@ -1,20 +1,17 @@
-import CreateDogFile from '@src/components/CreateDog/CreateDogFile'
+import React, { useState } from 'react'
+import { useAtom } from 'jotai'
+import { useMutation } from '@tanstack/react-query'
+import { createDogInfoAtom, createDogStepAtom } from '@src/stores/atoms/dog'
+import { createDog } from '@src/apis/dog'
 import CreateDogInfo from '@src/components/CreateDog/CreateDogInfo'
 import CreateDogMbti from '@src/components/CreateDog/CreateDogMbti'
-import { useInput } from '@src/hooks/useInput'
-import React, { useState } from 'react'
-import CreateDogDoneButton from '@src/components/CreateDog/CreateDogDoneButton'
-import { useMutation } from '@tanstack/react-query'
-import { createDog } from '@src/apis/dog'
+import CreateDogNote from '@src/components/CreateDog/CreateDogNote'
+import CreateDogFile from '@src/components/CreateDog/CreateDogFile'
 import * as c from '@src/container/style/CreateDogContainerStyle'
 
 const CreateDogContainer = () => {
-  const [name, setName] = useInput({ initialValue: '' })
-  const [kind, setKind] = useInput({ initialValue: '' })
-  const [isNaturalized, setIsNaturalized] = useInput({ initialValue: 0 })
-  const [color, setColor] = useInput({ initialValue: '' })
-  const [note, setNote] = useInput({ initialValue: '' })
-  const [mbti, setMbti] = useState<boolean[]>([])
+  const [createDogInfo] = useAtom(createDogInfoAtom)
+  const [createDogStep, setCreateDogStep] = useAtom(createDogStepAtom)
   const [file, setFile] = useState<File[]>([])
 
   const { mutate } = useMutation({
@@ -23,59 +20,79 @@ const CreateDogContainer = () => {
     onSuccess() {
       console.log('유기견 추가 성공')
     },
+    onError(error) {
+      console.error('유기견 추가 실패:', error)
+    },
   })
 
-  const onClickCreateDogButton = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateDog = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData()
-    const dogData = {
-      userNo: 1,
-      name,
-      kind,
-      isNaturalized: isNaturalized !== 0,
-      color,
-      note,
-      age: 1,
-      aw: mbti[0],
-      eq: mbti[1],
-      fc: mbti[2],
-      si: mbti[3],
-    }
-    // for (let i = 0; i < file.length; i += 1) {
-    //   formData.append('req', JSON.stringify(dogData))
-    // }
-    // formData.append('req', JSON.stringify(dogData))
+
+    formData.append(
+      'req',
+      new Blob([JSON.stringify(createDogInfo)], {
+        type: 'application/json',
+      }),
+    )
 
     for (let i = 0; i < file.length; i += 1) {
       formData.append('images', file[i])
     }
-    formData.append(
-      'req',
-      new Blob([JSON.stringify(dogData)], { type: 'application/json' }),
-    )
+
     mutate(formData)
-    console.log(JSON.stringify(dogData))
+    console.log(formData.get('images'))
+  }
+
+  const renderStepComponent = () => {
+    switch (createDogStep) {
+      case 1:
+        return <CreateDogInfo />
+      case 2:
+        return (
+          <>
+            <CreateDogNote />
+            <CreateDogFile file={file} setFile={setFile} />
+          </>
+        )
+      case 3:
+        return <CreateDogMbti />
+      default:
+        return null
+    }
+  }
+
+  const handlePrevStep = () => {
+    setCreateDogStep(prevStep => prevStep - 1)
+  }
+
+  const handleNextStep = () => {
+    setCreateDogStep(prevStep => prevStep + 1)
   }
 
   return (
     <c.Container>
-      <h1>보호소의 유기견 추가 페이지</h1>
-      <form onSubmit={onClickCreateDogButton} encType="multipart/form-data">
-        <CreateDogInfo
-          name={name}
-          setName={setName}
-          kind={kind}
-          setKind={setKind}
-          setIsNaturalized={setIsNaturalized}
-          color={color}
-          setColor={setColor}
-          note={note}
-          setNote={setNote}
-        />
-        <CreateDogMbti mbti={mbti} setMbti={setMbti} />
-        <CreateDogFile file={file} setFile={setFile} />
-        <CreateDogDoneButton onClick={onClickCreateDogButton} />
-      </form>
+      <c.TopContainer>
+        {createDogStep > 1 && (
+          <button type="button" onClick={handlePrevStep}>
+            &lt;
+          </button>
+        )}
+        <h1>보호소 강아지 등록</h1>
+      </c.TopContainer>
+      {renderStepComponent()}
+      <div>
+        {createDogStep < 3 && (
+          <c.Button type="button" onClick={handleNextStep}>
+            다음
+          </c.Button>
+        )}
+        <form onSubmit={handleCreateDog} encType="multipart/form-data">
+          {createDogStep === 3 && (
+            <c.Button type="submit">유기견 등록</c.Button>
+          )}
+        </form>
+      </div>
     </c.Container>
   )
 }

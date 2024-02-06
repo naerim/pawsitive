@@ -9,49 +9,62 @@ const DogListContainer = () => {
   const [basicDogListParams, setBasicDogListParams] =
     useState<BasicDogListParamsType>({
       page: 1,
-      size: 12,
+      size: 8,
       sort: ['string'],
     })
   const [basicDogList, setBasicDogList] = useState<BasicDogType[]>([])
+  const [totalPageCnt, setTotalPageCnt] = useState(1)
 
   const { data, isLoading, isFetching } = useQuery<BasicDogType[]>({
     queryKey: ['basicDogList', basicDogListParams],
     queryFn: async () => {
       const result = await fetchBasicDogList(basicDogListParams)
+      setTotalPageCnt(result.totalPages)
       return result.content
     },
   })
 
   useEffect(() => {
-    if (data) {
-      console.log(data)
-      setBasicDogList(prevList => [...prevList, ...data])
+    if (!isFetching && data) {
+      if (basicDogListParams.page === 0) {
+        setBasicDogList(data)
+      } else {
+        setBasicDogList(prevList => [...prevList, ...data])
+      }
     }
-  }, [isFetching, data])
-
-  const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop ===
-      document.documentElement.offsetHeight
-    ) {
-      setBasicDogListParams(prevParams => ({
-        ...prevParams,
-        page: prevParams.page + 1,
-      }))
-    }
-  }
+  }, [isFetching, basicDogListParams, data])
 
   useEffect(() => {
+    const handleScroll = () => {
+      if (
+        totalPageCnt > basicDogListParams.page &&
+        Math.ceil(window.innerHeight + window.scrollY) >=
+          document.documentElement.offsetHeight
+      ) {
+        setBasicDogListParams(prevParams => {
+          const newParams = {
+            ...prevParams,
+            page: prevParams.page + 1,
+          }
+
+          if (newParams.page <= totalPageCnt) {
+            return newParams
+          }
+          return prevParams
+        })
+      }
+    }
+
     window.addEventListener('scroll', handleScroll)
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  }, [basicDogListParams, totalPageCnt])
 
   if (isLoading && basicDogList.length === 0) {
     return (
       <d.Container>
-        {Array.from({ length: 6 }, (_, index) => (
+        {Array.from({ length: 2 }, (_, index) => (
           <d.FakeDiv key={index} />
         ))}
       </d.Container>
@@ -63,7 +76,12 @@ const DogListContainer = () => {
       {basicDogList.map(basicDogInfo => (
         <BasicDogInfoCard key={basicDogInfo.dogNo} dogInfo={basicDogInfo} />
       ))}
-      {isFetching && <d.FakeDiv>Loading more...</d.FakeDiv>}
+      {isFetching && (
+        <>
+          <d.FakeDiv />
+          <d.FakeDiv />
+        </>
+      )}
     </d.Container>
   )
 }

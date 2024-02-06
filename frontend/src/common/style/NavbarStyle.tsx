@@ -9,7 +9,7 @@ export const Container = styled.nav`
   border-top: 1px solid #f7f7f7;
   background-color: #fff;
   border-radius: 16px 16px 0 0;
-  height: 8vh;
+  height: 70px;
 `
 
 export const MenuWrap = styled.div`
@@ -37,5 +37,5 @@ export const Image = styled.img`
 export const Label = styled.div`
   margin-top: 10px;
   font-size: 0.8em;
-  font-weight: 500;
+  t-weight: 5 0;
 `
