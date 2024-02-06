@@ -38,9 +38,14 @@ public class CommunityServiceImpl implements CommunityService {
                 getCommunityListByCommunityCategoryNo(pageable, categoryNo);
         }
         for (CommunityBoardDetailRes board : communityList) {
+            setImages(board);
             setAddress(board);
         }
         return communityList;
+    }
+
+    private void setImages(CommunityBoardDetailRes board) {
+        board.setImages(communityBoardRepository.getCommunityImagesByDogNo(board.getBoardNo()));
     }
 
 
@@ -50,6 +55,7 @@ public class CommunityServiceImpl implements CommunityService {
         Page<CommunityBoardDetailRes> communityList =
             communityBoardRepository.getBoardListByCategoryNo(pageable, categoryNo);
         for (CommunityBoardDetailRes board : communityList) {
+            setImages(board);
             setAddress(board);
         }
         return communityList;
@@ -59,6 +65,7 @@ public class CommunityServiceImpl implements CommunityService {
     public CommunityDetailRes getCommunity(int boardNo) {
         CommunityBoardDetailRes board = getCommunityBoard(boardNo);
         setAddress(board);
+        setImages(board);
         return getCommunityByBoard(board);
     }
 
@@ -67,6 +74,7 @@ public class CommunityServiceImpl implements CommunityService {
         CommunityBoardDetailRes board = communityBoardRepository.getBoardByBoardNo(boardNo)
             .orElseThrow(CommunityBoardNotFoundException::new);
         setAddress(board);
+        setImages(board);
         return board;
     }
 
@@ -76,6 +84,7 @@ public class CommunityServiceImpl implements CommunityService {
             communityBoardRepository.getRecommendationBoardListLimitNum(num);
         for (CommunityBoardDetailRes board : communityList) {
             setAddress(board);
+            setImages(board);
         }
         return communityList;
     }
@@ -104,9 +113,7 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     private CommunityDetailRes getCommunityByBoard(CommunityBoardDetailRes board) {
-        List<String> images =
-            communityBoardRepository.getCommunityImagesByDogNo(board.getBoardNo());
-        board.setImages(images);
+        setImages(board);
         setAddress(board);
         List<CommunityCommentDetailRes> commentList =
             communityBoardRepository.getCommentsByBoardNo(board.getBoardNo());
@@ -118,6 +125,7 @@ public class CommunityServiceImpl implements CommunityService {
         String address = board.getMemberAddress().split(" ")[0];
         board.setMemberAddress(address);
     }
+
 
     private List<CommunityDetailRes> getCommunityListByBoardList(
         List<CommunityBoardDetailRes> boardList) {
