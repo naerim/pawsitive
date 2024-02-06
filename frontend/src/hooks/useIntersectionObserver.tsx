@@ -1,5 +1,6 @@
 import { InfiniteQueryObserverResult } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
+import * as console from 'console'
 
 interface UseIntersectionObserverPropType {
   threshold?: number
@@ -8,7 +9,7 @@ interface UseIntersectionObserverPropType {
 }
 
 export const useIntersectionObserver = ({
-  threshold = 0.1,
+  threshold = 0.2,
   hasNextPage,
   fetchNextPage,
 }: UseIntersectionObserverPropType) => {

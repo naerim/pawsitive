@@ -8,29 +8,28 @@ import { useIntersectionObserver } from '@src/hooks/useIntersectionObserver'
 
 const CommunityListContainer = () => {
   const [category, setCategory] = useState(0)
+  const [pageParam, setPageParam] = useState(1)
 
   const { data, fetchNextPage, hasNextPage, status, refetch } =
     useInfiniteQuery({
       queryKey: ['communityList', { category }],
-      initialPageParam: 0,
+      initialPageParam: 1,
       queryFn: () =>
         fetchCommunityList({
-          page: 0,
-          size: 8,
+          page: pageParam,
+          size: 6,
           sort: ['string'],
           categoryNo: category,
         }),
       getNextPageParam: lastPage => {
-        const num = lastPage.number
-        if (lastPage.totalPages === num) return false
-        return num + 1
-      },
-      select: item => {
-        return {
-          pages: item.pages[0],
-          pageParams: item.pageParams,
+        console.log(lastPage)
+        if (!lastPage.next) {
+          return undefined // No more pages to fetch
         }
+        setPageParam(pageParam + 1)
+        return lastPage.number + 1 // 다음 페이지의 번호 반환
       },
+      select: item => item.pages.flatMap(page => page.content),
     })
 
   useEffect(() => {
@@ -53,8 +52,7 @@ const CommunityListContainer = () => {
           <p>Loading...</p>
         ) : (
           <div>
-            <CommunityListSection data={data.pages.content} />
-            <c.Box ref={setTarget} className="box" />
+            <CommunityListSection data={data} setTarget={setTarget} />
           </div>
         )}
       </c.Wrap>

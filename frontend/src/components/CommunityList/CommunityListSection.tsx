@@ -3,8 +3,11 @@ import CommunityListItem from '@src/components/CommunityList/CommunityListItem'
 import * as c from '@src/components/style/CommunityListSectionStyle'
 import { CommunityType } from '@src/types/communityType'
 
-const CommunityListSection = (props: { data: CommunityType[] }) => {
-  const { data } = props
+const CommunityListSection = (props: {
+  data: CommunityType[]
+  setTarget: any
+}) => {
+  const { data, setTarget } = props
   return (
     <c.Container>
       <c.Wrap>
@@ -16,6 +19,7 @@ const CommunityListSection = (props: { data: CommunityType[] }) => {
             </Link>
           ))}
       </c.Wrap>
+      <c.Box ref={setTarget} className="box" />
     </c.Container>
   )
 }
