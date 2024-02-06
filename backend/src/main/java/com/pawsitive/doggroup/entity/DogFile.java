@@ -17,18 +17,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "dog_image")
-public class DogImage {
+@Table(name = "dog_file")
+public class DogFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dog_image_no")
-    private int dogImageNo;
+    @Column(name = "dog_file_no")
+    private int dogFileNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dog_no")
     private Dog dog;
 
-    @Column(name = "image")
-    private String image;
+    @Column(name = "file")
+    private String file;
 }

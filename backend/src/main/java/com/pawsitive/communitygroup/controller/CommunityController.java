@@ -71,9 +71,9 @@ public class CommunityController {
         @ApiResponse(responseCode = "400", description = "커뮤니티 글 등록에 필요한 정보가 유효하지 않음")})
     public ResponseEntity<CommunityBoardDetailRes> createCommunity(
         @Valid @RequestPart CommunityCreateReq req,
-        @RequestPart(required = false) MultipartFile[] images) {
+        @RequestPart(required = false) MultipartFile[] files) {
         return ResponseEntity.status(CREATED)
-            .body(communityService.createCommunityBoard(req, images));
+            .body(communityService.createCommunityBoard(req, files));
     }
 
 

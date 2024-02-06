@@ -34,7 +34,7 @@ public class DogServiceImpl implements DogService {
     private final DogRepository dogRepository;
 
     private final UserService userService;
-    private final DogImageService dogImageService;
+    private final DogFileService dogFileService;
 
     private final S3BucketUtil s3BucketUtil;
     private final String FOLDER_NAME = "dogs";
@@ -43,7 +43,7 @@ public class DogServiceImpl implements DogService {
 
     @Override
     @Transactional
-    public DogDetailRes createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images) {
+    public DogDetailRes createDog(DogCreateReq req, MultipartFile[] files) {
         User user = userService.getUserByUserNo(req.getUserNo());
 
 
@@ -52,25 +52,25 @@ public class DogServiceImpl implements DogService {
             .note(req.getNote()).mbti(getMbti(req))
             .sex(req.getSex()).age(req.getAge()).build();
 
-        String videoKey = null;
-        if (Objects.nonNull(video)) {
-            videoKey = s3BucketUtil.uploadFile(video, FOLDER_NAME);
-            log.info("DogService : videoKey = {}", videoKey);
-            dog.setVideo((s3BucketUtil.getFileUrl(videoKey, FOLDER_NAME)));
-        }
+//        String videoKey = null;
+//        if (Objects.nonNull(video)) {
+//            videoKey = s3BucketUtil.uploadFile(video, FOLDER_NAME);
+//            log.info("DogService : videoKey = {}", videoKey);
+//            dog.setVideo((s3BucketUtil.getFileUrl(videoKey, FOLDER_NAME)));
+//        }
 
         Dog savedDog;
         try {
             savedDog = dogRepository.save(dog);
         } catch (Exception e) {
             log.info(e.getMessage());
-            if (Objects.isNull(videoKey)) {
-                s3BucketUtil.deleteFile(videoKey, FOLDER_NAME);
-            }
+//            if (Objects.isNull(videoKey)) {
+//                s3BucketUtil.deleteFile(videoKey, FOLDER_NAME);
+//            }
             throw new NotSavedException();
         }
 
-        dogImageService.createDogImage(savedDog, images);
+        dogFileService.createDogImage(savedDog, files);
 
         return getDogByDogNo(savedDog.getDogNo());
     }
@@ -79,7 +79,7 @@ public class DogServiceImpl implements DogService {
     public DogDetailRes getDogByDogNo(int dogNo) {
         DogDetailRes dog =
             dogRepository.getDogByDogNo(dogNo).orElseThrow(DogNotFoundException::new);
-        dog.setImages(dogRepository.getDogImagesByDogNo(dog.getDogNo()));
+        dog.setFiles(dogRepository.getDogFilesByDogNo(dog.getDogNo()));
         return dog;
     }
 
@@ -137,9 +137,9 @@ public class DogServiceImpl implements DogService {
 
     private void setThumbnailImage(Iterable<DogListRes> dogList) {
         for (DogListRes dog : dogList) {
-            List<String> images = dogRepository.getDogImagesByDogNo(dog.getDogNo());
-            if (!images.isEmpty()) {
-                dog.setImage(images.get(0));
+            List<String> files = dogRepository.getDogFilesByDogNo(dog.getDogNo());
+            if (!files.isEmpty()) {
+                dog.setFile(files.get(0));
             }
         }
     }

@@ -52,9 +52,6 @@ public class Dog {
     @Column(name = "age")
     private int age;
 
-    @Column(name = "video")
-    private String video;
-
     @Column(name = "note")
     private String note;
 
@@ -69,21 +66,20 @@ public class Dog {
     private DogStatusEnum status;
 
     @OneToMany(mappedBy = "dog")
-    private List<DogImage> images = new ArrayList<>();
+    private List<DogFile> files = new ArrayList<>();
 
     @Column(name = "sex")
     private String sex;
 
     @Builder
     public Dog(User user, String name, String kind, DogStatusEnum status,
-               boolean isNeutralized, int age, String video, String note, String mbti, String sex) {
+               boolean isNeutralized, int age, String note, String mbti, String sex) {
         this.user = user;
         this.name = name;
         this.kind = kind;
         this.status = status;
         this.isNeutralized = isNeutralized;
         this.age = age;
-        this.video = video;
         this.note = note;
         this.mbti = mbti;
         this.sex = sex;

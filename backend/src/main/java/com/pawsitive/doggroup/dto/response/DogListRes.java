@@ -20,7 +20,7 @@ public class DogListRes {
     private int age;
     private String statusName;
     private int statusNo;
-    private String image;
+    private String file;
     private String sex;
 
 }
