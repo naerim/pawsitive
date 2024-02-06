@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as c from '@src/container/style/CommunityListContainerStyle'
 import CommunityCategorySection from '@src/components/CommunityList/CommunityCategorySection'
 import CommunityListSection from '@src/components/CommunityList/CommunityListSection'
@@ -10,7 +10,7 @@ const CommunityListContainer = () => {
   const [category, setCategory] = useState(0)
 
   // 무한 스크롤 아직 구현 못함
-  const { data, isLoading } = useQuery<CommunityResType>({
+  const { data, isLoading, refetch } = useQuery<CommunityResType>({
     queryKey: ['communityList'],
     queryFn: async () =>
       fetchCommunityList({
@@ -45,9 +45,9 @@ const CommunityListContainer = () => {
   //     select: item => item.pages.flatMap(page => page.content),
   //   })
   //
-  // useEffect(() => {
-  //   refetch().then(r => r)
-  // }, [category, refetch])
+  useEffect(() => {
+    refetch().then(r => r)
+  }, [category, refetch])
   //
   // const { setTarget } = useIntersectionObserver({
   //   hasNextPage,
