@@ -8,6 +8,7 @@ import com.pawsitive.doggroup.dto.response.AdoptedDogRes;
 import com.pawsitive.doggroup.service.AdoptDogService;
 import com.pawsitive.usergroup.dto.request.SilentRefreshReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
+import com.pawsitive.usergroup.dto.response.UpdateFieldRes;
 import com.pawsitive.usergroup.exception.UserNotLoginException;
 import com.pawsitive.usergroup.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -97,7 +98,7 @@ public class UserController {
      * @param req    수정할 값을 가지고 있는 요청 DTO 객체
      * @return OK 응답객체
      */
-    @PatchMapping("/{userNo}")
+    @PatchMapping
     @Operation(summary = "유저 정보 수정하기",
         description = "로그인한 회원의 정보를 수정한다.",
         tags = {"03.User"},
@@ -106,14 +107,10 @@ public class UserController {
             @ApiResponse(responseCode = "401", description = "현재 로그인 한 회원의 계정이 유효하지 않습니다."),
         }
     )
-    public ResponseEntity<BaseResponseBody> updateField(@PathVariable Integer userNo,
-                                                        @RequestBody UserTypeStagePatchReq req) {
-
-        userService.updateField(req, userNo);
-
+    public ResponseEntity<UpdateFieldRes> updateField(@RequestBody UserTypeStagePatchReq req) {
         return ResponseEntity
             .status(OK)
-            .body(BaseResponseBody.of(OK, "수정 완료"));
+            .body(userService.updateField(req));
     }
 
     /**
