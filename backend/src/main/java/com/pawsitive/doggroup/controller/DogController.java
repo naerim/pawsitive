@@ -36,15 +36,17 @@ public class DogController {
     private final DogService dogService;
 
     @PostMapping
-    @Operation(summary = "유기견 등록", description = "전달받은 입력 정보를 유기견 테이블에 등록합니다.", tags = {
-        "04.Dog"}, responses = {@ApiResponse(responseCode = "201", description = "유기견 등록 성공"),
-        @ApiResponse(responseCode = "400", description = "유기견 등록에 필요한 정보가 유효하지 않음")})
+    @Operation(summary = "유기견 등록", description = "전달받은 입력 정보를 유기견 테이블에 등록합니다.",
+        tags = {"04.Dog"},
+        responses = {
+            @ApiResponse(responseCode = "201", description = "유기견 등록 성공"),
+            @ApiResponse(responseCode = "400", description = "유기견 등록에 필요한 정보가 유효하지 않음")
+        })
     public ResponseEntity<DogDetailRes> createDog(@Valid @RequestPart DogCreateReq req,
                                                   @RequestPart(required = false)
                                                   MultipartFile video,
                                                   @RequestPart(required = false)
                                                   MultipartFile[] images) {
-
         return ResponseEntity.status(CREATED).body(dogService.createDog(req, video, images));
     }
 

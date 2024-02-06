@@ -35,7 +35,7 @@ public class S3BucketUtil {
             metadata.setContentLength(file.getSize());
 
             PutObjectRequest request =
-                new PutObjectRequest(bucket + addSlash(folderName),
+                new PutObjectRequest(bucket + "/" + folderName,
                     key, file.getInputStream(), metadata);
 
             request.withCannedAcl(CannedAccessControlList.AuthenticatedRead);
@@ -51,7 +51,7 @@ public class S3BucketUtil {
     }
 
     public void deleteFile(String fileName, String folderName) {
-        amazonS3Client.deleteObject(bucket + addSlash(folderName), fileName);
+        amazonS3Client.deleteObject(bucket + "/" + folderName, fileName);
     }
 
     public String getFileUrl(String key, String folderName) {
