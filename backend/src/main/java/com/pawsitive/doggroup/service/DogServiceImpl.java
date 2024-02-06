@@ -58,6 +58,8 @@ public class DogServiceImpl implements DogService {
 
         List<String> fileKeys = dogFileService.createDogFiles(savedDog, files);
 
+        log.warn("dogService : savedDog = {}, {}", savedDog.getDogNo(), savedDog.getStatus());
+
         return DogDetailRes.builder()
             .dogNo(savedDog.getDogNo())
             .userNo(user.getUserNo())
