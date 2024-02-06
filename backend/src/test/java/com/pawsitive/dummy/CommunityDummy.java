@@ -32,7 +32,7 @@ public class CommunityDummy {
         CommunityCategory category = CommunityCategoryDummy.getSuccessEntity();
 
         return new CommunityBoardDetailRes(
-            1, user.getEmail(), user.getName(), board.getTitle(),
+            1, user.getEmail(), user.getName(), 0, "광주광역시", board.getTitle(),
             board.getContent(), board.getIsPublic(), board.getLatitude(),
             board.getLongitude(), LocalDateTime.now(), 10, category.getCommunityCategoryNo(),
             category.getCommunityCategoryEnum().getCommunityCategory(), null);
