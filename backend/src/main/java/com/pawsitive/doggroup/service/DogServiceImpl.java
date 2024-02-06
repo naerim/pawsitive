@@ -47,19 +47,25 @@ public class DogServiceImpl implements DogService {
     public DogDetailRes createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images) {
         User user = userService.getUserByUserNo(req.getUserNo());
 
-        String videoKey = s3BucketUtil.uploadFile(video, FOLDER_NAME);
 
         Dog dog = Dog.builder().user(user).name(req.getName())
             .kind(DogKindEnum.stringToEnum(req.getKind())).isNeutralized(req.getIsNaturalized())
             .note(req.getNote()).mbti(getMbti(req))
-            .video(s3BucketUtil.getFileUrl(videoKey, FOLDER_NAME)).sex(req.getSex())
-            .age(req.getAge()).build();
+            .sex(req.getSex()).age(req.getAge()).build();
+
+        String videoKey = null;
+        if (Objects.nonNull(video)) {
+            videoKey = s3BucketUtil.uploadFile(video, FOLDER_NAME);
+            dog.setVideo((s3BucketUtil.getFileUrl(videoKey, FOLDER_NAME)));
+        }
 
         Dog savedDog;
         try {
             savedDog = dogRepository.save(dog);
         } catch (Exception e) {
-            s3BucketUtil.deleteFile(videoKey, FOLDER_NAME);
+            if (Objects.isNull(videoKey)) {
+                s3BucketUtil.deleteFile(videoKey, FOLDER_NAME);
+            }
             throw new NotSavedException();
         }
 
