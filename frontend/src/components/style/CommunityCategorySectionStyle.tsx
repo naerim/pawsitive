@@ -13,7 +13,7 @@ export const Container = styled.div`
   }
 `
 
-export const Item = styled.div<{ select: boolean }>`
+export const Item = styled.div<{ $select: boolean }>`
   display: flex;
   cursor: pointer;
   justify-content: center;
@@ -22,7 +22,7 @@ export const Item = styled.div<{ select: boolean }>`
   border-radius: 28px;
   margin-right: 10px;
   border: 1px solid #eaeaea;
-  background-color: ${props => (props.select ? '#FFE7D3' : 'transparent')};
+  background-color: ${props => (props.$select ? '#FFE7D3' : 'transparent')};
 
   img {
     width: 12px;
