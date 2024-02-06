@@ -4,5 +4,7 @@ import com.pawsitive.doggroup.entity.Dog;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface DogFileService {
-    Dog createDogImage(Dog dog, MultipartFile[] files);
+
+    void createDogFiles(Dog dog, MultipartFile[] files);
+
 }
