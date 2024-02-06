@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum DogKindEnum {
-    BICHON("비숑"), POMERANIAN("포메라니안");
+    BICHON("비숑"), POMERANIAN("포메라니안"), POODLE("푸들");
     private final String name;
 
     DogKindEnum(String name) {

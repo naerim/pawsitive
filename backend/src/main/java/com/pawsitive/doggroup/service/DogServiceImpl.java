@@ -6,7 +6,6 @@ import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.entity.Dog;
-import com.pawsitive.doggroup.entity.DogKindEnum;
 import com.pawsitive.doggroup.entity.DogStatusEnum;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.repository.DogRepository;
@@ -49,7 +48,7 @@ public class DogServiceImpl implements DogService {
 
 
         Dog dog = Dog.builder().user(user).name(req.getName())
-            .kind(DogKindEnum.stringToEnum(req.getKind())).isNeutralized(req.getIsNaturalized())
+            .kind(req.getKind()).isNeutralized(req.getIsNaturalized())
             .note(req.getNote()).mbti(getMbti(req))
             .sex(req.getSex()).age(req.getAge()).build();
 
