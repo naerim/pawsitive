@@ -64,7 +64,7 @@ const DogListContainer = () => {
   if (isLoading && basicDogList.length === 0) {
     return (
       <d.Container>
-        {Array.from({ length: 6 }, (_, index) => (
+        {Array.from({ length: 2 }, (_, index) => (
           <d.FakeDiv key={index} />
         ))}
       </d.Container>
