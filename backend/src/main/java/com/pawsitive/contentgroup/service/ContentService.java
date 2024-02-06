@@ -1,12 +1,14 @@
 package com.pawsitive.contentgroup.service;
 
 import com.pawsitive.contentgroup.dto.response.ContentDetailRes;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ContentService {
-    List<ContentDetailRes> getContentList();
+    Page<ContentDetailRes> getContentList(Pageable pageable, Integer categoryNo);
 
-    List<ContentDetailRes> getContentListByContentCategoryNo(int contentCategoryNo);
+    Page<ContentDetailRes> getContentListByContentCategoryNo(Pageable pageable,
+                                                             int contentCategoryNo);
 
     ContentDetailRes getContent(int contentNo);
 }

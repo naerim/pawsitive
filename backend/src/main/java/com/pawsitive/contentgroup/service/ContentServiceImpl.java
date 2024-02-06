@@ -3,8 +3,10 @@ package com.pawsitive.contentgroup.service;
 import com.pawsitive.contentgroup.dto.response.ContentDetailRes;
 import com.pawsitive.contentgroup.exception.ContentNotFoundException;
 import com.pawsitive.contentgroup.repository.ContentRepository;
-import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,14 +15,22 @@ public class ContentServiceImpl implements ContentService {
     private final ContentRepository contentRepository;
 
     @Override
-    public List<ContentDetailRes> getContentList() {
-        return contentRepository.getContentList();
+    public Page<ContentDetailRes> getContentList(Pageable pageable, Integer categoryNo) {
+        Page<ContentDetailRes> contentsList;
+        if (Objects.isNull(categoryNo)) {
+            contentsList = contentRepository.getContentList(pageable);
+        } else {
+            contentsList =
+                contentRepository.getContentListByContentCategoryNo(pageable, categoryNo);
+        }
+        return contentsList;
     }
 
 
     @Override
-    public List<ContentDetailRes> getContentListByContentCategoryNo(int contentCategoryNo) {
-        return contentRepository.getContentListByContentCategoryNo(contentCategoryNo);
+    public Page<ContentDetailRes> getContentListByContentCategoryNo(Pageable pageable,
+                                                                    int contentCategoryNo) {
+        return contentRepository.getContentListByContentCategoryNo(pageable, contentCategoryNo);
     }
 
     @Override
