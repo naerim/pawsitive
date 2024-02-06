@@ -7,6 +7,7 @@ import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
 import com.pawsitive.usergroup.dto.request.UserLoginPostReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
 import com.pawsitive.usergroup.dto.response.EmailVerificationRes;
+import com.pawsitive.usergroup.dto.response.UpdateFieldRes;
 import com.pawsitive.usergroup.dto.response.UserJoinRes;
 import com.pawsitive.usergroup.dto.response.UserLoginRes;
 import com.pawsitive.usergroup.entity.Member;
@@ -31,7 +32,7 @@ public interface UserService {
 
     Member getMemberByUserNo(int userNo);
 
-    void updateField(UserTypeStagePatchReq req, int userNo);
+    UpdateFieldRes updateField(UserTypeStagePatchReq req);
 
     User getUserByEmail(String email);
 

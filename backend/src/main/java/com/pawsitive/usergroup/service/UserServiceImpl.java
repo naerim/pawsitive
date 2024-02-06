@@ -14,6 +14,7 @@ import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
 import com.pawsitive.usergroup.dto.request.UserLoginPostReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
 import com.pawsitive.usergroup.dto.response.EmailVerificationRes;
+import com.pawsitive.usergroup.dto.response.UpdateFieldRes;
 import com.pawsitive.usergroup.dto.response.UserJoinRes;
 import com.pawsitive.usergroup.dto.response.UserLoginRes;
 import com.pawsitive.usergroup.entity.Member;
@@ -22,12 +23,14 @@ import com.pawsitive.usergroup.exception.InvalidPasswordException;
 import com.pawsitive.usergroup.exception.UserNotFoundException;
 import com.pawsitive.usergroup.repository.MemberRepository;
 import com.pawsitive.usergroup.repository.UserRepository;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -217,20 +220,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateField(UserTypeStagePatchReq req, int userNo) {
+    public UpdateFieldRes updateField(UserTypeStagePatchReq req) {
 
-        Member member =
-            memberRepository.findMemberByUserNo(userNo).orElseThrow(UserNotFoundException::new);
+        Member member = memberRepository.findMemberByUserNo(req.getUserNo()).orElseThrow(UserNotFoundException::new);
 
         if ("type".equals(req.getField())) {
-            // TODO 나중에
-            member.setType(Integer.parseInt(req.getValue()));
+            member.setType(req.getValue());
         }
         if ("stage".equals(req.getField())) {
-            member.setStage(member.getStage() + 1);
+            member.setStage(req.getValue());
         }
-        memberRepository.save(member);
 
+        Member savedMember = memberRepository.save(member);
+
+        return UpdateFieldRes.builder()
+            .userNo(savedMember.getUserNo())
+            .field(req.getField())
+            .value(req.getValue())
+            .build();
     }
 
     @Override
