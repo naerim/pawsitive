@@ -12,16 +12,15 @@ import ImageUpload from '@src/components/Community/ImageUpload'
 
 declare global {
   interface Window {
-    kakao: any
+    kakao: never
   }
 }
-
-const defaultMap = new window.kakao.maps.Map(document.createElement('div'), {
-  center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+const defaultMap = new kakao.maps.Map(document.createElement('div'), {
+  center: new kakao.maps.LatLng(33.450701, 126.570667),
   level: 3,
 })
 
-const defaultMarker = new window.kakao.maps.Marker()
+const defaultMarker = new kakao.maps.Marker()
 
 const mapAtom = atom<kakao.maps.Map>(defaultMap)
 const markerAtom = atom<kakao.maps.Marker>(defaultMarker)
@@ -43,7 +42,7 @@ const CreateForm = () => {
   const [imageFilesValue, setImageFiles] = useState<File[]>([])
 
   const [mapValue, setMap] = useAtom(mapAtom)
-  const [markerValue, setMarker] = useAtom(markerAtom)
+  const [markerValue, setMarker] = useAtom<kakao.maps.Marker>(markerAtom)
   const [addressValue, setAddress] = useState('')
   const [isDaumPostcodeOpenValue, setIsDaumPostcodeOpen] = useState(false)
   const location: LocationType | string = Locations()
@@ -69,19 +68,16 @@ const CreateForm = () => {
 
   // 카카오맵 불러오기
   useEffect(() => {
-    window.kakao.maps.load(() => {
+    kakao.maps.load(() => {
       const container = containerRef.current
       if (container && location.latitude !== 0) {
         const options = {
           center: new kakao.maps.LatLng(location.latitude, location.longitude),
           level: 3,
         }
-        const newMap = new window.kakao.maps.Map(
-          container as HTMLElement,
-          options,
-        )
+        const newMap = new kakao.maps.Map(container as HTMLElement, options)
         setMap(newMap)
-        setMarker(new window.kakao.maps.Marker())
+        setMarker(new kakao.maps.Marker())
       }
     })
   }, [setMap, setMarker, location.latitude, location.longitude])
@@ -91,16 +87,13 @@ const CreateForm = () => {
     setIsDaumPostcodeOpen(false)
 
     // 검색된 주소 위치 표시
-    if (window.kakao.maps && window.kakao.maps.services) {
-      const geocoder = new window.kakao.maps.services.Geocoder()
+    if (kakao.maps && kakao.maps.services) {
+      const geocoder = new kakao.maps.services.Geocoder()
       geocoder.addressSearch(
         datas.address,
         (result: any[], status: kakao.maps.services.Status) => {
-          if (status === window.kakao.maps.services.Status.OK) {
-            const currentPos = new window.kakao.maps.LatLng(
-              result[0].y,
-              result[0].x,
-            )
+          if (status === kakao.maps.services.Status.OK) {
+            const currentPos = new kakao.maps.LatLng(result[0].y, result[0].x)
             setLatitude(result[0].y)
             setLongitude(result[0].x)
 
@@ -122,14 +115,14 @@ const CreateForm = () => {
   // useEffect 내부에서 DaumPostcode로 주소를 선택했을 때의 콜백 함수를 등록
   useEffect(() => {
     if (mapValue) {
-      const clickHandler = (mouseEvent: kakao.maps.MouseEvent) => {
-        const geocoder = new window.kakao.maps.services.Geocoder()
+      const clickHandler = (mouseEvent: kakao.maps.event.MouseEvent) => {
+        const geocoder = new kakao.maps.services.Geocoder()
 
         geocoder.coord2Address(
           mouseEvent.latLng.getLng(),
           mouseEvent.latLng.getLat(),
           (result: any[], status: kakao.maps.services.Status) => {
-            if (status === window.kakao.maps.services.Status.OK) {
+            if (status === kakao.maps.services.Status.OK) {
               const addr = result[0].address.address_name
               // 마커로 찍은 주소를 저장한다.
               setAddress(addr)
@@ -146,11 +139,11 @@ const CreateForm = () => {
       }
 
       // 클릭 이벤트 등록
-      window.kakao.maps.event.addListener(mapValue, 'click', clickHandler)
+      kakao.maps.event.addListener(mapValue, 'click', clickHandler)
 
       // 컴포넌트가 언마운트될 때 클릭 이벤트 제거
       return () => {
-        window.kakao.maps.event.removeListener(mapValue, 'click', clickHandler)
+        kakao.maps.event.removeListener(mapValue, 'click', clickHandler)
       }
     }
   }, [mapValue, markerValue, setAddress, setLatitude, setLongitude])
