@@ -40,10 +40,10 @@ export const verifyEmailCode = async (
 
 // 로그인 유저 정보 저장하는 api
 export const loginData = async (
-  loginData: LoginUserType,
+  loginDatas: LoginUserType,
 ): Promise<LoginUserResponseType> => {
   return publicRequest
-    .post('auth/login', loginData)
+    .post('auth/login', loginDatas)
     .then(res => {
       // const setUserEmail = useSetAtom(userEmail)
       // setUserEmail(res.data.email)
@@ -55,25 +55,34 @@ export const loginData = async (
     })
 }
 
-const JWT_EXPIRY_TIME = 24 * 3600 * 1000
+// const JWT_EXPIRY_TIME = 24 * 3600 * 1000
+// 5분에 한 번 저장
+const JWT_EXPIRY_TIME = 300 * 1000
 
 export const onLoginSuccess = async (res: JwtTokenType) => {
   const currentUser = JSON.parse(localStorage.getItem('currentUser'))
   const userEmail = currentUser.email
   axios.defaults.headers.common.Authorization = `${res.grantType} ${res.accessToken}`
+  document.cookie = `refreshToken = ${res.refreshToken}`
   setTimeout(
     () =>
       onSilentRefresh({
-        email: userEmail,
-        refreshToken: res.refreshToken,
+        postData: {
+          email: userEmail,
+          refreshToken: res.refreshToken,
+        },
+        grantType: res.grantType,
+        accessToken: res.accessToken,
       }),
     JWT_EXPIRY_TIME - 60000,
   )
 }
 
-export const loginUser = async (loginData: LoginUserType): Promise<void> => {
+export const loginUser = async (
+  loginUserData: LoginUserType,
+): Promise<void> => {
   return publicRequest
-    .post('auth/login', loginData)
+    .post('auth/login', loginUserData)
     .then(res => {
       const Token = res.data.jwtToken
       onLoginSuccess(Token)
