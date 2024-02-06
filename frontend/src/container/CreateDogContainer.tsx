@@ -73,12 +73,8 @@ const CreateDogContainer = () => {
   return (
     <c.Container>
       <c.TopContainer>
-        {createDogStep > 1 && (
-          <button type="button" onClick={handlePrevStep}>
-            &lt;
-          </button>
-        )}
-        <h1>보호소 강아지 등록</h1>
+        <c.BackButton onClick={handlePrevStep}>&lt;</c.BackButton>
+        <c.Title>보호소 강아지 등록</c.Title>
       </c.TopContainer>
       {renderStepComponent()}
       <div>
