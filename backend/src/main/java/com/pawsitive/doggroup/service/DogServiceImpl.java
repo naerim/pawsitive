@@ -56,6 +56,7 @@ public class DogServiceImpl implements DogService {
         String videoKey = null;
         if (Objects.nonNull(video)) {
             videoKey = s3BucketUtil.uploadFile(video, FOLDER_NAME);
+            log.info("DogService : videoKey = {}", videoKey);
             dog.setVideo((s3BucketUtil.getFileUrl(videoKey, FOLDER_NAME)));
         }
 
@@ -63,6 +64,7 @@ public class DogServiceImpl implements DogService {
         try {
             savedDog = dogRepository.save(dog);
         } catch (Exception e) {
+            log.info(e.getMessage());
             if (Objects.isNull(videoKey)) {
                 s3BucketUtil.deleteFile(videoKey, FOLDER_NAME);
             }
