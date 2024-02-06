@@ -99,12 +99,14 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
-    public Page<DogListRes> getDogList(Pageable pageable, String kind) {
+    public Page<DogListRes> getDogList(Pageable pageable, String kind, Integer shelterNo) {
         Page<DogListRes> dogList;
-        if (Objects.isNull(kind)) {
-            dogList = dogRepository.getDogList(pageable);
-        } else {
+        if (!Objects.isNull(kind)) {
             dogList = dogRepository.getDogListByKindNo(pageable, kind);
+        } else if (!Objects.isNull(shelterNo)) {
+            dogList = dogRepository.getDogListByShelterNo(pageable, shelterNo);
+        } else {
+            dogList = dogRepository.getDogList(pageable);
         }
         setStatusName(dogList);
         setThumbnailImage(dogList);

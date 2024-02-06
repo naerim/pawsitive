@@ -78,8 +78,10 @@ public class DogController {
     )
     public ResponseEntity<PageResponse<DogListRes>> getDogList(Pageable pageable,
                                                                @RequestParam(required = false)
-                                                               String kind) {
-        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind);
+                                                               String kind,
+                                                               @RequestParam(required = false)
+                                                               Integer shelterNo) {
+        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind, shelterNo);
 
         return ResponseEntity.status(OK).body(new PageResponse<DogListRes>(dogPage));
 

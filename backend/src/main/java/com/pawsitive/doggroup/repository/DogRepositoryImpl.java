@@ -73,6 +73,20 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
         return new PageImpl<>(content, pageable, count);
     }
 
+    @Override
+    public Page<DogListRes> getDogListByShelterNo(Pageable pageable, Integer shelterNo) {
+        List<DogListRes> content =
+            getQueryDogList()
+                .orderBy(qDog.createdAt.desc())
+                .where(qUser.userNo.eq(shelterNo))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize()).fetch();
+
+        Long count = from(qDog).select(qDog.count()).fetchOne();
+
+        return new PageImpl<>(content, pageable, count);
+    }
+
     private JPQLQuery<DogDetailRes> getQueryDogDetailList() {
         return from(qDog).innerJoin(qDog.user, qUser).select(
             Projections.fields(DogDetailRes.class, qDog.dogNo, qUser.userNo,
