@@ -1,5 +1,5 @@
 export type UserType = {
-  user_id: number
+  userNo: number
   email: string
   name: string
   password: string
@@ -63,9 +63,24 @@ export type LoginUserType = {
   id: string
   password: string
 }
-
-export type LoginUserResponseType = {
+export type JwtTokenType = {
   grantType: string
   accessToken: string
+  refreshToken: string
+}
+export type LoginUserResponseType = {
+  jwtToken: JwtTokenType
+  userNo: number
+  email: string
+  name: string
+  password: string
+  address: string
+  birth: string
+  gender: string
+  type: number
+  stage: number
+}
+export type LoginRefreshType = {
+  email: string
   refreshToken: string
 }

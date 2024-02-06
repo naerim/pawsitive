@@ -4,8 +4,9 @@ import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.common.util.S3BucketUtil;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
+import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.entity.Dog;
-import com.pawsitive.doggroup.entity.DogKindEnum;
+import com.pawsitive.doggroup.entity.DogStatusEnum;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.usergroup.entity.User;
@@ -45,25 +46,27 @@ public class DogServiceImpl implements DogService {
     public DogDetailRes createDog(DogCreateReq req, MultipartFile video, MultipartFile[] images) {
         User user = userService.getUserByUserNo(req.getUserNo());
 
-        String videoKey = s3BucketUtil.uploadFile(video, FOLDER_NAME);
 
-        Dog dog = Dog.builder()
-            .user(user)
-            .name(req.getName())
-            .kind(DogKindEnum.stringToEnum(req.getKind()))
-            .isNeutralized(req.getIsNaturalized())
-            .color(req.getColor())
-            .note(req.getNote())
-            .mbti(getMbti(req))
-            .video(s3BucketUtil.getFileUrl(videoKey, FOLDER_NAME))
-            .sex(req.getSex())
-            .build();
+        Dog dog = Dog.builder().user(user).name(req.getName())
+            .kind(req.getKind()).isNeutralized(req.getIsNaturalized())
+            .note(req.getNote()).mbti(getMbti(req))
+            .sex(req.getSex()).age(req.getAge()).build();
+
+        String videoKey = null;
+        if (Objects.nonNull(video)) {
+            videoKey = s3BucketUtil.uploadFile(video, FOLDER_NAME);
+            log.info("DogService : videoKey = {}", videoKey);
+            dog.setVideo((s3BucketUtil.getFileUrl(videoKey, FOLDER_NAME)));
+        }
 
         Dog savedDog;
         try {
             savedDog = dogRepository.save(dog);
         } catch (Exception e) {
-            s3BucketUtil.deleteFile(videoKey, FOLDER_NAME);
+            log.info(e.getMessage());
+            if (Objects.isNull(videoKey)) {
+                s3BucketUtil.deleteFile(videoKey, FOLDER_NAME);
+            }
             throw new NotSavedException();
         }
 
@@ -74,28 +77,71 @@ public class DogServiceImpl implements DogService {
 
     @Override
     public DogDetailRes getDogByDogNo(int dogNo) {
-        DogDetailRes dog = dogRepository.getDogByDogNo(dogNo)
-            .orElseThrow(DogNotFoundException::new);
+        DogDetailRes dog =
+            dogRepository.getDogByDogNo(dogNo).orElseThrow(DogNotFoundException::new);
         dog.setImages(dogRepository.getDogImagesByDogNo(dog.getDogNo()));
         return dog;
     }
 
+    @Override
+    public Dog getDogEntityByDogNo(int dogNo) {
+        return dogRepository.findByDogNo(dogNo)
+            .orElseThrow(DogNotFoundException::new);
+    }
+
     // TODO [Yi] 추천로직 작성 (추천기준도 정해야댐)
     @Override
-    public List<DogDetailRes> getRecommendationDogList(int num) {
-        List<DogDetailRes> dogList = dogRepository.getRecommendationDogList(num);
-        for (DogDetailRes dog : dogList) {
-            dog.setImages(dogRepository.getDogImagesByDogNo(dog.getDogNo()));
+    public List<DogListRes> getRecommendationDogList(Integer num) {
+        List<DogListRes> dogList;
+        if (Objects.isNull(num)) {
+            dogList = dogRepository.getRecommendationDogList();
+        } else {
+            dogList = dogRepository.getRecommendationDogList(num);
         }
+        setStatusName(dogList);
+        setThumbnailImage(dogList);
         return dogList;
     }
 
     @Override
-    public Page<DogDetailRes> getDogList(Pageable pageable, String kind) {
+    public Page<DogListRes> getDogList(Pageable pageable, String kind) {
+        Page<DogListRes> dogList;
         if (Objects.isNull(kind)) {
-            return dogRepository.getDogList(pageable);
+            dogList = dogRepository.getDogList(pageable);
+        } else {
+            dogList = dogRepository.getDogListByKindNo(pageable, kind);
         }
-        return dogRepository.getDogListByKindNo(pageable, kind);
+        setStatusName(dogList);
+        setThumbnailImage(dogList);
+        return dogList;
+    }
+
+    @Override
+    public List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num) {
+        List<DogListRes> dogList;
+        if (Objects.isNull(num)) {
+            dogList = dogRepository.getDogListByShelterNo(shelterNo);
+        } else {
+            dogList = dogRepository.getDogListByShelterNo(shelterNo, num);
+        }
+        setStatusName(dogList);
+        setThumbnailImage(dogList);
+        return dogList;
+    }
+
+    private void setStatusName(Iterable<DogListRes> dogList) {
+        for (DogListRes dog : dogList) {
+            dog.setStatusName(DogStatusEnum.noToName(dog.getStatusNo()));
+        }
+    }
+
+    private void setThumbnailImage(Iterable<DogListRes> dogList) {
+        for (DogListRes dog : dogList) {
+            List<String> images = dogRepository.getDogImagesByDogNo(dog.getDogNo());
+            if (!images.isEmpty()) {
+                dog.setImage(images.get(0));
+            }
+        }
     }
 
     private String getMbti(DogCreateReq req) {
@@ -111,6 +157,5 @@ public class DogServiceImpl implements DogService {
         sb.append(tmp);
         return sb.toString();
     }
-
 
 }

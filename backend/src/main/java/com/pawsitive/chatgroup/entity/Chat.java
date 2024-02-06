@@ -41,5 +41,8 @@ public class Chat {
     @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "is_read", insertable = false)
+    private boolean isRead;
+
 
 }

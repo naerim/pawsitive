@@ -25,9 +25,6 @@ public class DogCreateReq {
     @NotNull(message = "isNaturalized can't be null")
     private Boolean isNaturalized;
 
-    @NotNull(message = "color can't be null")
-    private String color;
-
     @Length(max = 500)
     private String note;
 
@@ -45,5 +42,7 @@ public class DogCreateReq {
 
     @NotNull(message = "sex can't be null")
     private String sex;
+
+    private int age;
 
 }

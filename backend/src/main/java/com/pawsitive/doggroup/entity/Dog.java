@@ -1,6 +1,6 @@
 package com.pawsitive.doggroup.entity;
 
-import com.pawsitive.doggroup.converter.DogKindEnumConverter;
+import com.pawsitive.doggroup.converter.DogStatusEnumConverter;
 import com.pawsitive.usergroup.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -39,9 +39,9 @@ public class Dog {
     @Column(name = "name")
     private String name;
 
-    @Convert(converter = DogKindEnumConverter.class)
+    //    @Convert(converter = DogKindEnumConverter.class)
     @Column(name = "kind")
-    private DogKindEnum kind;
+    private String kind;
 
     @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
@@ -51,9 +51,6 @@ public class Dog {
 
     @Column(name = "age")
     private int age;
-
-    @Column(name = "color")
-    private String color;
 
     @Column(name = "video")
     private String video;
@@ -67,8 +64,9 @@ public class Dog {
     @Column(name = "mbti")
     private String mbti;
 
-    @Column(name = "is_adopted")
-    private boolean isAdopted;
+    @Convert(converter = DogStatusEnumConverter.class)
+    @Column(name = "status")
+    private DogStatusEnum status;
 
     @OneToMany(mappedBy = "dog")
     private List<DogImage> images = new ArrayList<>();
@@ -77,14 +75,14 @@ public class Dog {
     private String sex;
 
     @Builder
-    public Dog(User user, String name, DogKindEnum kind, boolean isNeutralized, int age,
-               String color, String video, String note, String mbti, String sex) {
+    public Dog(User user, String name, String kind, DogStatusEnum status,
+               boolean isNeutralized, int age, String video, String note, String mbti, String sex) {
         this.user = user;
         this.name = name;
         this.kind = kind;
+        this.status = status;
         this.isNeutralized = isNeutralized;
         this.age = age;
-        this.color = color;
         this.video = video;
         this.note = note;
         this.mbti = mbti;

@@ -16,7 +16,6 @@ import ProfilePage from '@src/pages/ProfilePage'
 import NotFoundPage from '@src/pages/NotFoundPage'
 import { useAtomValue } from 'jotai'
 import { themeAtom } from '@src/stores/atoms/theme'
-import Navbar from '@src/common/Navbar'
 import DogDetailPage from '@src/pages/DogDetailPage'
 import CreateDogPage from '@src/pages/CreateDogPage'
 import FindSimilarDogPage from '@src/pages/FindSimilarDogPage'
@@ -86,15 +85,35 @@ const HomeRoutes = () => (
 )
 
 const App = () => {
-  const user = false
   const theme = useAtomValue(themeAtom)
+  // const [userValue] = useAtom(userAtom)
 
+  // const user = userValue.email
+  const user = true
+  // const handleLogin = (user: UserType) => {
+  //   localStorage.setItem('currentUser', JSON.stringify(user))
+  // }
+  // handleLogin(userValue)
+  //
+  // // // 로그인 하면 스토리지에 추가된 email을 확인하여 접근 다르게 함
+  // // const currentUser: Partial<UserType> = JSON.parse(
+  // //   localStorage.getItem('currentUser'),
+  // // )
+  // // const user = currentUser.email
+  //
+  // useEffect(() => {
+  //   const currentUser: Partial<UserType> = JSON.parse(
+  //     localStorage.getItem('currentUser'),
+  //   )
+  //   const user = currentUser.email
+  // }, [])
+
+  // const user = true
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyle />
       <BrowserRouter>
         {user ? <AuthRoutes /> : <HomeRoutes />}
-        <Navbar />
         <ReactQueryDevtools initialIsOpen={false} />
       </BrowserRouter>
     </ThemeProvider>

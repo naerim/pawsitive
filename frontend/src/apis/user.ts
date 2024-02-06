@@ -4,10 +4,12 @@ import {
   EmailCodeVerifyType,
   JoinUserResponseType,
   JoinUserType,
+  JwtTokenType,
   LoginUserResponseType,
   LoginUserType,
 } from '@src/types/userType'
 import axios from 'axios'
+import { onSilentRefresh } from '@src/apis/silentRefresh'
 
 export const fetchAfterAdoptionUser = async () => {
   return publicRequest.get('users/admin/dogs').then(res => res.data)
@@ -36,15 +38,15 @@ export const verifyEmailCode = async (
     .then(res => res.data)
 }
 
-// 로그인 api
-export const loginUser = async (
+// 로그인 유저 정보 저장하는 api
+export const loginData = async (
   loginData: LoginUserType,
 ): Promise<LoginUserResponseType> => {
   return publicRequest
     .post('auth/login', loginData)
     .then(res => {
-      const { accessToken, grantType } = res.data
-      axios.defaults.headers.common.Authorization = `${grantType} ${accessToken}`
+      // const setUserEmail = useSetAtom(userEmail)
+      // setUserEmail(res.data.email)
       return res.data
     })
     .catch(error => {
@@ -53,29 +55,31 @@ export const loginUser = async (
     })
 }
 
-// const JWT_EXPIRY_TIME = 24 * 3600 * 1000
-// export const onLoginSuccess = async (res: AxiosResponse) => {
-//   const { accessToken, grantType } = res.data
-//   axios.defaults.headers.common.Authorization = `${grantType} ${accessToken}`
-//   setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000)
-// }
-//
-// export const loginUser = async (loginData: LoginUserType): Promise<void> => {
-//   return publicRequest
-//     .post('auth/login', loginData)
-//     .then(onLoginSuccess)
-//     .catch(error => {
-//       console.log(error)
-//       throw new Error('로그인 에러')
-//     })
-// }
-//
-// export const onSilentRefresh = async () => {
-//   return publicRequest
-//       .post('/silent-refresh')
-//       .then(onLoginSuccess)
-//       .catch(error => {
-//         console.log(error)
-//         throw new Error('리프레시 토큰 연장 에러')
-//       })
-// }
+const JWT_EXPIRY_TIME = 24 * 3600 * 1000
+
+export const onLoginSuccess = async (res: JwtTokenType) => {
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+  const userEmail = currentUser.email
+  axios.defaults.headers.common.Authorization = `${res.grantType} ${res.accessToken}`
+  setTimeout(
+    () =>
+      onSilentRefresh({
+        email: userEmail,
+        refreshToken: res.refreshToken,
+      }),
+    JWT_EXPIRY_TIME - 60000,
+  )
+}
+
+export const loginUser = async (loginData: LoginUserType): Promise<void> => {
+  return publicRequest
+    .post('auth/login', loginData)
+    .then(res => {
+      const Token = res.data.jwtToken
+      onLoginSuccess(Token)
+    })
+    .catch(error => {
+      console.log(error)
+      throw new Error('로그인 에러')
+    })
+}

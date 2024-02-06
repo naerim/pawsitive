@@ -1,6 +1,7 @@
 package com.pawsitive.doggroup.repository;
 
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
+import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.entity.QDog;
 import com.pawsitive.doggroup.entity.QDogImage;
@@ -31,64 +32,87 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
     @Override
     public Optional<DogDetailRes> getDogByDogNo(int dogNo) {
 
-        return Optional.ofNullable(getQueryDogList()
-            .where(qDog.dogNo.eq(dogNo))
-            .fetchOne());
+        return Optional.ofNullable(getQueryDogDetailList().where(qDog.dogNo.eq(dogNo)).fetchOne());
     }
 
     @Override
-    public List<DogDetailRes> getRecommendationDogList(int num) {
-        return getQueryDogList()
-            .limit(num)
-            .fetch();
+    public List<DogListRes> getRecommendationDogList() {
+        return getQueryDogList().fetch();
+    }
+
+    @Override
+    public List<DogListRes> getRecommendationDogList(int num) {
+        return getQueryDogList().limit(num).fetch();
     }
 
     @Override
     public List<String> getDogImagesByDogNo(int dogNo) {
-        return from(qDogImage)
-            .select(qDogImage.image)
-            .where(qDogImage.dog.dogNo.eq(dogNo))
-            .fetch();
+        return from(qDogImage).select(qDogImage.image).where(qDogImage.dog.dogNo.eq(dogNo)).fetch();
     }
 
     @Override
-    public Page<DogDetailRes> getDogList(Pageable pageable) {
+    public Page<DogListRes> getDogList(Pageable pageable) {
 
-        List<DogDetailRes> content = getQueryDogList()
-            .offset(pageable.getOffset())
-            .limit(pageable.getPageSize())
-            .fetch();
+        List<DogListRes> content =
+            getQueryDogList()
+                .orderBy(qDog.createdAt.desc())
+                .offset(pageable.getOffset()).limit(pageable.getPageSize())
+                .fetch();
 
-        Long count = from(qDog)
-            .select(qDog.count())
-            .fetchOne();
+        Long count = from(qDog).select(qDog.count()).fetchOne();
 
         return new PageImpl<>(content, pageable, count);
     }
 
     @Override
-    public Page<DogDetailRes> getDogListByKindNo(Pageable pageable, String kind) {
-        List<DogDetailRes> content = getQueryDogList()
-            .where(qDog.kind.stringValue().eq(kind))
-            .offset(pageable.getOffset())
-            .limit(pageable.getPageSize())
-            .fetch();
+    public Page<DogListRes> getDogListByKindNo(Pageable pageable, String kind) {
+        List<DogListRes> content =
+            getQueryDogList()
+                .orderBy(qDog.createdAt.desc())
+                .where(qDog.kind.stringValue().eq(kind))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize()).fetch();
 
-        Long count = from(qDog)
-            .select(qDog.count())
-            .fetchOne();
+        Long count = from(qDog).select(qDog.count()).fetchOne();
 
         return new PageImpl<>(content, pageable, count);
     }
 
-    private JPQLQuery<DogDetailRes> getQueryDogList() {
-        return from(qDog)
-            .innerJoin(qDog.user, qUser)
-            .select(Projections.fields(DogDetailRes.class, qDog.dogNo,
-                qUser.userNo, qUser.name.as("userName"), qDog.name,
+    @Override
+    public List<DogListRes> getDogListByShelterNo(int shelterNo) {
+        return getQueryDogList()
+            .orderBy(qDog.createdAt.desc())
+            .where(qDog.user.userNo.eq(shelterNo))
+            .fetch();
+    }
+
+    @Override
+    public List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num) {
+        return getQueryDogList()
+            .orderBy(qDog.createdAt.desc())
+            .where(qDog.user.userNo.eq(shelterNo))
+            .limit(num)
+            .fetch();
+    }
+
+
+    private JPQLQuery<DogDetailRes> getQueryDogDetailList() {
+        return from(qDog).innerJoin(qDog.user, qUser).select(
+            Projections.fields(DogDetailRes.class, qDog.dogNo, qUser.userNo,
+                qUser.name.as("userName"), qDog.name,
                 ExpressionUtils.as(qDog.kind.stringValue(), "kind"), qDog.createdAt,
-                qDog.isNeutralized, qDog.age, qDog.color, qDog.video, qDog.note,
-                qDog.hit, qDog.mbti, qDog.isAdopted, qDog.sex
-            ));
+                qDog.isNeutralized, qDog.age, qDog.video, qDog.note, qDog.hit,
+                qDog.mbti,
+                ExpressionUtils.as(qDog.status.stringValue().castToNum(Integer.class), "statusNo"),
+                qDog.sex));
+    }
+
+    private JPQLQuery<DogListRes> getQueryDogList() {
+        return from(qDog).innerJoin(qDog.user, qUser).select(
+            Projections.fields(DogListRes.class, qDog.dogNo, qDog.name,
+                ExpressionUtils.as(qDog.kind.stringValue(), "kind"),
+                qDog.isNeutralized, qDog.age,
+                ExpressionUtils.as(qDog.status.stringValue().castToNum(Integer.class), "statusNo"),
+                qDog.sex));
     }
 }

@@ -1,6 +1,7 @@
 package com.pawsitive.doggroup.repository;
 
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
+import com.pawsitive.doggroup.dto.response.DogListRes;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -15,12 +16,18 @@ import org.springframework.data.repository.NoRepositoryBean;
 public interface DogRepositoryCustom {
     Optional<DogDetailRes> getDogByDogNo(int dogNo);
 
-    List<DogDetailRes> getRecommendationDogList(int num);
+    List<DogListRes> getRecommendationDogList();
+
+    List<DogListRes> getRecommendationDogList(int num);
 
     List<String> getDogImagesByDogNo(int dogNo);
 
-    Page<DogDetailRes> getDogList(Pageable pageable);
+    Page<DogListRes> getDogList(Pageable pageable);
 
-    Page<DogDetailRes> getDogListByKindNo(Pageable pageable, String kind);
+    Page<DogListRes> getDogListByKindNo(Pageable pageable, String kind);
+
+    List<DogListRes> getDogListByShelterNo(int shelterNo);
+
+    List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num);
 
 }

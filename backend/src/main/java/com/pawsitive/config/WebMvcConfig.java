@@ -1,7 +1,8 @@
 package com.pawsitive.config;
 
-import com.pawsitive.common.util.JwtTokenUtil;
 import jakarta.servlet.Filter;
+import java.util.Collections;
+import java.util.List;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,10 +19,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         // configuration.addAllowedOrigin("*");
-        configuration.addAllowedOriginPattern("*");
-        configuration.addAllowedMethod("*");
-        configuration.addAllowedHeader("*");
-        configuration.addExposedHeader(JwtTokenUtil.HEADER_STRING);
+//        configuration.addAllowedOriginPattern("*");
+        configuration.setAllowedOrigins(
+            List.of("http://localhost:3000", "http://localhost:8080",
+                "https://i10c111.p.ssafy.io"));
+        configuration.setAllowedOriginPatterns(
+            List.of("http://localhost:3000/**", "http://localhost:8080/**",
+                "https://i10c111.p.ssafy.io/**"));
+        configuration.setAllowedMethods(Collections.singletonList("*"));
+        configuration.setAllowedHeaders(Collections.singletonList("*"));
+//        configuration.addExposedHeader(JwtTokenUtil.HEADER_STRING);
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

@@ -39,6 +39,8 @@ public class RedisConfig implements BeanClassLoaderAware {
         redisTemplate.setValueSerializer(new StringRedisSerializer());
         redisTemplate.setConnectionFactory(redisConnectionFactory());
 
+        redisTemplate.setEnableTransactionSupport(true);
+
         return redisTemplate;
     }
 
@@ -50,4 +52,5 @@ public class RedisConfig implements BeanClassLoaderAware {
     public ClassLoader getClassLoader() {
         return classLoader;
     }
+    
 }

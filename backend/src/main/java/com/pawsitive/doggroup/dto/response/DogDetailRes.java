@@ -23,12 +23,11 @@ public class DogDetailRes {
     private LocalDateTime createdAt;
     private boolean isNeutralized;
     private int age;
-    private String color;
     private String video;
     private String note;
     private int hit;
     private String mbti;
-    private boolean isAdopted;
+    private int statusNo;
     private List<String> images;
     private String sex;
 
