@@ -126,6 +126,13 @@ public class UserController {
             .body(userService.reissueJwtToken(req, authentication));
     }
 
+    public ResponseEntity<BaseResponseBody> logout(@RequestBody String email) {
+
+        return ResponseEntity
+            .status(OK)
+            .body(BaseResponseBody.of(OK, "로그아웃 완료"));
+    }
+
 //    @PatchMapping("/{userId}")
 //    public ResponseEntity<UserUpdateRes> modifyUser(@PathVariable String userId,
 //                                                    @RequestBody UserUpdatePatchReq updateInfo,
