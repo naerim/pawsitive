@@ -65,7 +65,7 @@ public class Dog {
     private String mbti;
 
     @Convert(converter = DogStatusEnumConverter.class)
-    @Column(name = "status")
+    @Column(name = "status", insertable = false)
     private DogStatusEnum status;
 
     @OneToMany(mappedBy = "dog")

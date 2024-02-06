@@ -5,9 +5,9 @@ import static com.pawsitive.auth.HttpCookieOAuth2AuthorizationRequestRepository.
 import com.pawsitive.auth.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.pawsitive.auth.OAuth2Provider;
 import com.pawsitive.auth.OAuth2UserPrincipal;
-import com.pawsitive.auth.OAuth2UserUnlinkManager;
 import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.auth.jwt.JwtTokenProvider;
+import com.pawsitive.auth.unlink.OAuth2UserUnlinkManager;
 import com.pawsitive.common.util.CookieUtils;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
