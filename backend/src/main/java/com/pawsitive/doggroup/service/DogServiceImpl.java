@@ -2,7 +2,6 @@ package com.pawsitive.doggroup.service;
 
 import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.common.util.S3BucketUtil;
-import com.pawsitive.doggroup.dogenum.DogStatusEnum;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
@@ -72,7 +71,7 @@ public class DogServiceImpl implements DogService {
             .note(savedDog.getNote())
             .hit(savedDog.getHit())
             .mbti(savedDog.getMbti())
-            .statusNo(savedDog.getStatus().getNo())
+            .statusNo(savedDog.getStatus().ordinal())
             .sex(savedDog.getSex())
             .files(fileKeys)
             .build();
@@ -101,7 +100,6 @@ public class DogServiceImpl implements DogService {
         } else {
             dogList = dogRepository.getRecommendationDogList(num);
         }
-        setStatusName(dogList);
         setThumbnailImage(dogList);
         return dogList;
     }
@@ -116,7 +114,6 @@ public class DogServiceImpl implements DogService {
 //            dogList = dogRepository.getDogListByKindNo(pageable, kind);
 //        }
         Page<DogListRes> dogList = dogRepository.getDogList(pageable, kind, sex, neutralized);
-        setStatusName(dogList);
         setThumbnailImage(dogList);
         return dogList;
     }
@@ -129,15 +126,8 @@ public class DogServiceImpl implements DogService {
         } else {
             dogList = dogRepository.getDogListByShelterNo(shelterNo, num);
         }
-        setStatusName(dogList);
         setThumbnailImage(dogList);
         return dogList;
-    }
-
-    private void setStatusName(Iterable<DogListRes> dogList) {
-        for (DogListRes dog : dogList) {
-            dog.setStatusName(DogStatusEnum.noToName(dog.getStatusNo()));
-        }
     }
 
     private void setThumbnailImage(Iterable<DogListRes> dogList) {
