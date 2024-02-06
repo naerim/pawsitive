@@ -114,7 +114,7 @@ public class DogServiceImpl implements DogService {
     private void setThumbnailImage(Page<DogListRes> dogList) {
         for (DogListRes dog : dogList) {
             List<String> images = dogRepository.getDogImagesByDogNo(dog.getDogNo());
-            if (images.size() > 1) {
+            if (images.size() >= 1) {
                 dog.setImage(images.get(0));
             }
         }

@@ -8,6 +8,9 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 public class ContentRepositoryImpl extends QuerydslRepositorySupport
@@ -20,19 +23,27 @@ public class ContentRepositoryImpl extends QuerydslRepositorySupport
     }
 
     @Override
-    public List<ContentDetailRes> getContentList() {
+    public Page<ContentDetailRes> getContentList(Pageable pageable) {
 
-        JPQLQuery<ContentDetailRes> contentListQuery = getQueryContentList();
+        List<ContentDetailRes> content = getQueryContentList().fetch();
+        Long count = from(qContent).select(qContent.count()).fetchOne();
 
-        return contentListQuery.fetch();
+        return new PageImpl<>(content, pageable, count);
     }
 
     @Override
-    public List<ContentDetailRes> getContentListByContentCategoryNo(int contentCategoryNo) {
+    public Page<ContentDetailRes> getContentListByContentCategoryNo(Pageable pageable,
+                                                                    int categoryNo) {
 
-        return getQueryContentList()
-            .where(qContentCategory.contentCategoryNo.eq(contentCategoryNo))
+        List<ContentDetailRes> content = getQueryContentList()
+            .where(qContentCategory.contentCategoryNo.eq(categoryNo))
             .fetch();
+
+        Long count = from(qContent).select(qContent.count())
+            .where(qContentCategory.contentCategoryNo.eq(categoryNo))
+            .fetchOne();
+
+        return new PageImpl<>(content, pageable, count);
     }
 
     @Override
