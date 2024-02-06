@@ -63,13 +63,13 @@ const CreateDogInfo = () => {
         <s.Label>성별</s.Label>
         <s.RadioButtonContainer>
           <s.RadioButton
-            isSelected={createDogData.sex === 'M'}
+            $isSelected={createDogData.sex === 'M'}
             onClick={() => handleSexChange('M')}
           >
             수컷
           </s.RadioButton>
           <s.RadioButton
-            isSelected={createDogData.sex === 'F'}
+            $isSelected={createDogData.sex === 'F'}
             onClick={() => handleSexChange('F')}
           >
             암컷
@@ -81,13 +81,13 @@ const CreateDogInfo = () => {
         <s.Label>중성화 여부</s.Label>
         <s.RadioButtonContainer>
           <s.RadioButton
-            isSelected={createDogData.isNaturalized}
+            $isSelected={createDogData.isNaturalized}
             onClick={() => handleIsNaturalizedChange(true)}
           >
             중성화 O
           </s.RadioButton>
           <s.RadioButton
-            isSelected={!createDogData.isNaturalized}
+            $isSelected={!createDogData.isNaturalized}
             onClick={() => handleIsNaturalizedChange(false)}
           >
             중성화 X

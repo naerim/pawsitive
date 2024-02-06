@@ -31,12 +31,12 @@ export const RadioButtonContainer = styled.div`
   margin-top: 15px;
 `
 
-export const RadioButton = styled.button<{ isSelected: boolean }>`
+export const RadioButton = styled.button<{ $isSelected: boolean }>`
   width: 150px;
   height: 50px;
-  background-color: ${props => (props.isSelected ? '#FF9232' : '#fff')};
-  color: ${props => (props.isSelected ? '#fff' : '#CBCBCB')};
-  border: 1px solid ${props => (props.isSelected ? '#FF9232' : '#cbcbcb')};
+  background-color: ${props => (props.$isSelected ? '#FF9232' : '#fff')};
+  color: ${props => (props.$isSelected ? '#fff' : '#CBCBCB')};
+  border: 1px solid ${props => (props.$isSelected ? '#FF9232' : '#cbcbcb')};
   font-size: 15px;
   font-weight: 300;
   cursor: pointer;
