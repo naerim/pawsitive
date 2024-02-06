@@ -63,7 +63,12 @@ const DogListContainer = () => {
       {basicDogList.map(basicDogInfo => (
         <BasicDogInfoCard key={basicDogInfo.dogNo} dogInfo={basicDogInfo} />
       ))}
-      {isFetching && <d.FakeDiv>Loading more...</d.FakeDiv>}
+      {isFetching && (
+        <>
+          <d.FakeDiv />
+          <d.FakeDiv />
+        </>
+      )}
     </d.Container>
   )
 }
