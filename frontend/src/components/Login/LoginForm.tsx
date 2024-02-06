@@ -82,8 +82,8 @@ const LoginForm = () => {
   // 유효성 검증 및 로그인 폼 제출
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    loginTokenMutation.mutate(loginFormValue)
     loginDataMutation.mutate(loginFormValue)
+    loginTokenMutation.mutate(loginFormValue)
   }
 
   return (

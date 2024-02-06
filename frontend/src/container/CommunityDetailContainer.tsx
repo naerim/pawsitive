@@ -1,11 +1,21 @@
-import CommunityDetail from '@src/components/Community/CommunityDetail'
 import { CommunityDetailType } from '@src/types/components/CommunityType'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { fetchCommunityDetail } from '@src/apis/community'
+import styled from 'styled-components'
+import CommunityFileSection from '@src/components/CommunityDetail/CommunityFileSection'
+import UserName from '@src/components/CommunityDetail/UserName'
+import CommunityContent from '@src/components/CommunityDetail/CommunityContent'
+import CommunityDetailMap from '@src/components/CommunityDetail/CommunityDetailMap'
+import TipSection from '@src/components/CommunityDetail/TipSection'
+
+const Container = styled.div`
+  padding-bottom: 80px;
+`
 
 const CommunityDetailContainer = () => {
   const { contentNo } = useParams<{ contentNo: string }>()
+  // const [DetailData, setDetailData] = useState<CommunityDetailType>([])
 
   // useQuery로 데이터 받아오기
   const { isLoading, data } = useQuery<CommunityDetailType>({
@@ -14,17 +24,44 @@ const CommunityDetailContainer = () => {
   })
 
   return (
-    <div>
-      {/* {isLoading || !CommunityDetailValue ? (      */}
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
+    <Container>
+      {!isLoading && data ? (
         <div>
-          <CommunityDetail data={data} />
+          <CommunityFileSection
+            images={data.board.images}
+            title={data.board.title}
+            category={data.board.communityCategoryName}
+            hit={data.board.hit}
+          />
+          {/* TODO 여기에 단계별 이미지랑 주소 넣기 */}
+          <UserName memberName={data.board.memberName} />
+          <CommunityContent content={data.board.content} />
+          <CommunityDetailMap
+            latitude={data.board.latitude}
+            longitude={data.board.longitude}
+          />
+          <TipSection />
         </div>
+      ) : (
+        '로딩중'
       )}
-    </div>
+    </Container>
   )
 }
 
+//   return (
+//     <div>
+//       {isLoading ? (
+//         <p>Loading...</p>
+//       ) : (
+//         <div>
+//           {data ? (
+//             <CommunityDetail data={data} />
+//           ) : (
+//             '상세 데이터를 불러올 수 없습니다'
+//           )}
+//         </div>
+//       )}
+//     </div>
+//   )
 export default CommunityDetailContainer
