@@ -4,8 +4,8 @@ import com.pawsitive.doggroup.converter.DogStatusEnumConverter;
 import com.pawsitive.doggroup.dogenum.DogStatusEnum;
 import com.pawsitive.usergroup.entity.User;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -62,7 +62,7 @@ public class Dog {
     @Column(name = "mbti")
     private String mbti;
 
-    @Convert(converter = DogStatusEnumConverter.class)
+    @Enumerated
     @Column(name = "status", insertable = false)
     private DogStatusEnum status;
 
