@@ -15,6 +15,8 @@ public class CommunityBoardDetailRes {
     private int boardNo;
     private String memberEmail;
     private String memberName;
+    private int memberStage;
+    private String memberAddress;
     private String title;
     private String content;
     private Boolean isPublic;
