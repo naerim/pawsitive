@@ -1,5 +1,11 @@
 import * as s from '@src/components/CommunityDetail/_style/CommunityDetailMapStyle'
-import { MutableRefObject, useCallback, useEffect, useRef } from 'react'
+import {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 
 declare global {
   interface Window {
@@ -14,6 +20,8 @@ interface PropsType {
 
 const CommunityDetailMap = (props: PropsType) => {
   const { latitude, longitude } = props
+  const [addressValue, setAddress] = useState('')
+
   const mapRef = useRef<kakao.maps.Map>(null)
 
   const initMap = useCallback(() => {
@@ -34,6 +42,22 @@ const CommunityDetailMap = (props: PropsType) => {
   }, [latitude, longitude])
 
   useEffect(() => {
+    const geocoder = new kakao.maps.services.Geocoder()
+    const coord = new kakao.maps.LatLng(latitude, longitude)
+    geocoder.coord2Address(
+      coord.getLng(),
+      coord.getLat(),
+      (result: any[], status: kakao.maps.services.Status) => {
+        if (status === kakao.maps.services.Status.OK) {
+          const addr = result[0].address.address_name
+          setAddress(addr)
+          console.log()
+        }
+      },
+    )
+  }, [setAddress, latitude, longitude])
+
+  useEffect(() => {
     kakao.maps.load(() => initMap())
   }, [mapRef, latitude, longitude, initMap])
 
@@ -42,9 +66,7 @@ const CommunityDetailMap = (props: PropsType) => {
       <s.MapWrap>
         <s.Map id="map" />
       </s.MapWrap>
-      <s.Address>
-        광주광역시 북구 본촌마을길 27 <b>복사</b>
-      </s.Address>
+      <s.Address>{addressValue}</s.Address>
     </s.Container>
   )
 }

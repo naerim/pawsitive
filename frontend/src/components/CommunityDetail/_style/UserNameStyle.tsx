@@ -12,6 +12,7 @@ export const Circle = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 100%;
+  padding: 15px;
 `
 export const Right = styled.div`
   margin-left: 10px;

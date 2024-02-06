@@ -4,6 +4,8 @@ export type CommunityItemType = {
   boardNo: number
   memberEmail: string
   memberName: string
+  memberStage: number
+  memberAddress: string
   title: string
   content: string
   isPublic: boolean
