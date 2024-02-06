@@ -8,8 +8,10 @@ import CreateDogMbti from '@src/components/CreateDog/CreateDogMbti'
 import CreateDogNote from '@src/components/CreateDog/CreateDogNote'
 import CreateDogFile from '@src/components/CreateDog/CreateDogFile'
 import * as c from '@src/container/style/CreateDogContainerStyle'
+import { useNavigate } from 'react-router-dom'
 
 const CreateDogContainer = () => {
+  const navigate = useNavigate()
   const [createDogInfo] = useAtom(createDogInfoAtom)
   const [createDogStep, setCreateDogStep] = useAtom(createDogStepAtom)
   const [file, setFile] = useState<File[]>([])
@@ -63,7 +65,11 @@ const CreateDogContainer = () => {
   }
 
   const handlePrevStep = () => {
-    setCreateDogStep(prevStep => prevStep - 1)
+    if (createDogStep === 1) {
+      navigate(-1)
+    } else {
+      setCreateDogStep(prevStep => prevStep - 1)
+    }
   }
 
   const handleNextStep = () => {
@@ -73,12 +79,8 @@ const CreateDogContainer = () => {
   return (
     <c.Container>
       <c.TopContainer>
-        {createDogStep > 1 && (
-          <button type="button" onClick={handlePrevStep}>
-            &lt;
-          </button>
-        )}
-        <h1>보호소 강아지 등록</h1>
+        <c.BackButton onClick={handlePrevStep}>&lt;</c.BackButton>
+        <c.Title>보호소 강아지 등록</c.Title>
       </c.TopContainer>
       {renderStepComponent()}
       <div>
