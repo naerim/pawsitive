@@ -91,11 +91,15 @@ public class DogServiceImpl implements DogService {
 
     // TODO [Yi] 추천로직 작성 (추천기준도 정해야댐)
     @Override
-    public List<DogDetailRes> getRecommendationDogList(int num) {
-        List<DogDetailRes> dogList = dogRepository.getRecommendationDogList(num);
-        for (DogDetailRes dog : dogList) {
-            dog.setImages(dogRepository.getDogImagesByDogNo(dog.getDogNo()));
+    public List<DogListRes> getRecommendationDogList(Integer num) {
+        List<DogListRes> dogList;
+        if (Objects.isNull(num)) {
+            dogList = dogRepository.getRecommendationDogList();
+        } else {
+            dogList = dogRepository.getRecommendationDogList(num);
         }
+        setStatusName(dogList);
+        setThumbnailImage(dogList);
         return dogList;
     }
 
@@ -112,16 +116,29 @@ public class DogServiceImpl implements DogService {
         return dogList;
     }
 
-    private void setStatusName(Page<DogListRes> dogList) {
+    @Override
+    public List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num) {
+        List<DogListRes> dogList;
+        if (Objects.isNull(num)) {
+            dogList = dogRepository.getDogListByShelterNo(shelterNo);
+        } else {
+            dogList = dogRepository.getDogListByShelterNo(shelterNo, num);
+        }
+        setStatusName(dogList);
+        setThumbnailImage(dogList);
+        return dogList;
+    }
+
+    private void setStatusName(Iterable<DogListRes> dogList) {
         for (DogListRes dog : dogList) {
             dog.setStatusName(DogStatusEnum.noToName(dog.getStatusNo()));
         }
     }
 
-    private void setThumbnailImage(Page<DogListRes> dogList) {
+    private void setThumbnailImage(Iterable<DogListRes> dogList) {
         for (DogListRes dog : dogList) {
             List<String> images = dogRepository.getDogImagesByDogNo(dog.getDogNo());
-            if (images.size() >= 1) {
+            if (!images.isEmpty()) {
                 dog.setImage(images.get(0));
             }
         }
