@@ -22,9 +22,10 @@ public interface DogRepositoryCustom {
 
     List<String> getDogFilesByDogNo(int dogNo);
 
-    Page<DogListRes> getDogList(Pageable pageable);
+    Page<DogListRes> getDogList(Pageable pageable, List<String> kind, Integer sex,
+                                Integer neutralized);
 
-    Page<DogListRes> getDogListByKindNo(Pageable pageable, String kind);
+    Page<DogListRes> getDogListByKindNo(Pageable pageable, List<String> kind);
 
     List<DogListRes> getDogListByShelterNo(int shelterNo);
 

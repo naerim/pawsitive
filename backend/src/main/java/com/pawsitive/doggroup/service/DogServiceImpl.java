@@ -2,11 +2,11 @@ package com.pawsitive.doggroup.service;
 
 import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.common.util.S3BucketUtil;
+import com.pawsitive.doggroup.dogenum.DogStatusEnum;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.entity.Dog;
-import com.pawsitive.doggroup.entity.DogStatusEnum;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.usergroup.entity.User;
@@ -104,13 +104,15 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
-    public Page<DogListRes> getDogList(Pageable pageable, String kind) {
-        Page<DogListRes> dogList;
-        if (Objects.isNull(kind)) {
-            dogList = dogRepository.getDogList(pageable);
-        } else {
-            dogList = dogRepository.getDogListByKindNo(pageable, kind);
-        }
+    public Page<DogListRes> getDogList(Pageable pageable, List<String> kind, Integer sex,
+                                       Integer neutralized) {
+
+        //        if (Objects.isNull(kind)) {
+//            dogList = dogRepository.getDogList(pageable, , , );
+//        } else {
+//            dogList = dogRepository.getDogListByKindNo(pageable, kind);
+//        }
+        Page<DogListRes> dogList = dogRepository.getDogList(pageable, kind, sex, neutralized);
         setStatusName(dogList);
         setThumbnailImage(dogList);
         return dogList;

@@ -1,4 +1,4 @@
-package com.pawsitive.doggroup.entity;
+package com.pawsitive.doggroup.dogenum;
 
 import lombok.Getter;
 

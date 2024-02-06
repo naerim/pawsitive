@@ -1,6 +1,6 @@
 package com.pawsitive.doggroup.converter;
 
-import com.pawsitive.doggroup.entity.DogStatusEnum;
+import com.pawsitive.doggroup.dogenum.DogStatusEnum;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
