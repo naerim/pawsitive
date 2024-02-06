@@ -30,7 +30,7 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Override
     public Page<CommunityBoardDetailRes> getCommunityList(Pageable pageable, Integer categoryNo) {
-        if (categoryNo == null) {
+        if (categoryNo == null || categoryNo.equals(0)) {
             return communityBoardRepository.getBoardList(pageable);
         }
         return getCommunityListByCommunityCategoryNo(pageable, categoryNo);
