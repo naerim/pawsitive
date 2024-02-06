@@ -23,6 +23,24 @@ export const InputLabel = styled.label`
   color: #333;
 `
 
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`
+
+export const RoleButton = styled.button<{ selected: boolean }>`
+  width: 100%;
+  padding: 10px 0;
+  font-size: 15px;
+  color: ${props => (props.selected ? '#FFFFFF' : '#A9A9A9')};
+  background-color: ${props => (props.selected ? '#ff9232' : '#FFFFFF')};
+  border: 1px solid ${props => (props.selected ? '#FF9232' : '#cbcbcb')};
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+`
+
 export const InputField = styled.input`
   width: 100%;
   padding: 8px;
