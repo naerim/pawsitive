@@ -19,6 +19,6 @@ export const FakeDiv = styled.div`
   margin: 1% 4%;
   position: relative;
   align-items: center;
-  height: 305px;
+  height: 244px;
   justify-content: center;
 `
