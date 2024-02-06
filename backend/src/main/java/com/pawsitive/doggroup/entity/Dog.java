@@ -2,19 +2,12 @@ package com.pawsitive.doggroup.entity;
 
 import com.pawsitive.doggroup.dogenum.DogStatusEnum;
 import com.pawsitive.usergroup.entity.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -61,7 +54,7 @@ public class Dog {
     @Column(name = "mbti")
     private String mbti;
 
-    @Enumerated
+    //    @Convert(converter = DogStatusEnum.class)
     @Column(name = "status", insertable = false)
     private DogStatusEnum status;
 
