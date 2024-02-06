@@ -80,19 +80,19 @@ const CreateDogContainer = () => {
         )}
         <h1>보호소 강아지 등록</h1>
       </c.TopContainer>
-      <form onSubmit={handleCreateDog} encType="multipart/form-data">
-        {renderStepComponent()}
-        <div>
-          {createDogStep < 3 && (
-            <c.Button type="button" onClick={handleNextStep}>
-              다음
-            </c.Button>
-          )}
+      {renderStepComponent()}
+      <div>
+        {createDogStep < 3 && (
+          <c.Button type="button" onClick={handleNextStep}>
+            다음
+          </c.Button>
+        )}
+        <form onSubmit={handleCreateDog} encType="multipart/form-data">
           {createDogStep === 3 && (
             <c.Button type="submit">유기견 등록</c.Button>
           )}
-        </div>
-      </form>
+        </form>
+      </div>
     </c.Container>
   )
 }
