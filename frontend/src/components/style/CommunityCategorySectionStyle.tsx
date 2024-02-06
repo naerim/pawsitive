@@ -5,20 +5,24 @@ export const Container = styled.div`
   overflow-x: auto;
   width: 100%;
   white-space: nowrap;
-  margin: 20px 0;
+  -ms-overflow-style: none;
+  padding: 10px 0;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
-export const Item = styled.div<{ isSelected: boolean }>`
+export const Item = styled.div<{ $select: boolean }>`
   display: flex;
   cursor: pointer;
   justify-content: center;
   font-size: 0.9em;
   padding: 6px 8px;
   border-radius: 28px;
-  margin-right: 6px;
+  margin-right: 10px;
   border: 1px solid #eaeaea;
-  background-color: ${({ isSelected }) =>
-    isSelected ? '#EFEFEF' : 'transparent'};
+  background-color: ${props => (props.$select ? '#FFE7D3' : 'transparent')};
 
   img {
     width: 12px;

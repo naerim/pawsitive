@@ -1,14 +1,9 @@
 import { Link } from 'react-router-dom'
 import CommunityListItem from '@src/components/CommunityList/CommunityListItem'
 import * as c from '@src/components/style/CommunityListSectionStyle'
-import { CommunityItemType } from '@src/types/components/CommunityType'
-import React from 'react'
+import { CommunityType } from '@src/types/communityType'
 
-interface CommunityListProps {
-  data: CommunityItemType[]
-}
-
-const CommunityListSection: React.FC<CommunityListProps> = props => {
+const CommunityListSection = (props: { data: CommunityType[] }) => {
   const { data } = props
 
   return (
@@ -22,6 +17,7 @@ const CommunityListSection: React.FC<CommunityListProps> = props => {
             </Link>
           ))}
       </c.Wrap>
+      {/* <c.Box ref={setTarget} className="box" /> */}
     </c.Container>
   )
 }

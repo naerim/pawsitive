@@ -1,6 +1,8 @@
 import { publicRequest } from '@src/hooks/requestMethods'
 import { CommunityListType } from '@src/types/components/CommunityType'
 import React from 'react'
+import { CommunityListParamsType } from '@src/types/communityType'
+import queryString from 'query-string' // import { CommunityItemType } from '@src/types/components/CommunityType'
 // import { CommunityItemType } from '@src/types/components/CommunityType'
 
 export const fetchCommunityDetail = async (num: number) => {
@@ -14,12 +16,12 @@ export const fetchPopularCommunity = async (num: number) => {
     .then(res => res.data)
 }
 
-export const fetchCommunityList = async (
-  setCommunityList: React.Dispatch<React.SetStateAction<CommunityListType[]>>,
-): Promise<void> => {
-  return publicRequest.get('/community').then(res => {
-    setCommunityList(res.data.content)
-  })
+// 커뮤니티 리스트 조회
+export const fetchCommunityList = async (params: CommunityListParamsType) => {
+  return publicRequest
+    .get(`/community?${queryString.stringify(params)}`)
+    .then(res => res.data)
+    .catch(error => console.log('커뮤니티 조회 실패', error))
 }
 
 export const fetchCommunityByFilter = async (

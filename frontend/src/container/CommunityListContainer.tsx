@@ -1,83 +1,71 @@
-import { CommunityItemType } from '@src/types/components/CommunityType'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { fetchCommunityByFilter, fetchCommunityList } from '@src/apis/community'
-import {
-  CommunityCategoryAtom,
-  CommunityListAtom,
-} from '@src/stores/atoms/community'
-import { useAtom } from 'jotai'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as c from '@src/container/style/CommunityListContainerStyle'
 import CommunityCategorySection from '@src/components/CommunityList/CommunityCategorySection'
 import CommunityListSection from '@src/components/CommunityList/CommunityListSection'
-import { useLocation } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import { fetchCommunityList } from '@src/apis/community'
+import { CommunityResType } from '@src/types/communityType'
 
-const Index: React.FC = () => {
-  const [CommunityCategoryValue, setCommunityCategory] = useAtom(
-    CommunityCategoryAtom,
-  )
-  const [CommunityListValue, setCommunityList] =
-    useAtom<CommunityItemType[]>(CommunityListAtom)
-  const [LoadList, setLoadList] = useState(true)
-  const isMounted = useRef(false)
-  const location = useLocation()
+const CommunityListContainer = () => {
+  const [category, setCategory] = useState(0)
 
-  const { isLoading, data, refetch } = useQuery({
+  // 무한 스크롤 아직 구현 못함
+  const { data, isLoading, refetch } = useQuery<CommunityResType>({
     queryKey: ['communityList'],
-    queryFn: () => fetchCommunityList(setCommunityList),
-    enabled: LoadList,
+    queryFn: async () =>
+      fetchCommunityList({
+        page: 0,
+        size: 30,
+        sort: ['string'],
+        categoryNo: category,
+      }),
   })
 
-  const { mutate } = useMutation({
-    mutationKey: ['communityCategory'],
-    mutationFn: async num => {
-      if (num !== 0) {
-        const result = await fetchCommunityByFilter(num, setCommunityList)
-        return result
-      }
-      const result = await fetchCommunityList(setCommunityList)
-      return result
-    },
-    onSuccess(): void {},
-  })
-
+  // const { data, fetchNextPage, hasNextPage, status, refetch } =
+  //   useInfiniteQuery({
+  //     queryKey: ['communityList'],
+  //     initialPageParam: 1,
+  //     queryFn: ({ pageParam }) => {
+  //       console.log(pageParam)
+  //       return fetchCommunityList({
+  //         page: pageParam,
+  //         size: 6,
+  //         sort: ['string'],
+  //         categoryNo: category,
+  //       })
+  //     },
+  //     getNextPageParam: lastPage => {
+  //       console.log(lastPage)
+  //       if (!lastPage.next) {
+  //         return undefined // No more pages to fetch
+  //       }
+  //       console.log('엥')
+  //       return lastPage.number + 1 // 다음 페이지의 번호 반환
+  //     },
+  //     select: item => item.pages.flatMap(page => page.content),
+  //   })
+  //
   useEffect(() => {
-    if (isMounted.current) {
-      setCommunityCategory(0)
-      refetch()
-    }
-  }, [refetch, setCommunityCategory])
-
-  useEffect(() => {
-    isMounted.current = true
-  }, [])
-
-  useEffect(() => {
-    mutate(CommunityCategoryValue)
-  }, [CommunityCategoryValue, isMounted, mutate, setLoadList])
-
-  useEffect(() => {
-    if (data) {
-      setCommunityList(data.content)
-    }
-  }, [data, setCommunityList, mutate])
-
-  // url 들어오면 전체목록 조회
-  useEffect(() => {
-    if (location.pathname === '/community') {
-      setLoadList(true)
-    }
-  }, [location.pathname])
+    refetch().then(r => r)
+  }, [category, refetch])
+  //
+  // const { setTarget } = useIntersectionObserver({
+  //   hasNextPage,
+  //   fetchNextPage,
+  // })
 
   return (
     <c.Container>
       <c.Wrap>
-        <CommunityCategorySection />
-        {isLoading || !CommunityListValue ? (
+        <CommunityCategorySection
+          category={category}
+          setCategory={setCategory}
+        />
+        {isLoading || !data ? (
           <p>Loading...</p>
         ) : (
           <div>
-            <CommunityListSection data={CommunityListValue} />
+            <CommunityListSection data={data.content} />
           </div>
         )}
       </c.Wrap>
@@ -85,4 +73,4 @@ const Index: React.FC = () => {
   )
 }
 
-export default Index
+export default CommunityListContainer
