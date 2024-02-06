@@ -1,7 +1,8 @@
 package com.pawsitive.config;
 
-import com.pawsitive.common.util.JwtTokenUtil;
 import jakarta.servlet.Filter;
+import java.util.Collections;
+import java.util.List;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,17 +13,15 @@ import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.Collections;
-import java.util.List;
-
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         // configuration.addAllowedOrigin("*");
-        configuration.addAllowedOriginPattern("*");
-        configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://i10c111.p.ssafy.io"));
+//        configuration.addAllowedOriginPattern("*");
+        configuration.setAllowedOriginPatterns(
+            List.of("http://localhost:3000/**", "https://i10c111.p.ssafy.io/**"));
         configuration.setAllowedMethods(Collections.singletonList("*"));
         configuration.setAllowedHeaders(Collections.singletonList("*"));
 //        configuration.addExposedHeader(JwtTokenUtil.HEADER_STRING);

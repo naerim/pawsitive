@@ -1,8 +1,11 @@
 package com.pawsitive.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.models.GroupedOpenApi;
@@ -31,13 +34,24 @@ import org.springframework.context.annotation.Configuration;
         @Tag(name = "06.ChatRoom", description = "채팅 기능"),
         @Tag(name = "07.Community", description = "커뮤니티 기능"),
         @Tag(name = "08.Question", description = "오늘의 질문 기능"),
-    })
+    }
+)
+@SecurityRequirement(name = "JWT")
+@SecurityScheme(
+    name = "JWT",
+    type = SecuritySchemeType.HTTP,
+    bearerFormat = "JWT",
+    scheme = "Bearer"
+)
 @Configuration
 public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi publicApi() {
-        return GroupedOpenApi.builder().group("controller").pathsToMatch("/api/**").build();
+        return GroupedOpenApi.builder()
+            .group("controller")
+            .pathsToMatch("/api/**")
+            .build();
     }
 
     public static final String SECURITY_SCHEMA_NAME = "JWT";
