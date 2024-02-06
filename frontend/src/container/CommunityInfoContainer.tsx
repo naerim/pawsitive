@@ -4,28 +4,17 @@ import CommunityListContainer from '@src/container/CommunityListContainer'
 import * as c from '@src/container/style/CommunityListInfoContainerStyle'
 import { useAtomValue } from 'jotai'
 import { CommunityListAtom } from '@src/stores/atoms/community'
-import { useEffect, useState } from 'react'
-import { CommunityItemType } from '@src/types/components/CommunityType'
+import { useState } from 'react'
 
 const CommunityInfoContainer = () => {
   const navigate = useNavigate()
 
   const [isMapValue, setIsMap] = useState(false)
   const communityListValue = useAtomValue(CommunityListAtom)
-  const [communityContents, setCommunityContents] = useState<
-    CommunityItemType[]
-  >([])
 
   const isMapChange = () => {
     setIsMap(!isMapValue)
   }
-
-  useEffect(() => {
-    // communityListValue가 비어있지 않은 경우에만 로직을 수행
-    if (communityListValue && CommunityListAtom) {
-      setCommunityContents(communityListValue)
-    }
-  }, [communityListValue, CommunityListAtom])
 
   const goCreateCommunity = () => navigate('/community/create')
 
@@ -42,7 +31,7 @@ const CommunityInfoContainer = () => {
 
       {isMapValue ? (
         <div>
-          <KakaoMap dummyData={communityContents} />
+          <KakaoMap dummyData={communityListValue} />
         </div>
       ) : (
         <div>
