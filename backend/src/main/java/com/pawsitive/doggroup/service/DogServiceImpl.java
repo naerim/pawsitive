@@ -2,6 +2,7 @@ package com.pawsitive.doggroup.service;
 
 import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.common.util.S3BucketUtil;
+import com.pawsitive.doggroup.dogenum.DogStatusEnum;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
@@ -46,7 +47,7 @@ public class DogServiceImpl implements DogService {
 
         Dog dog = Dog.builder().user(user).name(req.getName())
             .kind(req.getKind()).isNeutralized(req.getIsNaturalized())
-            .note(req.getNote()).mbti(getMbti(req))
+            .note(req.getNote()).mbti(getMbti(req)).status(DogStatusEnum.TODO)
             .sex(req.getSex()).age(req.getAge()).build();
 
         Dog savedDog;
