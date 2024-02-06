@@ -1,5 +1,6 @@
 package com.pawsitive.doggroup.entity;
 
+import com.pawsitive.doggroup.dogenum.DogStatusEnum;
 import com.pawsitive.usergroup.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

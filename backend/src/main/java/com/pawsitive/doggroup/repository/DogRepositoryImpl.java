@@ -1,5 +1,7 @@
 package com.pawsitive.doggroup.repository;
 
+import com.pawsitive.doggroup.dogenum.DogNeutralizedEnum;
+import com.pawsitive.doggroup.dogenum.DogSexEnum;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.entity.Dog;
@@ -8,8 +10,10 @@ import com.pawsitive.doggroup.entity.QDogFile;
 import com.pawsitive.usergroup.entity.QUser;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQuery;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -51,25 +55,49 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
     }
 
     @Override
-    public Page<DogListRes> getDogList(Pageable pageable) {
-
+    public Page<DogListRes> getDogList(Pageable pageable, List<String> kind, Integer sex,
+                                       Integer neutralized) {
         List<DogListRes> content =
             getQueryDogList()
+                .where(eqSex(sex), eqNeutralized(neutralized), inKindList(kind))
                 .orderBy(qDog.createdAt.desc())
                 .offset(pageable.getOffset()).limit(pageable.getPageSize())
                 .fetch();
 
-        Long count = from(qDog).select(qDog.count()).fetchOne();
+        Long count = from(qDog).select(qDog.count())
+            .where(eqSex(sex), eqNeutralized(neutralized), inKindList(kind))
+            .fetchOne();
 
         return new PageImpl<>(content, pageable, count);
     }
 
+    private BooleanExpression eqSex(Integer sex) {
+        if (Objects.isNull(sex) || sex.equals(0)) {
+            return null;
+        }
+        return qDog.sex.eq(DogSexEnum.intToString(sex));
+    }
+
+    private BooleanExpression eqNeutralized(Integer neutralized) {
+        if (Objects.isNull(neutralized) || neutralized.equals(0)) {
+            return null;
+        }
+        return qDog.isNeutralized.eq(DogNeutralizedEnum.intToBoolean(neutralized));
+    }
+
+    BooleanExpression inKindList(List<String> kind) {
+        if (Objects.isNull(kind) || kind.isEmpty()) {
+            return null;
+        }
+        return qDog.kind.in(kind);
+    }
+
     @Override
-    public Page<DogListRes> getDogListByKindNo(Pageable pageable, String kind) {
+    public Page<DogListRes> getDogListByKindNo(Pageable pageable, List<String> kind) {
         List<DogListRes> content =
             getQueryDogList()
                 .orderBy(qDog.createdAt.desc())
-                .where(qDog.kind.stringValue().eq(kind))
+                .where(qDog.kind.stringValue().in(kind))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize()).fetch();
 

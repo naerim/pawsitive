@@ -6,7 +6,6 @@ import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.entity.Dog;
-import com.pawsitive.doggroup.entity.DogStatusEnum;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.usergroup.entity.User;
@@ -72,7 +71,7 @@ public class DogServiceImpl implements DogService {
             .note(savedDog.getNote())
             .hit(savedDog.getHit())
             .mbti(savedDog.getMbti())
-            .statusNo(savedDog.getStatus().getNo())
+            .statusNo(savedDog.getStatus().ordinal())
             .sex(savedDog.getSex())
             .files(fileKeys)
             .build();
@@ -101,20 +100,20 @@ public class DogServiceImpl implements DogService {
         } else {
             dogList = dogRepository.getRecommendationDogList(num);
         }
-        setStatusName(dogList);
         setThumbnailImage(dogList);
         return dogList;
     }
 
     @Override
-    public Page<DogListRes> getDogList(Pageable pageable, String kind) {
-        Page<DogListRes> dogList;
-        if (Objects.isNull(kind)) {
-            dogList = dogRepository.getDogList(pageable);
-        } else {
-            dogList = dogRepository.getDogListByKindNo(pageable, kind);
-        }
-        setStatusName(dogList);
+    public Page<DogListRes> getDogList(Pageable pageable, List<String> kind, Integer sex,
+                                       Integer neutralized) {
+
+        //        if (Objects.isNull(kind)) {
+//            dogList = dogRepository.getDogList(pageable, , , );
+//        } else {
+//            dogList = dogRepository.getDogListByKindNo(pageable, kind);
+//        }
+        Page<DogListRes> dogList = dogRepository.getDogList(pageable, kind, sex, neutralized);
         setThumbnailImage(dogList);
         return dogList;
     }
@@ -127,15 +126,8 @@ public class DogServiceImpl implements DogService {
         } else {
             dogList = dogRepository.getDogListByShelterNo(shelterNo, num);
         }
-        setStatusName(dogList);
         setThumbnailImage(dogList);
         return dogList;
-    }
-
-    private void setStatusName(Iterable<DogListRes> dogList) {
-        for (DogListRes dog : dogList) {
-            dog.setStatusName(DogStatusEnum.noToName(dog.getStatusNo()));
-        }
     }
 
     private void setThumbnailImage(Iterable<DogListRes> dogList) {

@@ -18,7 +18,6 @@ public class DogListRes {
     private String kind;
     private boolean isNeutralized;
     private int age;
-    private String statusName;
     private int statusNo;
     private String file;
     private String sex;

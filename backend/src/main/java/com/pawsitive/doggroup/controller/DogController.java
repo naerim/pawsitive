@@ -72,7 +72,7 @@ public class DogController {
 
 
     @GetMapping
-    @Operation(summary = "유기견 공고 전체 조회", description = "전달받은 페이지 번호에 해당하는 유기견 공고를 반환한다. 유기견 품종 입력 시 품종별 유기견 조회를 한다.", tags = {
+    @Operation(summary = "유기견 공고 전체 조회", description = "전달받은 페이지 번호에 해당하는 유기견 공고를 반환한다. 유기견 필터링 조건 입력 시 조건에 따른 유기견 조회를 한다.", tags = {
         "04.Dog"}, responses = {
         @ApiResponse(responseCode = "200", description = "해당하는 페이지의 유기견 공고 목록을 정상적으로 반환한다."),
         @ApiResponse(responseCode = "400", description = "해당 페이지에 유기견 공고가 없음.")}
@@ -80,13 +80,16 @@ public class DogController {
     )
     public ResponseEntity<PageResponse<DogListRes>> getDogList(Pageable pageable,
                                                                @RequestParam(required = false)
-                                                               String kind) {
-        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind);
+                                                               List<String> kind,
+                                                               @RequestParam(required = false)
+                                                               Integer sex,
+                                                               @RequestParam(required = false)
+                                                               Integer neutralized) {
+        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind, sex, neutralized);
 
         return ResponseEntity.status(OK).body(new PageResponse<DogListRes>(dogPage));
 
     }
-
 
     @GetMapping("/shelters/{shelterNo}")
     @Operation(summary = "유기견 공고 보호소 기준 전체 조회", description = "전달받은 보호소 고유번호 기준으로 유기견 공고를 반환한다", tags = {

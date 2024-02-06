@@ -54,7 +54,8 @@ public interface DogService {
      * @param kind     조회할 유기견 품종
      * @return 해당 페이지 유기견 리스트
      */
-    Page<DogListRes> getDogList(Pageable pageable, String kind);
+    Page<DogListRes> getDogList(Pageable pageable, List<String> kind, Integer sex,
+                                Integer neutralized);
 
     /**
      * 보호소 기준 유기견 공고 목록을 조회하는 메서드입니다.
