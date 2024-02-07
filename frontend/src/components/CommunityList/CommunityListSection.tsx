@@ -6,8 +6,6 @@ import { CommunityType } from '@src/types/communityType'
 const CommunityListSection = (props: { data: CommunityType[] }) => {
   const { data } = props
 
-  console.log(data)
-
   return (
     <c.Container>
       <c.Wrap>

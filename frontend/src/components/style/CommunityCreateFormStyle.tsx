@@ -2,6 +2,10 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   margin: 3px 15px 10px;
+
+  form {
+    margin-top: 40px;
+  }
 `
 
 // 상단바
@@ -9,7 +13,7 @@ export const Top = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0px 0px 10px 0px;
+  margin: 0 0 10px 0;
 `
 export const CloseButton = styled.button`
   background-color: white;
@@ -22,20 +26,21 @@ export const CloseButton = styled.button`
   }
 
   .img {
-    width: 25px;
+    width: 20px;
+    height: 20px;
   }
 `
 
 export const H1 = styled.h1`
-  font-weight: bolder;
-  font-size: 18px;
+  font-weight: 500;
+  font-size: 1em;
 `
 
 export const SubmitButton = styled.button`
   background-color: white;
   color: #fd974e;
-  font-weight: bolder;
-  font-size: 18px;
+  font-weight: 500;
+  font-size: 0.9em;
   padding-right: 5px;
   outline: none;
 
@@ -47,11 +52,10 @@ export const SubmitButton = styled.button`
 
 // 이미지
 export const ImgContainer = styled.div`
-  //background-color: antiquewhite;
   display: flex;
   white-space: nowrap;
   overflow-x: auto;
-  padding: 20px 0px;
+  padding: 20px 0;
 `
 
 export const ImgLabel = styled.label`
@@ -63,31 +67,30 @@ export const ImgBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid #c8c8c8;
+  border: 1px solid #eaeaea;
   border-radius: 3px;
   width: 70px;
   height: 70px;
 
   .img {
-    width: 18px;
+    width: 16px;
   }
 
   .p {
-    font-size: 14px;
-    margin-bottom: 2px;
+    font-size: 0.6em;
+    margin-top: 6px;
+    color: #878787;
   }
 `
 
 export const ImageInput = styled.input`
   opacity: 0;
-  width: 0px;
-  height: 0px;
+  width: 0;
+  height: 0;
 `
 export const ImagePreview = styled.div`
   width: 70px;
   height: 70px;
-  //border: 1px solid gainsboro;
-  //border-radius: 3px;
 
   .img {
     width: 70px;
@@ -100,13 +103,12 @@ export const Delete = styled.button`
   z-index: 3;
   width: 15px;
   height: 17px;
-  background-color: white;
-  border-radius: 0px;
+  background-color: transparent;
 `
 
 export const DivLine = styled.div`
-  border-bottom: 1px solid #c8c8c8;
-  margin: 15px 0px;
+  border-bottom: 1px solid #eaeaea;
+  margin: 15px 0;
 `
 
 export const Tag = styled.div`
@@ -118,16 +120,13 @@ export const Tag = styled.div`
     display: inline-block;
     width: 22px;
     height: 22px;
-    border: 2px solid #c8c8c8;
-    border-radius: 5px;
+    border: 1px solid #eaeaea;
     margin-right: 10px;
     cursor: pointer;
   }
 
   .label::after {
     content: '✔';
-    color: #c8c8c8;
-    font-size: 17px;
     width: 22px;
     height: 22px;
     text-align: center;
@@ -143,10 +142,9 @@ export const Tag = styled.div`
 `
 
 export const Label = styled.label`
-  border-radius: 5px;
-  color: #c8c8c8;
-  font-weight: 400;
+  color: #d2d2d2;
   margin-right: 5px;
+  font-size: 0.9em;
 
   .img {
     width: 25px;
@@ -164,13 +162,11 @@ export const CheckBox = styled.input`
 
 export const Select = styled.select`
   width: 80%;
-  padding: 10px;
-  font-size: 16px;
   text-align: right;
   border: 1px solid #ffffff;
   border-radius: 5px;
   background-color: #fff;
-  color: #c8c8c8;
+  color: #878787;
   cursor: pointer;
   appearance: none;
 
@@ -182,20 +178,17 @@ export const Select = styled.select`
 
   option {
     color: #888;
-    font-size: 18px;
-    //text-align: left;
-    //border: 1px solid #ccc;
-    //box-shadow: none;
+    font-size: 1em;
   }
 `
 export const ContentInput = styled.input`
   width: 200px;
   height: 30px;
   margin-bottom: 2px;
-  font-size: 15px;
-  border: 0px;
+  font-size: 1em;
+  border: none;
   outline: none;
-  color: #c8c8c8;
+  color: #000;
 `
 
 export const MapCloseButton = styled.div`
@@ -207,18 +200,16 @@ export const MapDiv = styled.div`
   height: auto;
 `
 export const Map = styled.div`
-  width: auto;
+  width: 100%;
   height: 300px;
-  border: 2px solid #c8c8c8;
-  border-radius: 30px;
 `
 
 export const MapContentInput = styled.input`
   width: 360px;
   height: 30px;
   margin-bottom: 2px;
-  font-size: 15px;
-  border: 0px;
+  font-size: 0.9em;
+  border: none;
   outline: none;
   color: #c8c8c8;
 
