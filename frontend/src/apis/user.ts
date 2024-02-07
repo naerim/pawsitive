@@ -97,6 +97,18 @@ export const loginUser = async (
     })
 }
 
+export const fetchLogout = async () => {
+  return publicRequest
+    .post('users/logout', 'q')
+    .then(res => {
+      res.data
+    })
+    .catch(error => {
+      console.log(error)
+      throw new Error('로그아웃 에러')
+    })
+}
+
 // 유저 stage 수정
 export const updateUserStage = async (data: UpdateUserStageReqType) => {
   return publicRequest.patch('/users', data).then(res => res.data)
