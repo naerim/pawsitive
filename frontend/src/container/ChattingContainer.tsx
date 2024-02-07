@@ -1,46 +1,91 @@
-import { useCreateRoom } from '@src/components/Chat/useCreateRoom'
-import { useQuery } from '@tanstack/react-query'
-import { getRoomList } from '@src/components/Chat/chat'
-import { RoomType } from '@src/components/Chat/roomType'
-import styled from 'styled-components'
-import { useNavigate } from 'react-router-dom'
+import { useRef, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { Client, Stomp, StompSubscription } from '@stomp/stompjs'
+import SockJS from 'sockjs-client'
 
-const Container = styled.div`
-  display: flex;
-  padding: 20px;
-  background-color: #f2f2f2;
-  margin-bottom: 20px;
-`
+export type IChatDetail = {
+  message: string
+}
 
 const ChattingContainer = () => {
-  const navigate = useNavigate()
-  const { data } = useQuery<RoomType[]>({
-    queryKey: ['getRoomList'],
-    queryFn: () => getRoomList(1),
-  })
+  const { no } = useParams()
+  const [client, setClient] = useState<Client | null>(null)
+  const subscriptionRef = useRef<StompSubscription | null>(null)
 
-  // 임시 채팅방 생성 함수
-  const { createRoomHandler } = useCreateRoom()
+  const [messages, setMessages] = useState<IChatDetail[]>([])
+  const [newMessage, setNewMessage] = useState<IChatDetail>({ message: '' })
 
-  // 메세지 보내기
-  // const sendHandler = () => {}
+  const setupWebSocket = () => {
+    const socket = new SockJS(
+      'https://i10c111.p.ssafy.io/ws/chat',
+      {},
+      {
+        transports: ['xhr-polling'],
+      },
+    )
+    const stompClient = Stomp.over(socket)
+
+    setClient(stompClient)
+
+    console.log(stompClient)
+
+    stompClient.onConnect = () => {
+      console.log('Stomp 연결이 열렸습니다.')
+      subscriptionRef.current = stompClient.subscribe(
+        `/sub/rooms/${no}`,
+        message => {
+          const receivedMessage = JSON.parse(message.body)
+
+          setMessages(prevMessages => [...prevMessages, receivedMessage])
+          console.log(receivedMessage)
+        },
+      )
+    }
+
+    stompClient.activate()
+
+    return stompClient
+  }
+
+  const connectHandler = () => {
+    const newWebSocketClient = setupWebSocket()
+
+    return () => {
+      if (newWebSocketClient) {
+        newWebSocketClient.deactivate()
+      }
+    }
+  }
+
+  const sendMessage = () => {
+    if (client && client.connected) {
+      client.publish({
+        destination: `/pub/chat/${no}`,
+        body: JSON.stringify({ message: newMessage }),
+      })
+      setMessages(prevMessages => [...prevMessages, newMessage])
+    }
+    setNewMessage({ message: '' })
+  }
 
   return (
     <div>
-      <div>chatting 목록</div>
-      <button type="button" onClick={createRoomHandler}>
-        채팅방 생성
+      <h2>채팅 방 ({no})</h2>
+      <button type="button" onClick={() => connectHandler()}>
+        연결
       </button>
-      {data &&
-        data.map((room: RoomType) => (
-          <Container
-            key={room.chatRoomNo}
-            onClick={() => navigate(`/chat/${room.chatRoomNo}`)}
-          >
-            <div>{room.name}방</div>
-          </Container>
+
+      <div>
+        {messages.map((message, index) => (
+          <div key={index}>{message.message}</div>
         ))}
-      {/* <button onClick={onClickHandler}> chatting 완료</button> */}
+      </div>
+      <input
+        type="text"
+        value={newMessage.message}
+        onChange={e => setNewMessage({ message: e.target.value })}
+      />
+      <button onClick={sendMessage}>전송</button>
     </div>
   )
 }
