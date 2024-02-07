@@ -28,6 +28,7 @@ public class SurveysServiceImpl implements SurveysService {
             .q3Answer(req.getQ3())
             .q4Answer(req.getQ4())
             .q5Answer(req.getQ5())
+            .participant(req.getParticipant())
             .build());
     }
 

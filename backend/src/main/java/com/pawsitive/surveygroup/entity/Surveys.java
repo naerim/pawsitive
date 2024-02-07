@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
@@ -18,7 +17,6 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "surveys")
 public class Surveys {
 
@@ -42,13 +40,18 @@ public class Surveys {
     @Column(name = "q5_answer")
     private int q5Answer;
 
+    @Column(name = "participant", length = 10)
+    private String participant;
+
     @Builder
-    public Surveys(int q1Answer, int q2Answer, int q3Answer, int q4Answer, int q5Answer) {
+    public Surveys(int q1Answer, int q2Answer, int q3Answer, int q4Answer, int q5Answer,
+                   String participant) {
         this.q1Answer = q1Answer;
         this.q2Answer = q2Answer;
         this.q3Answer = q3Answer;
         this.q4Answer = q4Answer;
         this.q5Answer = q5Answer;
+        this.participant = participant;
     }
 
 }
