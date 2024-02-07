@@ -86,6 +86,7 @@ const HomeRoutes = () => (
     <Route path="*" element={<NotFoundPage />} />
     <Route path="/dogs" element={<DogListPage />} />
     <Route path="/dogs/:dogNo" element={<DogDetailPage />} />
+    <Route path="/chatroom" element={<ChattingPage />} />
   </Routes>
 )
 
