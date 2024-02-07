@@ -17,11 +17,13 @@ const QuestionList = () => {
       {!isLoading ? (
         <c.Body>
           {data.map((item: QuestionType) => (
-            <c.Card key={item.questionNo}>
-              <c.Number>{item.questionNo}번 질문</c.Number>
-              <c.Content>{item.questionContent}</c.Content>
-              <c.Answer>{item.answerContent}</c.Answer>
-            </c.Card>
+            <c.Box key={item.questionNo}>
+              <c.Card to={`/questions/${item.questionNo}`}>
+                <c.Number>{item.questionNo}번 질문</c.Number>
+                <c.Content>{item.questionContent}</c.Content>
+                <c.Answer>{item.answerContent}</c.Answer>
+              </c.Card>
+            </c.Box>
           ))}
         </c.Body>
       ) : (
