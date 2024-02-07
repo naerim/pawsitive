@@ -7,12 +7,14 @@ export type CommunityType = {
   content: string
   createdAt: string
   hit: number
-  images: []
+  images: string[]
   isPublic: boolean
   latitude: number
   longitude: number
+  memberAddress: string
   memberEmail: string
   memberName: string
+  memberStage: number
   title: string
 }
 

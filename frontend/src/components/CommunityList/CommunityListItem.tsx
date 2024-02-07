@@ -8,7 +8,8 @@ interface CommunityProps {
 const CommunityCard = (props: CommunityProps) => {
   const { data } = props
 
-  const setImageSrc = (category: string) => {
+  const setImageSrc = (images: string[], category: string) => {
+    if (images) return images[0]
     switch (category) {
       case '지식쌓개':
         return '/img/img_dog_food.png'
@@ -25,7 +26,7 @@ const CommunityCard = (props: CommunityProps) => {
 
   return (
     <c.Container>
-      <img src={setImageSrc(data.communityCategoryName)} alt="" />
+      <img src={setImageSrc(data.images, data.communityCategoryName)} alt="" />
       <c.Right>
         <c.Category>{data.communityCategoryName}</c.Category>
         <c.Title>{data.title}</c.Title>
