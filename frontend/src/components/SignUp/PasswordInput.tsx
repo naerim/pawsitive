@@ -11,6 +11,7 @@ const PasswordInput = () => {
   const [signUpData, setSignUpData] = useAtom(signUpDataAtom)
   const [error, setError] = useAtom(signUpErrorAtom)
   const [pwCheck, setPwCheck] = useAtom(signUpPwCheckAtom)
+
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const passwordInput = e.target.value
     setSignUpData(prevData => ({ ...prevData, pw: passwordInput }))
@@ -25,7 +26,7 @@ const PasswordInput = () => {
     if (pwCheckInput !== signUpData.pw) {
       setError(prevError => ({
         ...prevError,
-        pwCheck: '비밀번호가 일치하지 않습니다.',
+        pwCheck: '비밀번호가 일치하지 않습니다',
       }))
     } else {
       setError(prevError => ({
@@ -36,28 +37,34 @@ const PasswordInput = () => {
   }
 
   return (
-    <s.InputContainer>
-      <s.InputLabel htmlFor="password">비밀번호를 적어주세요.</s.InputLabel>
-      <div>
-        <s.InputField
-          type="password"
-          id="password"
-          name="password"
-          value={signUpData.pw}
-          onChange={handlePasswordChange}
-          placeholder="비밀번호"
-        />
-        <s.InputField
-          type="password"
-          id="passwordCheck"
-          name="passwordCheck"
-          value={pwCheck}
-          onChange={handlePasswordCheckChange}
-          placeholder="비밀번호 확인"
-        />
+    <s.Container>
+      <s.TitleContainer>
+        <s.Title>비밀번호를 적어주세요</s.Title>
+      </s.TitleContainer>
+      <s.TwoInputContainer>
+        <s.InputContainer>
+          <s.Input
+            type="password"
+            id="password"
+            name="password"
+            value={signUpData.pw}
+            onChange={handlePasswordChange}
+            placeholder="비밀번호"
+          />
+        </s.InputContainer>
+        <s.InputContainer>
+          <s.Input
+            type="password"
+            id="passwordCheck"
+            name="passwordCheck"
+            value={pwCheck}
+            onChange={handlePasswordCheckChange}
+            placeholder="비밀번호 확인"
+          />
+        </s.InputContainer>
         <s.ErrorText>{error.pwCheck}</s.ErrorText>
-      </div>
-    </s.InputContainer>
+      </s.TwoInputContainer>
+    </s.Container>
   )
 }
 
