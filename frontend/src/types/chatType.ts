@@ -4,3 +4,8 @@ export type ChatRoomType = {
   createdAt: string
   dogNo: number
 }
+
+export type CreateChatRoomParamsType = {
+  dogNo: number
+  userNo: number
+}
