@@ -17,7 +17,7 @@ export const dogDetailAtom = atom<DogType>({
   files: [],
   sex: '',
   neutralized: false,
-  address: '광주광역시 광산구 하남대로',
+  address: '',
 })
 
 export const createDogStepAtom = atom<number>(1)

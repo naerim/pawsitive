@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 export const Container = styled.div`
   display: flex;
@@ -14,6 +15,8 @@ export const Container = styled.div`
     height: 13px;
   }
 `
+
+export const Card = styled(Link)``
 export const Bold = styled.div`
   color: #ff9232;
   font-weight: 600;
