@@ -65,35 +65,36 @@ const EmailInput = () => {
   return (
     <s.InputContainer>
       <s.InputLabel htmlFor="email">이메일을 적어주세요.</s.InputLabel>
-      <s.InputField
-        type="text"
-        id="email"
-        name="email"
-        value={signUpData.email}
-        onChange={handleEmailChange}
-        placeholder="이메일"
-      />
-      <button type="button" onClick={handleSendCode}>
-        인증번호 받기
-      </button>
-      {isCodeSent && (
-        <>
-          <s.InputLabel htmlFor="verificationCode">
-            인증번호를 입력하세요.
-          </s.InputLabel>
+      <div>
+        <div>
           <s.InputField
             type="text"
-            id="verificationCode"
-            name="verificationCode"
-            value={verificationCode}
-            onChange={handleVerificationCodeChange}
-            placeholder="인증번호"
+            id="email"
+            name="email"
+            value={signUpData.email}
+            onChange={handleEmailChange}
+            placeholder="이메일"
           />
-          <button type="button" onClick={handleVerifyCode}>
-            인증번호 확인하기
+          <button type="button" onClick={handleSendCode}>
+            인증번호 받기
           </button>
-        </>
-      )}
+        </div>
+        {isCodeSent && (
+          <div>
+            <s.InputField
+              type="text"
+              id="verificationCode"
+              name="verificationCode"
+              value={verificationCode}
+              onChange={handleVerificationCodeChange}
+              placeholder="인증번호"
+            />
+            <button type="button" onClick={handleVerifyCode}>
+              인증번호 확인하기
+            </button>
+          </div>
+        )}
+      </div>
     </s.InputContainer>
   )
 }
