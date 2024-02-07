@@ -4,7 +4,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  height: 100vh;
 `
 
 export const Item = styled.div`
@@ -43,11 +42,12 @@ export const OKButton = styled.button`
   background-color: #ff9232;
   padding: 10px;
   color: #fff;
-  margin-top: auto;
+  margin-top: 40px;
 `
 
 export const CancelButton = styled.button`
   margin-top: 10px;
   font-size: 12px;
   color: #7b7b7b;
+  background-color: transparent;
 `

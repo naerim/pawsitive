@@ -4,16 +4,32 @@ import { userAtom } from '@src/stores/atoms/user'
 import Lottie from 'react-lottie'
 import coolGoldBadge from '@src/assets/lotties/cool_gold_badge.json'
 import * as c from '@src/container/style/ConfirmPawsitiveContainerStyle'
+import { useMutation } from '@tanstack/react-query'
+import { updateUserStage } from '@src/apis/user'
 
 const ConfirmPawsitiveContainer = () => {
   const navigate = useNavigate()
   const setUser = useSetAtom(userAtom)
 
+  const { mutate } = useMutation({
+    mutationKey: ['updateUserStage'],
+    mutationFn: updateUserStage,
+    onSuccess: () => {
+      setUser(user => ({ ...user, stage: 1 }))
+      navigate('/')
+    },
+    onError: error => console.error('user stage update 0-1 fail : ', error),
+  })
+
   const goBack = () => navigate(-1)
-  const onClick = () => {
-    setUser(user => ({ ...user, stage: 1 }))
-    navigate(-1)
-  }
+
+  // 확인했어요 버튼 클릭 시
+  const onClickOkButton = () =>
+    mutate({
+      userNo: 1,
+      field: 'stage',
+      value: 1,
+    })
 
   const defaultOptions = {
     loop: true,
@@ -52,7 +68,7 @@ const ConfirmPawsitiveContainer = () => {
           할 수 있는 준비를 갖추겠습니다.
         </c.Desc>
       </c.Item>
-      <c.OKButton type="button" onClick={onClick}>
+      <c.OKButton type="button" onClick={onClickOkButton}>
         준비됐어요!
       </c.OKButton>
       <c.CancelButton type="button" onClick={goBack}>

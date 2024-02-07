@@ -88,3 +88,9 @@ export type LoginRefreshType = {
   grantType: string
   accessToken: string
 }
+
+export type updateUserStageReqType = {
+  userNo: number
+  field: string
+  value: number
+}

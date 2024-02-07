@@ -7,6 +7,7 @@ import {
   JwtTokenType,
   LoginUserResponseType,
   LoginUserType,
+  updateUserStageReqType,
 } from '@src/types/userType'
 import axios from 'axios'
 import { onSilentRefresh } from '@src/apis/silentRefresh'
@@ -94,4 +95,9 @@ export const loginUser = async (
       console.log(error)
       throw new Error('로그인 에러')
     })
+}
+
+// 유저 stage 수정
+export const updateUserStage = async (data: updateUserStageReqType) => {
+  return publicRequest.patch('/users', data).then(res => res.data)
 }
