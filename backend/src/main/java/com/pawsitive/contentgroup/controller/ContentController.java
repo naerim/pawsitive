@@ -2,13 +2,13 @@ package com.pawsitive.contentgroup.controller;
 
 import static org.springframework.http.HttpStatus.OK;
 
+import com.pawsitive.common.dto.response.PageResponse;
 import com.pawsitive.contentgroup.dto.response.ContentDetailRes;
 import com.pawsitive.contentgroup.service.ContentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,12 +32,12 @@ public class ContentController {
             @ApiResponse(responseCode = "200", description = "전체 컨텐츠 목록 또는 카테고리에 해당되는 전체 컨텐츠 목록을 정상적으로 반환한다."),
         }
     )
-    public ResponseEntity<Page<ContentDetailRes>> getContentList(Pageable pageable,
-                                                                 @RequestParam(required = false)
-                                                                 Integer categoryNo) {
+    public ResponseEntity<PageResponse<ContentDetailRes>> getContentList(Pageable pageable,
+                                                                         @RequestParam(required = false)
+                                                                         Integer categoryNo) {
         return ResponseEntity
             .status(OK)
-            .body(contentService.getContentList(pageable, categoryNo));
+            .body(new PageResponse<>(contentService.getContentList(pageable, categoryNo)));
     }
 
     @GetMapping("/{contentNo}")

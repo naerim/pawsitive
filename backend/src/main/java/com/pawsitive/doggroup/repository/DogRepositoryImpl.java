@@ -132,7 +132,7 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
                 qDog.isNeutralized, qDog.age, qDog.note, qDog.hit,
                 qDog.mbti,
                 ExpressionUtils.as(qDog.status.stringValue().castToNum(Integer.class), "statusNo"),
-                qDog.sex));
+                qDog.sex, qUser.address));
     }
 
     private JPQLQuery<DogListRes> getQueryDogList() {
