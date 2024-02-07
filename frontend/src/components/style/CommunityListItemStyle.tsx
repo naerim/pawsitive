@@ -5,12 +5,13 @@ export const Container = styled.div`
   align-items: center;
   margin-bottom: 10px;
   padding: 6px;
+
   img {
     width: 70px;
     height: 70px;
     background-color: #fff3e9;
-    padding: 6px;
     border-radius: 6px;
+    object-fit: cover;
   }
 `
 

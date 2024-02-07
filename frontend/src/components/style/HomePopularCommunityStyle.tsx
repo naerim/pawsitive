@@ -42,6 +42,7 @@ export const Item = styled.div`
     width: 62px;
     height: 62px;
     margin-right: 19px;
+    object-fit: cover;
   }
 `
 
