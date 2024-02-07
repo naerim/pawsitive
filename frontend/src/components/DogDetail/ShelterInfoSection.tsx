@@ -2,6 +2,8 @@ import * as s from '@src/components/DogDetail/_style/ShelterInfoSectionStyle'
 import { MutableRefObject, useCallback, useEffect, useRef } from 'react'
 import { LocationType } from '@src/types/propsType'
 import Locations from '@src/components/Community/Locations'
+import { useAtom } from 'jotai/index'
+import { dogDetailAtom } from '@src/stores/atoms/dog.ts'
 
 declare global {
   interface Window {
@@ -12,6 +14,7 @@ declare global {
 const ShelterInfoSection = () => {
   const mapRef = useRef<kakao.maps.Map>(null)
   const location: LocationType | string = Locations()
+  const [dogDetail] = useAtom(dogDetailAtom)
 
   const initMap = useCallback(() => {
     // 위치가 잡히기 전에 임시로 띄우는 위치
@@ -33,14 +36,14 @@ const ShelterInfoSection = () => {
   return (
     <s.Container>
       <s.Date>
-        <b>등록일</b> 2024.02.04
+        <b>등록일</b> {dogDetail.createdAt.split(' ')[0]}
       </s.Date>
       <s.MapWrap>
         <s.Map id="map" />
       </s.MapWrap>
-      <s.Name>광주유기견보호소</s.Name>
+      <s.Name>{dogDetail.userName}</s.Name>
       <s.Address>
-        광주광역시 북구 본촌마을길 27 <b>복사</b>
+        {dogDetail.address} <b>복사</b>
       </s.Address>
     </s.Container>
   )
