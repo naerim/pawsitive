@@ -1,8 +1,6 @@
 import * as s from '@src/components/DogDetail/_style/ShelterInfoSectionStyle'
-import { MutableRefObject, useCallback, useEffect, useRef } from 'react'
-import { LocationType } from '@src/types/propsType'
-import Locations from '@src/components/Community/Locations'
-import { useAtom } from 'jotai/index'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { atom, useAtom } from 'jotai/index'
 import { dogDetailAtom } from '@src/stores/atoms/dog.ts'
 
 declare global {
@@ -11,27 +9,64 @@ declare global {
   }
 }
 
+const defaultMap = new kakao.maps.Map(document.createElement('div'), {
+  center: new kakao.maps.LatLng(33.450701, 126.570667),
+  level: 3,
+})
+
+const mapAtom = atom<kakao.maps.Map>(defaultMap)
+
 const ShelterInfoSection = () => {
   const mapRef = useRef<kakao.maps.Map>(null)
-  const location: LocationType | string = Locations()
+  const [latitudeValue, setLatitude] = useState(0)
+  const [longitudeValue, setLongitude] = useState(0)
+  const [mapValue, setMap] = useAtom(mapAtom)
   const [dogDetail] = useAtom(dogDetailAtom)
-
+  const adressData = dogDetail.address
   const initMap = useCallback(() => {
     // 위치가 잡히기 전에 임시로 띄우는 위치
     const container = document.getElementById('map')
     const options = {
-      center: new kakao.maps.LatLng(35.19088746066458, 126.81240608875785),
+      center: new kakao.maps.LatLng(latitudeValue, longitudeValue),
       disableDoubleClick: true,
       level: 3,
     }
 
     const map = new kakao.maps.Map(container as HTMLElement, options)
-    ;(mapRef as unknown as MutableRefObject<kakao.maps.Map>).current = map
-  }, [])
+    const marker = new kakao.maps.Marker({
+      position: new kakao.maps.LatLng(latitudeValue, longitudeValue),
+    })
+    marker.setMap(map)
+    setMap(map)
+  }, [latitudeValue, longitudeValue])
+
+  const handleAddress = (adressData: string) => {
+    // 검색된 주소 위치 표시
+    if (kakao.maps && kakao.maps.services) {
+      const geocoder = new kakao.maps.services.Geocoder()
+      geocoder.addressSearch(
+        adressData,
+        (result: any[], status: kakao.maps.services.Status) => {
+          if (status === kakao.maps.services.Status.OK) {
+            const currentPos = new kakao.maps.LatLng(result[0].y, result[0].x)
+            setLatitude(result[0].y)
+            setLongitude(result[0].x)
+
+            if (mapValue) {
+              mapValue.panTo(currentPos)
+            }
+          }
+        },
+      )
+    } else {
+      console.error('Kakao maps or services not loaded')
+    }
+  }
+  handleAddress(adressData)
 
   useEffect(() => {
     kakao.maps.load(() => initMap())
-  }, [mapRef, location, initMap])
+  }, [mapRef, latitudeValue, longitudeValue, initMap])
 
   return (
     <s.Container>
