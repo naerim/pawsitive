@@ -60,22 +60,25 @@ export const loginData = async (
 const JWT_EXPIRY_TIME = 300 * 1000
 
 export const onLoginSuccess = async (res: JwtTokenType) => {
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'))
-  const userEmail = currentUser.email
-  axios.defaults.headers.common.Authorization = `${res.grantType} ${res.accessToken}`
-  document.cookie = `refreshToken = ${res.refreshToken}`
-  setTimeout(
-    () =>
-      onSilentRefresh({
-        postData: {
-          email: userEmail,
-          refreshToken: res.refreshToken,
-        },
-        grantType: res.grantType,
-        accessToken: res.accessToken,
-      }),
-    JWT_EXPIRY_TIME - 60000,
-  )
+  const storage = localStorage.getItem('currentUser')
+  if (storage) {
+    const currentUser = JSON.parse(storage)
+    const userEmail = currentUser.email
+    axios.defaults.headers.common.Authorization = `${res.grantType} ${res.accessToken}`
+    document.cookie = `refreshToken = ${res.refreshToken}`
+    setTimeout(
+      () =>
+        onSilentRefresh({
+          postData: {
+            email: userEmail,
+            refreshToken: res.refreshToken,
+          },
+          grantType: res.grantType,
+          accessToken: res.accessToken,
+        }),
+      JWT_EXPIRY_TIME - 60000,
+    )
+  }
 }
 
 export const loginUser = async (
