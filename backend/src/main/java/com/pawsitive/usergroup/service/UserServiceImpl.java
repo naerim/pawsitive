@@ -23,14 +23,12 @@ import com.pawsitive.usergroup.exception.InvalidPasswordException;
 import com.pawsitive.usergroup.exception.UserNotFoundException;
 import com.pawsitive.usergroup.repository.MemberRepository;
 import com.pawsitive.usergroup.repository.UserRepository;
-
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -138,7 +136,7 @@ public class UserServiceImpl implements UserService {
             return;
         }
 
-        throw new NotFoundException("로그아웃 실패 (RefreshToken이 존재하지 않습니다.)");
+        throw new NotFoundException("refreshToken");
     }
 
     @Transactional
@@ -222,7 +220,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UpdateFieldRes updateField(UserTypeStagePatchReq req) {
 
-        Member member = memberRepository.findMemberByUserNo(req.getUserNo()).orElseThrow(UserNotFoundException::new);
+        Member member = memberRepository.findMemberByUserNo(req.getUserNo())
+            .orElseThrow(UserNotFoundException::new);
 
         if ("type".equals(req.getField())) {
             member.setType(req.getValue());

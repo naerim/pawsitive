@@ -7,10 +7,12 @@ import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.entity.Dog;
+import com.pawsitive.doggroup.entity.DogFile;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -80,10 +82,35 @@ public class DogServiceImpl implements DogService {
 
     @Override
     public DogDetailRes getDogByDogNo(int dogNo) {
-        DogDetailRes dog =
-            dogRepository.getDogByDogNo(dogNo).orElseThrow(DogNotFoundException::new);
-        dog.setFiles(dogRepository.getDogFilesByDogNo(dog.getDogNo()));
-        return dog;
+
+        // 엔티티 객체 가져오기
+        Dog dog = dogRepository.findByDogNo(dogNo).orElseThrow(DogNotFoundException::new);
+
+        // 조회수 증가
+        int hit = dog.getHit() + 1;
+        dog.setHit(hit);
+
+        // 조회수 저장 반영
+        dogRepository.save(dog);
+
+        // Res 객체 만들기
+        return DogDetailRes.builder()
+            .dogNo(dog.getDogNo())
+            .userNo(dog.getUser().getUserNo())
+            .userName(dog.getUser().getName())
+            .name(dog.getName())
+            .kind(dog.getKind())
+            .createdAt(dog.getCreatedAt())
+            .isNeutralized(dog.isNeutralized())
+            .age(dog.getAge())
+            .note(dog.getNote())
+            .hit(dog.getHit())
+            .mbti(dog.getMbti())
+            .statusNo(dog.getStatus().getNo())
+            .files(dogFileToString(dog.getFiles()))
+            .sex(dog.getSex())
+            .address(dog.getUser().getAddress())
+            .build();
     }
 
     @Override
@@ -152,6 +179,19 @@ public class DogServiceImpl implements DogService {
         tmp = Boolean.TRUE.equals(req.getFc()) ? "F" : "C";
         sb.append(tmp);
         return sb.toString();
+    }
+
+    private List<String> dogFileToString(List<DogFile> dogFiles) {
+        if (dogFiles.isEmpty()) {
+            return List.of();
+        }
+
+        List<String> list = new ArrayList<>();
+        for (DogFile file : dogFiles) {
+            list.add(file.getFile());
+        }
+
+        return list;
     }
 
 }

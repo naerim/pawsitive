@@ -75,7 +75,22 @@ public class CommunityServiceImpl implements CommunityService {
             .orElseThrow(CommunityBoardNotFoundException::new);
         setAddress(board);
         setImages(board);
+
         return board;
+
+//        // 엔티티 가져오기
+//        CommunityBoard communityBoard =
+//            communityBoardRepository.getCommunityBoardByCommunityBoardNo(boardNo).orElseThrow();
+//
+//        // 조회수 1 증가
+//        int hit = communityBoard.getHit() + 1;
+//        communityBoard.setHit(hit);
+//
+//        // 엔티티 저장
+//        communityBoardRepository.save(communityBoard);
+//
+//        // 응답 객체 생성
+//        return CommunityTransfer.entityToDto(communityBoard);
     }
 
     @Override

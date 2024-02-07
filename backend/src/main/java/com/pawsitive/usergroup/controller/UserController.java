@@ -98,7 +98,7 @@ public class UserController {
      * @param req    수정할 값을 가지고 있는 요청 DTO 객체
      * @return OK 응답객체
      */
-    @PatchMapping
+    @PatchMapping("/field")
     @Operation(summary = "유저 정보 수정하기",
         description = "로그인한 회원의 정보를 수정한다.",
         tags = {"03.User"},
