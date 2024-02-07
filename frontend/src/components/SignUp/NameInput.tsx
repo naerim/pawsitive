@@ -16,9 +16,14 @@ const NameInput = () => {
     } else setError(prevError => ({ ...prevError, name: '' }))
   }
 
+  let title = '보호소 이름을 적어주세요.'
+  if (signUpData.role === 'USER') {
+    title = '이름을 적어주세요.'
+  }
+
   return (
     <s.InputContainer>
-      <s.InputLabel htmlFor="name">이름을 적어주세요.</s.InputLabel>
+      <s.InputLabel htmlFor="name">{title}</s.InputLabel>
       <s.InputField
         type="text"
         id="name"
