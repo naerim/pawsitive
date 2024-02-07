@@ -16,6 +16,17 @@ export type DogType = {
   address: string
 }
 
+export type HomeRecommendDogType = {
+  age: number
+  dogNo: number
+  file: string
+  kind: string
+  name: string
+  neutralized: boolean
+  sex: string
+  statusNo: number
+}
+
 export type BasicDogType = {
   dogNo: number
   name: string
