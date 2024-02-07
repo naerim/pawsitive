@@ -48,7 +48,7 @@ public class DogServiceImpl implements DogService {
         Dog dog = Dog.builder().user(user).name(req.getName())
             .kind(req.getKind()).isNeutralized(req.getIsNaturalized())
             .note(req.getNote()).mbti(getMbti(req)).status(DogStatusEnum.TODO)
-            .sex(req.getSex()).age(req.getAge()).build();
+            .sex(req.getSex()).age(req.getAge()) build();
 
         Dog savedDog;
         try {

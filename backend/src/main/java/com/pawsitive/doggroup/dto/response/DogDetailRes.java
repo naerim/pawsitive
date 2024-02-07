@@ -29,5 +29,6 @@ public class DogDetailRes {
     private int statusNo;
     private List<String> files;
     private String sex;
+    private String address;
 
 }
