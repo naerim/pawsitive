@@ -20,7 +20,7 @@ const DictionaryDetailContainer = () => {
     return <div>Error fetching data</div>
   }
 
-  return <DictionaryDetail item={data!} />
+  return <DictionaryDetail data={data!} />
 }
 
 export default DictionaryDetailContainer
