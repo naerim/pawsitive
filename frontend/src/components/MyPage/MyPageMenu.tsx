@@ -1,9 +1,11 @@
 import * as m from '@src/components/style/MyPageMenuStyle'
 import { useAtom } from 'jotai'
 import { userAtom } from '@src/stores/atoms/user'
+import LogoutModal from '@src/components/MyPage/LogoutModal'
 
 const MyPageMenu = () => {
   const [user] = useAtom(userAtom)
+
   return (
     <m.Container>
       <m.Header>
@@ -45,6 +47,11 @@ const MyPageMenu = () => {
             <m.RightArrow src="/public/icon/icon_black_arrow_right.png" />
           </m.MenuItemDiv>
         </m.MenuItem>
+
+        <m.MenuItemDiv>
+          <LogoutModal />
+          <m.RightArrow src="/public/icon/icon_black_arrow_right.png" />
+        </m.MenuItemDiv>
       </m.Body>
     </m.Container>
   )
