@@ -1,20 +1,18 @@
 export type DogType = {
-  adopted: boolean
-  age: number
-  color: string
-  createdAt: string
   dogNo: number
-  hit: number
-  images: string[]
-  kind: string
-  mbti: string
-  name: string
-  neutralized: boolean
-  note: string
-  sex: string
-  userName: string
   userNo: number
-  video: string
+  userName: string
+  name: string
+  kind: string
+  createdAt: string
+  age: number
+  note: string
+  hit: number
+  mbti: string
+  statusNo: number
+  files: string[]
+  sex: string
+  neutralized: boolean
 }
 
 export type BasicDogType = {
