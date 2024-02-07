@@ -1,5 +1,24 @@
 import { atom } from 'jotai'
 import { CreateDogInfoType } from '@src/types/components/CreateDogType'
+import { DogType } from '@src/types/dogType'
+
+export const dogDetailAtom = atom<DogType>({
+  dogNo: 0,
+  userNo: 0,
+  userName: '',
+  name: '',
+  kind: '',
+  createdAt: '',
+  age: 0,
+  note: '',
+  hit: 0,
+  mbti: '',
+  statusNo: 0,
+  files: [],
+  sex: '',
+  neutralized: false,
+  address: '광주광역시 광산구 하남대로',
+})
 
 export const createDogStepAtom = atom<number>(1)
 
