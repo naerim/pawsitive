@@ -17,8 +17,8 @@ const QuestionList = () => {
       {!isLoading ? (
         <c.Body>
           {data.map((item: QuestionType) => (
-            <c.Box>
-              <c.Card key={item.questionNo} to={`/question/${item.questionNo}`}>
+            <c.Box key={item.questionNo}>
+              <c.Card to={`/questions/${item.questionNo}`}>
                 <c.Number>{item.questionNo}번 질문</c.Number>
                 <c.Content>{item.questionContent}</c.Content>
                 <c.Answer>{item.answerContent}</c.Answer>
