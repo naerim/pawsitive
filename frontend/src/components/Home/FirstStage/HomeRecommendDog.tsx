@@ -2,7 +2,7 @@ import * as h from '@src/components/style/HomeRecommendDogStyle'
 import LightColorMoveCard from '@src/common/LightColorMoveCard'
 import { useQuery } from '@tanstack/react-query'
 import { fetchRecommendDogs } from '@src/apis/dog'
-import { HomeRecommendDogType } from '@src/types/dogType'
+import { DogListType } from '@src/types/dogType'
 
 const HomeRecommendDog = () => {
   const { data, isLoading } = useQuery({
@@ -17,7 +17,7 @@ const HomeRecommendDog = () => {
       <h.Wrap>
         {!isLoading ? (
           data &&
-          data.map((item: HomeRecommendDogType, index: number) => (
+          data.map((item: DogListType, index: number) => (
             <h.Item key={item.dogNo || index}>
               <img src={item.file} alt="" />
 

@@ -1,6 +1,6 @@
 import * as d from '@src/components/style/DogListContainer'
 import { useEffect, useState } from 'react'
-import { BasicDogListParamsType, BasicDogType } from '@src/types/dogType'
+import { BasicDogListParamsType, DogListType } from '@src/types/dogType'
 import BasicDogInfoCard from '@src/common/BasicDogInfoCard'
 import { useQuery } from '@tanstack/react-query'
 import { fetchBasicDogList } from '@src/apis/dog'
@@ -12,10 +12,10 @@ const DogListContainer = () => {
       size: 8,
       sort: ['string'],
     })
-  const [basicDogList, setBasicDogList] = useState<BasicDogType[]>([])
+  const [basicDogList, setBasicDogList] = useState<DogListType[]>([])
   const [totalPageCnt, setTotalPageCnt] = useState(1)
 
-  const { data, isLoading, isFetching } = useQuery<BasicDogType[]>({
+  const { data, isLoading, isFetching } = useQuery<DogListType[]>({
     queryKey: ['basicDogList', basicDogListParams],
     queryFn: async () => {
       const result = await fetchBasicDogList(basicDogListParams)

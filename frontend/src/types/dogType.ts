@@ -16,7 +16,7 @@ export type DogType = {
   address: string
 }
 
-export type HomeRecommendDogType = {
+export type DogListType = {
   age: number
   dogNo: number
   file: string

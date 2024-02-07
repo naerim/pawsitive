@@ -1,9 +1,9 @@
 import * as b from '@src/common/style/BasicDogInfoCardStyle'
-import { BasicDogType } from '@src/types/dogType'
+import { DogListType } from '@src/types/dogType'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const BasicDogInfoCard: React.FC<{ dogInfo: BasicDogType }> = ({ dogInfo }) => {
+const BasicDogInfoCard: React.FC<{ dogInfo: DogListType }> = ({ dogInfo }) => {
   const navigate = useNavigate()
 
   const handleClick = () => {
@@ -12,11 +12,11 @@ const BasicDogInfoCard: React.FC<{ dogInfo: BasicDogType }> = ({ dogInfo }) => {
 
   return (
     <b.Container onClick={handleClick}>
-      <b.AdoptStatus status={dogInfo.statusName}>
-        {dogInfo.statusName}
+      <b.AdoptStatus $status={dogInfo.statusNo === 0 ? '공고중' : '입양완료'}>
+        {dogInfo.statusNo === 0 ? '공고중' : '입양완료'}
       </b.AdoptStatus>
       <b.ImgContainer>
-        <b.Dogimg src={dogInfo.image} />
+        <b.Dogimg src={dogInfo.file} />
       </b.ImgContainer>
       <b.DogTextInfoContainer>
         <b.DogName>{dogInfo.name}</b.DogName>
