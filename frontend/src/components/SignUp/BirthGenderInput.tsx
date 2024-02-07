@@ -70,26 +70,29 @@ const BirthGenderInput = () => {
     setInputValue(value)
     setError(prevError => ({
       ...prevError,
-      dob: '올바른 형식으로 입력하세요.',
+      dob: '올바른 형식으로 입력하세요',
     }))
   }
 
   return (
-    <s.InputContainer>
-      <s.InputLabel htmlFor="jumin">
-        주민등록번호 앞 6자리와 성별코드 1자리를 붙여주세요.
-      </s.InputLabel>
-      <s.InputField
-        type="text"
-        id="jumin"
-        name="jumin"
-        defaultValue={inputValue}
-        onChange={handleInputChange}
-        maxLength={8}
-        placeholder="YYMMDD-S"
-      />
+    <s.Container>
+      <s.TitleContainer>
+        <s.Title>주민등록번호</s.Title>
+        <s.Title>앞 7자리를 적어주세요</s.Title>
+      </s.TitleContainer>
+      <s.InputContainer>
+        <s.Input
+          type="text"
+          id="jumin"
+          name="jumin"
+          defaultValue={inputValue}
+          onChange={handleInputChange}
+          maxLength={8}
+          placeholder="YYMMDD-S"
+        />
+      </s.InputContainer>
       <s.ErrorText>{error.dob}</s.ErrorText>
-    </s.InputContainer>
+    </s.Container>
   )
 }
 
