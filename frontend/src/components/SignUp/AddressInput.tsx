@@ -34,25 +34,27 @@ const AddressInput = () => {
   }
 
   return (
-    <s.InputContainer>
-      <s.InputLabel htmlFor="address">주소를 입력해주세요.</s.InputLabel>
-
-      <div style={{ display: 'flex', marginBottom: '10px' }}>
-        <s.InputField value={postalCode} readOnly />
-        <button type="button" onClick={handleDaumPostcodeOpen}>
-          주소검색
-        </button>
-      </div>
-
-      <s.InputField value={address} readOnly />
-
-      <s.InputLabel htmlFor={detailAddress}>
-        <s.InputField
-          type="text"
-          value={detailAddress}
-          onChange={handleDetailAddress}
-        />
-      </s.InputLabel>
+    <s.Container>
+      <s.TitleContainer>
+        <s.Title>주소를 입력해주세요</s.Title>
+      </s.TitleContainer>
+      <s.ThreeInputContainer>
+        <s.InputContainer>
+          <s.Input value={postalCode} placeholder="우편번호" readOnly />
+          <s.CheckButton onClick={handleDaumPostcodeOpen}>검색</s.CheckButton>
+        </s.InputContainer>
+        <s.InputContainer>
+          <s.Input value={address} readOnly />
+        </s.InputContainer>
+        <s.InputContainer>
+          <s.Input
+            type="text"
+            value={detailAddress}
+            onChange={handleDetailAddress}
+            placeholder="상세주소를 작성해주세요"
+          />
+        </s.InputContainer>
+      </s.ThreeInputContainer>
 
       {isOpen && (
         <div>
@@ -65,7 +67,7 @@ const AddressInput = () => {
           />
         </div>
       )}
-    </s.InputContainer>
+    </s.Container>
   )
 }
 
