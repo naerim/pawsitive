@@ -1,7 +1,8 @@
 import * as a from '@src/components/style/AdoptionSurveyInfoStyle'
 import { useNavigate } from 'react-router-dom'
 import { useSetAtom } from 'jotai/index'
-import { userAtom } from '@src/stores/atoms/user.ts'
+import { userAtom } from '@src/stores/atoms/user'
+import SurveyForm from '@src/components/AdoptionSurvey/SurveyForm.tsx'
 
 const AdoptionSurveyInfo = () => {
   const navigate = useNavigate()
@@ -50,6 +51,7 @@ const AdoptionSurveyInfo = () => {
           <h2>4. 답변 작성</h2>
           <br />
         </div>
+        <SurveyForm />
         <a.DoneButton>
           <button type="button" onClick={goDone}>
             작성 완료했어요
