@@ -41,7 +41,6 @@ export const Item = styled.div`
     border-radius: 6px;
     width: 62px;
     height: 62px;
-    padding: 6px;
     margin-right: 19px;
   }
 `

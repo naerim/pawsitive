@@ -11,6 +11,22 @@ const HomePopularCommunity = () => {
     queryFn: () => fetchPopularCommunity(2),
   })
 
+  const setImageSrc = (images: string[], category: string) => {
+    if (images) return images[0]
+    switch (category) {
+      case '지식쌓개':
+        return '/img/img_dog_food.png'
+      case '자랑하개':
+        return '/img/img_dog_house.png'
+      case '영양있개':
+        return '/img/img_bone_bowl.png'
+      case '쇼핑하개':
+        return '/img/img_dog_medication.png'
+      default:
+        return '/img/img_main_house.png'
+    }
+  }
+
   return (
     <h.Container>
       <h.SubTitle>커뮤니티 TOP 게시글</h.SubTitle>
@@ -21,7 +37,10 @@ const HomePopularCommunity = () => {
           data.map(item => (
             <Link key={item.boardNo} to={`community/${item.boardNo}`}>
               <h.Item>
-                <img alt="" src="/img/img_popular_community.png" />
+                <img
+                  alt=""
+                  src={setImageSrc(item.images, item.communityCategoryName)}
+                />
                 <div>
                   <h.ItemTitle>{item.title}</h.ItemTitle>
                   <h.ItemDesc>{item.content}</h.ItemDesc>

@@ -28,7 +28,9 @@ const FindSimilarDog = () => {
 
   const labels: string[] = ['말티즈', '비숑', '치와와', '푸들', '리트리버']
   const [chartData, setChartData] = useState<number[]>([])
-  const [resultData, setResultData] = useState([])
+  const [resultData, setResultData] = useState<
+    { label: string; probability: number }[]
+  >([])
 
   const navigate = useNavigate()
   const handleNextButtonClick = () => {
