@@ -17,10 +17,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
-import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -82,7 +79,8 @@ public class SecurityConfig {
         http
             .httpBasic(HttpBasicConfigurer::disable)
             .csrf(CsrfConfigurer::disable) // csrf 설정 disable
-            .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer.loginPage("/api/v1/auth/no-auth"))
+            .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer.loginPage(
+                "/api/v1/auth/no-auth"))
             .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource))
             .sessionManagement(
                 configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -90,6 +88,7 @@ public class SecurityConfig {
                     .requestMatchers("/v3/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
                     .requestMatchers("/ws/chat", "/pub/**", "/sub/**").permitAll()
                     .requestMatchers("/api/v1/auth/no-auth").permitAll()
+                    .requestMatchers("/api/v1/surveys/**").permitAll()
                     .requestMatchers("/api/v1/users/**").authenticated()
                     .anyRequest().permitAll()
 //                .anyRequest().authenticated()
