@@ -32,7 +32,7 @@ import DailyDiaryPage from '@src/pages/DailyDiaryPage'
 import FindSimilarDogResultPage from '@src/pages/FindSimilarDogResultPage'
 import FillAdoptInfoPage from '@src/pages/FillAdoptInfoPage'
 import SaveDogsListPage from '@src/pages/SaveDogsListPage'
-import ChattingRoomContainerHj from '@src/components/Chat/ChattingRoomContainerHJ'
+import ChattingContainer from '@src/container/ChattingContainer.tsx'
 import { userAtom } from '@src/stores/atoms/user'
 import QuestionCreatePage from '@src/pages/QuestionCreatePage'
 import QuestionDetailPage from '@src/pages/QuestionDetailPage'
@@ -61,7 +61,7 @@ const AuthRoutes = () => (
     <Route path="/mypage/survey" element={<AdoptionSurveyPage />} />
     <Route path="/mypage/survey/done" element={<AdoptionSurveyDonePage />} />
     <Route path="/chat" element={<ChattingPage />} />
-    <Route path="/chat/:no" element={<ChattingRoomContainerHj />} />
+    <Route path="/chat/:no" element={<ChattingContainer />} />
     <Route path="/confirm/pawsitive" element={<ConfirmPawsitivePage />} />
     <Route path="/mypage/adoptionSurvey" element={<AdoptionSurveyPage />} />
     <Route path="/dictionary" element={<DictionaryListPage />} />
@@ -86,7 +86,6 @@ const HomeRoutes = () => (
     <Route path="*" element={<NotFoundPage />} />
     <Route path="/dogs" element={<DogListPage />} />
     <Route path="/dogs/:dogNo" element={<DogDetailPage />} />
-    <Route path="/chatroom" element={<ChattingPage />} />
   </Routes>
 )
 

@@ -20,7 +20,7 @@ const Container = styled.div`
 const DogDetailContainer = () => {
   const location = useLocation()
   const dogNo = location.state?.dogNo
-  const [dogDetail, setDogDetail] = useAtom(dogDetailAtom)
+  const [, setDogDetail] = useAtom(dogDetailAtom)
 
   const { data, isLoading } = useQuery<DogType | null>({
     queryKey: ['dogDetail'],
@@ -41,7 +41,7 @@ const DogDetailContainer = () => {
           <ShelterInfoSection />
           <TipSection />
           <SameShelterDogs />
-          <ChatStartButton dogNo={dogDetail.dogNo} />
+          <ChatStartButton />
         </>
       )}
     </Container>
