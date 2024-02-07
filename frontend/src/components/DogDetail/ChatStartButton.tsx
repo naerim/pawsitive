@@ -1,8 +1,8 @@
 import * as a from '@src/components/DogDetail/_style/ChatStartButtonStyle'
 import { useEffect, useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { fetchChatRooms } from '@src/apis/chat'
-import { ChatRoomType } from '@src/types/chatType'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { createChatRoom, fetchChatRooms } from '@src/apis/chat'
+import { ChatRoomType, CreateChatRoomParamsType } from '@src/types/chatType'
 import { useAtom } from 'jotai/index'
 import { userAtom } from '@src/stores/atoms/user'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -13,6 +13,8 @@ const ChatStartButton = () => {
   const navigate = useNavigate()
   const [chatRooms, setChatRooms] = useState<ChatRoomType[]>([])
   const [user] = useAtom(userAtom)
+  const [createChatRoomParams, setCreateChatRoomParams] =
+    useState<CreateChatRoomParamsType>()
 
   const { data, isLoading } = useQuery<ChatRoomType[]>({
     queryKey: ['fetchChatRooms'],
@@ -22,6 +24,7 @@ const ChatStartButton = () => {
   useEffect(() => {
     if (!isLoading && data) {
       setChatRooms(data)
+      setCreateChatRoomParams({ dogNo, userNo: user.userNo })
     }
   }, [isLoading, data, user.userNo, dogNo])
 
@@ -29,10 +32,15 @@ const ChatStartButton = () => {
     return chatRooms.some(chatRoom => chatRoom.dogNo === dogNo)
   }
 
+  const { mutate } = useMutation({
+    mutationKey: ['createChatRoom'],
+    mutationFn: createChatRoom,
+  })
+
   const handleClick = () => {
     if (doesChatRoomExist()) {
       navigate('/chatroom')
-    }
+    } else if (createChatRoomParams) mutate(createChatRoomParams)
   }
 
   return (
