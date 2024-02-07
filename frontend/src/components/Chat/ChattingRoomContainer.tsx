@@ -23,11 +23,11 @@ const ChattingRoomContainer = () => {
     console.log(`room Id:${no}`)
     console.log(client.current)
     client.current!.send(
-      '/pub/chat',
+      '/api/v1/chats/pub/chat',
       {},
       JSON.stringify({
         chatRoomNo: no,
-        userNo: 1,
+        senderNo: 1,
         message: inputMessage,
       }),
     )
@@ -35,16 +35,16 @@ const ChattingRoomContainer = () => {
   }
 
   const connectHandler = (mockId: string, mockName?: string) => {
-    const SockJs = SockJS('/ws/chat')
+    const SockJs = SockJS('http://localhost:8080/ws/chat')
     client.current = Stomp.over(() => SockJs)
     setChatMessageList([])
 
     client.current.connect(
       {},
       () => {
-        client.current?.subscribe(`/sub/rooms/${mockId}`, message => {
+        client.current?.subscribe(`/api/v1/chats/sub/rooms/${mockId}`, message => {
           setChatMessage(JSON.parse(message.body))
-          console.log(message)
+          console.log("수신: ",setChatMessageList)
         })
       },
       (error: any) => {

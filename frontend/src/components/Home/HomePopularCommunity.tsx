@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { fetchPopularCommunity } from '@src/apis/community'
 import { CommunityItemType } from '@src/types/components/CommunityType'
 import { Link } from 'react-router-dom'
+import { isArray } from 'chart.js/helpers'
 
 const HomePopularCommunity = () => {
   const { data, isLoading } = useQuery<CommunityItemType[]>({
@@ -17,7 +18,7 @@ const HomePopularCommunity = () => {
       <h.Title>가장 인기있는 게시물이에요.</h.Title>
       <h.Wrap>
         {!isLoading ? (
-          data &&
+          data && isArray(data) &&
           data.map(item => (
             <Link key={item.boardNo} to={`community/${item.boardNo}`}>
               <h.Item>

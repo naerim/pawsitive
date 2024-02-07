@@ -7,5 +7,6 @@ export const createRoom = async () => {
 
 export const getRoomList = async (userNo: number) => {
   const res = await publicRequest.get(`/chatrooms?userNo=${userNo}`)
+  console.log("res", res)
   return res.data
 }

@@ -29,4 +29,7 @@ public class ChatRoom {
     @Column(name = "dog_no")
     private int dogNo;
 
+    @Column(name = "user_no")
+    private int userNo;
+
 }
