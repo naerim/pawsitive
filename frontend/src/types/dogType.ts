@@ -13,6 +13,7 @@ export type DogType = {
   files: string[]
   sex: string
   neutralized: boolean
+  address: string
 }
 
 export type BasicDogType = {
