@@ -1,8 +1,11 @@
 import * as d from '@src/components/DogDetail/_style/DogFileSectionStyle'
 import { useNavigate } from 'react-router-dom'
+import { useAtom } from 'jotai'
+import { dogDetailAtom } from '@src/stores/atoms/dog'
 
 const DogFileSection = () => {
   const navigate = useNavigate()
+  const [dogDetail] = useAtom(dogDetailAtom)
 
   const settings = {
     dots: true,
@@ -39,12 +42,16 @@ const DogFileSection = () => {
         </div>
       </d.StyledSlider>
       <d.SliderBottom>
-        <d.Title>단풍이</d.Title>
-        <d.Desc>암컷 ∙ 중성화X ∙ 2023(년생) ∙ 믹스</d.Desc>
+        <d.Title>{dogDetail.name}</d.Title>
+        <d.Desc>
+          {dogDetail.sex === 'f' ? '수컷' : '암컷'} ∙{' '}
+          {dogDetail.neutralized ? 'X' : 'O'} ∙ {dogDetail.age}(년생) ∙{' '}
+          {dogDetail.kind}
+        </d.Desc>
       </d.SliderBottom>
       <d.EyeWrap>
         <img src="/icon/icon_eye.png" alt="" />
-        <span>22</span>
+        <span>{dogDetail.hit}</span>
       </d.EyeWrap>
       <d.ArrowWrap onClick={goDogList} role="presentation">
         <img src="/icon/icon_white_arrow_left.png" alt="" />
