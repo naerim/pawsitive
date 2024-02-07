@@ -22,10 +22,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 //        configuration.addAllowedOriginPattern("*");
         configuration.setAllowedOrigins(
             List.of("http://localhost:3000", "http://localhost:8080",
-                "https://i10c111.p.ssafy.io"));
+                "https://i10c111.p.ssafy.io", "https://c111pawsitive.netlify.app"));
         configuration.setAllowedOriginPatterns(
             List.of("http://localhost:3000/**", "http://localhost:8080/**",
-                "https://i10c111.p.ssafy.io/**"));
+                "https://i10c111.p.ssafy.io/**", "https://c111pawsitive.netlify.app/**"));
         configuration.setAllowedMethods(Collections.singletonList("*"));
         configuration.setAllowedHeaders(Collections.singletonList("*"));
 //        configuration.addExposedHeader(JwtTokenUtil.HEADER_STRING);

@@ -1,5 +1,6 @@
 package com.pawsitive.surveygroup.dto.request;
 
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
@@ -28,5 +29,8 @@ public class SurveyReq {
 
     @Range(min = 0, max = 4)
     private int q5;
+
+    @Size(max = 10)
+    private String participant;
 
 }

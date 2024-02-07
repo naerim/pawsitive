@@ -123,6 +123,11 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
             .fetch();
     }
 
+    @Override
+    public void updateHit(int dogNo) {
+        
+    }
+
 
     private JPQLQuery<DogDetailRes> getQueryDogDetailList() {
         return from(qDog).innerJoin(qDog.user, qUser).select(
