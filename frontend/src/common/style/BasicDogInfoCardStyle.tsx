@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 interface AdoptStatusProps {
-  status: string
+  $status: string
 }
 
 export const Container = styled.div`
@@ -35,12 +35,12 @@ export const AdoptStatus = styled.div<AdoptStatusProps>`
   position: absolute;
   width: fit-content;
   border-radius: 3px;
-  font-size: 11px;
+  font-size: 0.7em;
   padding: 2%;
   top: 6%;
   left: 8%;
   ${props =>
-    props.status === ' 공고중'
+    props.$status === ' 공고중'
       ? `background-color: #5B5B5B;
   color: #EAEAEA;`
       : ` background-color: #ff9232;
@@ -54,7 +54,7 @@ export const DogTextInfoContainer = styled.div`
 `
 
 export const DogName = styled.div`
-  font-size: 17px;
+  font-size: 1.1em;
   font-weight: 700;
   margin: 3% 0;
 `
@@ -65,5 +65,5 @@ export const SubInfo = styled.div`
   flex-direction: column;
   padding: 5% 2% 0 0;
   color: #818181;
-  font-size: 13px;
+  font-size: 0.8em;
 `

@@ -2,13 +2,14 @@ import * as h from '@src/components/style/HomeRecommendDogStyle'
 import LightColorMoveCard from '@src/common/LightColorMoveCard'
 import { useQuery } from '@tanstack/react-query'
 import { fetchRecommendDogs } from '@src/apis/dog'
-import { DogType } from '@src/types/dogType'
+import { DogListType } from '@src/types/dogType'
 
 const HomeRecommendDog = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['recommendDog'],
     queryFn: () => fetchRecommendDogs(2),
   })
+
   return (
     <h.Container>
       <h.SubTitle>나와 잘 맞는 강아지</h.SubTitle>
@@ -16,11 +17,10 @@ const HomeRecommendDog = () => {
       <h.Wrap>
         {!isLoading ? (
           data &&
-          data.map((item: DogType, index: number) => (
+          data.map((item: DogListType, index: number) => (
             <h.Item key={item.dogNo || index}>
-              {item.images && item.images.length > 0 && (
-                <img src={item.images[0]} alt="" />
-              )}
+              <img src={item.file} alt="" />
+
               <h.ItemTitle>{item.name}</h.ItemTitle>
               <h.ItemSubTitle>
                 {item.kind}, {item.age}살
