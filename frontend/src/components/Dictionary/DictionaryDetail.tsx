@@ -1,73 +1,119 @@
-import React from 'react'
-import * as c from '@src/components/style/DictionaryDetail'
 import { DictionaryItemType } from '@src/types/components/DictionaryType'
+import * as c from '@src/components/style/DictionaryDetail'
 
-interface DictionaryDetailProps {
-  item: DictionaryItemType | null
-}
+const DictionaryDetail = (props: { data: DictionaryItemType }) => {
+  const { data } = props
 
-const DictionaryDetail: React.FC<DictionaryDetailProps> = ({ item }) => {
-  if (!item) {
-    return <div>로딩 중...</div>
+  const setImageSrc = (category: string) => {
+    const imageUrls: Record<string, string[]> = {
+      펫티켓: ['/img/img_dog_poo.png', '/img/img_bag.png'],
+      질병정보: ['/img/img_popular_community.png', '/img/img_lope.png'],
+      행동교육: [
+        '/img/img_cage.png',
+        '/img/img_dog_medication.png',
+        '/img/img_bottle.png',
+      ],
+      애견상식: [
+        '/img/img_bowl.png',
+        '/img/img_can.png',
+        '/img/img_fish_bone.png',
+      ],
+    }
+
+    const images = imageUrls[category]
+    const randomIndex = Math.floor(Math.random() * images.length)
+    return images[randomIndex]
   }
 
-  const renderContent = (content: any) => {
-    return (
-      <c.DetailContainer>
-        <c.DetailTitle>{item.title}</c.DetailTitle>
-        {content.map((info: string, index: number) => (
-          <c.DetailInfo key={index}>{info}</c.DetailInfo>
-        ))}
-      </c.DetailContainer>
-    )
-  }
+  const parseContent = JSON.parse(data.content)
+  const commonContent = (
+    <c.wrap>
+      <c.Category>{data.contentCategoryName}</c.Category>
+      <c.Title>{data.title}</c.Title>
+    </c.wrap>
+  )
 
-  let contentRenderer: React.ReactNode
-
-  switch (item.contentCategoryName) {
+  switch (data.contentCategoryName) {
     case '펫티켓':
-      contentRenderer = renderContent([
-        `정보 : ${JSON.parse(item.content).description}`,
-        `부가 정보 : ${JSON.parse(item.content).remarks}`,
-      ])
-      break
+      return (
+        <div>
+          <c.ImageContainer>
+            <img src={setImageSrc(data.contentCategoryName)} alt="" />
+          </c.ImageContainer>
+          <c.Container>
+            {commonContent}
+            <c.InfoContainer>
+              <c.Desc>{parseContent.description}</c.Desc>
+              <c.Remarks>
+                <p>위반 시, 과태료 안내</p>
+                {
+                  parseContent.remarks
+                    .split(':')
+                    .filter((s: string) => s.trim() !== '')[1]
+                }
+              </c.Remarks>
+            </c.InfoContainer>
+          </c.Container>
+        </div>
+      )
     case '질병정보':
-      contentRenderer = renderContent([
-        `정보 : ${JSON.parse(item.content).description}`,
-        `증상 : ${JSON.parse(item.content).symptom}`,
-        `예방 : ${JSON.parse(item.content).prevent}`,
-      ])
-      break
+      return (
+        <div>
+          <c.ImageContainer>
+            <img src={setImageSrc(data.contentCategoryName)} alt="" />
+          </c.ImageContainer>
+          <c.Container>
+            {commonContent}
+            <c.InfoContainer>
+              <c.Desc>{parseContent.description}</c.Desc>
+              <c.Symptom>
+                <p>증상</p>
+                {parseContent.symptom
+                  .split('\n')
+                  .filter((s: string) => s.trim() !== '')
+                  .map((s: string) => (
+                    <c.SymptomItem key={`symptom-${s}`}>{s}</c.SymptomItem>
+                  ))}
+              </c.Symptom>
+              <c.Prevent>
+                <p>예방 방법</p>
+                {parseContent.prevent
+                  .split('\n')
+                  .filter((s: string) => s.trim() !== '')
+                  .map((p: string) => (
+                    <c.PreventItem key={`prevent-${p}`}>{p}</c.PreventItem>
+                  ))}
+              </c.Prevent>
+            </c.InfoContainer>
+          </c.Container>
+        </div>
+      )
     case '행동교육':
     case '애견상식':
-      contentRenderer = renderContent([
-        `정보 : ${JSON.parse(item.content).description}`,
-      ])
-      break
-    default:
-      contentRenderer = (
-        <c.DetailUnknownCategory>알 수 없는 카테고리</c.DetailUnknownCategory>
+      return (
+        <div>
+          <c.ImageContainer>
+            <img src={setImageSrc(data.contentCategoryName)} alt="" />
+          </c.ImageContainer>
+          <c.Container>
+            {commonContent}
+            <c.InfoContainer>
+              <c.Desc>
+                {parseContent.description
+                  .split('\n')
+                  .filter((s: string) => s.trim() !== '')
+                  .map((s: string) => (
+                    <c.DescItem key={`description-${s}`}>{s}</c.DescItem>
+                  ))}
+              </c.Desc>
+              <c.Remarks>{parseContent.remarks}</c.Remarks>
+            </c.InfoContainer>
+          </c.Container>
+        </div>
       )
-      break
+    default:
+      return <div>상세정보를 불러올 수 없습니다.</div>
   }
-
-  return <div>{contentRenderer}</div>
 }
 
 export default DictionaryDetail
-
-// // 1. 펫티켓
-// console.log(item.title)
-// console.log(JSON.parse(item.content).description)
-// console.log(JSON.parse(item.content).remarks)
-// // 2. 질병정보
-// console.log(item.title)
-// console.log(JSON.parse(item.content).description)
-// console.log(JSON.parse(item.content).symptom)
-// console.log(JSON.parse(item.content).prevent)
-// // 3. 행동교육
-// console.log(item.title)
-// console.log(JSON.parse(item.content).description)
-// // 4. 애견상식
-// console.log(item.title)
-// console.log(JSON.parse(item.content).description)
