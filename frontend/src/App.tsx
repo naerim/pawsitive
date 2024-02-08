@@ -19,7 +19,6 @@ import DogDetailPage from '@src/pages/DogDetailPage'
 import CreateDogPage from '@src/pages/CreateDogPage'
 import FindSimilarDogPage from '@src/pages/FindSimilarDogPage'
 import AdoptionSurveyPage from '@src/pages/AdoptionSurveyPage'
-import ChattingPage from '@src/pages/ChattingPage'
 import ConfirmPawsitivePage from '@src/pages/ConfirmPawsitivePage'
 import DictionaryListPage from '@src/pages/DictionaryListPage'
 import DictionaryDetailPage from '@src/pages/DictionaryDetailPage'
@@ -59,8 +58,7 @@ const AuthRoutes = () => (
     <Route path="/dogs/:dogNo" element={<DogDetailPage />} />
     <Route path="/mypage/survey" element={<AdoptionSurveyPage />} />
     <Route path="/mypage/survey/done" element={<AdoptionSurveyDonePage />} />
-    <Route path="/chat" element={<ChattingPage />} />
-    <Route path="/chat/:no" element={<ChattingContainer />} />
+    <Route path="/chatroom/:chatId" element={<ChattingContainer />} />
     <Route path="/confirm/pawsitive" element={<ConfirmPawsitivePage />} />
     <Route path="/mypage/adoptionSurvey" element={<AdoptionSurveyPage />} />
     <Route path="/dictionary" element={<DictionaryListPage />} />
