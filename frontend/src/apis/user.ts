@@ -9,7 +9,6 @@ import {
   LoginUserType,
   UpdateUserStageReqType,
 } from '@src/types/userType'
-import axios from 'axios'
 import { onSilentRefresh } from '@src/apis/silentRefresh'
 
 export const fetchAfterAdoptionUser = async () => {
@@ -65,8 +64,9 @@ export const onLoginSuccess = async (res: JwtTokenType) => {
   if (storage) {
     const currentUser = JSON.parse(storage)
     const userEmail = currentUser.email
-    axios.defaults.headers.common.Authorization = `${res.grantType} ${res.accessToken}`
+    publicRequest.defaults.headers.common.Authorization = `${res.grantType} ${res.accessToken}`
     document.cookie = `refreshToken = ${res.refreshToken}`
+
     setTimeout(
       () =>
         onSilentRefresh({
@@ -77,7 +77,7 @@ export const onLoginSuccess = async (res: JwtTokenType) => {
           grantType: res.grantType,
           accessToken: res.accessToken,
         }),
-      JWT_EXPIRY_TIME - 60000,
+      JWT_EXPIRY_TIME - 5000,
     )
   }
 }
@@ -100,9 +100,7 @@ export const loginUser = async (
 export const fetchLogout = async () => {
   return publicRequest
     .post('users/logout', 'q')
-    .then(res => {
-      res.data
-    })
+    .then(res => res.data)
     .catch(error => {
       console.log(error)
       throw new Error('로그아웃 에러')
@@ -111,5 +109,5 @@ export const fetchLogout = async () => {
 
 // 유저 stage 수정
 export const updateUserStage = async (data: UpdateUserStageReqType) => {
-  return publicRequest.patch('/users', data).then(res => res.data)
+  return publicRequest.post('/users/update', data).then(res => res.data)
 }

@@ -1,11 +1,7 @@
 import QuestionListContainer from '@src/container/QuestionListContainer'
 
 const questionListPage = () => {
-  return (
-    <div>
-      <QuestionListContainer />
-    </div>
-  )
+  return <QuestionListContainer />
 }
 
 export default questionListPage

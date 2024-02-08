@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 export const Container = styled.div`
   display: flex;
@@ -65,6 +65,11 @@ export const UserStage = styled.div`
     margin-right: 2px;
   }
 `
+const progressAnimation = keyframes`
+    0% {
+        width: 0;
+    }
+`
 
 export const Progress = styled.progress`
   width: 100%;
@@ -80,15 +85,37 @@ export const Progress = styled.progress`
   &::-webkit-progress-value {
     background-color: #ffa859;
     border-radius: 11px;
+    animation: ${progressAnimation} 5s ease forwards;
   }
 `
 
-export const Bottom = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8em;
+interface ProgressBarValueProps {
+  value: number
+}
 
-  .right {
-    font-weight: 300;
-  }
+export const ProgressBarWrapper = styled.div`
+  width: 100%;
+  height: 12px;
+  background-color: #fff;
+  border-radius: 11px;
+  overflow: hidden;
+  margin: 18px 0 10px 0;
+`
+
+export const ProgressBarValue = styled.div<ProgressBarValueProps>`
+  height: 100%;
+  width: ${({ value }) => value}%;
+  background-color: #ffa859;
+  border-radius: 11px;
+  animation: ${progressAnimation} 1.5s ease forwards;
+`
+
+export const Bottom = styled.div`
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8em;
+
+    .right {
+        font-weight: 300;
+
 `

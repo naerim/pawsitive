@@ -28,7 +28,6 @@ import CommunityInfoPage from '@src/pages/CommunityInfoPage'
 import CommunityDetailPage from '@src/pages/CommunityDetailPage'
 import CommunityCreatePage from '@src/pages/CommunityCreatePage'
 import AdoptionSurveyDonePage from '@src/pages/AdoptionSurveyDonePage'
-import DailyDiaryPage from '@src/pages/DailyDiaryPage'
 import FindSimilarDogResultPage from '@src/pages/FindSimilarDogResultPage'
 import FillAdoptInfoPage from '@src/pages/FillAdoptInfoPage'
 import SaveDogsListPage from '@src/pages/SaveDogsListPage'
@@ -66,7 +65,6 @@ const AuthRoutes = () => (
     <Route path="/mypage/adoptionSurvey" element={<AdoptionSurveyPage />} />
     <Route path="/dictionary" element={<DictionaryListPage />} />
     <Route path="/dictionary/:contentNo" element={<DictionaryDetailPage />} />
-    <Route path="/dailyDiary" element={<DailyDiaryPage />} />
     <Route path="/fill-adopt-info" element={<FillAdoptInfoPage />} />
     <Route path="/save-dogs-list" element={<SaveDogsListPage />} />
     <Route path="/questions" element={<QuestionListPage />} />

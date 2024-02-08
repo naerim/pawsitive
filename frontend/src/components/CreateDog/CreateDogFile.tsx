@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react'
 import { CreateDogFileType } from '@src/types/components/CreateDogType'
-import * as c from '@src/components/style/CommunityCreateFormStyle'
+import * as c from '@src/components/style/CreateDogFileStyle'
 
 const CreateDogFile = (props: CreateDogFileType) => {
   const { file, setFile } = props
@@ -61,7 +61,7 @@ const CreateDogFile = (props: CreateDogFileType) => {
   }
 
   return (
-    <c.ImgContainer>
+    <c.Container>
       <c.ImgLabel htmlFor="image">
         <c.ImgBox>
           <img className="img" src="/icon/icon_camera.png" alt="" />
@@ -85,7 +85,7 @@ const CreateDogFile = (props: CreateDogFileType) => {
           <c.Delete onClick={() => handleDeleteImage(id)}>X</c.Delete>
         </c.ImagePreview>
       ))}
-    </c.ImgContainer>
+    </c.Container>
   )
 }
 
