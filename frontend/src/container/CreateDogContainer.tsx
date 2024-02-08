@@ -43,7 +43,6 @@ const CreateDogContainer = () => {
     }
 
     mutate(formData)
-    console.log(formData.get('files'))
   }
 
   const renderStepComponent = () => {
@@ -53,12 +52,11 @@ const CreateDogContainer = () => {
       case 2:
         return (
           <>
+            <CreateDogMbti />
             <CreateDogNote />
             <CreateDogFile file={file} setFile={setFile} />
           </>
         )
-      case 3:
-        return <CreateDogMbti />
       default:
         return null
     }
@@ -82,19 +80,19 @@ const CreateDogContainer = () => {
         <c.BackButton onClick={handlePrevStep}>&lt;</c.BackButton>
         <c.Title>보호소 강아지 등록</c.Title>
       </c.TopContainer>
-      {renderStepComponent()}
-      <div>
-        {createDogStep < 3 && (
-          <c.Button type="button" onClick={handleNextStep}>
-            다음
-          </c.Button>
-        )}
-        <form onSubmit={handleCreateDog} encType="multipart/form-data">
-          {createDogStep === 3 && (
-            <c.Button type="submit">유기견 등록</c.Button>
+      <c.InputContainer>
+        {renderStepComponent()}
+        <c.ButtonContainer>
+          {createDogStep < 2 && (
+            <c.Button type="button" onClick={handleNextStep}>
+              다음
+            </c.Button>
           )}
-        </form>
-      </div>
+          <form onSubmit={handleCreateDog} encType="multipart/form-data">
+            {createDogStep === 2 && <c.Button type="submit">등록하기</c.Button>}
+          </form>
+        </c.ButtonContainer>
+      </c.InputContainer>
     </c.Container>
   )
 }
