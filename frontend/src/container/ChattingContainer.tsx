@@ -8,7 +8,7 @@ export type IChatDetail = {
 }
 
 const ChattingContainer = () => {
-  const { no } = useParams()
+  const { chatId } = useParams()
   const [client, setClient] = useState<Client | null>(null)
   const subscriptionRef = useRef<StompSubscription | null>(null)
 
@@ -32,7 +32,7 @@ const ChattingContainer = () => {
     stompClient.onConnect = () => {
       console.log('Stomp 연결이 열렸습니다.')
       subscriptionRef.current = stompClient.subscribe(
-        `/sub/rooms/${no}`,
+        `/sub/rooms/${chatId}`,
         message => {
           const receivedMessage = JSON.parse(message.body)
 
@@ -60,7 +60,7 @@ const ChattingContainer = () => {
   const sendMessage = () => {
     if (client && client.connected) {
       client.publish({
-        destination: `/pub/chat/${no}`,
+        destination: `/pub/chat/${chatId}`,
         body: JSON.stringify({ message: newMessage }),
       })
       setMessages(prevMessages => [...prevMessages, newMessage])
@@ -70,7 +70,7 @@ const ChattingContainer = () => {
 
   return (
     <div>
-      <h2>채팅 방 ({no})</h2>
+      <h2>채팅 방 ({chatId})</h2>
       <button type="button" onClick={() => connectHandler()}>
         연결
       </button>
