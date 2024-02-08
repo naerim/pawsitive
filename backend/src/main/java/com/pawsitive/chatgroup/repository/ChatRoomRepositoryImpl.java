@@ -5,6 +5,7 @@ import com.pawsitive.chatgroup.entity.Chat;
 import com.pawsitive.chatgroup.entity.ChatRoom;
 import com.pawsitive.chatgroup.entity.QChat;
 import com.pawsitive.chatgroup.entity.QChatRoom;
+import com.pawsitive.doggroup.entity.QDog;
 import com.pawsitive.usergroup.entity.QUser;
 import com.querydsl.core.types.Projections;
 import java.util.List;
@@ -16,17 +17,21 @@ public class ChatRoomRepositoryImpl extends QuerydslRepositorySupport
     private static final QChatRoom qChatRoom = QChatRoom.chatRoom;
     private static final QChat qChat = QChat.chat;
     private static final QUser qUser = QUser.user;
+    private static final QDog qDog = QDog.dog;
 
     public ChatRoomRepositoryImpl() {
         super(Chat.class);
     }
-
+    
     @Override
     public List<ChatRoom> getChatRoomsByOrderByCreatedAtDesc(int userNo) {
-        return from(qChatRoom)
-            .where(qChatRoom.userNo.eq(userNo))
-            .orderBy(qChatRoom.createdAt.desc())
-            .fetch();
+
+        return
+            from(qChatRoom, qDog)
+                .select(qChatRoom)
+                .where(qChatRoom.dogNo.eq(qDog.dogNo))
+                .where(qChatRoom.userNo.eq(userNo).or(qDog.user.userNo.eq(userNo)))
+                .fetch();
     }
 
     @Override
