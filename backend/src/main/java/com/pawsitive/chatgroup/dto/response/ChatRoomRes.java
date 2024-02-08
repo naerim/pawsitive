@@ -14,5 +14,6 @@ public class ChatRoomRes {
     private String chatRoomNo;
     private String name;
     private LocalDateTime createdAt;
+    private int creatorName;
     private int dogNo;
 }

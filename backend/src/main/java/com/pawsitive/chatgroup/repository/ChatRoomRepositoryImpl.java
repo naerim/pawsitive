@@ -23,12 +23,8 @@ public class ChatRoomRepositoryImpl extends QuerydslRepositorySupport
 
     @Override
     public List<ChatRoom> getChatRoomsByOrderByCreatedAtDesc(int userNo) {
-        return from(qChat)
-            .innerJoin(qChat.room, qChatRoom)
-            .innerJoin(qChat.user, qUser)
-            .select(qChat.room)
-            .where(qChat.user.userNo.eq(userNo))
-            .groupBy(qChat.room)
+        return from(qChatRoom)
+            .where(qChatRoom.userNo.eq(userNo))
             .orderBy(qChatRoom.createdAt.desc())
             .fetch();
     }
@@ -43,5 +39,16 @@ public class ChatRoomRepositoryImpl extends QuerydslRepositorySupport
             .where(qChatRoom.chatRoomNo.eq(roomNo))
             .orderBy(qChat.createdAt.desc())
             .fetch();
+    }
+
+    @Override
+    public boolean isDuplicateChatRoom(int userNo, int dogNo) {
+        Long cnt = from(qChatRoom)
+            .select(qChatRoom.chatRoomNo.count())
+            .where(qChatRoom.userNo.eq(userNo))
+            .where(qChatRoom.dogNo.eq(dogNo))
+            .fetchOne();
+
+        return cnt > 0;
     }
 }

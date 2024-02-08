@@ -42,7 +42,7 @@ public class Chat {
     private LocalDateTime createdAt;
 
     @Column(name = "is_read", insertable = false)
-    private boolean isRead;
+    private Boolean isRead;
 
 
 }

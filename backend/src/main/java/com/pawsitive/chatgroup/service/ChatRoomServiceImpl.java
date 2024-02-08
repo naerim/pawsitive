@@ -6,6 +6,7 @@ import com.pawsitive.chatgroup.dto.response.ChatRes;
 import com.pawsitive.chatgroup.dto.response.ChatRoomRes;
 import com.pawsitive.chatgroup.entity.ChatRoom;
 import com.pawsitive.chatgroup.exception.ChatRoomNotFoundException;
+import com.pawsitive.chatgroup.exception.DuplicateChatRoomException;
 import com.pawsitive.chatgroup.repository.ChatRoomRepository;
 import com.pawsitive.chatgroup.transfer.ChatGroupTransfer;
 import com.pawsitive.doggroup.entity.Dog;
@@ -38,12 +39,18 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 //            throw new InvalidRequestException();
 //        }
 
+        if (chatRoomRepository.isDuplicateChatRoom(req.getUserNo(), req.getDogNo())) {
+            throw new DuplicateChatRoomException();
+        }
+
         Dog dog = dogService.getDogEntityByDogNo(req.getDogNo());
 
         room.setChatRoomNo(getRandomRoomNo());
         room.setName(dog.getUser().getName() + "보호소 - " + dog.getName());
         room.setDogNo(req.getDogNo());
+        room.setUserNo(req.getUserNo());
         chatRoomRepository.save(room);
+
         ChatRoom chatRoom = getChatRoomEntityByChatRoomNo(room.getChatRoomNo());
         return ChatGroupTransfer.entityToDto(chatRoom);
     }
@@ -73,6 +80,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     /**
+     * !
      * 최근에 생성된 순으로 채팅방 전체 조회
      *
      * @return 최근에 생성된 순으로 조회한 채팅방 목록
