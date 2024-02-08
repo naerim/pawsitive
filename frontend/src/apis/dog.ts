@@ -1,8 +1,8 @@
 import { publicRequest } from '@src/hooks/requestMethods'
-import { BasicDogListParamsType, DogType } from '@src/types/dogType'
+import { BasicDogListParamsType } from '@src/types/dogType'
 import queryString from 'query-string'
 
-export const fetchDogDetails = async (dogNo: number): Promise<DogType> => {
+export const fetchDogDetails = async (dogNo: number) => {
   return publicRequest.get(`/dogs/${dogNo}`).then(res => res.data)
 }
 
