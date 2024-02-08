@@ -13,7 +13,6 @@ import NameInput from '@src/components/SignUp/NameInput'
 import RoleInput from '@src/components/SignUp/RoleInput'
 import EmailInput from '@src/components/SignUp/EmailInput'
 import PasswordInput from '@src/components/SignUp/PasswordInput'
-import PasswordCheckInput from '@src/components/SignUp/PasswordCheckInput'
 import BirthGenderInput from '@src/components/SignUp/BirthGenderInput'
 import AddressInput from '@src/components/SignUp/AddressInput'
 import * as s from '@src/container/style/SignUpContainerStyle'
@@ -29,6 +28,10 @@ const SignUpContainer = () => {
     mutationFn: async (data: JoinUserType) => joinUser(data),
   })
 
+  const handlePrevStep = () => {
+    setSignUpStep(prevStep => prevStep - 1)
+  }
+
   const handleNextStep = () => {
     setSignUpStep(prevStep => prevStep + 1)
   }
@@ -42,18 +45,16 @@ const SignUpContainer = () => {
       isDisabled = !signUpData.name || !!error.name
       break
     case 3:
-      isDisabled = !signUpData.email
-      break
-    case 4:
-      isDisabled = !signUpData.pw
-      break
-    case 5:
-      isDisabled = !pwCheck || !!error.pwCheck
-      break
-    case 6:
       isDisabled = !signUpData.birth || !signUpData.gender || !!error.dob
       break
-    case 7:
+    case 4:
+      isDisabled = !signUpData.email
+      // isDisabled = !signUpData.email || !!error.email || !!error.emailVerify
+      break
+    case 5:
+      isDisabled = !signUpData.pw || !pwCheck || !!error.pwCheck
+      break
+    case 6:
       isDisabled = !signUpData.address
       break
     default:
@@ -79,14 +80,12 @@ const SignUpContainer = () => {
       case 2:
         return <NameInput />
       case 3:
-        return <EmailInput />
-      case 4:
-        return <PasswordInput />
-      case 5:
-        return <PasswordCheckInput />
-      case 6:
         return <BirthGenderInput />
-      case 7:
+      case 4:
+        return <EmailInput />
+      case 5:
+        return <PasswordInput />
+      case 6:
         return <AddressInput />
       default:
         return null
@@ -95,19 +94,28 @@ const SignUpContainer = () => {
 
   return (
     <s.Container>
-      {renderStepComponent()}
-      <div>
-        {signUpStep < 7 && (
-          <s.Button onClick={handleNextStep} disabled={isDisabled}>
-            다음
-          </s.Button>
+      <s.BackButtonContainer>
+        {signUpStep > 1 && (
+          <button type="button" onClick={handlePrevStep}>
+            &lt;
+          </button>
         )}
-        {signUpStep === 7 && (
-          <s.Button onClick={handleSignUp} disabled={isDisabled}>
-            회원가입
-          </s.Button>
-        )}
-      </div>
+      </s.BackButtonContainer>
+      <s.InputContainer>
+        {renderStepComponent()}
+        <s.ButtonContainer>
+          {signUpStep < 6 && (
+            <s.Button onClick={handleNextStep} disabled={isDisabled}>
+              다음
+            </s.Button>
+          )}
+          {signUpStep === 6 && (
+            <s.Button onClick={handleSignUp} disabled={isDisabled}>
+              회원가입
+            </s.Button>
+          )}
+        </s.ButtonContainer>
+      </s.InputContainer>
     </s.Container>
   )
 }

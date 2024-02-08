@@ -20,7 +20,9 @@ const defaultMap = new kakao.maps.Map(document.createElement('div'), {
   level: 3,
 })
 
-const defaultMarker = new kakao.maps.Marker()
+const defaultMarker = new kakao.maps.Marker({
+  position: defaultMap.getCenter(),
+})
 
 const mapAtom = atom<kakao.maps.Map>(defaultMap)
 const markerAtom = atom<kakao.maps.Marker>(defaultMarker)
@@ -77,7 +79,8 @@ const CreateForm = () => {
         }
         const newMap = new kakao.maps.Map(container as HTMLElement, options)
         setMap(newMap)
-        setMarker(new kakao.maps.Marker())
+        // @ts-ignore
+        setMarker(new kakao.maps.Marker({}))
       }
     })
   }, [setMap, setMarker, location.latitude, location.longitude])
@@ -199,7 +202,6 @@ const CreateForm = () => {
             <img className="img" src="/icon/icon_close.png" alt="" />
           </c.CloseButton>
           <c.H1>글쓰기</c.H1>
-
           <c.SubmitButton type="submit">완료</c.SubmitButton>
         </c.Top>
         <ImageUpload
