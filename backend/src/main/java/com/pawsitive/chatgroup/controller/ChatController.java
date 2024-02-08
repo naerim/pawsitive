@@ -26,7 +26,7 @@ import org.springframework.web.socket.messaging.SessionUnsubscribeEvent;
 public class ChatController {
     private final ChatService chatService;
     private final SimpMessageSendingOperations template;
-    private static final String DESTINATION = "/sub/rooms/";
+    private static final String DESTINATION = "/rooms/";
 
     @MessageMapping("/chat/enter")
     @Operation(summary = "채팅방 입장", description = "채팅방에 입장합니다. 입장 경로: \'/pub/chat/enter\'",
@@ -92,7 +92,7 @@ public class ChatController {
     }
 
     @NotNull
-    private static String getDestinationUrl(ChatCreateReq chatReq) {
+    private String getDestinationUrl(ChatCreateReq chatReq) {
         return DESTINATION + chatReq.getChatRoomNo();
     }
 
