@@ -6,8 +6,10 @@ import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.doggroup.dto.response.AdoptedDogRes;
 import com.pawsitive.doggroup.service.AdoptDogService;
+import com.pawsitive.usergroup.dto.request.AdoptionReq;
 import com.pawsitive.usergroup.dto.request.SilentRefreshReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
+import com.pawsitive.usergroup.dto.response.AdoptionRes;
 import com.pawsitive.usergroup.dto.response.UpdateFieldRes;
 import com.pawsitive.usergroup.exception.UserNotLoginException;
 import com.pawsitive.usergroup.service.UserService;
@@ -184,6 +186,13 @@ public class UserController {
             .status(OK)
             .body(BaseResponseBody.of(OK, "로그아웃 완료"));
     }
+    
+//    @PostMapping("/adopt")
+//    public ResponseEntity<AdoptionRes> adoptDog(@RequestBody AdoptionReq req) {
+//
+//
+//        return
+//    }
 
 //    @PatchMapping("/{userId}")
 //    public ResponseEntity<UserUpdateRes> modifyUser(@PathVariable String userId,
