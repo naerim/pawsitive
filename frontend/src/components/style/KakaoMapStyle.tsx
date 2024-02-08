@@ -7,7 +7,7 @@ export const MapContainer = styled.div`
 
 export const Map = styled.div`
   width: auto;
-  height: 450px;
+  height: 755px;
   //border: 3px solid #fbefe6;
   border-radius: 10px;
 `
@@ -35,10 +35,13 @@ export const CurrentButton = styled.button`
 
 export const InfoWindow = styled.div`
   width: auto;
-  height: 100px;
+  height: 120px;
   //margin-top: 10px;
   //margin-bottom: 10px;
   padding: 10px;
-  background-color: #fffaf7;
+  background-color: white;
   border-radius: 10px;
+  z-index: 1;
+  position: relative;
+  margin-top: -130px;
 `

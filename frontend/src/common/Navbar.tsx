@@ -11,6 +11,7 @@ const Navbar = () => {
   if (locationNow.pathname === '/mypage/findSimilarDog/result') return null
   if (locationNow.pathname === '/mypage/findSimilarDog') return null
   if (locationNow.pathname === '/signUp') return null
+  if (locationNow.pathname === '/community/map') return null
 
   return (
     <n.Container>
