@@ -80,7 +80,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
      * @return
      */
     @Override
-    public List<ChatRes> getChatHistoryByChatRoomNo(String chatRoomNo) {
+    public List<ChatRes> getChatHistoryByChatRoomNo(int chatRoomNo) {
         return chatRoomRepository.getChatHistoryByChatRoomNo(chatRoomNo);
     }
 
