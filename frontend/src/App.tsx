@@ -31,11 +31,11 @@ import AdoptionSurveyDonePage from '@src/pages/AdoptionSurveyDonePage'
 import FindSimilarDogResultPage from '@src/pages/FindSimilarDogResultPage'
 import FillAdoptInfoPage from '@src/pages/FillAdoptInfoPage'
 import SaveDogsListPage from '@src/pages/SaveDogsListPage'
-import ChattingContainer from '@src/container/ChattingContainer.tsx'
 import { userAtom } from '@src/stores/atoms/user'
 import QuestionCreatePage from '@src/pages/QuestionCreatePage'
 import QuestionDetailPage from '@src/pages/QuestionDetailPage'
 import QuestionListPage from '@src/pages/QuestionListPage'
+import ChattingRoomPage from '@src/pages/ChattingRoomPage'
 
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
@@ -60,7 +60,7 @@ const AuthRoutes = () => (
     <Route path="/mypage/survey" element={<AdoptionSurveyPage />} />
     <Route path="/mypage/survey/done" element={<AdoptionSurveyDonePage />} />
     <Route path="/chat" element={<ChattingPage />} />
-    <Route path="/chat/:no" element={<ChattingContainer />} />
+    <Route path="/chat/:no" element={<ChattingRoomPage />} />
     <Route path="/confirm/pawsitive" element={<ConfirmPawsitivePage />} />
     <Route path="/mypage/adoptionSurvey" element={<AdoptionSurveyPage />} />
     <Route path="/dictionary" element={<DictionaryListPage />} />
