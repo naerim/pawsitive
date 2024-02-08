@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -98,7 +97,7 @@ public class UserController {
      * @param req    수정할 값을 가지고 있는 요청 DTO 객체
      * @return OK 응답객체
      */
-    @PatchMapping("/field")
+    @PostMapping("/update")
     @Operation(summary = "유저 정보 수정하기",
         description = "로그인한 회원의 정보를 수정한다.",
         tags = {"03.User"},
