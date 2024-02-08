@@ -36,13 +36,13 @@ const ChatStartButton = () => {
   const handleClick = async () => {
     const currentChatRoomIndex = findChatRoomIndex()
 
-    if (currentChatRoomIndex !== -1) {
-      navigate(`/chatroom/${data[currentChatRoomIndex].id}`)
+    if (data && currentChatRoomIndex !== -1) {
+      navigate(`/chat/${data[currentChatRoomIndex].id}`)
     } else if (createChatRoomParams) {
       const createChatRoomResult = await createChatRoom(createChatRoomParams)
       console.log(createChatRoomResult)
       if (createChatRoomResult && createChatRoomResult.id) {
-        navigate(`/chatroom/${createChatRoomResult.id}`)
+        navigate(`/chat/${createChatRoomResult.id}`)
       }
     }
   }
