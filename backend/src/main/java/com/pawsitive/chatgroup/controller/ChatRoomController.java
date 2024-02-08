@@ -43,20 +43,6 @@ public class ChatRoomController {
             .body(chatRoomService.getChatRooms(userNo));
     }
 
-    @PostMapping
-    @Operation(summary = "채팅방 생성/등록", description = "채팅방을 생성/등록합니다.",
-        tags = {"06.ChatRoom"},
-        responses = {
-            @ApiResponse(responseCode = "201", description = "채팅방 등록 성공"),
-        }
-    )
-    public ResponseEntity<ChatRoomRes> createRoom(
-        @RequestBody ChatRoomCreateReq chatRoomCreateReq, Authentication authentication) {
-        return ResponseEntity
-            .status(CREATED)
-            .body(chatRoomService.createChatRoom(chatRoomCreateReq, authentication));
-    }
-
     @GetMapping("/{chatRoomNo}")
     @Operation(summary = "채팅방 채팅 이력 조회", description = "채팅방을 상세 조회합니다.",
         tags = {"06.ChatRoom"},
@@ -70,5 +56,20 @@ public class ChatRoomController {
             .status(OK)
             .body(chatRoomService.getChatHistoryByChatRoomNo(chatRoomNo));
     }
+
+    @PostMapping
+    @Operation(summary = "채팅방 생성/등록", description = "채팅방을 생성/등록합니다.",
+        tags = {"06.ChatRoom"},
+        responses = {
+            @ApiResponse(responseCode = "201", description = "채팅방 등록 성공"),
+        }
+    )
+    public ResponseEntity<ChatRoomRes> createRoom(
+        @RequestBody ChatRoomCreateReq chatRoomCreateReq, Authentication authentication) {
+        return ResponseEntity
+            .status(CREATED)
+            .body(chatRoomService.createChatRoom(chatRoomCreateReq, authentication));
+    }
+    
 
 }

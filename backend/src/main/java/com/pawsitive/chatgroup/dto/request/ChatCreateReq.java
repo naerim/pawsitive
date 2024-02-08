@@ -13,7 +13,7 @@ import lombok.ToString;
 @Setter
 public class ChatCreateReq {
 
-    private String chatRoomNo;
+    private int chatRoomNo;
     private int senderNo;
     private String message;
 
