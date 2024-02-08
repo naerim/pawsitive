@@ -14,7 +14,7 @@ import lombok.ToString;
 public class ChatCreateReq {
 
     private String chatRoomNo;
-    private int userNo;
+    private int senderNo;
     private String message;
 
 }

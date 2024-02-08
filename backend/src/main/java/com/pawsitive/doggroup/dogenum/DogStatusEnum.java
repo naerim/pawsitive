@@ -2,6 +2,10 @@ package com.pawsitive.doggroup.dogenum;
 
 import lombok.Getter;
 
+/**
+ * TODO 변경하기
+ * 공고중, 입양완료
+ */
 @Getter
 public enum DogStatusEnum {
     TODO("공고 중", 0),
