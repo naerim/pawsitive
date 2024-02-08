@@ -25,7 +25,9 @@ const HomeProgressBar = (props: ProgressBarType) => {
           </h.UserStage>
         </h.TopRightWrap>
       </h.Top>
-      <h.Progress value={33 * currentStage} max="100" />
+      <h.ProgressBarWrapper>
+        <h.ProgressBarValue value={33 * currentStage} />
+      </h.ProgressBarWrapper>
       <h.Bottom>
         <div className="left">다음 단계까지 기다리는 중</div>
         <div className="right">{currentStage}/3</div>
