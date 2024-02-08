@@ -12,6 +12,5 @@ export const fetchChatRooms = async (
 export const createChatRoom = async (
   chatRoomParams: CreateChatRoomParamsType,
 ): Promise<ChatRoomType> => {
-  console.log(chatRoomParams)
   return publicRequest.post(`/chatrooms`, chatRoomParams).then(res => res.data)
 }
