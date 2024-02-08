@@ -1,6 +1,7 @@
 package com.pawsitive.chatgroup.controller;
 
 import com.pawsitive.chatgroup.dto.request.ChatCreateReq;
+import com.pawsitive.chatgroup.dto.response.ChatRes;
 import com.pawsitive.chatgroup.service.ChatService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -51,8 +52,8 @@ public class ChatController {
     )
     public void sentChat(@Payload ChatCreateReq chatReq) {
         log.info("chatReq: {}", chatReq.toString());
-        chatService.createChat(chatReq);
-        template.convertAndSend(DESTINATION + chatReq.getChatRoomNo(), chatReq);
+        ChatRes chatRes = chatService.createChat(chatReq);
+        template.convertAndSend(DESTINATION + chatReq.getChatRoomNo(), chatRes);
     }
 
     @EventListener
