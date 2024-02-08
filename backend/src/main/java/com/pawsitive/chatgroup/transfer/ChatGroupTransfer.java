@@ -10,6 +10,7 @@ public class ChatGroupTransfer {
         ChatRoomRes res = new ChatRoomRes();
         res.setName(chatRoom.getName());
         res.setChatRoomNo(chatRoom.getChatRoomNo());
+        res.setId(chatRoom.getId());
         res.setDogNo(chatRoom.getDogNo());
         res.setCreatedAt(chatRoom.getCreatedAt());
         return res;

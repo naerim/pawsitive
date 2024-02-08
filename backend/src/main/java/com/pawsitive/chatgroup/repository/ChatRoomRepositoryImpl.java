@@ -30,13 +30,13 @@ public class ChatRoomRepositoryImpl extends QuerydslRepositorySupport
     }
 
     @Override
-    public List<ChatRes> getChatHistoryByChatRoomNo(String roomNo) {
+    public List<ChatRes> getChatHistoryByChatRoomNo(String id) {
         return from(qChat)
             .innerJoin(qChat.room, qChatRoom)
             .innerJoin(qChat.user, qUser)
-            .select(Projections.constructor(ChatRes.class, qChat.chatNo, qUser.name,
+            .select(Projections.constructor(ChatRes.class, qChat.chatNo, qUser.userNo, qUser.name,
                 qUser.image, qChat.message, qChat.createdAt, qChat.isRead))
-            .where(qChatRoom.chatRoomNo.eq(roomNo))
+            .where(qChatRoom.id.eq(id))
             .orderBy(qChat.createdAt.desc())
             .fetch();
     }

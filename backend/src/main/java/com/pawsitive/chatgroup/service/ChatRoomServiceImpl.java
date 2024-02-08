@@ -6,12 +6,12 @@ import com.pawsitive.chatgroup.dto.response.ChatRes;
 import com.pawsitive.chatgroup.dto.response.ChatRoomRes;
 import com.pawsitive.chatgroup.entity.ChatRoom;
 import com.pawsitive.chatgroup.exception.ChatRoomNotFoundException;
-import com.pawsitive.chatgroup.exception.DuplicateChatRoomException;
 import com.pawsitive.chatgroup.repository.ChatRoomRepository;
 import com.pawsitive.chatgroup.transfer.ChatGroupTransfer;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.service.DogService;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -39,13 +39,18 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 //            throw new InvalidRequestException();
 //        }
 
-        if (chatRoomRepository.isDuplicateChatRoom(req.getUserNo(), req.getDogNo())) {
-            throw new DuplicateChatRoomException();
+
+        Optional<ChatRoom> existChatRoom =
+            chatRoomRepository.findChatRoomByUserNoAndDogNo(req.getUserNo(),
+                req.getDogNo());
+
+        if (existChatRoom.isPresent()) {
+            return ChatGroupTransfer.entityToDto(existChatRoom.get());
         }
 
         Dog dog = dogService.getDogEntityByDogNo(req.getDogNo());
 
-        room.setChatRoomNo(getRandomRoomNo());
+        room.setId(getRandomRoomNo());
         room.setName(dog.getUser().getName() + "보호소 - " + dog.getName());
         room.setDogNo(req.getDogNo());
         room.setUserNo(req.getUserNo());
@@ -63,7 +68,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     @Override
-    public ChatRoom getChatRoomEntityByChatRoomNo(String chatRoomNo) {
+    public ChatRoom getChatRoomEntityByChatRoomNo(int chatRoomNo) {
         return chatRoomRepository.findByChatRoomNo(chatRoomNo)
             .orElseThrow(ChatRoomNotFoundException::new);
     }
