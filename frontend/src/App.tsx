@@ -34,6 +34,7 @@ import { userAtom } from '@src/stores/atoms/user'
 import QuestionCreatePage from '@src/pages/QuestionCreatePage'
 import QuestionDetailPage from '@src/pages/QuestionDetailPage'
 import QuestionListPage from '@src/pages/QuestionListPage'
+import ChattingRoomPage from '@src/pages/ChattingRoomPage'
 import ChattingPage from '@src/pages/ChattingPage'
 
 // 로그인된 경우 접근할 수 있는 url
@@ -58,6 +59,8 @@ const AuthRoutes = () => (
     <Route path="/dogs/:dogNo" element={<DogDetailPage />} />
     <Route path="/mypage/survey" element={<AdoptionSurveyPage />} />
     <Route path="/mypage/survey/done" element={<AdoptionSurveyDonePage />} />
+    <Route path="/chat" element={<ChattingPage />} />
+    <Route path="/chat/:no" element={<ChattingRoomPage />} />
     <Route path="/chatroom/:chatId" element={<ChattingPage />} />
     <Route path="/confirm/pawsitive" element={<ConfirmPawsitivePage />} />
     <Route path="/mypage/adoptionSurvey" element={<AdoptionSurveyPage />} />
