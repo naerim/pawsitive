@@ -13,7 +13,7 @@ const CreateDogNote = () => {
 
   return (
     <c.Container>
-      <div>추가정보</div>
+      <c.Title>특이사항</c.Title>
       <c.CustomTextarea
         value={createDogData.note}
         onChange={handleNoteChange}

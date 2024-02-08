@@ -32,26 +32,26 @@ const CreateDogInfo = () => {
   return (
     <s.Container>
       <s.InputContainer>
-        <s.Label htmlFor="name">이름</s.Label>
+        <s.Title htmlFor="name">이름</s.Title>
         <s.Input
           id="name"
           type="text"
           value={createDogData.name}
           onChange={handleNameChange}
-          placeholder="이름을 입력해주세요."
+          placeholder="이름을 입력해주세요"
         />
       </s.InputContainer>
       <s.InputContainer>
-        <s.Label htmlFor="age">추정 출생연도</s.Label>
+        <s.Title htmlFor="age">추정 출생연도</s.Title>
         <s.Input
           type="text"
-          value={createDogData.age !== 0 ? createDogData.age : ''}
+          value={createDogData.age !== 2021 ? createDogData.age : ''}
           onChange={handleAgeChange}
           placeholder="ex) 2023"
         />
       </s.InputContainer>
       <s.InputContainer>
-        <s.Label htmlFor="kind">품종</s.Label>
+        <s.Title htmlFor="kind">품종</s.Title>
         <s.Input
           type="text"
           value={createDogData.kind}
@@ -59,41 +59,42 @@ const CreateDogInfo = () => {
           placeholder="닮은 강아지 품종을 적어줘도 좋아요!"
         />
       </s.InputContainer>
-      <s.InputContainer>
-        <s.Label>성별</s.Label>
-        <s.RadioButtonContainer>
-          <s.RadioButton
-            $isSelected={createDogData.sex === 'M'}
-            onClick={() => handleSexChange('M')}
-          >
-            수컷
-          </s.RadioButton>
-          <s.RadioButton
-            $isSelected={createDogData.sex === 'F'}
-            onClick={() => handleSexChange('F')}
-          >
-            암컷
-          </s.RadioButton>
-        </s.RadioButtonContainer>
-      </s.InputContainer>
-
-      <s.InputContainer>
-        <s.Label>중성화 여부</s.Label>
-        <s.RadioButtonContainer>
-          <s.RadioButton
-            $isSelected={createDogData.isNaturalized}
-            onClick={() => handleIsNaturalizedChange(true)}
-          >
-            중성화 O
-          </s.RadioButton>
-          <s.RadioButton
-            $isSelected={!createDogData.isNaturalized}
-            onClick={() => handleIsNaturalizedChange(false)}
-          >
-            중성화 X
-          </s.RadioButton>
-        </s.RadioButtonContainer>
-      </s.InputContainer>
+      <s.TwoInputContainer>
+        <s.InputContainer>
+          <s.Title>성별</s.Title>
+          <s.ButtonContainer>
+            <s.Button
+              $isSelected={createDogData.sex === 'M'}
+              onClick={() => handleSexChange('M')}
+            >
+              수컷
+            </s.Button>
+            <s.Button
+              $isSelected={createDogData.sex === 'F'}
+              onClick={() => handleSexChange('F')}
+            >
+              암컷
+            </s.Button>
+          </s.ButtonContainer>
+        </s.InputContainer>
+        <s.InputContainer>
+          <s.Title>중성화 여부</s.Title>
+          <s.ButtonContainer>
+            <s.Button
+              $isSelected={createDogData.isNaturalized}
+              onClick={() => handleIsNaturalizedChange(true)}
+            >
+              중성화 O
+            </s.Button>
+            <s.Button
+              $isSelected={!createDogData.isNaturalized}
+              onClick={() => handleIsNaturalizedChange(false)}
+            >
+              중성화 X
+            </s.Button>
+          </s.ButtonContainer>
+        </s.InputContainer>
+      </s.TwoInputContainer>
     </s.Container>
   )
 }
