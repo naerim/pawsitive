@@ -1,6 +1,6 @@
 import * as a from '@src/components/DogDetail/_style/ChatStartButtonStyle'
 import { useEffect, useState } from 'react'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { createChatRoom, fetchChatRooms } from '@src/apis/chat'
 import { ChatRoomType, CreateChatRoomParamsType } from '@src/types/chatType'
 import { useAtom } from 'jotai/index'
@@ -25,22 +25,26 @@ const ChatStartButton = () => {
     if (!isLoading && data) {
       setChatRooms(data)
       setCreateChatRoomParams({ dogNo, userNo: user.userNo })
+      console.log(data)
     }
   }, [isLoading, data, user.userNo, dogNo])
 
-  const doesChatRoomExist = () => {
-    return chatRooms.some(chatRoom => chatRoom.dogNo === dogNo)
+  const findChatRoomIndex = () => {
+    return chatRooms.findIndex(chatRoom => chatRoom.dogNo === dogNo)
   }
 
-  const { mutate } = useMutation({
-    mutationKey: ['createChatRoom'],
-    mutationFn: createChatRoom,
-  })
+  const handleClick = async () => {
+    const currentChatRoomIndex = findChatRoomIndex()
 
-  const handleClick = () => {
-    if (doesChatRoomExist()) {
-      navigate('/chatroom')
-    } else if (createChatRoomParams) mutate(createChatRoomParams)
+    if (currentChatRoomIndex !== -1) {
+      navigate(`/chatroom/${data[currentChatRoomIndex].id}`)
+    } else if (createChatRoomParams) {
+      const createChatRoomResult = await createChatRoom(createChatRoomParams)
+      console.log(createChatRoomResult)
+      if (createChatRoomResult && createChatRoomResult.id) {
+        navigate(`/chatroom/${createChatRoomResult.id}`)
+      }
+    }
   }
 
   return (

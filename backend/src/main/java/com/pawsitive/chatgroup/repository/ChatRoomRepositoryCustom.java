@@ -9,6 +9,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 public interface ChatRoomRepositoryCustom {
     List<ChatRoom> getChatRoomsByOrderByCreatedAtDesc(int userNo);
 
-    List<ChatRes> getChatHistoryByChatRoomNo(String roomNo);
+    List<ChatRes> getChatHistoryByChatRoomNo(int roomNo);
 
+    boolean isDuplicateChatRoom(int userNo, int dogNo);
 }

@@ -1,10 +1,12 @@
-import QuestionList from '@src/components/Question/QuestionList'
+import QuestionListSection from '@src/components/Question/QuestionListSection'
+import * as q from '@src/container/style/QuestionListContainerStyle'
 
 const QuestionListContainer = () => {
   return (
-    <div>
-      <QuestionList />
-    </div>
+    <q.Container>
+      <div>오늘의 질문</div>
+      <QuestionListSection />
+    </q.Container>
   )
 }
 

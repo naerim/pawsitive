@@ -7,6 +7,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import com.pawsitive.auth.exception.JwtAuthenticationProcessingException;
+import com.pawsitive.chatgroup.exception.DuplicateChatRoomException;
 import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.common.exception.InvalidRequestException;
 import com.pawsitive.common.util.ErrorMessageUtil;
@@ -111,7 +112,7 @@ public class RestControllerAdvisor {
      * @param e 실제 발생한 예외객체입니다.
      * @return 에러메세지를 response entity 에 담아서 전송합니다.
      */
-    @ExceptionHandler(value = {DuplicateIdException.class})
+    @ExceptionHandler(value = {DuplicateIdException.class, DuplicateChatRoomException.class})
     public ResponseEntity<BaseResponseBody> conflictException409(RuntimeException e) {
 
         return ResponseEntity.status(CONFLICT).body(BaseResponseBody.of(CONFLICT, e.getMessage()));

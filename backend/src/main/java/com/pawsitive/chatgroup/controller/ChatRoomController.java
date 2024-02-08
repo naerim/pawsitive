@@ -43,6 +43,20 @@ public class ChatRoomController {
             .body(chatRoomService.getChatRooms(userNo));
     }
 
+    @GetMapping("/{chatRoomNo}")
+    @Operation(summary = "채팅방 채팅 이력 조회", description = "채팅방을 상세 조회합니다.",
+        tags = {"06.ChatRoom"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "채팅방 고유 번호에 해당하는 채팅 이력 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "전달받은 채팅방 고유 번호에 해당하는 채팅방이 없음"),
+        }
+    )
+    public ResponseEntity<List<ChatRes>> getChatRoomByChatRoomNo(@PathVariable int chatRoomNo) {
+        return ResponseEntity
+            .status(OK)
+            .body(chatRoomService.getChatHistoryByChatRoomNo(chatRoomNo));
+    }
+
     @PostMapping
     @Operation(summary = "채팅방 생성/등록", description = "채팅방을 생성/등록합니다.",
         tags = {"06.ChatRoom"},
@@ -57,18 +71,5 @@ public class ChatRoomController {
             .body(chatRoomService.createChatRoom(chatRoomCreateReq, authentication));
     }
 
-    @GetMapping("/{chatRoomNo}")
-    @Operation(summary = "채팅방 채팅 이력 조회", description = "채팅방을 상세 조회합니다.",
-        tags = {"06.ChatRoom"},
-        responses = {
-            @ApiResponse(responseCode = "200", description = "채팅방 고유 번호에 해당하는 채팅 이력 조회 성공"),
-            @ApiResponse(responseCode = "400", description = "전달받은 채팅방 고유 번호에 해당하는 채팅방이 없음"),
-        }
-    )
-    public ResponseEntity<List<ChatRes>> getChatRoomByChatRoomNo(@PathVariable String chatRoomNo) {
-        return ResponseEntity
-            .status(OK)
-            .body(chatRoomService.getChatHistoryByChatRoomNo(chatRoomNo));
-    }
 
 }

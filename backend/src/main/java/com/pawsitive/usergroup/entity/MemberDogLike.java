@@ -1,6 +1,6 @@
-package com.pawsitive.chatgroup.entity;
+package com.pawsitive.usergroup.entity;
 
-import com.pawsitive.usergroup.entity.User;
+import com.pawsitive.doggroup.entity.Dog;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,7 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
 import java.time.LocalDateTime;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,30 +21,22 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "chat")
-public class Chat {
+@Table(name = "member_dog_like")
+public class MemberDogLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "chat_no")
-    private int chatNo;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_room_no")
-    private ChatRoom room;
+    @Column(name = "member_dog_like_no")
+    private int memberDogNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
-    private User user;
+    private Member member;
 
-    @Column(name = "message")
-    private String message;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dog_no")
+    private Dog dog;
 
     @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
-
-    @Column(name = "is_read", insertable = false)
-    private Boolean isRead;
-
-
 }

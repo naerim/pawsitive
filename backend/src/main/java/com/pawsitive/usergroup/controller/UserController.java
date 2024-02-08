@@ -6,8 +6,10 @@ import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.doggroup.dto.response.AdoptedDogRes;
 import com.pawsitive.doggroup.service.AdoptDogService;
+import com.pawsitive.usergroup.dto.request.AdoptionReq;
 import com.pawsitive.usergroup.dto.request.SilentRefreshReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
+import com.pawsitive.usergroup.dto.response.AdoptionRes;
 import com.pawsitive.usergroup.dto.response.UpdateFieldRes;
 import com.pawsitive.usergroup.exception.UserNotLoginException;
 import com.pawsitive.usergroup.service.UserService;
@@ -19,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -98,7 +99,7 @@ public class UserController {
      * @param req    수정할 값을 가지고 있는 요청 DTO 객체
      * @return OK 응답객체
      */
-    @PatchMapping
+    @PostMapping("/update")
     @Operation(summary = "유저 정보 수정하기",
         description = "로그인한 회원의 정보를 수정한다.",
         tags = {"03.User"},
@@ -185,6 +186,13 @@ public class UserController {
             .status(OK)
             .body(BaseResponseBody.of(OK, "로그아웃 완료"));
     }
+    
+//    @PostMapping("/adopt")
+//    public ResponseEntity<AdoptionRes> adoptDog(@RequestBody AdoptionReq req) {
+//
+//
+//        return
+//    }
 
 //    @PatchMapping("/{userId}")
 //    public ResponseEntity<UserUpdateRes> modifyUser(@PathVariable String userId,

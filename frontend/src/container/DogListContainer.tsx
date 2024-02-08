@@ -13,7 +13,7 @@ const DogListContainer = () => {
       sort: ['string'],
     })
   const [basicDogList, setBasicDogList] = useState<DogListType[]>([])
-  const [totalPageCnt, setTotalPageCnt] = useState(1)
+  const [totalPageCnt, setTotalPageCnt] = useState(7)
 
   const { data, isLoading, isFetching } = useQuery<DogListType[]>({
     queryKey: ['basicDogList', basicDogListParams],
