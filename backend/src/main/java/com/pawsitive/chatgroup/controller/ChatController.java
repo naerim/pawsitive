@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.MessageDeliveryException;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -26,7 +25,8 @@ import org.springframework.web.socket.messaging.SessionUnsubscribeEvent;
 public class ChatController {
     private final ChatService chatService;
     private final SimpMessageSendingOperations template;
-    private static final String DESTINATION = "/rooms/";
+
+    private final String DESTINATION = "/api/v1/chats/sub/rooms/";
 
     @MessageMapping("/chat/enter")
     @Operation(summary = "채팅방 입장", description = "채팅방에 입장합니다. 입장 경로: \'/pub/chat/enter\'",
@@ -38,7 +38,7 @@ public class ChatController {
     public void enterChatRoom(@Payload ChatCreateReq chatReq, Principal principal) {
         log.info("chatReq: {}, enter user: {}", chatReq.toString(), principal.getName());
         String msg = principal.getName() + "님이 채팅을 시작하였습니다.";
-        template.convertAndSend(getDestinationUrl(chatReq), msg);
+        template.convertAndSend(DESTINATION + chatReq, msg);
     }
 
 
@@ -52,7 +52,7 @@ public class ChatController {
     public void sentChat(@Payload ChatCreateReq chatReq) {
         log.info("chatReq: {}", chatReq.toString());
         chatService.createChat(chatReq);
-        template.convertAndSend(getDestinationUrl(chatReq), chatReq);
+        template.convertAndSend(DESTINATION + chatReq, chatReq);
     }
 
     @EventListener
@@ -77,7 +77,7 @@ public class ChatController {
         assert destination != null;
         if (destination.equals(DESTINATION)) {
             String msg = event.getUser().getName() + "님이 채팅방에 입장하였습니다.";
-            template.convertAndSend(DESTINATION, msg);
+            template.convertAndSend(destination, msg);
         }
     }
 
@@ -87,13 +87,8 @@ public class ChatController {
         assert destination != null;
         if (destination.equals(DESTINATION)) {
             String msg = event.getUser().getName() + "님이 채팅방에서 퇴장하였습니다.";
-            template.convertAndSend(DESTINATION, msg);
+            template.convertAndSend(destination, msg);
         }
-    }
-
-    @NotNull
-    private String getDestinationUrl(ChatCreateReq chatReq) {
-        return DESTINATION + chatReq.getChatRoomNo();
     }
 
 }
