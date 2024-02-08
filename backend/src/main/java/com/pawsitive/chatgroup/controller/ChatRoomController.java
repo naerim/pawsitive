@@ -51,7 +51,7 @@ public class ChatRoomController {
             @ApiResponse(responseCode = "400", description = "전달받은 채팅방 고유 번호에 해당하는 채팅방이 없음"),
         }
     )
-    public ResponseEntity<List<ChatRes>> getChatRoomByChatRoomNo(@PathVariable String chatRoomNo) {
+    public ResponseEntity<List<ChatRes>> getChatRoomByChatRoomNo(@PathVariable int chatRoomNo) {
         return ResponseEntity
             .status(OK)
             .body(chatRoomService.getChatHistoryByChatRoomNo(chatRoomNo));
@@ -70,6 +70,6 @@ public class ChatRoomController {
             .status(CREATED)
             .body(chatRoomService.createChatRoom(chatRoomCreateReq, authentication));
     }
-    
+
 
 }

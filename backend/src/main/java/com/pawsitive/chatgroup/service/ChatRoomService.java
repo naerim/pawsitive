@@ -12,7 +12,7 @@ public interface ChatRoomService {
 
     ChatRoom getChatRoomEntityByChatRoomNo(int chatRoomNo);
 
-    List<ChatRes> getChatHistoryByChatRoomNo(String chatRoomNo);
+    List<ChatRes> getChatHistoryByChatRoomNo(int chatRoomNo);
 
     List<ChatRoom> getChatRooms(int userNo);
 }
