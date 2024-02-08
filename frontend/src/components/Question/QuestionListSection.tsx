@@ -18,14 +18,12 @@ const QuestionListSection = () => {
 
   return (
     <q.Container>
-      <div>
-        {data &&
-          data.map((item: QuestionType) => (
-            <Link key={item.questionNo} to={`/questions/${item.questionNo}`}>
-              <QuestionListItem item={item} />
-            </Link>
-          ))}
-      </div>
+      {data &&
+        data.map((item: QuestionType) => (
+          <Link key={item.questionNo} to={`/questions/${item.questionNo}`}>
+            <QuestionListItem item={item} />
+          </Link>
+        ))}
     </q.Container>
   )
 }

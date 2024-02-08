@@ -1,19 +1,15 @@
 import { QuestionType } from '@src/types/components/QuestionType'
+import * as q from '@src/components/style/QuestionListItemStyle'
 
 const QuestionListItem = (props: { item: QuestionType }) => {
   const { item } = props
 
-  // answerContent
-  // createdAt
-  // questionContent
-  // questionNo
-
   return (
-    <div>
-      <div>{item.questionNo}번 질문</div>
-      <div>{item.questionContent}</div>
-      <div>{item.answerContent}</div>
-    </div>
+    <q.Container>
+      <q.Number>Q{item.questionNo}.</q.Number>
+      <q.Title>{item.questionContent}</q.Title>
+      <q.Icon src="/icon/icon_black_arrow_right.png" alt="" />
+    </q.Container>
   )
 }
 
