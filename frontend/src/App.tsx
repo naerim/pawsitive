@@ -19,7 +19,6 @@ import DogDetailPage from '@src/pages/DogDetailPage'
 import CreateDogPage from '@src/pages/CreateDogPage'
 import FindSimilarDogPage from '@src/pages/FindSimilarDogPage'
 import AdoptionSurveyPage from '@src/pages/AdoptionSurveyPage'
-import ChattingPage from '@src/pages/ChattingPage'
 import ConfirmPawsitivePage from '@src/pages/ConfirmPawsitivePage'
 import DictionaryListPage from '@src/pages/DictionaryListPage'
 import DictionaryDetailPage from '@src/pages/DictionaryDetailPage'
@@ -36,6 +35,7 @@ import QuestionCreatePage from '@src/pages/QuestionCreatePage'
 import QuestionDetailPage from '@src/pages/QuestionDetailPage'
 import QuestionListPage from '@src/pages/QuestionListPage'
 import ChattingRoomPage from '@src/pages/ChattingRoomPage'
+import ChattingPage from '@src/pages/ChattingPage'
 
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
@@ -61,6 +61,7 @@ const AuthRoutes = () => (
     <Route path="/mypage/survey/done" element={<AdoptionSurveyDonePage />} />
     <Route path="/chat" element={<ChattingPage />} />
     <Route path="/chat/:no" element={<ChattingRoomPage />} />
+    <Route path="/chatroom/:chatId" element={<ChattingPage />} />
     <Route path="/confirm/pawsitive" element={<ConfirmPawsitivePage />} />
     <Route path="/mypage/adoptionSurvey" element={<AdoptionSurveyPage />} />
     <Route path="/dictionary" element={<DictionaryListPage />} />

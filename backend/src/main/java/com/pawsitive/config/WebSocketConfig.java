@@ -21,17 +21,17 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         //클라이언트에서 보낸 메세지를 받을 prefix
-        registry.setApplicationDestinationPrefixes("/pub"); // 보내기
+        registry.setApplicationDestinationPrefixes("/api/v1/chats/pub"); // 보내기
         //해당 주소를 구독하고 있는 클라이언트들에게 메세지 전달
-        registry.enableSimpleBroker("/sub"); //받기
+        registry.enableSimpleBroker("/api/v1/chats/sub"); //받기
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws/chat")   //SockJS 연결 주소
             .addInterceptors(new StompHandshakeInterceptor())
-            .setAllowedOriginPatterns("http://localhost:3000",
-                "https://i10c111.p.ssafy.io:9000", "http://i10c111.p.ssafy.io:9000")
+            .setAllowedOriginPatterns("http://localhost:3000", "https://i10c111.p.ssafy.io:9000/**",
+                "http://i10c111.p.ssafy.io:9000/**")
             .withSockJS()
             .setDisconnectDelay(30 * 1000)
             .setClientLibraryUrl(

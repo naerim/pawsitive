@@ -125,7 +125,7 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
 
     @Override
     public void updateHit(int dogNo) {
-        
+
     }
 
 

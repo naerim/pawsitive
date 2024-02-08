@@ -1,11 +1,8 @@
 import { publicRequest } from '@src/hooks/requestMethods'
 import {
-  EmailCodeVerifyResponseType,
   EmailCodeVerifyType,
-  JoinUserResponseType,
   JoinUserType,
   JwtTokenType,
-  LoginUserResponseType,
   LoginUserType,
   UpdateUserStageReqType,
 } from '@src/types/userType'
@@ -16,9 +13,7 @@ export const fetchAfterAdoptionUser = async () => {
 }
 
 // 회원가입
-export const joinUser = async (
-  userData: JoinUserType,
-): Promise<JoinUserResponseType> => {
+export const joinUser = async (userData: JoinUserType) => {
   return publicRequest.post('/auth/join', userData).then(res => res.data)
 }
 
@@ -30,18 +25,14 @@ export const fetchEmailVerification = async (email: string) => {
 }
 
 // 인증 코드 검증
-export const verifyEmailCode = async (
-  emailData: EmailCodeVerifyType,
-): Promise<EmailCodeVerifyResponseType> => {
+export const verifyEmailCode = async (emailData: EmailCodeVerifyType) => {
   return publicRequest
     .post('/auth/email/verify', emailData)
     .then(res => res.data)
 }
 
 // 로그인 유저 정보 저장하는 api
-export const loginData = async (
-  loginDatas: LoginUserType,
-): Promise<LoginUserResponseType> => {
+export const loginData = async (loginDatas: LoginUserType) => {
   return publicRequest
     .post('auth/login', loginDatas)
     .then(res => {

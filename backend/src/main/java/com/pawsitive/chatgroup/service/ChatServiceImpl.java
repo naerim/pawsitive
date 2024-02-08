@@ -1,8 +1,10 @@
 package com.pawsitive.chatgroup.service;
 
 import com.pawsitive.chatgroup.dto.request.ChatCreateReq;
+import com.pawsitive.chatgroup.dto.response.ChatRes;
 import com.pawsitive.chatgroup.entity.Chat;
 import com.pawsitive.chatgroup.repository.ChatRepository;
+import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,12 +22,24 @@ public class ChatServiceImpl implements ChatService {
      * @return 생성한 채팅방
      */
     @Override
-    public Chat createChat(ChatCreateReq chatReq) {
+    public ChatRes createChat(ChatCreateReq chatReq) {
+        User user = userService.getUserByUserNo(chatReq.getSenderNo());
         Chat chat = new Chat();
         chat.setRoom(chatRoomService.getChatRoomEntityByChatRoomNo(chatReq.getChatRoomNo()));
-        chat.setUser(userService.getUserByUserNo(chatReq.getUserNo()));
+        chat.setUser(user);
         chat.setMessage(chatReq.getMessage());
-        return chatRepository.save(chat);
+        Chat savedChat = chatRepository.save(chat);
+
+        ChatRes chatRes = new ChatRes();
+        chatRes.setChatNo(savedChat.getChatNo());
+        chatRes.setUserNo(chatReq.getSenderNo());
+        chatRes.setUserName(user.getName());
+        chatRes.setUserImage(user.getImage());
+        chatRes.setMessage(chatReq.getMessage());
+        chatRes.setCreatedAt(savedChat.getCreatedAt());
+        chatRes.setIsRead(savedChat.getIsRead());
+        
+        return chatRes;
     }
 
 }

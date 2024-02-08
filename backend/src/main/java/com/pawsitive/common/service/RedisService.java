@@ -1,11 +1,14 @@
 package com.pawsitive.common.service;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class RedisService {
+
     private final RedisTemplate<String, Object> redisTemplate;
 
     @Transactional
@@ -66,9 +70,26 @@ public class RedisService {
         values.delete(key, hashKey);
     }
 
-    @Transactional
     public boolean checkExistsValue(String value) {
         return !value.equals("false");
+    }
+
+    @Transactional
+    public void addVisited(String key, Integer no) {
+        ListOperations<String, Object> alreadyVisitedList = redisTemplate.opsForList();
+        alreadyVisitedList.rightPush(key, no);
+    }
+
+    public List<Object> getVisited(String key) {
+        ListOperations<String, Object> alreadyVisitedList = redisTemplate.opsForList();
+        int listSize = getListSize(key);
+
+        return alreadyVisitedList.range(key, 0, listSize);
+    }
+
+    private int getListSize(String key) {
+        ListOperations<String, Object> list = redisTemplate.opsForList();
+        return Math.toIntExact(list.size(key));
     }
 
 }

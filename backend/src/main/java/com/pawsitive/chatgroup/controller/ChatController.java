@@ -1,7 +1,11 @@
 package com.pawsitive.chatgroup.controller;
 
 import com.pawsitive.chatgroup.dto.request.ChatCreateReq;
+import com.pawsitive.chatgroup.dto.response.ChatRes;
 import com.pawsitive.chatgroup.service.ChatService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,33 +14,46 @@ import org.springframework.messaging.MessageDeliveryException;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 import org.springframework.web.socket.messaging.SessionUnsubscribeEvent;
 
-//@Tag(name = "07.Chat")
-//@RestController
-@Controller
+@Tag(name = "09.Chat")
+@RestController
 @RequiredArgsConstructor
 @Slf4j
 public class ChatController {
     private final ChatService chatService;
     private final SimpMessageSendingOperations template;
-    private static final String DESTINATION = "/sub/rooms/";
 
-    @MessageMapping("/chat/enter") // 입장 경로: "/pub/chat/enter"
+    private final String DESTINATION = "/api/v1/chats/sub/rooms/";
+
+    @MessageMapping("/chat/enter")
+    @Operation(summary = "채팅방 입장", description = "채팅방에 입장합니다. 입장 경로: \'/pub/chat/enter\'",
+        tags = {"09.Chat"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "채팅방 입장 성공"),
+        }
+    )
     public void enterChatRoom(@Payload ChatCreateReq chatReq, Principal principal) {
         log.info("chatReq: {}, enter user: {}", chatReq.toString(), principal.getName());
         String msg = principal.getName() + "님이 채팅을 시작하였습니다.";
-        template.convertAndSend(DESTINATION + chatReq.getChatRoomNo(), msg);
+        template.convertAndSend(DESTINATION + chatReq.getChatRoomNo() + chatReq, msg);
     }
 
-    @MessageMapping("/chat") // 메시지 보내는 경로: "/pub/chat"
+
+    @MessageMapping("/chat")
+    @Operation(summary = "채팅 전송", description = "채팅을 전송합니다. 메시지 보내는 경로: \'/pub/chat\'",
+        tags = {"09.Chat"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "채팅 전송 성공"),
+        }
+    )
     public void sentChat(@Payload ChatCreateReq chatReq) {
         log.info("chatReq: {}", chatReq.toString());
-        chatService.createChat(chatReq);
-        template.convertAndSend(DESTINATION + chatReq.getChatRoomNo(), chatReq);
+        ChatRes chatRes = chatService.createChat(chatReq);
+        template.convertAndSend(DESTINATION + chatReq.getChatRoomNo(), chatRes);
     }
 
     @EventListener
@@ -61,7 +78,7 @@ public class ChatController {
         assert destination != null;
         if (destination.equals(DESTINATION)) {
             String msg = event.getUser().getName() + "님이 채팅방에 입장하였습니다.";
-            template.convertAndSend(DESTINATION, msg);
+            template.convertAndSend(destination, msg);
         }
     }
 
@@ -71,7 +88,7 @@ public class ChatController {
         assert destination != null;
         if (destination.equals(DESTINATION)) {
             String msg = event.getUser().getName() + "님이 채팅방에서 퇴장하였습니다.";
-            template.convertAndSend(DESTINATION, msg);
+            template.convertAndSend(destination, msg);
         }
     }
 
