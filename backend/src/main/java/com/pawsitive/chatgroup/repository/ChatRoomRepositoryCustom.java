@@ -11,4 +11,5 @@ public interface ChatRoomRepositoryCustom {
 
     List<ChatRes> getChatHistoryByChatRoomNo(String roomNo);
 
+    boolean isDuplicateChatRoom(int userNo, int dogNo);
 }
