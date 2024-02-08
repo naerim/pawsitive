@@ -7,6 +7,19 @@ interface ButtonProps {
 export const Container = styled.div`
   margin: 20px 30px;
 `
+
+export const SectionContainer = styled.div`
+  margin: 100px 0;
+  width: 100%;
+  height: auto;
+  text-align: center;
+`
+
+export const Image = styled.img`
+  width: 182px;
+  height: 182px;
+`
+
 export const Title = styled.h1`
   margin: 0 0 10px 0;
   font-weight: 450;
@@ -108,10 +121,10 @@ export const Question = styled.h1`
 `
 
 export const Explain = styled.div`
-  width: auto;
-  height: 200px;
-  margin-bottom: 2px;
-  font-size: 15px;
-  border: 1px solid #c8c8c8;
-  border-radius: 5px;
+    width: auto;
+    height: 200px;
+    margin-bottom: 2px;
+    font-size: 15px;
+    border: 1px solid #c8c8c8;
+    der-ra ius:;
 `

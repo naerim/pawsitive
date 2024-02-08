@@ -7,7 +7,6 @@ import CommunityFileSection from '@src/components/CommunityDetail/CommunityFileS
 import UserName from '@src/components/CommunityDetail/UserName'
 import CommunityContent from '@src/components/CommunityDetail/CommunityContent'
 import CommunityDetailMap from '@src/components/CommunityDetail/CommunityDetailMap'
-import TipSection from '@src/components/CommunityDetail/TipSection'
 
 const Container = styled.div`
   padding-bottom: 80px;
@@ -44,7 +43,6 @@ const CommunityDetailContainer = () => {
             latitude={data.board.latitude}
             longitude={data.board.longitude}
           />
-          <TipSection />
         </div>
       ) : (
         '로딩중'

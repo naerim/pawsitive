@@ -1,12 +1,15 @@
+import KakaoMap from '@src/components/Community/KakaoMap'
 import { useNavigate } from 'react-router-dom'
-import CommunityListContainer from '@src/container/CommunityListContainer'
 import * as c from '@src/container/style/CommunityListInfoContainerStyle'
+import { useAtomValue } from 'jotai'
+import { CommunityListAtom } from '@src/stores/atoms/community'
 
-const CommunityInfoContainer = () => {
+const CommunityMapContainer = () => {
   const navigate = useNavigate()
+  const communityListValue = useAtomValue(CommunityListAtom)
 
   const isMapChange = () => {
-    navigate('/community/map')
+    navigate('/community')
   }
 
   const goCreateCommunity = () => navigate('/community/create')
@@ -15,7 +18,7 @@ const CommunityInfoContainer = () => {
     <c.Container>
       <c.Header>
         <c.HeaderButton type="button" onClick={isMapChange}>
-          지도보기
+          목록보기
         </c.HeaderButton>
         <c.CreateButton type="button" onClick={goCreateCommunity}>
           작성하기
@@ -23,10 +26,10 @@ const CommunityInfoContainer = () => {
       </c.Header>
 
       <div>
-        <CommunityListContainer />
+        <KakaoMap dummyData={communityListValue} />
       </div>
     </c.Container>
   )
 }
 
-export default CommunityInfoContainer
+export default CommunityMapContainer

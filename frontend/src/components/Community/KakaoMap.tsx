@@ -10,7 +10,7 @@ import Locations from '@src/components/Community/Locations'
 import CommunityCard from '@src/components/CommunityList/CommunityListItem'
 import { LocationType } from '@src/types/propsType'
 import { CommunityItemType } from '@src/types/components/CommunityType'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 declare global {
   interface Window {
@@ -22,6 +22,7 @@ const KakaoMap = (props: { dummyData: CommunityItemType[] }) => {
   const { dummyData } = props
   const mapRef = useRef<kakao.maps.Map>(null)
   const location: LocationType | string = Locations()
+  const navigate = useNavigate()
   const [selectedMarker, setSelectedMarker] =
     useState<kakao.maps.Marker | null>(null)
 
@@ -81,12 +82,16 @@ const KakaoMap = (props: { dummyData: CommunityItemType[] }) => {
     kakao.maps.load(() => initMap())
   }, [mapRef, location, initMap])
 
+  const handleMarkerLink = (boardNo: number) => {
+    navigate(`/community/${boardNo}`)
+  }
+
   return (
     <m.Container>
       <m.MapContainer>
         <m.Map id="map" />
         <m.CurrentButton onClick={() => initMap()}>
-          <img className="img" src="public/icon/icon_locate.png" alt="locate" />
+          <img className="img" src="/icon/icon_locate.png" alt="locate" />
         </m.CurrentButton>
       </m.MapContainer>
       {selectedMarker && (
@@ -96,9 +101,12 @@ const KakaoMap = (props: { dummyData: CommunityItemType[] }) => {
             data =>
               // 예제: 마커의 타이틀이 게시글의 제목과 일치하면 렌더링
               selectedMarker.getTitle() === data.title && (
-                <Link key={data.boardNo} to={`${data.boardNo}`}>
+                <div
+                  key={data.boardNo}
+                  onClick={() => handleMarkerLink(data.boardNo)}
+                >
                   <CommunityCard data={data} />
-                </Link>
+                </div>
               ),
           )}
         </m.InfoWindow>

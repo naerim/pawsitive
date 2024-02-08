@@ -4,7 +4,12 @@ export const Container = styled.div``
 
 export const BackButtonContainer = styled.div`
   width: 100%;
-  border-bottom: 3.5px solid rgba(128, 128, 128, 0.5);
+  border-bottom: 3.5px solid rgb(255, 212, 175);
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
 
   img {
     width: 26px;

@@ -5,9 +5,12 @@ import CommunityListSection from '@src/components/CommunityList/CommunityListSec
 import { useQuery } from '@tanstack/react-query'
 import { fetchCommunityList } from '@src/apis/community'
 import { CommunityResType } from '@src/types/communityType'
+import { CommunityListAtom } from '@src/stores/atoms/community'
+import { useSetAtom } from 'jotai/index'
 
 const CommunityListContainer = () => {
   const [category, setCategory] = useState(0)
+  const setcommunityList = useSetAtom(CommunityListAtom)
 
   // 무한 스크롤 아직 구현 못함
   const { data, isLoading, refetch } = useQuery<CommunityResType>({
@@ -21,6 +24,12 @@ const CommunityListContainer = () => {
       }),
   })
 
+  useEffect(() => {
+    if (data) {
+      const listValue = data.content
+      setcommunityList(listValue)
+    }
+  }, [data])
   // const { data, fetchNextPage, hasNextPage, status, refetch } =
   //   useInfiniteQuery({
   //     queryKey: ['communityList'],
