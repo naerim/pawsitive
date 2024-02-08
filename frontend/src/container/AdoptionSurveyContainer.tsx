@@ -23,12 +23,18 @@ import SurveyQuestionNo17 from '@src/components/AdoptionSurvey/SurveyQuestionNo1
 import SurveyQuestionNo18 from '@src/components/AdoptionSurvey/SurveyQuestionNo18'
 import SurveyQuestionNo19 from '@src/components/AdoptionSurvey/SurveyQuestionNo19'
 import SurveyQuestionNo20 from '@src/components/AdoptionSurvey/SurveyQuestionNo20'
+import SurveyQuestionSection1 from '@src/components/AdoptionSurvey/SurveyQuestionSection1'
+import SurveyQuestionSection2 from '@src/components/AdoptionSurvey/SurveyQuestionSection2'
 
 const AdoptionSurveyContainer = () => {
   const [surveyStep, setSurveyStep] = useAtom(surveyStepAtom)
   const setUser = useSetAtom(userAtom)
   const navigate = useNavigate()
   // const surveyData = useAtomValue(surveyDataAtom)
+
+  const handlePrevPage = () => {
+    navigate(-1)
+  }
 
   const handlePrevStep = () => {
     setSurveyStep(prevStep => prevStep - 1)
@@ -47,44 +53,48 @@ const AdoptionSurveyContainer = () => {
   const renderStepComponent = () => {
     switch (surveyStep) {
       case 1:
-        return <SurveyQuestionNo1 />
+        return <SurveyQuestionSection1 />
       case 2:
-        return <SurveyQuestionNo2 />
+        return <SurveyQuestionNo1 />
       case 3:
-        return <SurveyQuestionNo3 />
+        return <SurveyQuestionNo2 />
       case 4:
-        return <SurveyQuestionNo4 />
+        return <SurveyQuestionNo3 />
       case 5:
-        return <SurveyQuestionNo5 />
+        return <SurveyQuestionNo4 />
       case 6:
-        return <SurveyQuestionNo6 />
+        return <SurveyQuestionNo5 />
       case 7:
-        return <SurveyQuestionNo7 />
+        return <SurveyQuestionNo6 />
       case 8:
-        return <SurveyQuestionNo8 />
+        return <SurveyQuestionNo7 />
       case 9:
-        return <SurveyQuestionNo9 />
+        return <SurveyQuestionNo8 />
       case 10:
-        return <SurveyQuestionNo10 />
+        return <SurveyQuestionSection2 />
       case 11:
-        return <SurveyQuestionNo11 />
+        return <SurveyQuestionNo9 />
       case 12:
-        return <SurveyQuestionNo12 />
+        return <SurveyQuestionNo10 />
       case 13:
-        return <SurveyQuestionNo13 />
+        return <SurveyQuestionNo11 />
       case 14:
-        return <SurveyQuestionNo14 />
+        return <SurveyQuestionNo12 />
       case 15:
-        return <SurveyQuestionNo15 />
+        return <SurveyQuestionNo13 />
       case 16:
-        return <SurveyQuestionNo16 />
+        return <SurveyQuestionNo14 />
       case 17:
-        return <SurveyQuestionNo17 />
+        return <SurveyQuestionNo15 />
       case 18:
-        return <SurveyQuestionNo18 />
+        return <SurveyQuestionNo16 />
       case 19:
-        return <SurveyQuestionNo19 />
+        return <SurveyQuestionNo17 />
       case 20:
+        return <SurveyQuestionNo18 />
+      case 21:
+        return <SurveyQuestionNo19 />
+      case 22:
         return <SurveyQuestionNo20 />
 
       default:
@@ -95,10 +105,18 @@ const AdoptionSurveyContainer = () => {
   return (
     <c.Container>
       <c.BackButtonContainer>
-        {surveyStep > 1 && (
+        {surveyStep > 1 ? (
           <c.BackButton
             type="button"
             onClick={handlePrevStep}
+            aria-label="Previous Step"
+          >
+            <img src="/icon/icon_black_arrow_left.png" alt="" />
+          </c.BackButton>
+        ) : (
+          <c.BackButton
+            type="button"
+            onClick={handlePrevPage}
             aria-label="Previous Step"
           >
             <img src="/icon/icon_black_arrow_left.png" alt="" />
@@ -110,10 +128,10 @@ const AdoptionSurveyContainer = () => {
         {renderStepComponent()}
 
         <c.ButtonContainer>
-          {surveyStep < 20 && (
+          {surveyStep < 22 && (
             <c.Button onClick={handleNextStep}>다음</c.Button>
           )}
-          {surveyStep === 20 && (
+          {surveyStep === 22 && (
             <c.Button onClick={goDone}>설문 작성 완료</c.Button>
           )}
         </c.ButtonContainer>

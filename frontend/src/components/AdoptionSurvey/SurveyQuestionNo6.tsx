@@ -5,7 +5,7 @@ import { useSetAtom } from 'jotai/index'
 
 const SurveyQuestionNo6 = () => {
   const setSurveyData = useSetAtom(surveyDataAtom)
-  const [selectedValue, setSelectedValue] = useState(true)
+  const [selectedValue, setSelectedValue] = useState(false)
 
   const handleButtonClick = (value: boolean) => {
     setSelectedValue(value)
