@@ -16,8 +16,9 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
+  '&:focus': {
+    outline: 'none',
+  },
   p: 4,
 }
 
@@ -32,7 +33,7 @@ const LogoutModal = () => {
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
-  const [userValue, setUser] = useAtom(userAtom)
+  const [user, setUser] = useAtom(userAtom)
 
   const { mutate } = useMutation({
     mutationFn: fetchLogout,
@@ -52,7 +53,7 @@ const LogoutModal = () => {
   })
 
   const handleLogout = () => {
-    mutate(userValue.userNo)
+    mutate(user.email)
   }
   return (
     <div>

@@ -97,11 +97,11 @@ export const loginUser = async (
     })
 }
 
-export const fetchLogout = async () => {
+export const fetchLogout = async (email: string) => {
   return publicRequest
-    .post('users/logout', 'q')
+    .post('users/logout', email)
     .then(res => {
-      res.data
+      return res.data
     })
     .catch(error => {
       console.log(error)
