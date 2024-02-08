@@ -5,10 +5,6 @@ import { ChatRoomType } from '@src/types/chatType'
 import { createChatRoom, fetchChatRooms } from '@src/apis/chat'
 import { useNavigate } from 'react-router-dom'
 
-export type IChatDetail = {
-  message: string
-}
-
 const ChattingContainer = () => {
   const [user] = useAtom(userAtom)
   const navigate = useNavigate()

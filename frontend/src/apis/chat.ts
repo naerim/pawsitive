@@ -14,3 +14,11 @@ export const createChatRoom = async (
 ): Promise<ChatRoomType> => {
   return publicRequest.post(`/chatrooms`, chatRoomParams).then(res => res.data)
 }
+
+// 채팅방 채팅 이력 조회
+export const fetchHistoryMessage = async (chatRoomNo: number) => {
+  return publicRequest.get(`/chatrooms/${chatRoomNo}`).then(res => {
+    console.log(res.data)
+    return res.data
+  })
+}
