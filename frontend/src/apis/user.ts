@@ -88,10 +88,12 @@ export const loginUser = async (
     })
 }
 
-export const fetchLogout = async () => {
+export const fetchLogout = async (email: string) => {
   return publicRequest
-    .post('users/logout', 'q')
-    .then(res => res.data)
+    .post('users/logout', email)
+    .then(res => {
+      return res.data
+    })
     .catch(error => {
       console.log(error)
       throw new Error('로그아웃 에러')
