@@ -64,7 +64,7 @@ const CreateDogContainer = () => {
 
   const handlePrevStep = () => {
     if (createDogStep === 1) {
-      navigate(-1)
+      navigate('/dogs')
     } else {
       setCreateDogStep(prevStep => prevStep - 1)
     }
@@ -77,8 +77,11 @@ const CreateDogContainer = () => {
   return (
     <c.Container>
       <c.TopContainer>
-        <c.BackButton onClick={handlePrevStep}>&lt;</c.BackButton>
+        <c.BackButtonWrap onClick={handlePrevStep}>
+          <img src="/icon/icon_gray_arrow_left.png" alt="" />
+        </c.BackButtonWrap>
         <c.Title>보호소 강아지 등록</c.Title>
+        <c.Span />
       </c.TopContainer>
       <c.InputContainer>
         {renderStepComponent()}

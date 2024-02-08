@@ -18,19 +18,21 @@ export const TopContainer = styled.div`
   position: relative;
 `
 
-export const BackButton = styled.div`
-  text-align: center;
-  width: 20%;
-  font-size: 15px;
-  font-weight: 600;
+export const BackButtonWrap = styled.div`
+  img {
+    width: 9px;
+    height: 15px;
+  }
 `
 
+export const Span = styled.div`
+  width: 9px;
+  height: 10px;
+`
 export const Title = styled.div`
   text-align: center;
-  width: 80%;
-  font-size: 15px;
-  font-weight: 600;
-  margin-right: 20%;
+  font-size: 1em;
+  font-weight: 500;
 `
 
 export const InputContainer = styled.div`
