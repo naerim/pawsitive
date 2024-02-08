@@ -38,7 +38,7 @@ public class ChatController {
     public void enterChatRoom(@Payload ChatCreateReq chatReq, Principal principal) {
         log.info("chatReq: {}, enter user: {}", chatReq.toString(), principal.getName());
         String msg = principal.getName() + "님이 채팅을 시작하였습니다.";
-        template.convertAndSend(DESTINATION + chatReq, msg);
+        template.convertAndSend(DESTINATION + chatReq.getChatRoomNo() + chatReq, msg);
     }
 
 
@@ -52,7 +52,7 @@ public class ChatController {
     public void sentChat(@Payload ChatCreateReq chatReq) {
         log.info("chatReq: {}", chatReq.toString());
         chatService.createChat(chatReq);
-        template.convertAndSend(DESTINATION + chatReq, chatReq);
+        template.convertAndSend(DESTINATION + chatReq.getChatRoomNo(), chatReq);
     }
 
     @EventListener
