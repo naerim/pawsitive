@@ -18,6 +18,6 @@ export const CustomTextarea = styled.textarea`
   width: 100%;
   height: 150px;
   resize: none;
-  border-width: 1px;
   padding: 10px;
+  border: 1px solid #cbcbcb;
 `

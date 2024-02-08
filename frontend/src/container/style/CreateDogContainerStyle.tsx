@@ -19,6 +19,8 @@ export const TopContainer = styled.div`
 `
 
 export const BackButtonWrap = styled.div`
+  cursor: pointer;
+
   img {
     width: 9px;
     height: 15px;
