@@ -26,10 +26,10 @@ const ChattingContainer = () => {
               key={item.id}
               chatRoomNo={item.chatRoomNo}
               name={item.name}
-              createdAt={item.createdAt}
-              dogNo={item.dogNo}
+              lastChat={item.lastChat}
+              memberProfileImage={item.memberProfileImage}
+              shelterProfileImage={item.shelterProfileImage}
               id={item.id}
-              userNo={item.userNo}
             />
           ))}
       </c.Wrap>
