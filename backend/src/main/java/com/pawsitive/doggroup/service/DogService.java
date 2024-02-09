@@ -66,4 +66,6 @@ public interface DogService {
      */
     List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num);
 
+    void createMemberDogLike()
+
 }

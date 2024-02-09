@@ -11,8 +11,10 @@ import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
+
 import java.util.List;
 import java.util.Objects;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -130,6 +132,7 @@ public class DogServiceImpl implements DogService {
         setThumbnailImage(dogList);
         return dogList;
     }
+
 
     private void setThumbnailImage(Iterable<DogListRes> dogList) {
         for (DogListRes dog : dogList) {
