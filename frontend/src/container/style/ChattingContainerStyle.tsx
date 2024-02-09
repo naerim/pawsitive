@@ -9,4 +9,5 @@ export const Wrap = styled.div`
   flex-direction: column;
   width: 90%;
   margin: 0 auto;
+  padding-top: 60px;
 `
