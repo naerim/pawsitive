@@ -21,3 +21,10 @@ export const fetchHistoryMessage = async (chatRoomNo: number) => {
     return res.data
   })
 }
+
+// 같은 강아지에 대한 채팅 리스틑 조회
+export const fetchSameDogChatRooms = async (dogNo: number) => {
+  return publicRequest
+    .get(`/chatrooms?type=dogNo&value=${dogNo}`)
+    .then(res => res.data)
+}
