@@ -10,5 +10,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class AdoptionReq {
-
+    private int userNo;
+    private int dogNo;
 }
