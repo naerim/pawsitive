@@ -9,7 +9,9 @@ import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.request.MemberDogLikeReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
+import com.pawsitive.doggroup.dto.response.MemberDogLikeRes;
 import com.pawsitive.doggroup.service.DogService;
+import com.pawsitive.usergroup.service.MemberDogLikeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,6 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class DogController {
 
     private final DogService dogService;
+    private final MemberDogLikeService memberDogLikeService;
 
     @PostMapping
     @Operation(summary = "유기견 등록", description = "전달받은 입력 정보를 유기견 테이블에 등록합니다.",
@@ -107,14 +111,21 @@ public class DogController {
         responses = {
             @ApiResponse(responseCode = "200", description = "찜 정상 등록 완료"),
             @ApiResponse(responseCode = "400", description = "파라미터 오류"),
+            @ApiResponse(responseCode = "401", description = "권한 없음"),
             @ApiResponse(responseCode = "500", description = "서버 에러")
         })
-    public ResponseEntity<BaseResponseBody> memberDogLike(@RequestBody MemberDogLikeReq req) {
+    public ResponseEntity<MemberDogLikeRes> memberDogLike(@RequestBody MemberDogLikeReq req, Authentication authentication) {
 
-
+//        User user = (User) authentication.getPrincipal();
+//        String email = user.getUsername();
+//
+//        if (req.getEmail().equals(email)) {
+//            throw new NotSavedException();
+//        }
+        
         return ResponseEntity
             .status(OK)
-            .body(BaseResponseBody.of(OK, "찜 등록 완료"));
+            .body(memberDogLikeService.createMemberDogLike(req));
     }
 
 }

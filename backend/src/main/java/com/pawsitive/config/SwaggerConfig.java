@@ -43,7 +43,7 @@ import org.springframework.context.annotation.Configuration;
     name = "JWT",
     type = SecuritySchemeType.HTTP,
     bearerFormat = "JWT",
-    scheme = "Bearer"
+    scheme = "bearer"
 )
 @Configuration
 public class SwaggerConfig {

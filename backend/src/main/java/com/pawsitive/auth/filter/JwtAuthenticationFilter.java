@@ -12,6 +12,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
@@ -21,6 +22,7 @@ import org.springframework.web.filter.GenericFilterBean;
  * 요청 헤더에 jwt 토큰이 있는 경우, 토큰 검증 및 인증 처리 로직 정의.
  */
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -37,7 +39,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                          FilterChain filterChain) throws IOException, ServletException {
         // Request Header에서 토큰 추출
         String token = resolveToken((HttpServletRequest) servletRequest);
-
+        
         // validateToken 메서드로 유효성 검사
         if (!Objects.isNull(token) && jwtTokenProvider.validateToken(token)) {
             // 유효하다면 Token에서 Authentication 정보를 가져와 SecurityContext에 저장
