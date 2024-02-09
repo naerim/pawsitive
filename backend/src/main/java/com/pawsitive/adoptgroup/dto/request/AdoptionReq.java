@@ -1,13 +1,14 @@
-package com.pawsitive.usergroup.dto.request;
+package com.pawsitive.adoptgroup.dto.request;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
+/**
+ * @author 이하늬
+ * @since 1.0
+ */
 @Getter
-@Builder
 @AllArgsConstructor
 public class AdoptionReq {
-
 
 }

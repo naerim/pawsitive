@@ -46,7 +46,7 @@ public class ChatRoomRepositoryImpl extends QuerydslRepositorySupport
             .innerJoin(qChat.room, qChatRoom)
             .innerJoin(qChat.user, qUser)
             .select(Projections.constructor(ChatRes.class, qChat.chatNo, qUser.userNo, qUser.name,
-                qUser.image, qChat.message, qChat.createdAt, qChat.isRead))
+                qUser.image, qChat.type, qChat.message, qChat.createdAt, qChat.isRead))
             .where(qChatRoom.chatRoomNo.eq(roomNo))
             .orderBy(qChat.createdAt.desc())
             .fetch();

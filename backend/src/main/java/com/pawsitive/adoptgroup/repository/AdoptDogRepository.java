@@ -1,6 +1,6 @@
-package com.pawsitive.doggroup.repository;
+package com.pawsitive.adoptgroup.repository;
 
-import com.pawsitive.doggroup.entity.AdoptDog;
+import com.pawsitive.adoptgroup.entity.AdoptDog;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

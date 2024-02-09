@@ -1,6 +1,8 @@
-package com.pawsitive.doggroup.service;
+package com.pawsitive.adoptgroup.service;
 
+import com.pawsitive.adoptgroup.dto.request.AdoptionReq;
 import com.pawsitive.doggroup.dto.response.AdoptedDogRes;
+import com.pawsitive.usergroup.dto.response.AdoptionRes;
 
 /**
  * AdoptDogService 입니다.
@@ -18,4 +20,12 @@ public interface AdoptDogService {
      */
     AdoptedDogRes getAdoptedDogByUserNo(int userNo);
 
+    /**
+     * 유기견 입양 정보를 등록하는 메서드입니다.
+     *
+     * @param adoptionReq 유기견 입양 정보
+     * @return 유기견 입양 정보 dto
+     */
+
+    AdoptionRes createAdoptDog(AdoptionReq adoptionReq);
 }

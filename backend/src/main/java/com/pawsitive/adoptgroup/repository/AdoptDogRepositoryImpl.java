@@ -1,8 +1,8 @@
-package com.pawsitive.doggroup.repository;
+package com.pawsitive.adoptgroup.repository;
 
+import com.pawsitive.adoptgroup.entity.AdoptDog;
+import com.pawsitive.adoptgroup.entity.QAdoptDog;
 import com.pawsitive.doggroup.dto.response.AdoptedDogRes;
-import com.pawsitive.doggroup.entity.AdoptDog;
-import com.pawsitive.doggroup.entity.QAdoptDog;
 import com.pawsitive.doggroup.entity.QDog;
 import com.pawsitive.usergroup.entity.QMember;
 import com.querydsl.core.types.Projections;

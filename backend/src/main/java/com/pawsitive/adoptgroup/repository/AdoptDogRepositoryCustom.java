@@ -1,4 +1,4 @@
-package com.pawsitive.doggroup.repository;
+package com.pawsitive.adoptgroup.repository;
 
 import com.pawsitive.doggroup.dto.response.AdoptedDogRes;
 import java.util.Optional;
