@@ -1,4 +1,4 @@
-import * as s from '@src/components/DogDetail/_style/ShelterInfoSectionStyle'
+import * as s from '@src/components/DogDetail/style/ShelterInfoSectionStyle'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { atom, useAtom } from 'jotai/index'
 import { dogDetailAtom } from '@src/stores/atoms/dog.ts'

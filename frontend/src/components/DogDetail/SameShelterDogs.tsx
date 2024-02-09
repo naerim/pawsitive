@@ -1,4 +1,4 @@
-import * as s from '@src/components/DogDetail/_style/SameShelterDogsStyle'
+import * as s from '@src/components/DogDetail/style/SameShelterDogsStyle'
 import { useQuery } from '@tanstack/react-query'
 import { fetchBasicDogList } from '@src/apis/dog'
 import { BasicDogType } from '@src/types/dogType'

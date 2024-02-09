@@ -1,4 +1,4 @@
-import * as t from '@src/components/DogDetail/_style/TipSectionStyle'
+import * as t from '@src/components/DogDetail/style/TipSectionStyle'
 
 const randomNumber = Math.floor(Math.random() * 10)
 const TipSection = () => {

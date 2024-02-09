@@ -1,4 +1,4 @@
-import * as d from '@src/components/DogDetail/_style/DogFileSectionStyle'
+import * as d from '@src/components/DogDetail/style/DogFileSectionStyle'
 import { useNavigate } from 'react-router-dom'
 import { useAtom } from 'jotai'
 import { dogDetailAtom } from '@src/stores/atoms/dog'
