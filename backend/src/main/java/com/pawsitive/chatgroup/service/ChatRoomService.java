@@ -16,9 +16,10 @@ public interface ChatRoomService {
 
     List<ChatRes> getChatHistoryByChatRoomNo(int chatRoomNo);
 
-    List<ChatRoomListRes> getChatRoomList(int userNo);
+    List<ChatRoomListRes> getChatRoomList(String type, int value);
 
     String createAppointment(AppointmentReq appointmentReq);
 
     String acceptAppointment(AppointmentReq appointmentReq);
+
 }

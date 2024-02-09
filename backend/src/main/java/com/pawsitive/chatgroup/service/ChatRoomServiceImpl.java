@@ -6,6 +6,7 @@ import com.pawsitive.chatgroup.dto.request.ChatRoomCreateReq;
 import com.pawsitive.chatgroup.dto.response.ChatRes;
 import com.pawsitive.chatgroup.dto.response.ChatRoomListRes;
 import com.pawsitive.chatgroup.dto.response.ChatRoomRes;
+import com.pawsitive.chatgroup.dto.response.LastChatTmp;
 import com.pawsitive.chatgroup.entity.ChatRoom;
 import com.pawsitive.chatgroup.exception.ChatRoomNotFoundException;
 import com.pawsitive.chatgroup.repository.ChatRoomRepository;
@@ -16,8 +17,11 @@ import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.service.DogService;
 import com.pawsitive.surveygroup.dto.request.AppointmentReq;
 import com.pawsitive.usergroup.service.UserService;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -52,8 +56,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         }
 
         Optional<ChatRoom> existChatRoom =
-            chatRoomRepository.findChatRoomByUserNoAndDogNo(userNo,
-                dogNo);
+            chatRoomRepository.findChatRoomByUserNoAndDogNo(userNo, dogNo);
 
         if (existChatRoom.isPresent()) {
             return ChatGroupTransfer.entityToDto(existChatRoom.get());
@@ -95,19 +98,40 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     /**
-     * !
      * 최근에 생성된 순으로 채팅방 전체 조회
      *
      * @return 최근에 생성된 순으로 조회한 채팅방 목록
      */
     @Override
-    public List<ChatRoomListRes> getChatRoomList(int userNo) {
-        List<ChatRoomListRes> chatRooms = chatRoomRepository.getChatRoomList(userNo);
-        for (ChatRoomListRes chatRoom : chatRooms) {
-            chatRoom.setLastChat(chatRoomRepository.getLastChat(chatRoom.getChatRoomNo()));
+    public List<ChatRoomListRes> getChatRoomList(String type, int value) {
+
+        List<ChatRoomListRes> chatRooms = null;
+
+        if ("dogNo".equals(type)) {
+            chatRooms = chatRoomRepository.getChatRoomListByDogNo(value);
+        } else if ("userNo".equals(type)) {
+            chatRooms = chatRoomRepository.getChatRoomListByUserNo(value);
+        } else {
+            throw new InvalidRequestDataException("유기견 번호나 회원 번호로만 조회 가능합니다.");
         }
+        setLastChat(chatRooms);
 
         return chatRooms;
+    }
+
+    private void setLastChat(List<ChatRoomListRes> chatRooms) {
+        for (ChatRoomListRes chatRoom : chatRooms) {
+            LastChatTmp lastChat = chatRoomRepository.getLastChat(chatRoom.getChatRoomNo());
+            if (Objects.nonNull(lastChat)) {
+                if (lastChat.getCreatedDate().toLocalDate().isEqual(LocalDate.now())) {
+                    chatRoom.setLastChat(new ChatRoomListRes.LastChat(lastChat.getMessage(),
+                        LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+                } else {
+                    chatRoom.setLastChat(new ChatRoomListRes.LastChat(lastChat.getMessage(),
+                        lastChat.getCreatedDate().format(DateTimeFormatter.ofPattern("HH:mm"))));
+                }
+            }
+        }
     }
 
     @Override
@@ -126,5 +150,6 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         chatRoomRepository.save(chatRoom);
         return BaseResponseMessage.SUCCESS.getMessage();
     }
+
 
 }
