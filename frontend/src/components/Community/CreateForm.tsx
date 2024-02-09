@@ -1,4 +1,4 @@
-import { atom, useAtom } from 'jotai'
+import { atom, useAtom, useAtomValue } from 'jotai'
 import * as c from '@src/components/style/CommunityCreateFormStyle'
 import React, { useEffect, useRef, useState } from 'react'
 import { DaumPostData } from '@src/types/components/SignUpType'
@@ -10,6 +10,7 @@ import { useMutation } from '@tanstack/react-query'
 import { fetchCommunityCreate } from '@src/apis/community'
 import ImageUpload from '@src/components/Community/ImageUpload'
 import Checkbox from '@mui/material/Checkbox'
+import { userAtom } from '@src/stores/atoms/user'
 
 declare global {
   interface Window {
@@ -51,6 +52,7 @@ const CreateForm = () => {
   const [isDaumPostcodeOpenValue, setIsDaumPostcodeOpen] = useState(false)
   const location: LocationType | string = Locations()
   const navigate = useNavigate()
+  const user = useAtomValue(userAtom)
   const containerRef = useRef<HTMLDivElement>(null)
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -158,7 +160,6 @@ const CreateForm = () => {
     mutationKey: ['communityCreateForm'],
     mutationFn: fetchCommunityCreate,
     onSuccess(responseData) {
-      console.log('mutate 사용을 성공했습니다')
       navigate(`/community/${responseData.boardNo}`)
     },
     onError() {
@@ -170,7 +171,7 @@ const CreateForm = () => {
     e.preventDefault()
     const formData: FormData = new FormData()
     const ArticleData = {
-      userNo: 1,
+      userNo: user.userNo,
       title: titleValue,
       content: contentValue,
       isPublic: isPublicValue,
@@ -179,7 +180,7 @@ const CreateForm = () => {
       categoryNo: categoryValue,
     }
     for (let i = 0; i < imageFilesValue.length; i += 1) {
-      formData.append('images', imageFilesValue[i])
+      formData.append('files', imageFilesValue[i])
     }
     formData.append(
       'req',

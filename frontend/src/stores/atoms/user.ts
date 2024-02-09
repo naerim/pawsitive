@@ -8,6 +8,7 @@ const currentUser = {
   name: '',
   password: '',
   address: '',
+  role: '',
   birth: '',
   gender: '',
   type: 0,

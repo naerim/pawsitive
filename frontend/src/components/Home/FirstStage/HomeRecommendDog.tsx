@@ -3,8 +3,10 @@ import LightColorMoveCard from '@src/common/LightColorMoveCard'
 import { useQuery } from '@tanstack/react-query'
 import { fetchRecommendDogs } from '@src/apis/dog'
 import { DogListType } from '@src/types/dogType'
+import { useNavigate } from 'react-router-dom'
 
 const HomeRecommendDog = () => {
+  const navigate = useNavigate()
   const { data, isLoading } = useQuery({
     queryKey: ['recommendDog'],
     queryFn: () => fetchRecommendDogs(2),
@@ -18,17 +20,24 @@ const HomeRecommendDog = () => {
         {!isLoading ? (
           data &&
           data.map((item: DogListType, index: number) => (
-            <h.Item key={item.dogNo || index}>
-              <img src={item.file} alt="" />
+            <h.DogButton
+              onClick={() => {
+                navigate(`/dogs/${item.dogNo}`)
+              }}
+              key={index}
+            >
+              <h.Item key={item.dogNo || index}>
+                <img src={item.file} alt="" />
 
-              <h.ItemTitle>{item.name}</h.ItemTitle>
-              <h.ItemSubTitle>
-                {item.kind}, {item.age}살
-              </h.ItemSubTitle>
-              <h.ItemSubTitle>
-                {item.neutralized ? '중성화O' : '중성화X'}
-              </h.ItemSubTitle>
-            </h.Item>
+                <h.ItemTitle>{item.name}</h.ItemTitle>
+                <h.ItemSubTitle>
+                  {item.kind}, {item.age}살
+                </h.ItemSubTitle>
+                <h.ItemSubTitle>
+                  {item.neutralized ? '중성화O' : '중성화X'}
+                </h.ItemSubTitle>
+              </h.Item>
+            </h.DogButton>
           ))
         ) : (
           <div>로딩중</div>
