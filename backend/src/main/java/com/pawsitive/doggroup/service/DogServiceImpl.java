@@ -7,12 +7,17 @@ import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.entity.Dog;
+import com.pawsitive.doggroup.entity.DogFile;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.repository.DogRepository;
+import com.pawsitive.doggroup.transfer.DogTransfer;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -58,32 +63,24 @@ public class DogServiceImpl implements DogService {
 
         List<String> fileKeys = dogFileService.createDogFiles(savedDog, files);
 
-        log.warn("dogService : savedDog = {}, {}", savedDog.getDogNo(), savedDog.getStatus());
-
-        return DogDetailRes.builder()
-            .dogNo(savedDog.getDogNo())
-            .userNo(user.getUserNo())
-            .userName(user.getName())
-            .name(savedDog.getName())
-            .kind(savedDog.getKind())
-            .createdAt(savedDog.getCreatedAt())
-            .isNeutralized(savedDog.isNeutralized())
-            .age(savedDog.getAge())
-            .note(savedDog.getNote())
-            .hit(savedDog.getHit())
-            .mbti(savedDog.getMbti())
-            .statusNo(savedDog.getStatus().getNo())
-            .sex(savedDog.getSex())
-            .files(fileKeys)
-            .build();
+        return DogTransfer.entityToDto(savedDog, fileKeys);
     }
 
     @Override
+    @Transactional
     public DogDetailRes getDogByDogNo(int dogNo) {
-        DogDetailRes dog =
-            dogRepository.getDogByDogNo(dogNo).orElseThrow(DogNotFoundException::new);
-        dog.setFiles(dogRepository.getDogFilesByDogNo(dog.getDogNo()));
-        return dog;
+        // 엔티티 객체 가져오기
+        Dog dog = dogRepository.findByDogNo(dogNo).orElseThrow(DogNotFoundException::new);
+
+        // 조회수 증가
+        int hit = dog.getHit() + 1;
+        dog.setHit(hit);
+
+        // 조회수 저장 반영
+        dogRepository.save(dog);
+
+        // Res 객체 만들기
+        return DogTransfer.entityToDto(dog);
     }
 
     @Override
@@ -131,6 +128,7 @@ public class DogServiceImpl implements DogService {
         return dogList;
     }
 
+
     private void setThumbnailImage(Iterable<DogListRes> dogList) {
         for (DogListRes dog : dogList) {
             List<String> files = dogRepository.getDogFilesByDogNo(dog.getDogNo());
@@ -153,5 +151,6 @@ public class DogServiceImpl implements DogService {
         sb.append(tmp);
         return sb.toString();
     }
+
 
 }

@@ -31,6 +31,4 @@ public interface DogRepositoryCustom {
 
     List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num);
 
-    void updateHit(int dogNo);
-
 }

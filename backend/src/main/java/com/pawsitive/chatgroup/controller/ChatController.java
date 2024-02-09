@@ -6,7 +6,9 @@ import com.pawsitive.chatgroup.service.ChatService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import java.security.Principal;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -19,7 +21,7 @@ import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 import org.springframework.web.socket.messaging.SessionUnsubscribeEvent;
 
-@Tag(name = "08.Chat")
+@Tag(name = "06.Chat")
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -31,7 +33,6 @@ public class ChatController {
 
     @MessageMapping("/chat/enter")
     @Operation(summary = "채팅방 입장", description = "채팅방에 입장합니다. 입장 경로: \'/pub/chat/enter\'",
-        tags = {"08.Chat"},
         responses = {
             @ApiResponse(responseCode = "200", description = "채팅방 입장 성공"),
         }
@@ -45,7 +46,6 @@ public class ChatController {
 
     @MessageMapping("/chat")
     @Operation(summary = "채팅 전송", description = "채팅을 전송합니다. 메시지 보내는 경로: \'/pub/chat\'",
-        tags = {"08.Chat"},
         responses = {
             @ApiResponse(responseCode = "200", description = "채팅 전송 성공"),
         }

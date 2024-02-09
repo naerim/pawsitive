@@ -6,8 +6,8 @@ import com.pawsitive.communitygroup.dto.response.CommunityBoardDetailRes;
 import com.pawsitive.communitygroup.dto.response.CommunityCommentDetailRes;
 import com.pawsitive.communitygroup.dto.response.CommunityDetailRes;
 import com.pawsitive.communitygroup.entity.CommunityBoard;
-import com.pawsitive.communitygroup.exception.CommunityBoardNotFoundException;
 import com.pawsitive.communitygroup.repository.CommunityBoardRepository;
+import com.pawsitive.communitygroup.transfer.CommunityTransfer;
 import com.pawsitive.usergroup.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,11 +71,26 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Override
     public CommunityBoardDetailRes getCommunityBoard(int boardNo) {
-        CommunityBoardDetailRes board = communityBoardRepository.getBoardByBoardNo(boardNo)
-            .orElseThrow(CommunityBoardNotFoundException::new);
-        setAddress(board);
-        setImages(board);
-        return board;
+//        CommunityBoardDetailRes board = communityBoardRepository.getBoardByBoardNo(boardNo)
+//            .orElseThrow(CommunityBoardNotFoundException::new);
+//        setAddress(board);
+//        setImages(board);
+//
+//        return board;
+
+        // 엔티티 가져오기
+        CommunityBoard communityBoard =
+            communityBoardRepository.getCommunityBoardByCommunityBoardNo(boardNo).orElseThrow();
+
+        // 조회수 1 증가
+        int hit = communityBoard.getHit() + 1;
+        communityBoard.setHit(hit);
+
+        // 엔티티 저장
+        communityBoardRepository.save(communityBoard);
+
+        // 응답 객체 생성
+        return CommunityTransfer.entityToDto(communityBoard);
     }
 
     @Override

@@ -18,19 +18,20 @@ import com.pawsitive.usergroup.dto.response.UpdateFieldRes;
 import com.pawsitive.usergroup.dto.response.UserJoinRes;
 import com.pawsitive.usergroup.dto.response.UserLoginRes;
 import com.pawsitive.usergroup.entity.Member;
+import com.pawsitive.usergroup.entity.MemberDogLike;
+import com.pawsitive.usergroup.entity.MemberDogMatrix;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.exception.InvalidPasswordException;
 import com.pawsitive.usergroup.exception.UserNotFoundException;
+import com.pawsitive.usergroup.repository.MemberDogMatrixRepository;
 import com.pawsitive.usergroup.repository.MemberRepository;
 import com.pawsitive.usergroup.repository.UserRepository;
-
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,6 +53,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final MemberRepository memberRepository;
+    private final MemberDogMatrixRepository memberDogMatrixRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
@@ -138,7 +140,7 @@ public class UserServiceImpl implements UserService {
             return;
         }
 
-        throw new NotFoundException("로그아웃 실패 (RefreshToken이 존재하지 않습니다.)");
+        throw new NotFoundException("refreshToken");
     }
 
     @Transactional
@@ -173,6 +175,9 @@ public class UserServiceImpl implements UserService {
                 .type(userJoinPostReq.getType())
                 .gender(userJoinPostReq.getGender())
                 .build());
+
+            // 회원가입 시 행렬평균 테이블도 같이 생성해서 추가하기
+            memberDogMatrixRepository.save(MemberDogMatrix.builder().user(user).userNo(user.getUserNo()).build());
 
             return UserJoinRes.builder()
                 .userNo(user.getUserNo())
@@ -222,7 +227,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UpdateFieldRes updateField(UserTypeStagePatchReq req) {
 
-        Member member = memberRepository.findMemberByUserNo(req.getUserNo()).orElseThrow(UserNotFoundException::new);
+        Member member = memberRepository.findMemberByUserNo(req.getUserNo())
+            .orElseThrow(UserNotFoundException::new);
 
         if ("type".equals(req.getField())) {
             member.setType(req.getValue());

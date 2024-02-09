@@ -27,17 +27,13 @@ import org.springframework.context.annotation.Configuration;
         contact = @Contact(name = "yihoney", email = "109622@naver.com")),
     tags = {
         @Tag(name = "01.User", description = "유저 기능"),
-        @Tag(name = "02.Member-Adoption", description = "개인회원 입양 기능"),
-        @Tag(name = "03.Shelter-Adoption", description = "보호소회원 입양 기능"),
-        @Tag(name = "04.Auth", description = "인증 기능"),
-        @Tag(name = "05.Dog", description = "유기견 기능"),
-        @Tag(name = "06.Content", description = "펫과사전 기능"),
-        @Tag(name = "07.ChatRoom", description = "채팅방 기능"),
-        @Tag(name = "08.Chat", description = "채팅 기능"),
-        @Tag(name = "09.Community", description = "커뮤니티 기능"),
-        @Tag(name = "10.Question", description = "오늘의 질문 기능"),
-        @Tag(name = "11.Surveys", description = "설문 기능"),
-
+        @Tag(name = "02.Auth", description = "인증 기능"),
+        @Tag(name = "03.Dog", description = "유기견 기능"),
+        @Tag(name = "04.Content", description = "펫과사전 기능"),
+        @Tag(name = "05.ChatRoom", description = "채팅방 기능"),
+        @Tag(name = "06.Community", description = "커뮤니티 기능"),
+        @Tag(name = "07.Question", description = "오늘의 질문 기능"),
+        @Tag(name = "08.Surveys", description = "설문 기능")
     }
 )
 @SecurityRequirement(name = "JWT")

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "06.Content")
+@Tag(name = "04.Content")
 @RestController
 @RequestMapping("/api/v1/contents")
 @RequiredArgsConstructor
@@ -27,7 +27,6 @@ public class ContentController {
     @GetMapping
     @Operation(summary = "컨텐츠 전체 조회",
         description = "컨텐츠 <strong>전체 조회</strong>를 한다. 파라미터로 카테고리 번호가 넘어온다면 <strong>카테고리별 컨텐츠 목록을 조회</strong> 한다.",
-        tags = {"06.Content"},
         responses = {
             @ApiResponse(responseCode = "200", description = "전체 컨텐츠 목록 또는 카테고리에 해당되는 전체 컨텐츠 목록을 정상적으로 반환한다."),
         }
@@ -43,7 +42,6 @@ public class ContentController {
     @GetMapping("/{contentNo}")
     @Operation(summary = "컨텐츠 상세 조회",
         description = "컨텐츠를 <strong>컨텐츠 고유번호</strong>로 <strong>상세 조회</strong> 한다.",
-        tags = {"06.Content"},
         responses = {
             @ApiResponse(responseCode = "200", description = "컨텐츠 고유번호에 해당되는 컨텐츠 세부사항을 정상적으로 반환한다."),
         }

@@ -11,7 +11,9 @@ import com.pawsitive.chatgroup.service.ChatRoomService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -23,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "07.ChatRoom")
+@Tag(name = "05.ChatRoom")
 @RestController
 @RequestMapping("/api/v1/chatrooms")
 @RequiredArgsConstructor
@@ -32,7 +34,6 @@ public class ChatRoomController {
 
     @GetMapping
     @Operation(summary = "채팅방 전체 조회", description = "회원 고유번호나 유기견 번호로 채팅방을 전체 조회합니다.",
-        tags = {"07.ChatRoom"},
         responses = {
             @ApiResponse(responseCode = "200", description = "채팅 전체 조회 성공"),
         }
@@ -46,7 +47,6 @@ public class ChatRoomController {
 
     @GetMapping("/{chatRoomNo}")
     @Operation(summary = "채팅방 채팅 이력 조회", description = "채팅방을 상세 조회합니다.",
-        tags = {"07.ChatRoom"},
         responses = {
             @ApiResponse(responseCode = "200", description = "채팅방 고유 번호에 해당하는 채팅 이력 조회 성공"),
             @ApiResponse(responseCode = "400", description = "전달받은 채팅방 고유 번호에 해당하는 채팅방이 없음"),
@@ -60,7 +60,6 @@ public class ChatRoomController {
 
     @PostMapping
     @Operation(summary = "채팅방 생성/등록", description = "채팅방을 생성/등록합니다.",
-        tags = {"07.ChatRoom"},
         responses = {
             @ApiResponse(responseCode = "201", description = "채팅방 등록 성공"),
         }

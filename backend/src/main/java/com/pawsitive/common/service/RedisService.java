@@ -3,6 +3,7 @@ package com.pawsitive.common.service;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import lombok.RequiredArgsConstructor;
@@ -36,7 +37,7 @@ public class RedisService {
 
     public String getValues(String key) {
         ValueOperations<String, Object> values = redisTemplate.opsForValue();
-        if (values.get(key) == null) {
+        if (Objects.isNull(values.get(key))) {
             return "false";
         }
         return (String) values.get(key);
@@ -76,20 +77,30 @@ public class RedisService {
 
     @Transactional
     public void addVisited(String key, Integer no) {
-        ListOperations<String, Object> alreadyVisitedList = redisTemplate.opsForList();
-        alreadyVisitedList.rightPush(key, no);
+        ListOperations<String, Object> listOperations = redisTemplate.opsForList();
+        listOperations.rightPush(key, no);
     }
 
-    public List<Object> getVisited(String key) {
-        ListOperations<String, Object> alreadyVisitedList = redisTemplate.opsForList();
+    public List<Object> getList(String key) {
+        ListOperations<String, Object> listOperations = redisTemplate.opsForList();
         int listSize = getListSize(key);
 
-        return alreadyVisitedList.range(key, 0, listSize);
+        return listOperations.range(key, 0, listSize);
+    }
+
+    // @Scheduled(cron = "0 0 0 * * *")
+    public void removeList(String key) {
+        ListOperations<String, Object> listOperations = redisTemplate.opsForList();
+        int listSize = getListSize(key);
+
+        for (int i = 0; i < listSize; i++) {
+            listOperations.leftPop(key);
+        }
     }
 
     private int getListSize(String key) {
-        ListOperations<String, Object> list = redisTemplate.opsForList();
-        return Math.toIntExact(list.size(key));
+        ListOperations<String, Object> listOperations = redisTemplate.opsForList();
+        return Math.toIntExact(listOperations.size(key));
     }
 
 }
