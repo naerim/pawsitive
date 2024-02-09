@@ -3,7 +3,9 @@ import { CreateChatRoomParamsType } from '@src/types/chatType' // 현재 사용�
 
 // 현재 사용자 채팅 리스트 전체 조회
 export const fetchChatRooms = async (userNo: number) => {
-  return publicRequest.get(`/chatrooms?userNo=${userNo}`).then(res => res.data)
+  return publicRequest
+    .get(`/chatrooms?type=userNo&value=${userNo}`)
+    .then(res => res.data)
 }
 
 // 채팅방 생성
