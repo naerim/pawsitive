@@ -37,5 +37,12 @@ public class AdoptionController {
             .body(BaseResponseBody.of(OK, "성공"));
     }
 
+    @PostMapping("/like")
+    public ResponseEntity<BaseResponseBody> likeDog() {
+        return ResponseEntity
+            .status(OK)
+            .body(BaseResponseBody.of(OK, "성공"));
+    }
+
 
 }
