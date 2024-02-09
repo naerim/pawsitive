@@ -20,29 +20,23 @@ const ChatStartButton = () => {
     setCreateChatRoomParams({ dogNo, userNo: user.userNo })
   }, [dogNo, user])
 
-  const handleUserClick = async () => {
-    const createChatRoomResult = await createChatRoom(createChatRoomParams)
-    console.log(createChatRoomResult)
-    if (createChatRoomResult && createChatRoomResult.chatRoomNo) {
-      navigate(`/chat/${createChatRoomResult.chatRoomNo}`)
+  const handleClick = async () => {
+    if (userRole === 'USER') {
+      const createChatRoomResult = await createChatRoom(createChatRoomParams)
+      console.log(createChatRoomResult)
+      if (createChatRoomResult && createChatRoomResult.chatRoomNo) {
+        navigate(`/chat/${createChatRoomResult.chatRoomNo}`)
+      }
+    } else {
+      navigate(`/shelter/chat/${dogNo}`)
     }
-  }
-
-  const handleShelterClick = async () => {
-    navigate(`/shelter/chat/${dogNo}`)
   }
 
   return (
     <a.Container>
-      {userRole === 'SHELTER' ? (
-        <a.Button type="button" onClick={handleShelterClick}>
-          진행중인 채팅방 보기
-        </a.Button>
-      ) : (
-        <a.Button type="button" onClick={handleUserClick}>
-          보호소와 채팅하기
-        </a.Button>
-      )}
+      <a.Button type="button" onClick={handleClick}>
+        {userRole === 'SHELTER' ? '진행중인 채팅방 보기' : '보호소와 채팅하기'}
+      </a.Button>
     </a.Container>
   )
 }
