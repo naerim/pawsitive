@@ -5,8 +5,8 @@ import static org.springframework.http.HttpStatus.OK;
 
 import com.pawsitive.chatgroup.dto.request.ChatRoomCreateReq;
 import com.pawsitive.chatgroup.dto.response.ChatRes;
+import com.pawsitive.chatgroup.dto.response.ChatRoomListRes;
 import com.pawsitive.chatgroup.dto.response.ChatRoomRes;
-import com.pawsitive.chatgroup.entity.ChatRoom;
 import com.pawsitive.chatgroup.service.ChatRoomService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "06.ChatRoom")
+@Tag(name = "07.ChatRoom")
 @RestController
 @RequestMapping("/api/v1/chatrooms")
 @RequiredArgsConstructor
@@ -31,21 +31,21 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
     @GetMapping
-    @Operation(summary = "채팅방 전체 조회", description = "회원 고유번호로 채팅방을 전체 조회합니다.",
-        tags = {"06.ChatRoom"},
+    @Operation(summary = "회원의 채팅방 전체 조회", description = "회원 고유번호로 채팅방을 전체 조회합니다.",
+        tags = {"07.ChatRoom"},
         responses = {
             @ApiResponse(responseCode = "200", description = "채팅 전체 조회 성공"),
         }
     )
-    public ResponseEntity<List<ChatRoom>> getRooms(@RequestParam int userNo) {
+    public ResponseEntity<List<ChatRoomListRes>> getRooms(@RequestParam int userNo) {
         return ResponseEntity
             .status(OK)
-            .body(chatRoomService.getChatRooms(userNo));
+            .body(chatRoomService.getChatRoomList(userNo));
     }
 
     @GetMapping("/{chatRoomNo}")
     @Operation(summary = "채팅방 채팅 이력 조회", description = "채팅방을 상세 조회합니다.",
-        tags = {"06.ChatRoom"},
+        tags = {"07.ChatRoom"},
         responses = {
             @ApiResponse(responseCode = "200", description = "채팅방 고유 번호에 해당하는 채팅 이력 조회 성공"),
             @ApiResponse(responseCode = "400", description = "전달받은 채팅방 고유 번호에 해당하는 채팅방이 없음"),
@@ -59,7 +59,7 @@ public class ChatRoomController {
 
     @PostMapping
     @Operation(summary = "채팅방 생성/등록", description = "채팅방을 생성/등록합니다.",
-        tags = {"06.ChatRoom"},
+        tags = {"07.ChatRoom"},
         responses = {
             @ApiResponse(responseCode = "201", description = "채팅방 등록 성공"),
         }

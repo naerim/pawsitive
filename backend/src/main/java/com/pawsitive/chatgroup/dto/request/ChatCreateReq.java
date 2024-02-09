@@ -15,6 +15,7 @@ public class ChatCreateReq {
 
     private int chatRoomNo;
     private int senderNo;
+    private String type;
     private String message;
 
 }
