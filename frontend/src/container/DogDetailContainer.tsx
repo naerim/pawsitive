@@ -12,6 +12,7 @@ import { DogType } from '@src/types/dogType'
 import { fetchDogDetails } from '@src/apis/dog'
 import { useAtom } from 'jotai'
 import { dogDetailAtom } from '@src/stores/atoms/dog'
+import { useEffect } from 'react'
 
 const Container = styled.div`
   padding-bottom: 80px;
@@ -27,9 +28,11 @@ const DogDetailContainer = () => {
     queryFn: () => fetchDogDetails(Number(dogNo)),
   })
 
-  if (!isLoading && data) {
-    setDogDetail(data)
-  }
+  useEffect(() => {
+    if (!isLoading && data) {
+      setDogDetail(data)
+    }
+  }, [data, isLoading, setDogDetail])
 
   return (
     <Container>
