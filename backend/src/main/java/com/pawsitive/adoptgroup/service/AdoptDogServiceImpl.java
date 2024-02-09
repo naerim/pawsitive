@@ -1,8 +1,10 @@
-package com.pawsitive.doggroup.service;
+package com.pawsitive.adoptgroup.service;
 
+import com.pawsitive.adoptgroup.dto.request.AdoptionReq;
+import com.pawsitive.adoptgroup.repository.AdoptDogRepository;
 import com.pawsitive.doggroup.dto.response.AdoptedDogRes;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
-import com.pawsitive.doggroup.repository.AdoptDogRepository;
+import com.pawsitive.usergroup.dto.response.AdoptionRes;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,11 @@ public class AdoptDogServiceImpl implements AdoptDogService {
             (int) ChronoUnit.DAYS.between(LocalDateTime.now(), adoptedDogRes.getCreatedAt()));
 
         return adoptedDogRes;
+    }
+
+    @Override
+    public AdoptionRes createAdoptDog(AdoptionReq adoptionReq) {
+        return null;
     }
 
 }

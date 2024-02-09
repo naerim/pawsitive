@@ -1,10 +1,10 @@
-package com.pawsitive.usergroup.controller;
+package com.pawsitive.adoptgroup.controller;
 
 import static org.springframework.http.HttpStatus.OK;
 
+import com.pawsitive.adoptgroup.service.AdoptDogService;
 import com.pawsitive.chatgroup.service.ChatRoomService;
 import com.pawsitive.common.dto.BaseResponseBody;
-import com.pawsitive.doggroup.service.AdoptDogService;
 import com.pawsitive.surveygroup.dto.request.AppointmentReq;
 import com.pawsitive.usergroup.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
