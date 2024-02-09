@@ -18,7 +18,7 @@ export const Header = styled.div`
 export const word = styled.div`
   padding: 20px;
 `
-export const Pawsitiver = styled.p`
+export const Role = styled.p`
   font-size: 15px;
   margin-bottom: 10px;
 `

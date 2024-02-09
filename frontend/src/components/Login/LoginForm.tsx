@@ -29,6 +29,7 @@ const LoginForm = () => {
       name: data.name,
       password: data.password,
       address: data.address,
+      role: data.role,
       birth: data.birth,
       gender: data.gender,
       type: data.type,
@@ -49,7 +50,6 @@ const LoginForm = () => {
     mutationKey: ['loginData'],
     mutationFn: loginData,
     onSuccess(reqData: LoginUserResponseType) {
-      console.log('mutate 사용을 성공했습니다')
       SaveLoginUser(reqData)
       navigate('/')
     },
