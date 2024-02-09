@@ -9,20 +9,20 @@ const SurveyQuestionNo18 = () => {
 
   const handleInputChange = (value: string) => {
     setSelectedValue(value)
-    setSurveyData(prevData => ({ ...prevData, No18: value }))
+    setSurveyData(prevData => ({ ...prevData, expenditure: value }))
   }
   return (
     <c.Container>
       <c.Title>
-        다니시는 (다니실 예정인) <br />
-        동물병원이 있습니까? 있다면 <br />
-        어느 병원인지 얘기해 주세요 <br />
+        강아지가 병원 치료나 수술을 받을 <br />
+        상황이 된다면 현실적으로 어느 정도 <br />의 병원비까지 부담이
+        가능한가요? <br />
       </c.Title>
       <c.Content>책임감을 파악하기 위한 질문이에요</c.Content>
 
       <c.Input
         value={selectedValue}
-        placeholder="참사랑 동물병원"
+        placeholder="전액 부담 가능"
         onChange={e => handleInputChange(e.target.value)}
       />
     </c.Container>

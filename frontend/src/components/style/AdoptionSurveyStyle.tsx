@@ -44,6 +44,7 @@ export const TextArea = styled.textarea`
   color: rgba(128, 128, 128, 0.64);
   border: 1px solid #c8c8c8;
   border-radius: 5px;
+  padding: 15px;
   //line-height: 1;
 
   &:focus,
@@ -54,7 +55,6 @@ export const TextArea = styled.textarea`
   &::placeholder {
     color: #c8c8c8;
     font-size: 15px;
-    padding: 12px;
   }
 `
 
@@ -79,6 +79,7 @@ export const Input = styled.input`
   height: 50px;
   border: 1px solid rgb(200, 200, 200);
   border-radius: 5px;
+  padding: 12px;
 
   &:focus,
   &:active {
@@ -88,7 +89,6 @@ export const Input = styled.input`
   &::placeholder {
     color: #c8c8c8;
     font-size: 15px;
-    padding: 12px;
   }
 `
 
