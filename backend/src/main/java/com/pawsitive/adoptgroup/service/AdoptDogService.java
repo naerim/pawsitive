@@ -1,7 +1,9 @@
 package com.pawsitive.adoptgroup.service;
 
 import com.pawsitive.adoptgroup.dto.request.AdoptionReq;
+import com.pawsitive.adoptgroup.dto.request.UpdateAdoptDogRes;
 import com.pawsitive.adoptgroup.dto.response.AdoptionDogRes;
+import com.pawsitive.adoptgroup.entity.AdoptDog;
 
 /**
  * AdoptDogService 입니다.
@@ -27,4 +29,16 @@ public interface AdoptDogService {
      */
 
     AdoptionDogRes createAdoptDog(AdoptionReq adoptionReq);
+
+    /**
+     * 유기견 입양 정보를 수정하는 메서드입니다.
+     *
+     * @param adoptDogsNo
+     * @param updateAdoptDogRes
+     * @return
+     */
+
+    AdoptionDogRes updateInformation(int adoptDogsNo, UpdateAdoptDogRes updateAdoptDogRes);
+
+    AdoptDog getAdoptDogEntity(int adoptDogNo);
 }

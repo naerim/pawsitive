@@ -1,6 +1,7 @@
 package com.pawsitive.adoptgroup.repository;
 
 import com.pawsitive.adoptgroup.entity.AdoptDog;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -11,4 +12,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface AdoptDogRepository
     extends JpaRepository<AdoptDog, Integer>, AdoptDogRepositoryCustom {
+    Optional<AdoptDog> getAdoptDogByAdoptDogNo(int adoptDogNo);
 }
