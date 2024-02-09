@@ -2,10 +2,10 @@ package com.pawsitive.usergroup.controller;
 
 import static org.springframework.http.HttpStatus.OK;
 
+import com.pawsitive.adoptgroup.dto.response.AdoptionDogRes;
 import com.pawsitive.adoptgroup.service.AdoptDogService;
 import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.common.dto.BaseResponseBody;
-import com.pawsitive.doggroup.dto.response.AdoptedDogRes;
 import com.pawsitive.usergroup.dto.request.SilentRefreshReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
 import com.pawsitive.usergroup.dto.response.UpdateFieldRes;
@@ -53,13 +53,13 @@ public class UserController {
             @ApiResponse(responseCode = "401", description = "현재 로그인 한 회원의 계정이 유효하지 않습니다."),
         }
     )
-    public ResponseEntity<AdoptedDogRes> getDogsByUser(@PathVariable String userId) {
+    public ResponseEntity<AdoptionDogRes> getDogsByUser(@PathVariable String userId) {
 
         if (!userId.equals("admin")) {
             throw new UserNotLoginException();
         }
 
-        AdoptedDogRes response = AdoptedDogRes.builder()
+        AdoptionDogRes response = AdoptionDogRes.builder()
             .adoptedDays(290)
 //            .answerCount(10)
 //            .memoryCount(9)
@@ -127,7 +127,7 @@ public class UserController {
             @ApiResponse(responseCode = "401", description = "현재 로그인 한 회원의 계정이 유효하지 않습니다."),
         }
     )
-    public ResponseEntity<AdoptedDogRes> getAdoptedDogByUserNo(@PathVariable Integer userNo) {
+    public ResponseEntity<AdoptionDogRes> getAdoptedDogByUserNo(@PathVariable Integer userNo) {
         return ResponseEntity
             .status(OK)
             .body(adoptDogService.getAdoptedDogByUserNo(userNo));

@@ -1,6 +1,6 @@
 package com.pawsitive.adoptgroup.repository;
 
-import com.pawsitive.doggroup.dto.response.AdoptedDogRes;
+import com.pawsitive.adoptgroup.dto.response.AdoptionDogRes;
 import java.util.Optional;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -12,5 +12,5 @@ import org.springframework.data.repository.NoRepositoryBean;
  */
 @NoRepositoryBean
 public interface AdoptDogRepositoryCustom {
-    Optional<AdoptedDogRes> getAdoptedDogByUserNo(int userNo);
+    Optional<AdoptionDogRes> getAdoptedDogByUserNo(int userNo);
 }

@@ -1,8 +1,8 @@
 package com.pawsitive.adoptgroup.repository;
 
+import com.pawsitive.adoptgroup.dto.response.AdoptionDogRes;
 import com.pawsitive.adoptgroup.entity.AdoptDog;
 import com.pawsitive.adoptgroup.entity.QAdoptDog;
-import com.pawsitive.doggroup.dto.response.AdoptedDogRes;
 import com.pawsitive.doggroup.entity.QDog;
 import com.pawsitive.usergroup.entity.QMember;
 import com.querydsl.core.types.Projections;
@@ -28,11 +28,11 @@ public class AdoptDogRepositoryImpl extends QuerydslRepositorySupport
     }
 
     @Override
-    public Optional<AdoptedDogRes> getAdoptedDogByUserNo(int userNo) {
+    public Optional<AdoptionDogRes> getAdoptedDogByUserNo(int userNo) {
         return Optional.ofNullable(from(qAdoptDog)
             .innerJoin(qAdoptDog.member, qMember)
             .innerJoin(qAdoptDog.dog, qDog)
-            .select(Projections.fields(AdoptedDogRes.class, qAdoptDog.adoptDogNo, qMember.userNo,
+            .select(Projections.fields(AdoptionDogRes.class, qAdoptDog.adoptDogNo, qMember.userNo,
                 qDog.dogNo, qAdoptDog.name, qAdoptDog.createdAt, qAdoptDog.weight, qAdoptDog.age))
             .where(qMember.userNo.eq(userNo))
             .fetchOne());

@@ -42,9 +42,9 @@ public class AdoptDog {
     @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "weight")
+    @Column(name = "weight", insertable = false)
     private double weight;
 
-    @Column(name = "age")
+    @Column(name = "age", insertable = false)
     private int age;
 }

@@ -1,4 +1,4 @@
-package com.pawsitive.doggroup.dto.response;
+package com.pawsitive.adoptgroup.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "AdoptedDogResponse")
-public class AdoptedDogRes {
+public class AdoptionDogRes {
 
     @Schema(description = "입양 번호 (PK)")
     private int adoptDogNo;
@@ -35,7 +35,7 @@ public class AdoptedDogRes {
     private LocalDateTime createdAt;
 
     @Schema(description = "몸무게")
-    private int weight;
+    private double weight;
 
     @Schema(description = "나이")
     private int age;
