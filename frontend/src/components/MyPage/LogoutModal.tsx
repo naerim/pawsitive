@@ -8,6 +8,7 @@ import { useMutation } from '@tanstack/react-query'
 import { fetchLogout } from '@src/apis/user'
 import { userAtom } from '@src/stores/atoms/user'
 import { useAtom } from 'jotai'
+import { useNavigate } from 'react-router-dom'
 
 const style = {
   position: 'absolute' as const,
@@ -34,7 +35,7 @@ const LogoutModal = () => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   const [user, setUser] = useAtom(userAtom)
-
+  const navigate = useNavigate()
   const { mutate } = useMutation({
     mutationFn: fetchLogout,
     onSuccess: () => {
@@ -49,6 +50,7 @@ const LogoutModal = () => {
         type: 0,
         stage: 0,
       })
+      navigate('/')
     },
   })
 

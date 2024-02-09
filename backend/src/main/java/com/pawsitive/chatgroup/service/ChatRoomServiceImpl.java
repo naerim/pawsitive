@@ -4,15 +4,19 @@ package com.pawsitive.chatgroup.service;
 import com.pawsitive.auth.Role;
 import com.pawsitive.chatgroup.dto.request.ChatRoomCreateReq;
 import com.pawsitive.chatgroup.dto.response.ChatRes;
+import com.pawsitive.chatgroup.dto.response.ChatRoomListRes;
 import com.pawsitive.chatgroup.dto.response.ChatRoomRes;
 import com.pawsitive.chatgroup.entity.ChatRoom;
 import com.pawsitive.chatgroup.exception.ChatRoomNotFoundException;
 import com.pawsitive.chatgroup.repository.ChatRoomRepository;
 import com.pawsitive.chatgroup.transfer.ChatGroupTransfer;
+import com.pawsitive.common.dto.response.BaseResponseMessage;
 import com.pawsitive.common.exception.InvalidRequestDataException;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.service.DogService;
+import com.pawsitive.surveygroup.dto.request.AppointmentReq;
 import com.pawsitive.usergroup.service.UserService;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -98,8 +102,30 @@ public class ChatRoomServiceImpl implements ChatRoomService {
      * @return 최근에 생성된 순으로 조회한 채팅방 목록
      */
     @Override
-    public List<ChatRoom> getChatRooms(int userNo) {
-        return chatRoomRepository.getChatRoomsByOrderByCreatedAtDesc(userNo);
+    public List<ChatRoomListRes> getChatRoomList(int userNo) {
+        List<ChatRoomListRes> chatRooms = chatRoomRepository.getChatRoomList(userNo);
+        for (ChatRoomListRes chatRoom : chatRooms) {
+            chatRoom.setLastChat(chatRoomRepository.getLastChat(chatRoom.getChatRoomNo()));
+        }
+
+        return chatRooms;
+    }
+
+    @Override
+    public String createAppointment(AppointmentReq appointmentReq) {
+        ChatRoom chatRoom = getChatRoomEntityByChatRoomNo(appointmentReq.getChatRoomNo());
+        chatRoom.setPromiseCreatedAt(LocalDateTime.now());
+        chatRoom.setIsPromiseAccepted(false);
+        chatRoomRepository.save(chatRoom);
+        return BaseResponseMessage.SUCCESS.getMessage();
+    }
+
+    @Override
+    public String acceptAppointment(AppointmentReq appointmentReq) {
+        ChatRoom chatRoom = getChatRoomEntityByChatRoomNo(appointmentReq.getChatRoomNo());
+        chatRoom.setIsPromiseAccepted(true);
+        chatRoomRepository.save(chatRoom);
+        return BaseResponseMessage.SUCCESS.getMessage();
     }
 
 }

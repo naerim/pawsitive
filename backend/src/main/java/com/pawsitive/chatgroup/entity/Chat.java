@@ -35,6 +35,9 @@ public class Chat {
     @JoinColumn(name = "user_no")
     private User user;
 
+    @Column(name = "type")
+    private String type;
+
     @Column(name = "message")
     private String message;
 

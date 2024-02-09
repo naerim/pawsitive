@@ -1,12 +1,13 @@
 package com.pawsitive.chatgroup.repository;
 
 import com.pawsitive.chatgroup.dto.response.ChatRes;
+import com.pawsitive.chatgroup.dto.response.ChatRoomListRes;
 import com.pawsitive.chatgroup.entity.Chat;
-import com.pawsitive.chatgroup.entity.ChatRoom;
 import com.pawsitive.chatgroup.entity.QChat;
 import com.pawsitive.chatgroup.entity.QChatRoom;
 import com.pawsitive.doggroup.entity.QDog;
 import com.pawsitive.usergroup.entity.QUser;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import java.util.List;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -22,14 +23,19 @@ public class ChatRoomRepositoryImpl extends QuerydslRepositorySupport
     public ChatRoomRepositoryImpl() {
         super(Chat.class);
     }
-    
+
     @Override
-    public List<ChatRoom> getChatRoomsByOrderByCreatedAtDesc(int userNo) {
+    public List<ChatRoomListRes> getChatRoomList(int userNo) {
 
         return
             from(qChatRoom, qDog)
-                .select(qChatRoom)
                 .where(qChatRoom.dogNo.eq(qDog.dogNo))
+                .select(Projections.fields(ChatRoomListRes.class,
+                    qChatRoom.chatRoomNo, qChatRoom.id, qChatRoom.name,
+                    ExpressionUtils.as(from(qUser)
+                        .select(qUser.image)
+                        .where(qUser.userNo.eq(userNo)), "memberProfileImage"),
+                    qDog.user.image.as("shelterProfileImage")))
                 .where(qChatRoom.userNo.eq(userNo).or(qDog.user.userNo.eq(userNo)))
                 .fetch();
     }
@@ -55,5 +61,16 @@ public class ChatRoomRepositoryImpl extends QuerydslRepositorySupport
             .fetchOne();
 
         return cnt > 0;
+    }
+
+    @Override
+    public ChatRoomListRes.LastChat getLastChat(int chatRoomNo) {
+        return from(qChat)
+            .innerJoin(qChat.room, qChatRoom)
+            .select(Projections.constructor(ChatRoomListRes.LastChat.class,
+                qChat.message, qChat.createdAt))
+            .where(qChatRoom.chatRoomNo.eq(chatRoomNo))
+            .orderBy(qChat.createdAt.desc())
+            .fetchFirst();
     }
 }
