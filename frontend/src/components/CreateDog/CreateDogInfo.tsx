@@ -52,6 +52,19 @@ const CreateDogInfo = () => {
       </s.InputContainer>
       <s.InputContainer>
         <s.Title htmlFor="kind">품종</s.Title>
+        <select>
+          <option>말티즈</option>
+          <option>비숑</option>
+          <option>치와아</option>
+          <option>푸들</option>
+          <option>포메라니안</option>
+          <option>시바견</option>
+          <option>시츄</option>
+          <option>도베르만</option>
+          <option>리트리버</option>
+          <option>기타</option>
+          <option>기타</option>
+        </select>
         <s.Input
           type="text"
           value={createDogData.kind}
