@@ -19,16 +19,10 @@ const ChatStartButton = () => {
   }, [dogNo, user])
 
   const handleClick = async () => {
-    const currentChatRoomIndex = findChatRoomIndex()
-
-    if (data && currentChatRoomIndex !== -1) {
-      navigate(`/chat/${data[currentChatRoomIndex].id}`)
-    } else if (createChatRoomParams) {
-      const createChatRoomResult = await createChatRoom(createChatRoomParams)
-      console.log(createChatRoomResult)
-      if (createChatRoomResult && createChatRoomResult.id) {
-        navigate(`/chat/${createChatRoomResult.id}`)
-      }
+    const createChatRoomResult = await createChatRoom(createChatRoomParams)
+    console.log(createChatRoomResult)
+    if (createChatRoomResult && createChatRoomResult.chatRoomNo) {
+      navigate(`/chat/${createChatRoomResult.chatRoomNo}`)
     }
   }
 
