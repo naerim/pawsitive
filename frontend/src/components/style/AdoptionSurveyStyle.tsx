@@ -114,17 +114,3 @@ export const Button = styled.button<ButtonProps>`
     outline: none;
   }
 `
-
-export const Question = styled.h1`
-  font-weight: bolder;
-  font-size: 16px;
-`
-
-export const Explain = styled.div`
-    width: auto;
-    height: 200px;
-    margin-bottom: 2px;
-    font-size: 15px;
-    border: 1px solid #c8c8c8;
-    der-ra ius:;
-`
