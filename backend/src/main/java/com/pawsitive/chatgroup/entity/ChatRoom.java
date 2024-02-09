@@ -38,4 +38,10 @@ public class ChatRoom {
     @Column(name = "user_no")
     private int userNo;
 
+    @Column(name = "promise_created_at", insertable = false)
+    private LocalDateTime promiseCreatedAt;
+
+    @Column(name = "is_promise_accepted", insertable = false)
+    private Boolean isPromiseAccepted;
+
 }

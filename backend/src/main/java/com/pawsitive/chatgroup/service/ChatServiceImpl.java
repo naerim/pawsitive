@@ -28,6 +28,7 @@ public class ChatServiceImpl implements ChatService {
         chat.setRoom(chatRoomService.getChatRoomEntityByChatRoomNo(chatReq.getChatRoomNo()));
         chat.setUser(user);
         chat.setMessage(chatReq.getMessage());
+        chat.setType(chatReq.getType());
         Chat savedChat = chatRepository.save(chat);
 
         ChatRes chatRes = new ChatRes();
@@ -35,10 +36,11 @@ public class ChatServiceImpl implements ChatService {
         chatRes.setUserNo(chatReq.getSenderNo());
         chatRes.setUserName(user.getName());
         chatRes.setUserImage(user.getImage());
+        chatRes.setType(chatRes.getType());
         chatRes.setMessage(chatReq.getMessage());
         chatRes.setCreatedAt(savedChat.getCreatedAt());
         chatRes.setIsRead(savedChat.getIsRead());
-        
+
         return chatRes;
     }
 

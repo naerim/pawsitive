@@ -16,6 +16,7 @@ public class ChatRes {
     private int userNo;
     private String userName;
     private String userImage;
+    private String type;
     private String message;
     private LocalDateTime createdAt;
     private Boolean isRead;
