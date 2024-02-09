@@ -90,6 +90,7 @@ public class SecurityConfig {
                     .requestMatchers("/api/v1/auth/no-auth").permitAll()
                     .requestMatchers("/api/v1/surveys/**").permitAll()
                     .requestMatchers("/api/v1/users/**").authenticated()
+                    .requestMatchers("/api/v1/dogs/like").authenticated()
                     .anyRequest().permitAll()
 //                .anyRequest().authenticated()
             )
@@ -108,4 +109,5 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 }

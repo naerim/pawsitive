@@ -1,6 +1,7 @@
 package com.pawsitive.doggroup.service;
 
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
+import com.pawsitive.doggroup.dto.request.MemberDogLikeReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.entity.Dog;
@@ -68,6 +69,5 @@ public interface DogService {
      */
     List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num);
 
-//    void createMemberDogLike();
-
+    
 }

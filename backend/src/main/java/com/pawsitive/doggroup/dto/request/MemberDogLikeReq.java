@@ -7,5 +7,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class MemberDogLikeReq {
     private Integer userNo;
+    private String email;
     private Integer dogNo;
 }
