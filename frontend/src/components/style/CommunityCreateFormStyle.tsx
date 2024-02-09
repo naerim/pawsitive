@@ -113,32 +113,9 @@ export const DivLine = styled.div`
 
 export const Tag = styled.div`
   display: flex;
-  align-items: center;
-
-  .label {
-    position: relative;
-    display: inline-block;
-    width: 22px;
-    height: 22px;
-    border: 1px solid #eaeaea;
-    margin-right: 10px;
-    cursor: pointer;
-  }
-
-  .label::after {
-    content: '✔';
-    width: 22px;
-    height: 22px;
-    text-align: center;
-    position: absolute;
-    left: 0;
-    top: 0;
-    display: none;
-  }
-
-  .checked::after {
-    display: block; /* Show after checkbox is checked */
-  }
+  flex-direction: row;
+  align-items: flex-start;
+  margin: 15px 0 0 0;
 `
 
 export const Label = styled.label`
@@ -152,12 +129,21 @@ export const Label = styled.label`
   }
 `
 
-export const CheckBox = styled.input`
-  display: none;
+export const CheckBoxDiv = styled.div`
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  margin-top: -7px;
+`
 
-  &:checked + .label::after {
-    display: block; /* Show after checkbox is checked */
-  }
+export const CheckBoxLabel = styled.div`
+  display: flex;
+  align-items: center;
+  margin: -5px 0;
+`
+
+export const CheckBoxOk = styled.div`
+  margin: 1px 0 0 5px;
 `
 
 export const Select = styled.select`
@@ -184,11 +170,46 @@ export const Select = styled.select`
 export const ContentInput = styled.input`
   width: 200px;
   height: 30px;
-  margin-bottom: 2px;
+  margin: -7px 1px 2px 0;
   font-size: 1em;
   border: none;
   outline: none;
   color: #000;
+`
+
+export const TextAreaLabel = styled.label`
+  color: #d2d2d2;
+  margin-right: 15px;
+  font-size: 0.9em;
+
+  .img {
+    width: 25px;
+    height: 30px;
+  }
+`
+export const TextArea = styled.textarea`
+  width: 80%;
+  height: 160px;
+  font-size: 15px;
+  color: rgba(0, 0, 0, 1);
+  border: 0 solid #c8c8c8;
+  border-radius: 5px;
+  resize: none;
+
+  &::placeholder {
+    color: #c8c8c8;
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: #c8c8c8;
+    font-size: 15px;
+    padding: 12px;
+  }
 `
 
 export const MapCloseButton = styled.div`

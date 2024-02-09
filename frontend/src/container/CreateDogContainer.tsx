@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useAtom } from 'jotai'
+import React, { useEffect, useState } from 'react'
+import { useAtom, useAtomValue } from 'jotai'
 import { useMutation } from '@tanstack/react-query'
 import { createDogInfoAtom, createDogStepAtom } from '@src/stores/atoms/dog'
 import { createDog } from '@src/apis/dog'
@@ -9,11 +9,13 @@ import CreateDogNote from '@src/components/CreateDog/CreateDogNote'
 import CreateDogFile from '@src/components/CreateDog/CreateDogFile'
 import * as c from '@src/container/style/CreateDogContainerStyle'
 import { useNavigate } from 'react-router-dom'
+import { userAtom } from '@src/stores/atoms/user'
 
 const CreateDogContainer = () => {
   const navigate = useNavigate()
-  const [createDogInfo] = useAtom(createDogInfoAtom)
+  const [createDogInfo, setCreateDogInfo] = useAtom(createDogInfoAtom)
   const [createDogStep, setCreateDogStep] = useAtom(createDogStepAtom)
+  const user = useAtomValue(userAtom)
   const [file, setFile] = useState<File[]>([])
 
   const { mutate } = useMutation({
@@ -26,6 +28,13 @@ const CreateDogContainer = () => {
       console.error('유기견 추가 실패:', error)
     },
   })
+
+  useEffect(() => {
+    setCreateDogInfo({
+      ...createDogInfo,
+      userNo: user.userNo,
+    })
+  }, [createDogInfo, setCreateDogInfo, user.userNo])
 
   const handleCreateDog = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

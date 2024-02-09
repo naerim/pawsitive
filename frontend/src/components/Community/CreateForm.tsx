@@ -9,6 +9,7 @@ import Locations from '@src/components/Community/Locations'
 import { useMutation } from '@tanstack/react-query'
 import { fetchCommunityCreate } from '@src/apis/community'
 import ImageUpload from '@src/components/Community/ImageUpload'
+import Checkbox from '@mui/material/Checkbox'
 
 declare global {
   interface Window {
@@ -32,6 +33,7 @@ const categoryList = [
   { value: '자랑하개', index: 2 },
   { value: '영양있개', index: 3 },
   { value: '쇼핑하개', index: 4 },
+  { value: '산책하개', index: 5 },
 ]
 
 const CreateForm = () => {
@@ -58,7 +60,7 @@ const CreateForm = () => {
     setCategory(e.target.value)
   }
 
-  const handleContentChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setContent(e.target.value)
 
   const handleIsPublicChange = () => setIsPublic(!isPublicValue)
@@ -149,6 +151,7 @@ const CreateForm = () => {
         kakao.maps.event.removeListener(mapValue, 'click', clickHandler)
       }
     }
+    return () => {}
   }, [mapValue, markerValue, setAddress, setLatitude, setLongitude])
 
   const { mutate } = useMutation({
@@ -222,13 +225,21 @@ const CreateForm = () => {
 
           <c.Tag>
             <c.Label htmlFor="isPublic">비공개</c.Label>
-            <c.CheckBox
-              type="checkbox"
-              id="isPublic"
-              defaultChecked={false}
-              onChange={handleIsPublicChange}
-            />
-            <label className="label" htmlFor="isPublic" />
+            <c.CheckBoxDiv>
+              <c.CheckBoxLabel>
+                <Checkbox
+                  checked={!isPublicValue}
+                  onChange={handleIsPublicChange}
+                  sx={{
+                    color: '#c8c8c8',
+                    '&.Mui-checked': {
+                      color: '#c8c8c8',
+                    },
+                  }}
+                />
+                <c.CheckBoxOk>{isPublicValue}</c.CheckBoxOk>
+              </c.CheckBoxLabel>
+            </c.CheckBoxDiv>
           </c.Tag>
         </c.Top>
         <c.DivLine />
@@ -253,8 +264,9 @@ const CreateForm = () => {
         <c.DivLine />
 
         <c.Tag>
-          <c.Label htmlFor="content">내 용 :</c.Label>
-          <c.ContentInput
+          <c.TextAreaLabel htmlFor="content">내 용</c.TextAreaLabel>
+          <c.TextArea
+            // placeholder="_______________________________"
             id="content"
             value={contentValue}
             onChange={handleContentChange}

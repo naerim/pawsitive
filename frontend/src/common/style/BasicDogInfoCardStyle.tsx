@@ -30,6 +30,12 @@ export const Dogimg = styled.img`
   border-radius: 8px;
   margin-top: 2%;
 `
+export const DogVideo = styled.video`
+  width: 95%;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 2%;
+`
 
 export const AdoptStatus = styled.div<AdoptStatusProps>`
   position: absolute;
