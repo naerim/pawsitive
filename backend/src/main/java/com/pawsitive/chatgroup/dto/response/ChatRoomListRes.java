@@ -1,6 +1,5 @@
 package com.pawsitive.chatgroup.dto.response;
 
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ChatRoomListRes {
     private int chatRoomNo;
+    private int dogNo;
     private String id;
     private String name;
     private String memberProfileImage;
@@ -22,7 +22,6 @@ public class ChatRoomListRes {
     @Getter
     public static class LastChat {
         private String message;
-        private LocalDateTime createdAt;
-
+        private String createdAt;
     }
 }

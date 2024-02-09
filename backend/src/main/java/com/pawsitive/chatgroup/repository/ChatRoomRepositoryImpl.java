@@ -2,6 +2,7 @@ package com.pawsitive.chatgroup.repository;
 
 import com.pawsitive.chatgroup.dto.response.ChatRes;
 import com.pawsitive.chatgroup.dto.response.ChatRoomListRes;
+import com.pawsitive.chatgroup.dto.response.LastChatTmp;
 import com.pawsitive.chatgroup.entity.Chat;
 import com.pawsitive.chatgroup.entity.QChat;
 import com.pawsitive.chatgroup.entity.QChatRoom;
@@ -25,18 +26,36 @@ public class ChatRoomRepositoryImpl extends QuerydslRepositorySupport
     }
 
     @Override
-    public List<ChatRoomListRes> getChatRoomList(int userNo) {
+    public List<ChatRoomListRes> getChatRoomListByUserNo(int userNo) {
 
         return
             from(qChatRoom, qDog)
                 .where(qChatRoom.dogNo.eq(qDog.dogNo))
                 .select(Projections.fields(ChatRoomListRes.class,
-                    qChatRoom.chatRoomNo, qChatRoom.id, qChatRoom.name,
+                    qChatRoom.chatRoomNo, qChatRoom.dogNo, qChatRoom.id, qChatRoom.name,
                     ExpressionUtils.as(from(qUser)
                         .select(qUser.image)
                         .where(qUser.userNo.eq(userNo)), "memberProfileImage"),
                     qDog.user.image.as("shelterProfileImage")))
                 .where(qChatRoom.userNo.eq(userNo).or(qDog.user.userNo.eq(userNo)))
+                .fetch();
+    }
+
+    @Override
+    public List<ChatRoomListRes> getChatRoomListByDogNo(int dogNo) {
+
+        return
+            from(qChatRoom, qDog)
+                .where(qChatRoom.dogNo.eq(qDog.dogNo))
+                .select(Projections.fields(ChatRoomListRes.class,
+                    qChatRoom.chatRoomNo, qChatRoom.dogNo, qChatRoom.id, qChatRoom.name,
+                    ExpressionUtils.as(from(qUser, qChatRoom)
+                        .where(qUser.userNo.eq(qChatRoom.userNo))
+                        .select(qUser.image)
+                        .where(qUser.userNo.eq(qDog.user.userNo)), "memberProfileImage"),
+                    qDog.user.image.as("shelterProfileImage")))
+                .where(qDog.dogNo.eq(dogNo))
+                .orderBy(qChatRoom.createdAt.desc())
                 .fetch();
     }
 
@@ -48,7 +67,7 @@ public class ChatRoomRepositoryImpl extends QuerydslRepositorySupport
             .select(Projections.constructor(ChatRes.class, qChat.chatNo, qUser.userNo, qUser.name,
                 qUser.image, qChat.type, qChat.message, qChat.createdAt, qChat.isRead))
             .where(qChatRoom.chatRoomNo.eq(roomNo))
-            .orderBy(qChat.createdAt.desc())
+            .orderBy(qChat.createdAt.asc())
             .fetch();
     }
 
@@ -64,10 +83,10 @@ public class ChatRoomRepositoryImpl extends QuerydslRepositorySupport
     }
 
     @Override
-    public ChatRoomListRes.LastChat getLastChat(int chatRoomNo) {
+    public LastChatTmp getLastChat(int chatRoomNo) {
         return from(qChat)
             .innerJoin(qChat.room, qChatRoom)
-            .select(Projections.constructor(ChatRoomListRes.LastChat.class,
+            .select(Projections.constructor(LastChatTmp.class,
                 qChat.message, qChat.createdAt))
             .where(qChatRoom.chatRoomNo.eq(chatRoomNo))
             .orderBy(qChat.createdAt.desc())
