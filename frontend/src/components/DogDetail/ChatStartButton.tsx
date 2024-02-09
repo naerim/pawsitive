@@ -8,7 +8,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 const ChatStartButton = () => {
   const userRole = JSON.parse(window.localStorage.getItem('currentUser')).role
-  console.log(userRole)
   const location = useLocation()
   const dogNo = location.state?.dogNo
   const navigate = useNavigate()
