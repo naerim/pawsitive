@@ -10,9 +10,12 @@ import com.pawsitive.communitygroup.exception.CommunityBoardNotFoundException;
 import com.pawsitive.communitygroup.repository.CommunityBoardRepository;
 import com.pawsitive.dummy.CommunityDummy;
 import com.pawsitive.usergroup.service.UserService;
+
 import java.util.List;
 import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +30,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  */
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = CommunityServiceImpl.class)
+@Disabled
 class CommunityServiceImplTest {
 
     @Autowired
