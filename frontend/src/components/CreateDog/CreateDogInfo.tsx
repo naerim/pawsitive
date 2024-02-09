@@ -63,7 +63,6 @@ const CreateDogInfo = () => {
           <option>도베르만</option>
           <option>리트리버</option>
           <option>기타</option>
-          <option>기타</option>
         </select>
         <s.Input
           type="text"

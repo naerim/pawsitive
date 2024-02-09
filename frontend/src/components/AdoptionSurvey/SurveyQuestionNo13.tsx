@@ -5,11 +5,14 @@ import { useSetAtom } from 'jotai/index'
 
 const SurveyQuestionNo13 = () => {
   const setSurveyData = useSetAtom(surveyDataAtom)
-  const [selectedValue, setSelectedValue] = useState(false)
+  const [selectedValue, setSelectedValue] = useState('')
 
-  const handleButtonClick = (value: boolean) => {
+  const handleButtonClick = (value: string) => {
     setSelectedValue(value)
-    setSurveyData(prevData => ({ ...prevData, No13: value }))
+    setSurveyData(prevData => ({
+      ...prevData,
+      pet_sociability: value,
+    }))
   }
   return (
     <c.Container>
@@ -21,14 +24,14 @@ const SurveyQuestionNo13 = () => {
       <c.Content>생활 환경에 관한 질문이에요</c.Content>
       <c.ButtonDiv>
         <c.Button
-          onClick={() => handleButtonClick(true)}
-          active={selectedValue}
+          onClick={() => handleButtonClick('true')}
+          active={selectedValue === 'true'}
         >
           네
         </c.Button>
         <c.Button
-          onClick={() => handleButtonClick(false)}
-          active={!selectedValue}
+          onClick={() => handleButtonClick('false')}
+          active={selectedValue === 'false'}
         >
           아니요
         </c.Button>

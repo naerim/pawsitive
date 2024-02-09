@@ -7,24 +7,33 @@ const SurveyQuestionNo19 = () => {
   const setSurveyData = useSetAtom(surveyDataAtom)
   const [selectedValue, setSelectedValue] = useState('')
 
-  const handleInputChange = (value: string) => {
+  const handleButtonClick = (value: string) => {
     setSelectedValue(value)
-    setSurveyData(prevData => ({ ...prevData, No19: value }))
+    setSurveyData(prevData => ({ ...prevData, forever_responsibility: value }))
   }
   return (
     <c.Container>
       <c.Title>
-        강아지가 병원 치료나 수술을 받을 <br />
-        상황이 된다면 현실적으로 어느 정도 <br />의 병원비까지 부담이
-        가능한가요? <br />
+        강아지에게 장애가 생기거나 <br />
+        질병으로 인하여 특별한 도움이 <br />
+        필요하게 되는 경우에도 평생 <br />
+        책임지실 수 있습니까? <br />
       </c.Title>
       <c.Content>책임감을 파악하기 위한 질문이에요</c.Content>
-
-      <c.Input
-        value={selectedValue}
-        placeholder="전액 부담 가능"
-        onChange={e => handleInputChange(e.target.value)}
-      />
+      <c.ButtonDiv>
+        <c.Button
+          onClick={() => handleButtonClick('true')}
+          active={selectedValue === 'true'}
+        >
+          네
+        </c.Button>
+        <c.Button
+          onClick={() => handleButtonClick('false')}
+          active={selectedValue === 'false'}
+        >
+          아니요
+        </c.Button>
+      </c.ButtonDiv>
     </c.Container>
   )
 }

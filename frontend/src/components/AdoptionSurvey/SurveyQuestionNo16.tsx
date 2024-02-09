@@ -5,34 +5,25 @@ import { useSetAtom } from 'jotai/index'
 
 const SurveyQuestionNo16 = () => {
   const setSurveyData = useSetAtom(surveyDataAtom)
-  const [selectedValue, setSelectedValue] = useState(false)
+  const [selectedValue, setSelectedValue] = useState('')
 
-  const handleButtonClick = (value: boolean) => {
+  const handleInputChange = (value: string) => {
     setSelectedValue(value)
-    setSurveyData(prevData => ({ ...prevData, No16: value }))
+    setSurveyData(prevData => ({ ...prevData, training: value }))
   }
   return (
     <c.Container>
       <c.Title>
-        입양을 원하시는 강아지 브리드
-        <br />
-        성격과 성질에 익숙합니까?
+        강아지가 짖거나, 분리 불안이 있는 등의 행동 교정이 필요한 경우, <br />
+        적절한 훈련이 필요할수 있습니다. <br /> 어떤 방법으로 훈련해주실건지
+        <br /> 알려주세요.
       </c.Title>
-      <c.Content>생활 환경에 관한 질문이에요</c.Content>
-      <c.ButtonDiv>
-        <c.Button
-          onClick={() => handleButtonClick(true)}
-          active={selectedValue}
-        >
-          네
-        </c.Button>
-        <c.Button
-          onClick={() => handleButtonClick(false)}
-          active={!selectedValue}
-        >
-          아니요
-        </c.Button>
-      </c.ButtonDiv>
+      <c.Content>책임감을 파악하기 위한 질문이에요</c.Content>
+      <c.TextArea
+        value={selectedValue}
+        placeholder="전문가에게 훈련시킬 예정 등"
+        onChange={e => handleInputChange(e.target.value)}
+      />
     </c.Container>
   )
 }

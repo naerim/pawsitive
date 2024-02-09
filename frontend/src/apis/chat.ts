@@ -3,7 +3,9 @@ import { CreateChatRoomParamsType } from '@src/types/chatType' // 현재 사용�
 
 // 현재 사용자 채팅 리스트 전체 조회
 export const fetchChatRooms = async (userNo: number) => {
-  return publicRequest.get(`/chatrooms?userNo=${userNo}`).then(res => res.data)
+  return publicRequest
+    .get(`/chatrooms?type=userNo&value=${userNo}`)
+    .then(res => res.data)
 }
 
 // 채팅방 생성
@@ -20,4 +22,11 @@ export const fetchHistoryMessage = async (chatRoomNo: number) => {
     console.log(res.data)
     return res.data
   })
+}
+
+// 같은 강아지에 대한 채팅 리스틑 조회
+export const fetchSameDogChatRooms = async (dogNo: number) => {
+  return publicRequest
+    .get(`/chatrooms?type=dogNo&value=${dogNo}`)
+    .then(res => res.data)
 }
