@@ -37,9 +37,7 @@ const ChattingRoomContainer = () => {
     })
   }, [refetch])
 
-  const connectHandler = () => {
-    const SockJs = SockJS('https://i10c111.p.ssafy.io/ws/chat')
-
+  const connectHandler = (SockJs: WebSocket) => {
     client.current = new Client({
       webSocketFactory: () => SockJs,
       debug: str => console.log(str),
@@ -70,7 +68,8 @@ const ChattingRoomContainer = () => {
   }
 
   useEffect(() => {
-    connectHandler()
+    const SockJs = SockJS('https://i10c111.p.ssafy.io/ws/chat')
+    connectHandler(SockJs)
     return () => {
       client.current?.deactivate()
     }
@@ -102,9 +101,6 @@ const ChattingRoomContainer = () => {
   return (
     <div>
       <div>채팅방이든아니든니가뭔상관이야</div>
-      <button type="button" onClick={() => connectHandler()}>
-        응연결안해줄거야
-      </button>
 
       <div>
         {messages.map(message => (
