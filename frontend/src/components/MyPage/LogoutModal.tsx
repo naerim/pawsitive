@@ -24,7 +24,7 @@ const style = {
 }
 
 const ButtonValue = styled(Button)({
-  color: 'black',
+  color: '#000000',
   '&:focus': {
     outline: 'none',
   },
@@ -45,6 +45,7 @@ const LogoutModal = () => {
         name: '',
         password: '',
         address: '',
+        role: '',
         birth: '',
         gender: '',
         type: 0,

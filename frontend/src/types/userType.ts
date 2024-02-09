@@ -4,6 +4,7 @@ export type UserType = {
   name: string
   password: string
   address: string
+  role: string
   birth: string
   gender: string
   type: number
@@ -75,6 +76,7 @@ export type LoginUserResponseType = {
   email: string
   name: string
   password: string
+  role: string
   address: string
   birth: string
   gender: string
