@@ -72,6 +72,8 @@ const AuthRoutes = () => (
     <Route path="/questions" element={<QuestionListPage />} />
     <Route path="/questions/new" element={<QuestionCreatePage />} />
     <Route path="/questions/:questionNo" element={<QuestionDetailPage />} />
+    {/* 임시로 넣을게요~~~ */}
+    <Route path="/signUp" element={<SignUpPage />} />
   </Routes>
 )
 
