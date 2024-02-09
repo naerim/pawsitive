@@ -55,7 +55,7 @@ class CommunityServiceImplTest {
             .willReturn(Optional.of(board));
 
         CommunityBoardDetailRes actualCommunity =
-            communityService.getCommunityBoard(1);
+            communityService.getCommunityBoard(11);
 
         Assertions.assertThat(actualCommunity).isNotNull();
         Assertions.assertThat(actualCommunity.getBoardNo())
@@ -69,7 +69,7 @@ class CommunityServiceImplTest {
         given(mockCommunityBoardRepository.getBoardByBoardNo(anyInt()))
             .willReturn(Optional.empty());
 
-        Assertions.assertThatThrownBy(() -> communityService.getCommunityBoard(1))
+        Assertions.assertThatThrownBy(() -> communityService.getCommunityBoard(11))
             .isInstanceOf(CommunityBoardNotFoundException.class)
             .hasMessageContaining("존재하지 않는");
     }
@@ -103,7 +103,7 @@ class CommunityServiceImplTest {
         given(mockCommunityBoardRepository.getCommentsByBoardNo(anyInt()))
             .willReturn(List.of(comment));
 
-        CommunityDetailRes actualCommunity = communityService.getCommunity(1);
+        CommunityDetailRes actualCommunity = communityService.getCommunity(11);
 
         Assertions.assertThat(actualCommunity).isNotNull();
         Assertions.assertThat(actualCommunity.getBoard()).isEqualTo(board);

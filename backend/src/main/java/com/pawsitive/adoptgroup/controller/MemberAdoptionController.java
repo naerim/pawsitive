@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "02.Member-Adoption", description = "회원 입양 기능")
+@Tag(name = "09.Member-Adoption")
 @RestController
 @RequestMapping("/api/v1/adopt-dogs")
 @RequiredArgsConstructor
@@ -35,10 +35,10 @@ public class MemberAdoptionController {
     private final AdoptDogService adoptDogService;
 
     @PutMapping("/appointment")
-    @Operation(summary = "유기견 입양 약속 등록", description = "전달받은 유기견 번호와 회원 번호로 입양 약속을 등록한다", tags = {
-        "02.Member-Adoption"}, responses = {
-        @ApiResponse(responseCode = "200", description = "입양 약속 등록 여부를 정상 반환한다.")}
-    )
+    @Operation(summary = "유기견 입양 약속 등록", description = "전달받은 유기견 번호와 회원 번호로 입양 약속을 등록한다",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "입양 약속 등록 여부를 정상 반환한다.")
+        })
     public ResponseEntity<BaseResponseBody> createdDogAppointment(
         @RequestBody AppointmentReq appointmentReq) {
         return ResponseEntity
@@ -48,10 +48,10 @@ public class MemberAdoptionController {
 
 
     @PostMapping
-    @Operation(summary = "유기견 입양 등록", description = "전달받은 유기견 번호와 회원 번호로 입양 정보를 등록한다", tags = {
-        "02.Member-Adoption"}, responses = {
-        @ApiResponse(responseCode = "201", description = "입양 등록 여부를 정상 반환한다.")}
-    )
+    @Operation(summary = "유기견 입양 등록", description = "전달받은 유기견 번호와 회원 번호로 입양 정보를 등록한다",
+        responses = {
+            @ApiResponse(responseCode = "201", description = "입양 등록 여부를 정상 반환한다.")
+        })
     public ResponseEntity<AdoptionRes> createAdoptDog(@RequestBody @Valid AdoptionReq adoptionReq) {
         return ResponseEntity
             .status(CREATED)
