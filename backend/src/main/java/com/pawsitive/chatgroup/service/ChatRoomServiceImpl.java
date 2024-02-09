@@ -65,9 +65,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         room.setName(dog.getUser().getName() + "보호소 - " + dog.getName());
         room.setDogNo(dogNo);
         room.setUserNo(userNo);
-        chatRoomRepository.save(room);
+        ChatRoom chatRoom = chatRoomRepository.save(room);
 
-        ChatRoom chatRoom = getChatRoomEntityByChatRoomNo(room.getChatRoomNo());
         return ChatGroupTransfer.entityToDto(chatRoom);
     }
 
