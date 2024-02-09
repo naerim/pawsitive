@@ -10,7 +10,10 @@ const SurveyQuestionNo4 = () => {
 
   const handleCheckboxChange = (value: string) => {
     setSelectedValue(value)
-    setSurveyData(prevData => ({ ...prevData, No4: selectedValue }))
+    setSurveyData(prevData => ({
+      ...prevData,
+      family_type: selectedValue,
+    }))
   }
   return (
     <c.Container>

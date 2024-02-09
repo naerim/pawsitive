@@ -55,6 +55,13 @@ export const Question = styled.h1`
   font-weight: bolder;
   font-size: 16px;
 `
+export const Step = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  color: #ff9232;
+  margin: 45px 0 0 0;
+`
 
 export const InputContainer = styled.div`
   display: flex;

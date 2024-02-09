@@ -1,8 +1,8 @@
 import * as c from '@src/container/style/AdoptionSurveyContainerStyle'
-import { useAtom, useSetAtom } from 'jotai/index'
+import { useAtom } from 'jotai/index'
 import { userAtom } from '@src/stores/atoms/user'
 import { useNavigate } from 'react-router-dom'
-import { surveyStepAtom } from '@src/stores/atoms/survey'
+import { surveyDataAtom, surveyStepAtom } from '@src/stores/atoms/survey'
 import SurveyQuestionNo1 from '@src/components/AdoptionSurvey/SurveyQuestionNo1'
 import SurveyQuestionNo2 from '@src/components/AdoptionSurvey/SurveyQuestionNo2'
 import SurveyQuestionNo3 from '@src/components/AdoptionSurvey/SurveyQuestionNo3'
@@ -22,15 +22,22 @@ import SurveyQuestionNo16 from '@src/components/AdoptionSurvey/SurveyQuestionNo1
 import SurveyQuestionNo17 from '@src/components/AdoptionSurvey/SurveyQuestionNo17'
 import SurveyQuestionNo18 from '@src/components/AdoptionSurvey/SurveyQuestionNo18'
 import SurveyQuestionNo19 from '@src/components/AdoptionSurvey/SurveyQuestionNo19'
-import SurveyQuestionNo20 from '@src/components/AdoptionSurvey/SurveyQuestionNo20'
 import SurveyQuestionSection1 from '@src/components/AdoptionSurvey/SurveyQuestionSection1'
 import SurveyQuestionSection2 from '@src/components/AdoptionSurvey/SurveyQuestionSection2'
+import { useEffect } from 'react'
 
 const AdoptionSurveyContainer = () => {
   const [surveyStep, setSurveyStep] = useAtom(surveyStepAtom)
-  const setUser = useSetAtom(userAtom)
+  const [user, setUser] = useAtom(userAtom)
   const navigate = useNavigate()
-  // const surveyData = useAtomValue(surveyDataAtom)
+  const [surveyData, setSurveyData] = useAtom(surveyDataAtom)
+
+  useEffect(() => {
+    setSurveyData(prevData => ({
+      ...prevData,
+      user_no: user.userNo,
+    }))
+  }, [])
 
   const handlePrevPage = () => {
     navigate(-1)
@@ -47,6 +54,7 @@ const AdoptionSurveyContainer = () => {
   const goDone = () => {
     // console.log(surveyData)
     setUser(user => ({ ...user, stage: 2 }))
+    console.log(surveyData)
     navigate('/mypage/survey/done')
   }
 
@@ -94,8 +102,6 @@ const AdoptionSurveyContainer = () => {
         return <SurveyQuestionNo18 />
       case 21:
         return <SurveyQuestionNo19 />
-      case 22:
-        return <SurveyQuestionNo20 />
 
       default:
         return null
@@ -126,12 +132,12 @@ const AdoptionSurveyContainer = () => {
 
       <c.InputContainer>
         {renderStepComponent()}
-
+        <c.Step>{surveyStep} / 21</c.Step>
         <c.ButtonContainer>
-          {surveyStep < 22 && (
+          {surveyStep < 21 && (
             <c.Button onClick={handleNextStep}>다음</c.Button>
           )}
-          {surveyStep === 22 && (
+          {surveyStep === 21 && (
             <c.Button onClick={goDone}>설문 작성 완료</c.Button>
           )}
         </c.ButtonContainer>

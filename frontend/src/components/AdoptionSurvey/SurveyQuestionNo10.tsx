@@ -9,15 +9,19 @@ const SurveyQuestionNo10 = () => {
 
   const handleInputChange = (value: string) => {
     setSelectedValue(value)
-    setSurveyData(prevData => ({ ...prevData, No10: value }))
+    setSurveyData(prevData => ({
+      ...prevData,
+      raise_history: value,
+    }))
   }
   return (
     <c.Container>
       <c.Title>
+        반려동물을 키우신 적이 있거나 <br />
         현재 기르시고 계시는 <br />
-        반려동물을 알려주세요
+        반려동물이 있으신가요?
       </c.Title>
-      <c.Content>생활 환경에 관한 질문이에요</c.Content>
+      <c.Content>경험에 관한 질문이에요</c.Content>
       <c.TextArea
         value={selectedValue}
         placeholder="종, 성별, 나이 등"

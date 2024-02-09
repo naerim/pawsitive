@@ -1,5 +1,4 @@
 import * as c from '@src/components/style/AdoptionSurveyStyle'
-import Checkbox from '@mui/material/Checkbox'
 import { useState } from 'react'
 import { surveyDataAtom } from '@src/stores/atoms/survey'
 import { useSetAtom } from 'jotai/index'
@@ -8,38 +7,26 @@ const SurveyQuestionNo14 = () => {
   const setSurveyData = useSetAtom(surveyDataAtom)
   const [selectedValue, setSelectedValue] = useState('')
 
-  const handleCheckboxChange = (value: string) => {
+  const handleInputChange = (value: string) => {
     setSelectedValue(value)
-    setSurveyData(prevData => ({ ...prevData, No14: value }))
+    setSurveyData(prevData => ({
+      ...prevData,
+      raise_no_reason: value,
+    }))
   }
   return (
     <c.Container>
       <c.Title>
-        현재 키우시는 반려동물이 있거나 <br /> 키웠던 경우, 어떤 경로로 함께
-        하게 <br /> 되었나요?
+        반려동물을 키우셨으나 <br />
+        지금 키우지 않고 있으시다면 <br />
+        이유를 설명해주세요
       </c.Title>
-      <c.Content>책임감을 파악하기 위한 질문이에요</c.Content>
-      <c.CheckBoxDiv>
-        {['유기동물 입양', '전문 브리더를 통해', '펫샵을 통해', '기타'].map(
-          value => (
-            <label key={value}>
-              <c.CheckBoxLabel>
-                <Checkbox
-                  value={value}
-                  checked={selectedValue === value}
-                  onChange={() => handleCheckboxChange(value)}
-                  sx={{
-                    '&.Mui-checked': {
-                      color: '#fd9132',
-                    },
-                  }}
-                />
-                <c.CheckBoxOk>{value}</c.CheckBoxOk>
-              </c.CheckBoxLabel>
-            </label>
-          ),
-        )}
-      </c.CheckBoxDiv>
+      <c.Content>경험에 관한 질문이에요</c.Content>
+      <c.TextArea
+        value={selectedValue}
+        placeholder="교육이 쉽지 않아서 등"
+        onChange={e => handleInputChange(e.target.value)}
+      />
     </c.Container>
   )
 }

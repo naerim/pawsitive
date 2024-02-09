@@ -9,7 +9,10 @@ const SurveyQuestionNo8 = () => {
 
   const handleInputChange = (value: string) => {
     setSelectedValue(value)
-    setSurveyData(prevData => ({ ...prevData, No8: value }))
+    setSurveyData(prevData => ({
+      ...prevData,
+      alone_time: value,
+    }))
   }
   return (
     <c.Container>

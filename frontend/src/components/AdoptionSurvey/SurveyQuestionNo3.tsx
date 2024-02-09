@@ -10,7 +10,7 @@ const SurveyQuestionNo3 = () => {
 
   const handleCheckboxChange = (value: string) => {
     setSelectedValue(value)
-    setSurveyData(prevData => ({ ...prevData, No3: value }))
+    setSurveyData(prevData => ({ ...prevData, reason: value }))
   }
   return (
     <c.Container>
