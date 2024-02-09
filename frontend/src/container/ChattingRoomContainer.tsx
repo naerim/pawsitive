@@ -7,6 +7,8 @@ import { fetchHistoryMessage } from '@src/apis/chat'
 import { useQuery } from '@tanstack/react-query'
 import { MessageType } from '@src/types/chatType'
 import SockJS from 'sockjs-client'
+import MessageItem from '@src/components/ChattingRoom/MessageItem'
+import * as c from '@src/container/style/ChattingRoomContainerStyle'
 
 const ChattingRoomContainer = () => {
   const { no } = useParams()
@@ -51,13 +53,13 @@ const ChattingRoomContainer = () => {
           setMessages(prevMessages => [
             ...prevMessages,
             {
-              userNo: user.userNo,
+              userNo: receivedMessage.userNo,
               message: receivedMessage.message,
               userName: user.name,
               createdAt: '',
               type: 'chat',
               userImage: '',
-              chatNo: 0,
+              chatNo: receivedMessage.chatNo,
               isRead: false,
             },
           ])
@@ -83,6 +85,7 @@ const ChattingRoomContainer = () => {
         chatRoomNo: no,
         senderNo: user.userNo,
         message: newMessage.message,
+        type: 'chat',
       }),
     })
     setNewMessage({
@@ -95,17 +98,18 @@ const ChattingRoomContainer = () => {
       chatNo: 0,
       isRead: false,
     })
+    console.log(messages)
   }
 
   return (
     <div>
       <div>채팅방이든아니든니가뭔상관이야</div>
 
-      <div>
+      <c.MessageSection>
         {messages.map(message => (
-          <div key={message.chatNo}>{message.message}</div>
+          <MessageItem item={message} key={message.chatNo} />
         ))}
-      </div>
+      </c.MessageSection>
       <input
         type="text"
         value={newMessage.message}
