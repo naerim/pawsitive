@@ -1,8 +1,10 @@
 package com.pawsitive.adoptgroup.service;
 
 import com.pawsitive.adoptgroup.dto.request.AdoptionReq;
+import com.pawsitive.adoptgroup.dto.request.UpdateAdoptDogRes;
 import com.pawsitive.adoptgroup.dto.response.AdoptionDogRes;
 import com.pawsitive.adoptgroup.entity.AdoptDog;
+import com.pawsitive.adoptgroup.exception.AdoptDogNotFoundException;
 import com.pawsitive.adoptgroup.repository.AdoptDogRepository;
 import com.pawsitive.adoptgroup.transfer.AdoptDogTransfer;
 import com.pawsitive.doggroup.entity.Dog;
@@ -11,6 +13,7 @@ import com.pawsitive.doggroup.service.DogService;
 import com.pawsitive.usergroup.service.UserService;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +56,33 @@ public class AdoptDogServiceImpl implements AdoptDogService {
         setAdoptedDays(adoptionDogRes);
 
         return adoptionDogRes;
+    }
+
+    @Override
+    public AdoptionDogRes updateInformation(int adoptDogNo, UpdateAdoptDogRes updateAdoptDogRes) {
+        AdoptDog adoptDogEntity = getAdoptDogEntity(adoptDogNo);
+
+        if (Objects.nonNull(updateAdoptDogRes.getAge())) {
+            adoptDogEntity.setAge(updateAdoptDogRes.getAge());
+        }
+        if (Objects.nonNull(updateAdoptDogRes.getName())) {
+            adoptDogEntity.setName(updateAdoptDogRes.getName());
+        }
+        if (Objects.nonNull(updateAdoptDogRes.getWeight())) {
+            adoptDogEntity.setWeight(updateAdoptDogRes.getWeight());
+        }
+
+        AdoptDog updatedDog = adoptDogRepository.save(adoptDogEntity);
+        AdoptionDogRes adoptionDogRes = AdoptDogTransfer.entityToDto(updatedDog);
+        setAdoptedDays(adoptionDogRes);
+
+        return adoptionDogRes;
+    }
+
+    @Override
+    public AdoptDog getAdoptDogEntity(int adoptDogNo) {
+        return adoptDogRepository.getAdoptDogByAdoptDogNo(adoptDogNo)
+            .orElseThrow(AdoptDogNotFoundException::new);
     }
 
 

@@ -2,6 +2,8 @@ package com.pawsitive.adoptgroup.controller;
 
 import static org.springframework.http.HttpStatus.OK;
 
+import com.pawsitive.adoptgroup.dto.request.UpdateAdoptDogRes;
+import com.pawsitive.adoptgroup.dto.response.AdoptionDogRes;
 import com.pawsitive.adoptgroup.service.AdoptDogService;
 import com.pawsitive.chatgroup.service.ChatRoomService;
 import com.pawsitive.common.dto.BaseResponseBody;
@@ -13,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +45,18 @@ public class MemberAdoptionController {
             .body(BaseResponseBody.of(OK, chatRoomService.createAppointment(appointmentReq)));
     }
 
+    @PutMapping("/{adoptDogsNo}")
+    @Operation(summary = "유기견 정보 수정", description = "전달받은 유기견 입양 번호로 유기견 정보를 수정한다",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "반려견 정보 수정 여부를 정상 반환한다.")
+        })
+    public ResponseEntity<AdoptionDogRes> updateDogInformation(@PathVariable int adoptDogsNo,
+                                                               @RequestBody
+                                                               UpdateAdoptDogRes updateAdoptDogRes) {
+        return ResponseEntity
+            .status(OK)
+            .body(adoptDogService.updateInformation(adoptDogsNo, updateAdoptDogRes));
+    }
 
     @PostMapping("/form")
     public ResponseEntity<BaseResponseBody> submitForm() {
