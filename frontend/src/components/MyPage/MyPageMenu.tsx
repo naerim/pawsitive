@@ -60,13 +60,14 @@ const MyPageMenu = () => {
             나와 닮은꼴 강아지 찾기
             <m.RightArrow src="/icon/icon_black_arrow_right.png" />
           </m.MenuItemDiv>
-          <m.MenuItem to="/mypage/setting">
-            <m.MenuItemDiv>
-              환경 설정
-              <m.RightArrow src="/icon/icon_black_arrow_right.png" />
-            </m.MenuItemDiv>
-          </m.MenuItem>
         </m.MenuItem>
+        <m.MenuItem to="/mypage/setting">
+          <m.MenuItemDiv>
+            환경 설정
+            <m.RightArrow src="/icon/icon_black_arrow_right.png" />
+          </m.MenuItemDiv>
+        </m.MenuItem>
+
         <m.MenuItemDiv>
           <LogoutModal />
           <m.RightArrow src="/icon/icon_black_arrow_right.png" />
