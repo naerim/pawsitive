@@ -1,17 +1,12 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { Client } from '@stomp/stompjs'
-import SockJS from 'sockjs-client'
 import { useAtom } from 'jotai/index'
 import { userAtom } from '@src/stores/atoms/user'
-import { fetchHistoryMessage } from '@src/apis/chat.ts'
+import { fetchHistoryMessage } from '@src/apis/chat'
 import { useQuery } from '@tanstack/react-query'
-
-export type MessageType = {
-  userNo: number
-  message: string
-  userName: string
-}
+import { MessageType } from '@src/types/chatType'
+import SockJS from 'sockjs-client'
 
 const ChattingRoomContainer = () => {
   const { no } = useParams()
@@ -23,6 +18,11 @@ const ChattingRoomContainer = () => {
     message: '',
     userNo: user.userNo,
     userName: user.name,
+    createdAt: '',
+    type: null,
+    userImage: null,
+    chatNo: 0,
+    isRead: false,
   })
 
   // fetchHistoryMessage
@@ -35,11 +35,10 @@ const ChattingRoomContainer = () => {
     refetch().then(res => {
       setMessages(res.data)
     })
-  }, [no])
+  }, [refetch])
 
   const connectHandler = () => {
     const SockJs = SockJS('https://i10c111.p.ssafy.io/ws/chat')
-
     client.current = new Client({
       webSocketFactory: () => SockJs,
       debug: str => console.log(str),
@@ -55,6 +54,11 @@ const ChattingRoomContainer = () => {
               userNo: user.userNo,
               message: receivedMessage.message,
               userName: user.name,
+              createdAt: '',
+              type: 'chat',
+              userImage: '',
+              chatNo: 0,
+              isRead: false,
             },
           ])
         })
@@ -69,6 +73,7 @@ const ChattingRoomContainer = () => {
     return () => {
       client.current?.deactivate()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const sendHandler = () => {
@@ -80,19 +85,25 @@ const ChattingRoomContainer = () => {
         message: newMessage.message,
       }),
     })
-    setNewMessage({ message: '', userNo: user.userNo, userName: user.name })
+    setNewMessage({
+      message: '',
+      userNo: user.userNo,
+      userName: user.name,
+      createdAt: '',
+      type: 'chat',
+      userImage: null,
+      chatNo: 0,
+      isRead: false,
+    })
   }
 
   return (
     <div>
       <div>채팅방이든아니든니가뭔상관이야</div>
-      <button type="button" onClick={() => connectHandler()}>
-        응연결안해줄거야
-      </button>
 
       <div>
-        {messages.map((message, index) => (
-          <div key={index}>{message.message}</div>
+        {messages.map(message => (
+          <div key={message.chatNo}>{message.message}</div>
         ))}
       </div>
       <input
@@ -100,9 +111,14 @@ const ChattingRoomContainer = () => {
         value={newMessage.message}
         onChange={e =>
           setNewMessage({
-            message: e.target.value,
             userNo: user.userNo,
+            message: e.target.value,
             userName: user.name,
+            createdAt: '',
+            type: 'chat',
+            userImage: '',
+            chatNo: 0,
+            isRead: false,
           })
         }
       />

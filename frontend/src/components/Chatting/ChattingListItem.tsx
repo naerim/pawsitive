@@ -23,7 +23,7 @@ const ChattingListItem = (props: ChatRoomType) => {
       </c.ImgWrap>
       <c.Right>
         <c.Name>{name}</c.Name>
-        <c.LastMsg>{lastChat.message}</c.LastMsg>
+        <c.LastMsg>{lastChat ? lastChat.message : '-'}</c.LastMsg>
       </c.Right>
     </c.Container>
   )
