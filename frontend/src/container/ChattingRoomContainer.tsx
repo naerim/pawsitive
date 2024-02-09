@@ -1,12 +1,12 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { Client } from '@stomp/stompjs'
-import SockJS from 'sockjs-client'
 import { useAtom } from 'jotai/index'
 import { userAtom } from '@src/stores/atoms/user'
 import { fetchHistoryMessage } from '@src/apis/chat'
 import { useQuery } from '@tanstack/react-query'
 import { MessageType } from '@src/types/chatType'
+import SockJS from 'sockjs-client'
 
 const ChattingRoomContainer = () => {
   const { no } = useParams()
@@ -37,7 +37,8 @@ const ChattingRoomContainer = () => {
     })
   }, [refetch])
 
-  const connectHandler = (SockJs: WebSocket) => {
+  const connectHandler = () => {
+    const SockJs = SockJS('https://i10c111.p.ssafy.io/ws/chat')
     client.current = new Client({
       webSocketFactory: () => SockJs,
       debug: str => console.log(str),
@@ -68,11 +69,11 @@ const ChattingRoomContainer = () => {
   }
 
   useEffect(() => {
-    const SockJs = SockJS('https://i10c111.p.ssafy.io/ws/chat')
-    connectHandler(SockJs)
+    connectHandler()
     return () => {
       client.current?.deactivate()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const sendHandler = () => {
@@ -95,8 +96,6 @@ const ChattingRoomContainer = () => {
       isRead: false,
     })
   }
-
-  console.log(messages)
 
   return (
     <div>
