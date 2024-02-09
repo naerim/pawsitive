@@ -2,10 +2,10 @@ package com.pawsitive.usergroup.controller;
 
 import static org.springframework.http.HttpStatus.OK;
 
+import com.pawsitive.adoptgroup.service.AdoptDogService;
 import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.doggroup.dto.response.AdoptedDogRes;
-import com.pawsitive.doggroup.service.AdoptDogService;
 import com.pawsitive.usergroup.dto.request.SilentRefreshReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
 import com.pawsitive.usergroup.dto.response.UpdateFieldRes;
