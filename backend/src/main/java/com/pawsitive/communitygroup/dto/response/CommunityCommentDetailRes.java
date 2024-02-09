@@ -2,6 +2,7 @@ package com.pawsitive.communitygroup.dto.response;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 /**
@@ -9,6 +10,7 @@ import lombok.Getter;
  * @since 1.0
  */
 @Getter
+@Builder
 @AllArgsConstructor
 public class CommunityCommentDetailRes {
     private int boardNo;
