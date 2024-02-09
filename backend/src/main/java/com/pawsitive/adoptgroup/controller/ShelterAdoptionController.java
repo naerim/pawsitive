@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "03.Shelter-Adoption", description = "보호소 입양 기능")
+@Tag(name = "10.Shelter-Adoption")
 @RestController
 @RequestMapping("/api/v1/shelter/adopt-dogs")
 @RequiredArgsConstructor
@@ -30,10 +30,10 @@ public class ShelterAdoptionController {
     private final AdoptDogService adoptDogService;
 
     @PutMapping("/appointment")
-    @Operation(summary = "유기견 입양 약속 수락", description = "전달받은 유기견 번호와 회원 번호로 입양 약속을 수락한다", tags = {
-        "03.Shelter-Adoption"}, responses = {
-        @ApiResponse(responseCode = "200", description = "입양 약속 수락 여부를 정상 반환한다.")}
-    )
+    @Operation(summary = "유기견 입양 약속 수락", description = "전달받은 유기견 번호와 회원 번호로 입양 약속을 수락한다",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "입양 약속 수락 여부를 정상 반환한다.")
+        })
     public ResponseEntity<BaseResponseBody> createdDogAppointment(
         @RequestBody AppointmentReq appointmentReq) {
         return ResponseEntity
