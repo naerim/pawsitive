@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "10.Surveys")
+@Tag(name = "11.Surveys")
 @RestController
 @RequestMapping("/api/v1/surveys")
 @RequiredArgsConstructor
@@ -34,7 +34,7 @@ public class SurveysController {
      */
     @PostMapping
     @Operation(summary = "설문 등록", description = "설문을 등록합니다.",
-        tags = {"10.Surveys"},
+        tags = {"11.Surveys"},
         responses = {
             @ApiResponse(responseCode = "200", description = "유기견 등록 성공"),
             @ApiResponse(responseCode = "400", description = "등록 실패 : 올바르지 않은 설문 값"),

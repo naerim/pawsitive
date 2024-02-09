@@ -6,10 +6,8 @@ import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.doggroup.dto.response.AdoptedDogRes;
 import com.pawsitive.doggroup.service.AdoptDogService;
-import com.pawsitive.usergroup.dto.request.AdoptionReq;
 import com.pawsitive.usergroup.dto.request.SilentRefreshReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
-import com.pawsitive.usergroup.dto.response.AdoptionRes;
 import com.pawsitive.usergroup.dto.response.UpdateFieldRes;
 import com.pawsitive.usergroup.exception.UserNotLoginException;
 import com.pawsitive.usergroup.service.UserService;
@@ -30,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
  */
-@Tag(name = "03.User")
+@Tag(name = "01.User")
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
@@ -49,7 +47,7 @@ public class UserController {
     @GetMapping("recommendation/{userId}")
     @Operation(summary = "로그인 한 회원의 입양한 유기견 조회",
         description = "<strong>로그인 한 회원이 입양한 유기견</strong>을 조회한다.",
-        tags = {"03.User"},
+        tags = {"01.User"},
         responses = {
             @ApiResponse(responseCode = "200", description = "로그인 한 회원의 입양한 유기견 조회에 성공하였습니다."),
             @ApiResponse(responseCode = "401", description = "현재 로그인 한 회원의 계정이 유효하지 않습니다."),
@@ -80,7 +78,7 @@ public class UserController {
     @GetMapping("/me")
     @Operation(summary = "로그인 체크",
         description = "현재 회원이 로그인되어 있는지 체크한다.",
-        tags = {"03.User"},
+        tags = {"01.User"},
         responses = {
             @ApiResponse(responseCode = "200", description = "유저가 로그인 되어있음"),
             @ApiResponse(responseCode = "401", description = "로그인 되어있지 않음 (권한 없음)")
@@ -102,7 +100,7 @@ public class UserController {
     @PostMapping("/update")
     @Operation(summary = "유저 정보 수정하기",
         description = "로그인한 회원의 정보를 수정한다.",
-        tags = {"03.User"},
+        tags = {"01.User"},
         responses = {
             @ApiResponse(responseCode = "200", description = "회원 정보 수정 성공"),
             @ApiResponse(responseCode = "401", description = "현재 로그인 한 회원의 계정이 유효하지 않습니다."),
@@ -123,7 +121,7 @@ public class UserController {
     @GetMapping("/dogs/{userNo}")
     @Operation(summary = "로그인 한 회원의 입양한 유기견 조회",
         description = "<strong>로그인 한 회원이 입양한 유기견</strong>을 조회한다.",
-        tags = {"03.User"},
+        tags = {"01.User"},
         responses = {
             @ApiResponse(responseCode = "200", description = "로그인 한 회원의 입양한 유기견 조회에 성공하였습니다."),
             @ApiResponse(responseCode = "401", description = "현재 로그인 한 회원의 계정이 유효하지 않습니다."),
@@ -146,7 +144,7 @@ public class UserController {
     @Operation(
         summary = "JWT 토큰 재발급",
         description = "전달된 RefreshToken 값을 확인하여 JWT Token을 재발급한다.",
-        tags = {"03.User"},
+        tags = {"01.User"},
         responses = {
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "401", description = "권한 없음"),
@@ -172,7 +170,7 @@ public class UserController {
     @Operation(
         summary = "로그아웃",
         description = "현재 로그인한 유저를 로그아웃 처리 한다.",
-        tags = {"03.User"},
+        tags = {"01.User"},
         responses = {
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "401", description = "권한 없음"),
@@ -186,7 +184,7 @@ public class UserController {
             .status(OK)
             .body(BaseResponseBody.of(OK, "로그아웃 완료"));
     }
-    
+
 //    @PostMapping("/adopt")
 //    public ResponseEntity<AdoptionRes> adoptDog(@RequestBody AdoptionReq req) {
 //
