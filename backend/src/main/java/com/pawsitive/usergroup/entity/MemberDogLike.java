@@ -27,7 +27,7 @@ public class MemberDogLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_dog_like_no")
-    private int memberDogNo;
+    private int memberDogLikeNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
