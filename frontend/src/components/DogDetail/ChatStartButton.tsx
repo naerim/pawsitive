@@ -7,7 +7,8 @@ import { userAtom } from '@src/stores/atoms/user'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 const ChatStartButton = () => {
-  const userRole = window.localStorage.getItem('role')
+  const userRole = JSON.parse(window.localStorage.getItem('currentUser')).role
+  console.log(userRole)
   const location = useLocation()
   const dogNo = location.state?.dogNo
   const navigate = useNavigate()
@@ -28,12 +29,12 @@ const ChatStartButton = () => {
   }
 
   const handleShelterClick = async () => {
-    navigate(`/chat`)
+    navigate(`/shelter/chat/${dogNo}`)
   }
 
   return (
     <a.Container>
-      {userRole === 'USER' ? (
+      {userRole === 'SHELTER' ? (
         <a.Button type="button" onClick={handleShelterClick}>
           진행중인 채팅방 보기
         </a.Button>
