@@ -13,7 +13,7 @@ import MyPage from '@src/pages/MyPage'
 import SettingPage from '@src/pages/SettingPage'
 import ProfilePage from '@src/pages/ProfilePage'
 import NotFoundPage from '@src/pages/NotFoundPage'
-import { useAtom, useAtomValue } from 'jotai'
+import { useAtomValue } from 'jotai'
 import { themeAtom } from '@src/stores/atoms/theme'
 import DogDetailPage from '@src/pages/DogDetailPage'
 import CreateDogPage from '@src/pages/CreateDogPage'
@@ -31,12 +31,12 @@ import AdoptionSurveyDonePage from '@src/pages/AdoptionSurveyDonePage'
 import FindSimilarDogResultPage from '@src/pages/FindSimilarDogResultPage'
 import FillAdoptInfoPage from '@src/pages/FillAdoptInfoPage'
 import SaveDogsListPage from '@src/pages/SaveDogsListPage'
-import { userAtom } from '@src/stores/atoms/user'
 import QuestionCreatePage from '@src/pages/QuestionCreatePage'
 import QuestionDetailPage from '@src/pages/QuestionDetailPage'
 import QuestionListPage from '@src/pages/QuestionListPage'
 import ChattingRoomPage from '@src/pages/ChattingRoomPage'
 import ChattingPage from '@src/pages/ChattingPage'
+// import { userAtom } from '@src/stores/atoms/user'
 
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
@@ -91,10 +91,10 @@ const HomeRoutes = () => (
 
 const App = () => {
   const theme = useAtomValue(themeAtom)
-  const [userValue] = useAtom(userAtom)
+  // const [userValue] = useAtom(userAtom)
 
-  const user = userValue.email
-  // const user = true
+  // const user = userValue.email
+  const user = true
 
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
