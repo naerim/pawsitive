@@ -26,7 +26,12 @@ export const Wrap = styled.div`
   justify-content: space-around;
   margin-top: 20px;
 `
-
+export const DogButton = styled.button`
+  &:active,
+  &:focus {
+    outline: none;
+  }
+`
 export const Item = styled.div`
   display: flex;
   flex-direction: column;

@@ -10,6 +10,10 @@ export const Header = styled.div`
 
 export const Container = styled.div``
 
+export const CategoryDiv = styled.div`
+  margin: 0 0 0 20px;
+`
+
 export const HeaderButton = styled.button`
   width: auto;
   font-weight: 500;

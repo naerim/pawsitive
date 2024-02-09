@@ -54,13 +54,13 @@ const CommunityMapContainer = () => {
         </c.CreateButton>
       </c.Header>
 
-      <div>
+      <c.CategoryDiv>
         <CommunityCategorySection
           category={category}
           setCategory={setCategory}
         />
-        <KakaoMap dummyData={communityListValue} />
-      </div>
+      </c.CategoryDiv>
+      <KakaoMap dummyData={communityListValue} />
     </c.Container>
   )
 }

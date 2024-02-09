@@ -6,7 +6,7 @@ import ChatStartButton from '@src/components/DogDetail/ChatStartButton'
 import TipSection from '@src/components/DogDetail/TipSection'
 import ShelterInfoSection from '@src/components/DogDetail/ShelterInfoSection'
 import SameShelterDogs from '@src/components/DogDetail/SameShelterDogs'
-import { useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { DogType } from '@src/types/dogType'
 import { fetchDogDetails } from '@src/apis/dog'
@@ -19,8 +19,9 @@ const Container = styled.div`
 `
 
 const DogDetailContainer = () => {
-  const location = useLocation()
-  const dogNo = location.state?.dogNo
+  // const location = useLocation()
+  // const dogNo = location.state?.dogNo
+  const { dogNo } = useParams<{ dogNo: string }>()
   const [, setDogDetail] = useAtom(dogDetailAtom)
 
   const { data, isLoading } = useQuery<DogType | null>({
