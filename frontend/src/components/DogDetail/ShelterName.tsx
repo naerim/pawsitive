@@ -1,4 +1,4 @@
-import * as s from '@src/components/DogDetail/_style/ShelterNameStyle'
+import * as s from '@src/components/DogDetail/style/ShelterNameStyle'
 import { useAtom } from 'jotai/index'
 import { dogDetailAtom } from '@src/stores/atoms/dog'
 
