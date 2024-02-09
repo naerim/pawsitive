@@ -25,7 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@Tag(name = "05.Dog")
+@Tag(name = "03.Dog")
 @RestController
 @RequestMapping("/api/v1/dogs")
 @RequiredArgsConstructor
@@ -36,7 +36,6 @@ public class DogController {
 
     @PostMapping
     @Operation(summary = "유기견 등록", description = "전달받은 입력 정보를 유기견 테이블에 등록합니다.",
-        tags = {"05.Dog"},
         responses = {
             @ApiResponse(responseCode = "201", description = "유기견 등록 성공"),
             @ApiResponse(responseCode = "400", description = "유기견 등록에 필요한 정보가 유효하지 않음")
@@ -49,7 +48,6 @@ public class DogController {
 
     @GetMapping("/{dogNo}")
     @Operation(summary = "유기견 상세 조회", description = "전달받은 유기견 번호에 대한 상세 조회 정보를 반환합니다.",
-        tags = {"05.Dog"},
         responses = {
             @ApiResponse(responseCode = "200", description = "유기견 고유 번호에 해당하는 강아지 상세 조회 성공"),
             @ApiResponse(responseCode = "400", description = "유기견 고유 번호에 해당하는 강아지가 없음")
@@ -61,7 +59,6 @@ public class DogController {
 
     @GetMapping("/recommendation")
     @Operation(summary = "추천 강아지 조회", description = "전달받은 페이지에 해당하는 <strong>유기견 목록</strong>을 반환한다.",
-        tags = {"05.Dog"},
         responses = {
             @ApiResponse(responseCode = "200", description = "추천 강아지 목록을 정상적으로 반환한다."),
             @ApiResponse(responseCode = "400", description = "전달받은 페이지 값에 해당하는 추천 강아지가 없음.")
@@ -75,7 +72,6 @@ public class DogController {
 
     @GetMapping
     @Operation(summary = "유기견 공고 전체 조회", description = "전달받은 페이지 번호에 해당하는 유기견 공고를 반환한다. 유기견 필터링 조건 입력 시 조건에 따른 유기견 조회를 한다.",
-        tags = {"05.Dog"},
         responses = {
             @ApiResponse(responseCode = "200", description = "해당하는 페이지의 유기견 공고 목록을 정상적으로 반환한다."),
             @ApiResponse(responseCode = "400", description = "해당 페이지에 유기견 공고가 없음.")
@@ -95,7 +91,6 @@ public class DogController {
 
     @GetMapping("/shelters/{shelterNo}")
     @Operation(summary = "유기견 공고 보호소 기준 전체 조회", description = "전달받은 보호소 고유번호 기준으로 유기견 공고를 반환한다",
-        tags = {"05.Dog"},
         responses = {
             @ApiResponse(responseCode = "200", description = "보호소 기준 유기견 공고 목록을 정상적으로 반환한다."),
             @ApiResponse(responseCode = "400", description = "유기견 공고가 없음.")
@@ -109,7 +104,6 @@ public class DogController {
 
     @PostMapping("/like")
     @Operation(summary = "유기견 공고 찜", description = "해당 유저가 전달받은 유기견 공고를 찜한다.",
-        tags = {"05.Dog"},
         responses = {
             @ApiResponse(responseCode = "200", description = "찜 정상 등록 완료"),
             @ApiResponse(responseCode = "400", description = "파라미터 오류"),

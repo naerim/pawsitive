@@ -4,7 +4,9 @@ import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.entity.Dog;
+
 import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -66,6 +68,6 @@ public interface DogService {
      */
     List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num);
 
-    void createMemberDogLike()
+//    void createMemberDogLike();
 
 }

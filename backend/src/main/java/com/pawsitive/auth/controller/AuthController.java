@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 천세진, 이하늬
  * @since 1.0
  */
-@Tag(name = "04.Auth")
+@Tag(name = "02.Auth")
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -45,7 +45,6 @@ public class AuthController {
     @Operation(
         summary = "로그인",
         description = "<strong>이메일과 패스워드</strong>를 통해 로그인 한다.",
-        tags = {"04.Auth"},
         responses = {
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "401", description = "비밀번호 불일치"),
@@ -69,7 +68,6 @@ public class AuthController {
     @Operation(
         summary = "회원가입",
         description = "<strong>이메일, 패스워드, 보호소/유저 여부</strong>를 입력받아 회원가입을 한다.",
-        tags = {"04.Auth"},
         responses = {
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "400", description = "실패")
@@ -91,7 +89,6 @@ public class AuthController {
     @Operation(
         summary = "인증 메일 요청",
         description = "해당 이메일로 인증 메일을 보낸다.",
-        tags = {"04.Auth"},
         responses = {
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "500", description = "서버 오류")
@@ -114,7 +111,6 @@ public class AuthController {
     @Operation(
         summary = "인증 코드 검증",
         description = "해당 이메일로 보낸 인증 메일과 실제 사용자가 보낸 검증 값이 같은지 확인한다.",
-        tags = {"04.Auth"},
         responses = {
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "500", description = "서버 오류")
@@ -127,6 +123,10 @@ public class AuthController {
     }
 
     @GetMapping("no-auth")
+    @Operation(
+        summary = "권한 없음",
+        description = "권한이 없을 때 Redirect하는 경로"
+    )
     public ResponseEntity<BaseResponseBody> noAuth() {
         return ResponseEntity
             .status(UNAUTHORIZED)

@@ -11,7 +11,9 @@ import com.pawsitive.questiongroup.service.QuestionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "10.Question")
+@Tag(name = "07.Question")
 @RestController
 @RequestMapping("/api/v1/questions")
 @RequiredArgsConstructor
@@ -32,7 +34,6 @@ public class QuestionController {
     @GetMapping("/today/users/{userNo}")
     @Operation(summary = "등록할 오늘의 질문 상세 조회",
         description = "등록할 오늘의 질문을 <strong>회원 고유번호</strong>로 <strong>상세 조회</strong> 한다.",
-        tags = {"10.Question"},
         responses = {
             @ApiResponse(responseCode = "200", description = "회원이 등록해야 할 질문 내용을 정상적으로 반환한다."),
         }
@@ -46,7 +47,6 @@ public class QuestionController {
     @GetMapping("/users/{userNo}")
     @Operation(summary = "등록한 오늘의 질문 전체 조회",
         description = "등록한 오늘의 질문을 <strong>회원 고유번호</strong>로 <strong>전체 조회</strong> 한다.",
-        tags = {"10.Question"},
         responses = {
             @ApiResponse(responseCode = "200", description = "회원이 등록한 질문 리스트를 정상적으로 반환한다."),
         }
@@ -60,7 +60,6 @@ public class QuestionController {
     @PostMapping("/users/{userNo}")
     @Operation(summary = "오늘의 질문 답변 등록",
         description = "<strong>회원 고유번호</strong>로 <strong>오늘의 질문 답변을 등록</strong> 한다.",
-        tags = {"10.Question"},
         responses = {
             @ApiResponse(responseCode = "201", description = "회원이 입력한 질문에 대한 답변 내용을 정상적으로 등록한다."),
         }
@@ -75,7 +74,6 @@ public class QuestionController {
     @GetMapping("{questionNo}/users/{userNo}")
     @Operation(summary = "등록한 질문 상세 조회",
         description = "등록한 질문을 <strong>질문 고유번호와 회원 고유번호</strong>로 <strong>상세 조회</strong> 한다.",
-        tags = {"10.Question"},
         responses = {
             @ApiResponse(responseCode = "200", description = "회원이 등록한 질문과 답변 내용을 정상적으로 반환한다."),
         }

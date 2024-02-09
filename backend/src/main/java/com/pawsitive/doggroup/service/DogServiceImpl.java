@@ -10,8 +10,10 @@ import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.entity.DogFile;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.repository.DogRepository;
+import com.pawsitive.doggroup.transfer.DogTransfer;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -61,29 +63,12 @@ public class DogServiceImpl implements DogService {
 
         List<String> fileKeys = dogFileService.createDogFiles(savedDog, files);
 
-        log.warn("dogService : savedDog = {}, {}", savedDog.getDogNo(), savedDog.getStatus());
-
-        return DogDetailRes.builder()
-            .dogNo(savedDog.getDogNo())
-            .userNo(user.getUserNo())
-            .userName(user.getName())
-            .name(savedDog.getName())
-            .kind(savedDog.getKind())
-            .createdAt(savedDog.getCreatedAt())
-            .isNeutralized(savedDog.isNeutralized())
-            .age(savedDog.getAge())
-            .note(savedDog.getNote())
-            .hit(savedDog.getHit())
-            .mbti(savedDog.getMbti())
-            .statusNo(savedDog.getStatus().getNo())
-            .sex(savedDog.getSex())
-            .files(fileKeys)
-            .build();
+        return DogTransfer.entityToDto(savedDog, fileKeys);
     }
 
     @Override
+    @Transactional
     public DogDetailRes getDogByDogNo(int dogNo) {
-
         // 엔티티 객체 가져오기
         Dog dog = dogRepository.findByDogNo(dogNo).orElseThrow(DogNotFoundException::new);
 
@@ -95,23 +80,7 @@ public class DogServiceImpl implements DogService {
         dogRepository.save(dog);
 
         // Res 객체 만들기
-        return DogDetailRes.builder()
-            .dogNo(dog.getDogNo())
-            .userNo(dog.getUser().getUserNo())
-            .userName(dog.getUser().getName())
-            .name(dog.getName())
-            .kind(dog.getKind())
-            .createdAt(dog.getCreatedAt())
-            .isNeutralized(dog.isNeutralized())
-            .age(dog.getAge())
-            .note(dog.getNote())
-            .hit(dog.getHit())
-            .mbti(dog.getMbti())
-            .statusNo(dog.getStatus().getNo())
-            .files(dogFileToString(dog.getFiles()))
-            .sex(dog.getSex())
-            .address(dog.getUser().getAddress())
-            .build();
+        return DogTransfer.entityToDto(dog);
     }
 
     @Override
@@ -183,17 +152,5 @@ public class DogServiceImpl implements DogService {
         return sb.toString();
     }
 
-    private List<String> dogFileToString(List<DogFile> dogFiles) {
-        if (dogFiles.isEmpty()) {
-            return List.of();
-        }
-
-        List<String> list = new ArrayList<>();
-        for (DogFile file : dogFiles) {
-            list.add(file.getFile());
-        }
-
-        return list;
-    }
 
 }
