@@ -11,9 +11,7 @@ import com.pawsitive.questiongroup.service.QuestionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,18 +55,17 @@ public class QuestionController {
             .body(answerService.getQuestionListByUserNo(userNo));
     }
 
-    @PostMapping("/users/{userNo}")
+    @PostMapping
     @Operation(summary = "오늘의 질문 답변 등록",
         description = "<strong>회원 고유번호</strong>로 <strong>오늘의 질문 답변을 등록</strong> 한다.",
         responses = {
             @ApiResponse(responseCode = "201", description = "회원이 입력한 질문에 대한 답변 내용을 정상적으로 등록한다."),
         }
     )
-    public ResponseEntity<AnswerDetailRes> createQuestion(@PathVariable int userNo,
-                                                          @RequestBody QuestionCreateReq req) {
+    public ResponseEntity<AnswerDetailRes> createQuestion(@RequestBody QuestionCreateReq req) {
         return ResponseEntity
             .status(CREATED)
-            .body(answerService.createQuestionAnswer(userNo, req));
+            .body(answerService.createQuestionAnswer(req));
     }
 
     @GetMapping("{questionNo}/users/{userNo}")

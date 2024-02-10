@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.Length;
 @Getter
 @AllArgsConstructor
 public class QuestionCreateReq {
+    private int userNo;
     private int questionNo;
     @Length(max = 500)
     private String answerContent;

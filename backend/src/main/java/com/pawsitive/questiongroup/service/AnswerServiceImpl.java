@@ -25,14 +25,14 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     @Transactional
-    public AnswerDetailRes createQuestionAnswer(int userNo, QuestionCreateReq req) {
+    public AnswerDetailRes createQuestionAnswer(QuestionCreateReq req) {
         Answer answer = new Answer();
-        answer.setMember(userService.getMemberByUserNo(userNo));
+        answer.setMember(userService.getMemberByUserNo(req.getUserNo()));
         answer.setQuestion(questionService.getQuestionByQuestionNo(req.getQuestionNo()));
         answer.setContent(req.getAnswerContent());
         answerRepository.save(answer);
 
-        return getQuestionAnswer(answer.getQuestion().getQuestionNo(), userNo);
+        return getQuestionAnswer(answer.getQuestion().getQuestionNo(), req.getUserNo());
     }
 
     @Override
