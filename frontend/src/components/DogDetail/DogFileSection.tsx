@@ -62,8 +62,8 @@ const DogFileSection = () => {
       <d.SliderBottom>
         <d.Title>{dogDetail.name}</d.Title>
         <d.Desc>
-          {dogDetail.sex === 'f' ? '수컷' : '암컷'} ∙{' '}
-          {dogDetail.neutralized ? 'X' : 'O'} ∙ {dogDetail.age}(년생) ∙{' '}
+          {dogDetail.sex === 'F' ? '암컷' : '수컷'} ∙ 중성화
+          {dogDetail.neutralized ? 'O' : 'X'} ∙ {dogDetail.age}(년생) ∙{' '}
           {dogDetail.kind}
         </d.Desc>
       </d.SliderBottom>
