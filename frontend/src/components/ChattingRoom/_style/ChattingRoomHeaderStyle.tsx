@@ -5,7 +5,7 @@ export const Container = styled.header`
   position: fixed;
   top: 0;
   width: 390px;
-  height: 130px;
+  height: 150px;
   z-index: 100;
   border-bottom: 1px solid #ebebeb;
   background-color: #fff;
@@ -21,10 +21,9 @@ export const Wrap = styled.div`
 
 export const TopWrap = styled.div`
   display: flex;
-  height: 40px;
+  height: 60px;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
 
   .arrow {
     width: 14px;
