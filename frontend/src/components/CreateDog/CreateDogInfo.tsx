@@ -1,4 +1,3 @@
-import React from 'react'
 import { useAtom } from 'jotai'
 import { createDogInfoAtom } from '@src/stores/atoms/dog'
 import * as s from '@src/components/style/CreateDogInfoStyle'
@@ -16,9 +15,9 @@ const CreateDogInfo = () => {
     setCreateDogData(prevData => ({ ...prevData, age: ageInput }))
   }
 
-  const handleKindChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const kindInput = e.target.value
-    setCreateDogData(prevData => ({ ...prevData, kind: kindInput }))
+  const handleKindSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const kindSelect = e.target.value
+    setCreateDogData(prevData => ({ ...prevData, kind: kindSelect }))
   }
 
   const handleSexChange = (sex: string) => {
@@ -52,24 +51,22 @@ const CreateDogInfo = () => {
       </s.InputContainer>
       <s.InputContainer>
         <s.Title htmlFor="kind">품종</s.Title>
-        <select>
-          <option>말티즈</option>
-          <option>비숑</option>
-          <option>치와아</option>
-          <option>푸들</option>
-          <option>포메라니안</option>
-          <option>시바견</option>
-          <option>시츄</option>
-          <option>도베르만</option>
-          <option>리트리버</option>
-          <option>기타</option>
-        </select>
-        <s.Input
-          type="text"
+        <select
+          id="kind"
           value={createDogData.kind}
-          onChange={handleKindChange}
-          placeholder="닮은 강아지 품종을 적어줘도 좋아요!"
-        />
+          onChange={handleKindSelectChange}
+        >
+          <option value="말티즈">말티즈</option>
+          <option value="비숑">비숑</option>
+          <option value="치와와">치와와</option>
+          <option value="푸들">푸들</option>
+          <option value="포메라니안">포메라니안</option>
+          <option value="시바견">시바견</option>
+          <option value="시츄">시츄</option>
+          <option value="도베르만">도베르만</option>
+          <option value="리트리버">리트리버</option>
+          <option value="기타">기타</option>
+        </select>
       </s.InputContainer>
       <s.TwoInputContainer>
         <s.InputContainer>

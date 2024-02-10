@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useAtom, useAtomValue } from 'jotai'
+import { useState } from 'react'
+import { useAtom } from 'jotai'
 import { useMutation } from '@tanstack/react-query'
 import { createDogInfoAtom, createDogStepAtom } from '@src/stores/atoms/dog'
 import { createDog } from '@src/apis/dog'
@@ -9,34 +9,26 @@ import CreateDogNote from '@src/components/CreateDog/CreateDogNote'
 import CreateDogFile from '@src/components/CreateDog/CreateDogFile'
 import * as c from '@src/container/style/CreateDogContainerStyle'
 import { useNavigate } from 'react-router-dom'
-import { userAtom } from '@src/stores/atoms/user'
 
 const CreateDogContainer = () => {
   const navigate = useNavigate()
   const [createDogInfo, setCreateDogInfo] = useAtom(createDogInfoAtom)
   const [createDogStep, setCreateDogStep] = useAtom(createDogStepAtom)
-  const user = useAtomValue(userAtom)
   const [file, setFile] = useState<File[]>([])
 
   const { mutate } = useMutation({
     mutationKey: ['createDog'],
     mutationFn: createDog,
-    onSuccess() {
+    onSuccess(result) {
       console.log('유기견 추가 성공')
+      navigate(`/dogs/${result.dogNo}`)
     },
     onError(error) {
       console.error('유기견 추가 실패:', error)
     },
   })
 
-  useEffect(() => {
-    setCreateDogInfo({
-      ...createDogInfo,
-      userNo: user.userNo,
-    })
-  }, [createDogInfo, setCreateDogInfo, user.userNo])
-
-  const handleCreateDog = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateDog = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData()
 
@@ -50,8 +42,7 @@ const CreateDogContainer = () => {
     for (let i = 0; i < file.length; i += 1) {
       formData.append('files', file[i])
     }
-
-    mutate(formData)
+    await mutate(formData)
   }
 
   const renderStepComponent = () => {
