@@ -99,27 +99,30 @@ const ChattingRoomContainer = () => {
   }, [])
 
   const sendHandler = () => {
-    client.current!.publish({
-      destination: `/api/v1/chats/pub/chat`,
-      body: JSON.stringify({
-        chatRoomNo,
-        senderNo: user.userNo,
-        message: newMessage.message,
+    // 빈 문자 았는지 확인
+    if (newMessage.message.trim() !== '') {
+      client.current!.publish({
+        destination: `/api/v1/chats/pub/chat`,
+        body: JSON.stringify({
+          chatRoomNo,
+          senderNo: user.userNo,
+          message: newMessage.message,
+          type: 'chat',
+        }),
+      })
+      setNewMessage({
+        message: '',
+        userNo: user.userNo,
+        userName: user.name,
+        createdAt: '',
         type: 'chat',
-      }),
-    })
-    setNewMessage({
-      message: '',
-      userNo: user.userNo,
-      userName: user.name,
-      createdAt: '',
-      type: 'chat',
-      userImage: null,
-      chatNo: 0,
-      isRead: false,
-      dogNo: 0,
-    })
-    scrollToBottom()
+        userImage: null,
+        chatNo: 0,
+        isRead: false,
+        dogNo: 0,
+      })
+      scrollToBottom()
+    }
   }
 
   useEffect(() => {

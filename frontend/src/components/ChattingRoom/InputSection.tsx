@@ -1,11 +1,17 @@
 import * as i from '@src/components/ChattingRoom/_style/InputSectionStyle'
+import { ChattingInputSectionType } from '@src/types/chatType'
+import React from 'react'
 
-const InputSection = (props: {
-  onClick: () => void
-  message: string
-  onChange: any
-}) => {
+const InputSection = (props: ChattingInputSectionType) => {
   const { onClick, message, onChange } = props
+
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      onClick()
+    }
+  }
+
   return (
     <i.Container>
       <i.Wrap>
@@ -14,6 +20,7 @@ const InputSection = (props: {
         </i.PlusButton>
         <input
           value={message}
+          onKeyUp={handleKeyUp}
           onChange={onChange}
           placeholder="메시지 보내기"
         />

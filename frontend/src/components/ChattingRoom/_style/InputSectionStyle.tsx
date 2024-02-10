@@ -24,6 +24,10 @@ export const Wrap = styled.div`
     border: none;
     padding: 4px 10px;
     border-radius: 10px;
+
+    &:focus {
+      outline: none;
+    }
   }
 `
 

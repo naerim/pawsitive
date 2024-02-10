@@ -1,3 +1,5 @@
+import React from 'react'
+
 export type ChatRoomType = {
   chatRoomNo: string
   name: string
@@ -26,4 +28,10 @@ export type MessageType = {
   message: string
   userName: string
   dogNo: number
+}
+
+export type ChattingInputSectionType = {
+  onClick: () => void
+  message: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
