@@ -1,11 +1,27 @@
 import styled from 'styled-components'
 
+export const TopContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
+  background-color: #ffe7d3;
+  height: 450px;
+`
+
+export const BackButtonWrap = styled.div`
+  cursor: pointer;
+  margin: 50px 35px 0;
+
+  img {
+    width: 10px;
+    height: 16px;
+  }
+`
 export const ImageContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #ffe7d3;
-  height: 400px;
 
   img {
     width: 230px;

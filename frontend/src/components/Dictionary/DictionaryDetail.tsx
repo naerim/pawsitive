@@ -1,8 +1,15 @@
+import { useNavigate } from 'react-router-dom'
 import { DictionaryItemType } from '@src/types/components/DictionaryType'
 import * as c from '@src/components/style/DictionaryDetailStyle'
 
 const DictionaryDetail = (props: { data: DictionaryItemType }) => {
   const { data } = props
+
+  const navigate = useNavigate()
+
+  const handlePrevStep = () => {
+    navigate('/dictionary')
+  }
 
   const setImageSrc = (category: string) => {
     const imageUrls: Record<string, string[]> = {
@@ -37,9 +44,14 @@ const DictionaryDetail = (props: { data: DictionaryItemType }) => {
     case '펫티켓':
       return (
         <div>
-          <c.ImageContainer>
-            <img src={setImageSrc(data.contentCategoryName)} alt="" />
-          </c.ImageContainer>
+          <c.TopContainer>
+            <c.BackButtonWrap onClick={handlePrevStep}>
+              <img src="/icon/icon_white_arrow_left.png" alt="" />
+            </c.BackButtonWrap>
+            <c.ImageContainer>
+              <img src={setImageSrc(data.contentCategoryName)} alt="" />
+            </c.ImageContainer>
+          </c.TopContainer>
           <c.Container>
             {commonContent}
             <c.InfoContainer>
@@ -59,9 +71,14 @@ const DictionaryDetail = (props: { data: DictionaryItemType }) => {
     case '질병정보':
       return (
         <div>
-          <c.ImageContainer>
-            <img src={setImageSrc(data.contentCategoryName)} alt="" />
-          </c.ImageContainer>
+          <c.TopContainer>
+            <c.BackButtonWrap onClick={handlePrevStep}>
+              <img src="/icon/icon_white_arrow_left.png" alt="" />
+            </c.BackButtonWrap>
+            <c.ImageContainer>
+              <img src={setImageSrc(data.contentCategoryName)} alt="" />
+            </c.ImageContainer>
+          </c.TopContainer>
           <c.Container>
             {commonContent}
             <c.InfoContainer>
@@ -92,9 +109,14 @@ const DictionaryDetail = (props: { data: DictionaryItemType }) => {
     case '애견상식':
       return (
         <div>
-          <c.ImageContainer>
-            <img src={setImageSrc(data.contentCategoryName)} alt="" />
-          </c.ImageContainer>
+          <c.TopContainer>
+            <c.BackButtonWrap onClick={handlePrevStep}>
+              <img src="/icon/icon_white_arrow_left.png" alt="" />
+            </c.BackButtonWrap>
+            <c.ImageContainer>
+              <img src={setImageSrc(data.contentCategoryName)} alt="" />
+            </c.ImageContainer>
+          </c.TopContainer>
           <c.Container>
             {commonContent}
             <c.InfoContainer>
