@@ -1,8 +1,9 @@
-import { DictionaryCategoryType } from '@src/types/components/DictionaryType'
 import * as c from '@src/components/style/DictionaryCategorySectionStyle'
+import { useAtom } from 'jotai/index'
+import { DictionaryCategoryAtom } from '@src/stores/atoms/dictionary'
 
-const DictionaryCategorySection = (props: DictionaryCategoryType) => {
-  const { category, setCategory } = props
+const DictionaryCategorySection = () => {
+  const [category, setCategory] = useAtom(DictionaryCategoryAtom)
 
   return (
     <c.Container>
