@@ -70,6 +70,11 @@ const CreateDogContainer = () => {
     }
   }
 
+  const isNextButtonDisabled =
+    createDogInfo.name.trim() === '' ||
+    createDogInfo.kind.trim() === '' ||
+    createDogInfo.age === 0
+
   const handleNextStep = () => {
     setCreateDogStep(prevStep => prevStep + 1)
   }
@@ -87,7 +92,11 @@ const CreateDogContainer = () => {
         {renderStepComponent()}
         <c.ButtonContainer>
           {createDogStep < 2 && (
-            <c.Button type="button" onClick={handleNextStep}>
+            <c.Button
+              type="button"
+              onClick={handleNextStep}
+              disabled={isNextButtonDisabled}
+            >
               다음
             </c.Button>
           )}
