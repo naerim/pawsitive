@@ -34,3 +34,14 @@ export const fetchBasicDogList = async (
       throw new Error('유기견 조회')
     })
 }
+
+// 같은 보호소 유기견 조회
+export const fetchSameShelterDogs = async (number: number) => {
+  return publicRequest
+    .get(`/dogs/shelters/${number}?num=2`)
+    .then(res => res.data)
+    .catch(error => {
+      console.log(error)
+      throw new Error('같은 보호소 유기견')
+    })
+}

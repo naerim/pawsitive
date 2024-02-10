@@ -1,25 +1,18 @@
 import * as s from '@src/components/DogDetail/style/SameShelterDogsStyle'
 import { useQuery } from '@tanstack/react-query'
-import { fetchBasicDogList } from '@src/apis/dog'
-import { BasicDogType } from '@src/types/dogType'
+import { fetchSameShelterDogs } from '@src/apis/dog'
+import { BasicDogType, DogType } from '@src/types/dogType'
 import BasicDogInfoCard from '@src/common/BasicDogInfoCard'
 import { useNavigate } from 'react-router-dom'
 
-const SameShelterDogs = () => {
+const SameShelterDogs = (props: { dogDetail: DogType }) => {
+  const { dogDetail } = props
   const navigate = useNavigate()
 
   const { data, isLoading } = useQuery<BasicDogType[]>({
     queryKey: ['basicDogList'],
-    queryFn: async () => {
-      const result = await fetchBasicDogList({
-        page: 1,
-        size: 2,
-        sort: ['string'],
-      })
-      return result.content
-    },
+    queryFn: async () => fetchSameShelterDogs(dogDetail.userNo),
   })
-
   const goDogList = () => navigate('/dogs')
 
   return (
