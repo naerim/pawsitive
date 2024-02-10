@@ -35,7 +35,7 @@ public class CommunityDummy {
             1, user.getEmail(), user.getName(), 0, "광주광역시", board.getTitle(),
             board.getContent(), board.getIsPublic(), board.getLatitude(),
             board.getLongitude(), LocalDateTime.now(), 10, category.getCommunityCategoryNo(),
-            category.getCommunityCategoryEnum().getCategoryName(), null);
+            category.getCommunityCategoryName(), null);
     }
 
     public static CommunityCommentDetailRes getSuccessCommentDto() {

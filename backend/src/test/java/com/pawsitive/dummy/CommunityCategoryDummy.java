@@ -10,7 +10,7 @@ import com.pawsitive.communitygroup.entity.CommunityCategoryEnum;
 public class CommunityCategoryDummy {
     public static CommunityCategory getSuccessEntity() {
         CommunityCategory category = new CommunityCategory();
-        category.setCommunityCategoryEnum(CommunityCategoryEnum.WALKING);
+        category.setCommunityCategoryName(CommunityCategoryEnum.WALKING.getCategoryName());
         return category;
     }
 }
