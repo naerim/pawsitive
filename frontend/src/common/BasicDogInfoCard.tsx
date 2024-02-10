@@ -41,7 +41,7 @@ const BasicDogInfoCard: React.FC<{ dogInfo: DogListType }> = ({ dogInfo }) => {
       <b.DogTextInfoContainer>
         <b.DogName>{dogInfo.name}</b.DogName>
         <b.SubInfo>
-          {dogInfo.sex === 'f' ? '암컷' : '수컷'} ∙ 중성화
+          {dogInfo.sex === 'F' ? '암컷' : '수컷'} ∙ 중성화
           {dogInfo.neutralized ? '0' : 'X'}
         </b.SubInfo>
         <b.SubInfo>

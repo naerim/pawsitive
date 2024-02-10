@@ -12,6 +12,7 @@ import {
 import NameInput from '@src/components/SignUp/NameInput'
 import RoleInput from '@src/components/SignUp/RoleInput'
 import EmailInput from '@src/components/SignUp/EmailInput'
+import IdInput from '@src/components/SignUp/IdInput'
 import PasswordInput from '@src/components/SignUp/PasswordInput'
 import BirthGenderInput from '@src/components/SignUp/BirthGenderInput'
 import AddressInput from '@src/components/SignUp/AddressInput'
@@ -29,7 +30,11 @@ const SignUpContainer = () => {
   })
 
   const handlePrevStep = () => {
-    setSignUpStep(prevStep => prevStep - 1)
+    if (signUpStep === 1) {
+      navigate(`/login`)
+    } else {
+      setSignUpStep(prevStep => prevStep - 1)
+    }
   }
 
   const handleNextStep = () => {
@@ -48,8 +53,8 @@ const SignUpContainer = () => {
       isDisabled = !signUpData.birth || !signUpData.gender || !!error.dob
       break
     case 4:
-      isDisabled = !signUpData.email
-      // isDisabled = !signUpData.email || !!error.email || !!error.emailVerify
+      // isDisabled = !signUpData.email
+      isDisabled = !signUpData.email || !!error.email || !!error.emailVerify
       break
     case 5:
       isDisabled = !signUpData.pw || !pwCheck || !!error.pwCheck
@@ -82,6 +87,9 @@ const SignUpContainer = () => {
       case 3:
         return <BirthGenderInput />
       case 4:
+        if (signUpData.role === 'SHELTER') {
+          return <IdInput />
+        }
         return <EmailInput />
       case 5:
         return <PasswordInput />
@@ -95,11 +103,9 @@ const SignUpContainer = () => {
   return (
     <s.Container>
       <s.BackButtonContainer>
-        {signUpStep > 1 && (
-          <button type="button" onClick={handlePrevStep}>
-            &lt;
-          </button>
-        )}
+        <button type="button" onClick={handlePrevStep}>
+          &lt;
+        </button>
       </s.BackButtonContainer>
       <s.InputContainer>
         {renderStepComponent()}

@@ -109,6 +109,7 @@ const App = () => {
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyle />
       <BrowserRouter>
+        <ScrollToTop />
         {user ? <AuthRoutes /> : <HomeRoutes />}
         <ReactQueryDevtools initialIsOpen={false} />
       </BrowserRouter>

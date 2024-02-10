@@ -9,7 +9,7 @@ const DogListContainer = () => {
   const [basicDogListParams, setBasicDogListParams] =
     useState<BasicDogListParamsType>({
       page: 1,
-      size: 8,
+      size: 100,
       sort: ['string'],
     })
   const [basicDogList, setBasicDogList] = useState<DogListType[]>([])
