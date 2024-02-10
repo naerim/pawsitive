@@ -15,6 +15,8 @@ const ChattingRoomHeader = (props: { dogNo: number }) => {
     queryFn: () => fetchDogDetails(dogNo),
   })
 
+  const goCreateAdoptedAppointment = () => navigate('/new/adopted-appointment')
+
   return (
     <c.Container>
       <c.Wrap>
@@ -43,7 +45,9 @@ const ChattingRoomHeader = (props: { dogNo: number }) => {
                 </span>
               </c.InfoDetailWrap>
               <c.ButtonWrap>
-                <button type="button">입양약속 잡기</button>
+                <button type="button" onClick={goCreateAdoptedAppointment}>
+                  입양약속 잡기
+                </button>
               </c.ButtonWrap>
             </c.InfoWrap>
           </>
