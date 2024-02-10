@@ -1,10 +1,12 @@
 import { useAtom } from 'jotai'
 import { createDogInfoAtom } from '@src/stores/atoms/dog'
 import * as s from '@src/components/style/CreateDogInfoStyle'
+import { useState } from 'react'
 
 const CreateDogInfo = () => {
   const [createDogData, setCreateDogData] = useAtom(createDogInfoAtom)
-
+  const [sexSelected, setSexSelected] = useState('')
+  const [naturalizedSelected, setNaturalizedSelected] = useState(undefined)
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nameInput = e.target.value
     setCreateDogData(prevData => ({ ...prevData, name: nameInput }))
@@ -28,11 +30,16 @@ const CreateDogInfo = () => {
   }
 
   const handleSexChange = (sex: string) => {
+    setSexSelected(sex)
     setCreateDogData(prevData => ({ ...prevData, sex }))
   }
 
-  const handleIsNaturalizedChange = (isNaturalized: boolean) => {
-    setCreateDogData(prevData => ({ ...prevData, isNaturalized }))
+  const handleIsNaturalizedChange = isNaturalized => {
+    setNaturalizedSelected(isNaturalized)
+    setCreateDogData(prevData => ({
+      ...prevData,
+      isNaturalized,
+    }))
   }
 
   return (
@@ -81,13 +88,13 @@ const CreateDogInfo = () => {
           <s.Title>성별</s.Title>
           <s.ButtonContainer>
             <s.Button
-              $isSelected={createDogData.sex === 'M'}
+              $isSelected={sexSelected === 'M'}
               onClick={() => handleSexChange('M')}
             >
               수컷
             </s.Button>
             <s.Button
-              $isSelected={createDogData.sex === 'F'}
+              $isSelected={sexSelected === 'F'}
               onClick={() => handleSexChange('F')}
             >
               암컷
@@ -98,13 +105,13 @@ const CreateDogInfo = () => {
           <s.Title>중성화 여부</s.Title>
           <s.ButtonContainer>
             <s.Button
-              $isSelected={createDogData.isNaturalized}
+              $isSelected={naturalizedSelected === true}
               onClick={() => handleIsNaturalizedChange(true)}
             >
               중성화 O
             </s.Button>
             <s.Button
-              $isSelected={!createDogData.isNaturalized}
+              $isSelected={naturalizedSelected === false}
               onClick={() => handleIsNaturalizedChange(false)}
             >
               중성화 X
