@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useAtom, useAtomValue } from 'jotai'
 import { useMutation } from '@tanstack/react-query'
 import { createDogInfoAtom, createDogStepAtom } from '@src/stores/atoms/dog'
@@ -28,13 +28,6 @@ const CreateDogContainer = () => {
       console.error('유기견 추가 실패:', error)
     },
   })
-
-  useEffect(() => {
-    setCreateDogInfo({
-      ...createDogInfo,
-      userNo: user.userNo,
-    })
-  }, [createDogInfo, setCreateDogInfo, user.userNo])
 
   const handleCreateDog = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
