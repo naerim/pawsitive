@@ -10,7 +10,7 @@ export const Container = styled.div`
 export const Wrap = styled.div`
   display: flex;
   flex-direction: column;
-  width: 86%;
+  width: 95%;
   margin: 0 auto;
   padding-bottom: 100px;
 `
