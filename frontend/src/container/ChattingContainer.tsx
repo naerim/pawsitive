@@ -30,6 +30,7 @@ const ChattingContainer = () => {
               memberProfileImage={item.memberProfileImage}
               shelterProfileImage={item.shelterProfileImage}
               id={item.id}
+              dogNo={item.dogNo}
             />
           ))}
       </c.Wrap>

@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { Client } from '@stomp/stompjs'
 import { useAtom } from 'jotai/index'
@@ -7,15 +7,21 @@ import { fetchHistoryMessage } from '@src/apis/chat'
 import { useQuery } from '@tanstack/react-query'
 import { MessageType } from '@src/types/chatType'
 import SockJS from 'sockjs-client'
+import MessageItem from '@src/components/ChattingRoom/MessageItem'
+import * as c from '@src/container/style/ChattingRoomContainerStyle'
+import ChattingRoomHeader from '@src/components/ChattingRoom/ChattingRoomHeader'
+import InputSection from '@src/components/ChattingRoom/InputSection'
 
 const ChattingRoomContainer = () => {
-  const { no } = useParams()
+  const location = useLocation()
+  const { dogNo, chatRoomNo } = location.state
+
   const [user] = useAtom(userAtom)
   const client = useRef<Client | null>(null)
 
-  const [messages, setMessages] = useState<MessageType[]>([])
-  const [newMessage, setNewMessage] = useState<MessageType>({
+  const defaultMessage = {
     message: '',
+    dogNo: 0,
     userNo: user.userNo,
     userName: user.name,
     createdAt: '',
@@ -23,17 +29,29 @@ const ChattingRoomContainer = () => {
     userImage: null,
     chatNo: 0,
     isRead: false,
-  })
+  }
+
+  const [messages, setMessages] = useState<MessageType[]>([])
+  const [newMessage, setNewMessage] = useState<MessageType>(defaultMessage)
+
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  const scrollToBottom = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+    }
+  }
 
   // fetchHistoryMessage
   const { refetch } = useQuery({
     queryKey: ['fetchHistoryMessage'],
-    queryFn: () => no && fetchHistoryMessage(Number(no)),
+    queryFn: () => chatRoomNo && fetchHistoryMessage(Number(chatRoomNo)),
   })
 
   useEffect(() => {
     refetch().then(res => {
       setMessages(res.data)
+      scrollToBottom()
     })
   }, [refetch])
 
@@ -46,22 +64,28 @@ const ChattingRoomContainer = () => {
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
-        client.current?.subscribe(`/api/v1/chats/sub/rooms/${no}`, msg => {
-          const receivedMessage = JSON.parse(msg.body)
-          setMessages(prevMessages => [
-            ...prevMessages,
-            {
-              userNo: user.userNo,
-              message: receivedMessage.message,
-              userName: user.name,
-              createdAt: '',
-              type: 'chat',
-              userImage: '',
-              chatNo: 0,
-              isRead: false,
-            },
-          ])
-        })
+        client.current?.subscribe(
+          `/api/v1/chats/sub/rooms/${chatRoomNo}`,
+          msg => {
+            const receivedMessage = JSON.parse(msg.body)
+            setMessages(prevMessages => [
+              ...prevMessages,
+              {
+                userNo: receivedMessage.userNo,
+                message: receivedMessage.message,
+                dogNo: receivedMessage.dogNo,
+                userName: user.name,
+                createdAt: '',
+                type: 'chat',
+                userImage: '',
+                chatNo: receivedMessage.chatNo,
+                isRead: false,
+              },
+            ])
+            console.log('sss')
+            scrollToBottom()
+          },
+        )
       },
       onStompError: frame => console.log(frame.headers.message),
     })
@@ -77,55 +101,42 @@ const ChattingRoomContainer = () => {
   }, [])
 
   const sendHandler = () => {
-    client.current!.publish({
-      destination: `/api/v1/chats/pub/chat`,
-      body: JSON.stringify({
-        chatRoomNo: no,
-        senderNo: user.userNo,
-        message: newMessage.message,
-      }),
-    })
-    setNewMessage({
-      message: '',
-      userNo: user.userNo,
-      userName: user.name,
-      createdAt: '',
-      type: 'chat',
-      userImage: null,
-      chatNo: 0,
-      isRead: false,
-    })
+    // 빈 문자 았는지 확인
+    if (newMessage.message.trim() !== '') {
+      client.current!.publish({
+        destination: `/api/v1/chats/pub/chat`,
+        body: JSON.stringify({
+          chatRoomNo,
+          senderNo: user.userNo,
+          message: newMessage.message,
+          type: 'chat',
+        }),
+      })
+      setNewMessage(defaultMessage)
+      scrollToBottom()
+    }
   }
 
-  return (
-    <div>
-      <div>채팅방이든아니든니가뭔상관이야</div>
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
 
-      <div>
+  return (
+    <c.Container>
+      <ChattingRoomHeader dogNo={dogNo} />
+      <c.MessageSection ref={scrollRef}>
         {messages.map(message => (
-          <div key={message.chatNo}>{message.message}</div>
+          <MessageItem item={message} key={message.chatNo} />
         ))}
-      </div>
-      <input
-        type="text"
-        value={newMessage.message}
+      </c.MessageSection>
+      <InputSection
+        onClick={sendHandler}
+        message={newMessage.message}
         onChange={e =>
-          setNewMessage({
-            userNo: user.userNo,
-            message: e.target.value,
-            userName: user.name,
-            createdAt: '',
-            type: 'chat',
-            userImage: '',
-            chatNo: 0,
-            isRead: false,
-          })
+          setNewMessage(prev => ({ ...prev, message: e.target.value }))
         }
       />
-      <button type="button" onClick={sendHandler}>
-        전송
-      </button>
-    </div>
+    </c.Container>
   )
 }
 
