@@ -110,7 +110,7 @@ public class CommunityBoardRepositoryImpl extends QuerydslRepositorySupport
                     qUser.address.as("memberAddress"), qBoard.title, qBoard.content,
                     qBoard.isPublic, qBoard.latitude, qBoard.longitude, qBoard.createdAt,
                     qBoard.hit, qCategory.communityCategoryNo,
-                    ExpressionUtils.as(qCategory.communityCategoryEnum.stringValue(),
+                    ExpressionUtils.as(qCategory.communityCategoryName,
                         "communityCategoryName")
                 )
             );

@@ -1,8 +1,6 @@
 package com.pawsitive.communitygroup.entity;
 
-import com.pawsitive.communitygroup.converter.CommunityCategoryEnumConverter;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,7 +22,6 @@ public class CommunityCategory {
     @Column(name = "community_category_no")
     private int communityCategoryNo;
 
-    @Convert(converter = CommunityCategoryEnumConverter.class)
     @Column(name = "community_category_name")
-    private CommunityCategoryEnum communityCategoryEnum;
+    private String communityCategoryName;
 }
