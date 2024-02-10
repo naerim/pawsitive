@@ -75,6 +75,14 @@ const CreateDogContainer = () => {
     createDogInfo.kind.trim() === '' ||
     createDogInfo.age === 0
 
+  const isSubmitDisabled =
+    createDogInfo.eq === undefined ||
+    createDogInfo.si === undefined ||
+    createDogInfo.aw === undefined ||
+    createDogInfo.fc === undefined ||
+    createDogInfo.note.trim() === '' ||
+    file.length === 0
+
   const handleNextStep = () => {
     setCreateDogStep(prevStep => prevStep + 1)
   }
@@ -101,7 +109,11 @@ const CreateDogContainer = () => {
             </c.Button>
           )}
           <form onSubmit={handleCreateDog} encType="multipart/form-data">
-            {createDogStep === 2 && <c.Button type="submit">등록하기</c.Button>}
+            {createDogStep === 2 && (
+              <c.Button type="submit" disabled={isSubmitDisabled}>
+                등록하기
+              </c.Button>
+            )}
           </form>
         </c.ButtonContainer>
       </c.InputContainer>
