@@ -11,8 +11,15 @@ const CreateDogInfo = () => {
   }
 
   const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const ageInput = Number(e.target.value)
-    setCreateDogData(prevData => ({ ...prevData, age: ageInput }))
+    const inputChar = e.target.value
+
+    if (!/^\d{0,4}$/.test(inputChar)) {
+      e.preventDefault()
+    } else {
+      const ageInput = e.target.value
+      const age = Number(ageInput)
+      setCreateDogData(prevData => ({ ...prevData, age }))
+    }
   }
 
   const handleKindSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
