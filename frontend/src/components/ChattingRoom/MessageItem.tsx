@@ -1,7 +1,7 @@
 import * as m from '@src/components/ChattingRoom/_style/MessageItemStyle'
 import { MessageType } from '@src/types/chatType'
 import { useAtom } from 'jotai/index'
-import { userAtom } from '@src/stores/atoms/user.ts'
+import { userAtom } from '@src/stores/atoms/user'
 
 const MessageItem = (props: { item: MessageType }) => {
   const { message, userNo, chatNo } = props.item

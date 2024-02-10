@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { Client } from '@stomp/stompjs'
 import { useAtom } from 'jotai/index'
@@ -9,15 +9,19 @@ import { MessageType } from '@src/types/chatType'
 import SockJS from 'sockjs-client'
 import MessageItem from '@src/components/ChattingRoom/MessageItem'
 import * as c from '@src/container/style/ChattingRoomContainerStyle'
+import ChattingRoomHeader from '@src/components/ChattingRoom/ChattingRoomHeader'
 
 const ChattingRoomContainer = () => {
-  const { no } = useParams()
+  const location = useLocation()
+  const { dogNo, chatRoomNo } = location.state
+
   const [user] = useAtom(userAtom)
   const client = useRef<Client | null>(null)
 
   const [messages, setMessages] = useState<MessageType[]>([])
   const [newMessage, setNewMessage] = useState<MessageType>({
     message: '',
+    dogNo: 0,
     userNo: user.userNo,
     userName: user.name,
     createdAt: '',
@@ -30,7 +34,7 @@ const ChattingRoomContainer = () => {
   // fetchHistoryMessage
   const { refetch } = useQuery({
     queryKey: ['fetchHistoryMessage'],
-    queryFn: () => no && fetchHistoryMessage(Number(no)),
+    queryFn: () => chatRoomNo && fetchHistoryMessage(Number(chatRoomNo)),
   })
 
   useEffect(() => {
@@ -48,22 +52,26 @@ const ChattingRoomContainer = () => {
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
-        client.current?.subscribe(`/api/v1/chats/sub/rooms/${no}`, msg => {
-          const receivedMessage = JSON.parse(msg.body)
-          setMessages(prevMessages => [
-            ...prevMessages,
-            {
-              userNo: receivedMessage.userNo,
-              message: receivedMessage.message,
-              userName: user.name,
-              createdAt: '',
-              type: 'chat',
-              userImage: '',
-              chatNo: receivedMessage.chatNo,
-              isRead: false,
-            },
-          ])
-        })
+        client.current?.subscribe(
+          `/api/v1/chats/sub/rooms/${chatRoomNo}`,
+          msg => {
+            const receivedMessage = JSON.parse(msg.body)
+            setMessages(prevMessages => [
+              ...prevMessages,
+              {
+                userNo: receivedMessage.userNo,
+                message: receivedMessage.message,
+                dogNo: receivedMessage.dogNo,
+                userName: user.name,
+                createdAt: '',
+                type: 'chat',
+                userImage: '',
+                chatNo: receivedMessage.chatNo,
+                isRead: false,
+              },
+            ])
+          },
+        )
       },
       onStompError: frame => console.log(frame.headers.message),
     })
@@ -82,7 +90,7 @@ const ChattingRoomContainer = () => {
     client.current!.publish({
       destination: `/api/v1/chats/pub/chat`,
       body: JSON.stringify({
-        chatRoomNo: no,
+        chatRoomNo,
         senderNo: user.userNo,
         message: newMessage.message,
         type: 'chat',
@@ -97,14 +105,14 @@ const ChattingRoomContainer = () => {
       userImage: null,
       chatNo: 0,
       isRead: false,
+      dogNo: 0,
     })
     console.log(messages)
   }
 
   return (
     <div>
-      <div>채팅방이든아니든니가뭔상관이야</div>
-
+      <ChattingRoomHeader dogNo={dogNo} />
       <c.MessageSection>
         {messages.map(message => (
           <MessageItem item={message} key={message.chatNo} />
@@ -123,6 +131,7 @@ const ChattingRoomContainer = () => {
             userImage: '',
             chatNo: 0,
             isRead: false,
+            dogNo: 0,
           })
         }
       />

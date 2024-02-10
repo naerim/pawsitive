@@ -8,6 +8,7 @@ export type ChatRoomType = {
   }
   memberProfileImage: string
   shelterProfileImage: string
+  dogNo: number
 }
 
 export type CreateChatRoomParamsType = {
@@ -24,4 +25,5 @@ export type MessageType = {
   userNo: number
   message: string
   userName: string
+  dogNo: number
 }
