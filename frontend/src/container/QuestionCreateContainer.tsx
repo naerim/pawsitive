@@ -1,10 +1,12 @@
 import QuestionCreate from '@src/components/Question/QuestionCreate'
+import * as q from '@src/container/style/QuestionCreateContainerStyle'
 
 const QuestionCreateContainer = () => {
   return (
-    <div>
+    <q.Container>
+      <div>오늘의 질문</div>
       <QuestionCreate />
-    </div>
+    </q.Container>
   )
 }
 
