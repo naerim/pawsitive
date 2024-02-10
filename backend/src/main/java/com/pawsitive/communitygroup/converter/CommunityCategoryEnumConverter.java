@@ -9,7 +9,7 @@ public class CommunityCategoryEnumConverter
     implements AttributeConverter<CommunityCategoryEnum, String> {
     @Override
     public String convertToDatabaseColumn(CommunityCategoryEnum communityCategoryEnum) {
-        return communityCategoryEnum.getCommunityCategory();
+        return communityCategoryEnum.getCategoryName();
     }
 
     @Override

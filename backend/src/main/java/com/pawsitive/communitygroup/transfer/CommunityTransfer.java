@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class CommunityTransfer {
-    
+
     public static CommunityBoardDetailRes entityToDto(CommunityBoard communityBoard) {
         return CommunityBoardDetailRes.builder()
             .boardNo(communityBoard.getCommunityBoardNo())
@@ -24,8 +24,7 @@ public class CommunityTransfer {
             .createdAt(communityBoard.getCreatedAt())
             .hit(communityBoard.getHit())
             .communityCategoryNo(communityBoard.getCommunityCategory().getCommunityCategoryNo())
-            .communityCategoryName(communityBoard.getCommunityCategory().getCommunityCategoryEnum()
-                .name())
+            .communityCategoryName(communityBoard.getCommunityCategory().getCommunityCategoryName())
             .build();
     }
 
