@@ -10,7 +10,7 @@ export const MessageSection = styled.div`
   flex-direction: column;
   width: 100%;
   margin-top: 10px;
-  padding: 120px 5% 0 5%;
+  padding: 140px 5% 0 5%;
   height: 90%;
   overflow-y: scroll;
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
