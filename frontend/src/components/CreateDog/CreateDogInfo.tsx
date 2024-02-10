@@ -1,4 +1,3 @@
-import React from 'react'
 import { useAtom } from 'jotai'
 import { createDogInfoAtom } from '@src/stores/atoms/dog'
 import * as s from '@src/components/style/CreateDogInfoStyle'
