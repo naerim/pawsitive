@@ -16,7 +16,7 @@ const DogListContainer = () => {
   const [totalPageCnt, setTotalPageCnt] = useState(7)
 
   const { data, isLoading, isFetching } = useQuery<DogListType[]>({
-    queryKey: ['basicDogList', basicDogListParams],
+    queryKey: ['basicDogList'],
     queryFn: async () => {
       const result = await fetchBasicDogList(basicDogListParams)
       setTotalPageCnt(result.totalPages)
