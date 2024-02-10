@@ -10,7 +10,7 @@ import SockJS from 'sockjs-client'
 import MessageItem from '@src/components/ChattingRoom/MessageItem'
 import * as c from '@src/container/style/ChattingRoomContainerStyle'
 import ChattingRoomHeader from '@src/components/ChattingRoom/ChattingRoomHeader'
-import InputSection from '@src/components/ChattingRoom/InputSection.tsx'
+import InputSection from '@src/components/ChattingRoom/InputSection'
 
 const ChattingRoomContainer = () => {
   const location = useLocation()
@@ -19,8 +19,7 @@ const ChattingRoomContainer = () => {
   const [user] = useAtom(userAtom)
   const client = useRef<Client | null>(null)
 
-  const [messages, setMessages] = useState<MessageType[]>([])
-  const [newMessage, setNewMessage] = useState<MessageType>({
+  const defaultMessage = {
     message: '',
     dogNo: 0,
     userNo: user.userNo,
@@ -30,7 +29,10 @@ const ChattingRoomContainer = () => {
     userImage: null,
     chatNo: 0,
     isRead: false,
-  })
+  }
+
+  const [messages, setMessages] = useState<MessageType[]>([])
+  const [newMessage, setNewMessage] = useState<MessageType>(defaultMessage)
 
   const scrollRef = useRef<HTMLDivElement>(null)
 
@@ -110,17 +112,7 @@ const ChattingRoomContainer = () => {
           type: 'chat',
         }),
       })
-      setNewMessage({
-        message: '',
-        userNo: user.userNo,
-        userName: user.name,
-        createdAt: '',
-        type: 'chat',
-        userImage: null,
-        chatNo: 0,
-        isRead: false,
-        dogNo: 0,
-      })
+      setNewMessage(defaultMessage)
       scrollToBottom()
     }
   }
@@ -140,18 +132,8 @@ const ChattingRoomContainer = () => {
       <InputSection
         onClick={sendHandler}
         message={newMessage.message}
-        onChange={(e: { target: { value: any } }) =>
-          setNewMessage({
-            userNo: user.userNo,
-            message: e.target.value,
-            userName: user.name,
-            createdAt: '',
-            type: 'chat',
-            userImage: '',
-            chatNo: 0,
-            isRead: false,
-            dogNo: 0,
-          })
+        onChange={e =>
+          setNewMessage(prev => ({ ...prev, message: e.target.value }))
         }
       />
     </c.Container>
