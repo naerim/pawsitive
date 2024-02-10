@@ -2,14 +2,11 @@ package com.pawsitive.usergroup.controller;
 
 import static org.springframework.http.HttpStatus.OK;
 
-import com.pawsitive.adoptgroup.dto.response.AdoptionDogRes;
-import com.pawsitive.adoptgroup.service.AdoptDogService;
 import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.usergroup.dto.request.SilentRefreshReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
 import com.pawsitive.usergroup.dto.response.UpdateFieldRes;
-import com.pawsitive.usergroup.exception.UserNotLoginException;
 import com.pawsitive.usergroup.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,39 +32,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
-    private final AdoptDogService adoptDogService;
-
-    /**
-     * 현재 로그인한 회원의 반려견을 조회하는 컨트롤러 메서드입니다.
-     *
-     * @param userId 유저 ID
-     * @return 반려견 정보 응답 객체
-     */
-    @GetMapping("recommendation/{userId}")
-    @Operation(summary = "로그인 한 회원의 입양한 유기견 조회",
-        description = "<strong>로그인 한 회원이 입양한 유기견</strong>을 조회한다.",
-        tags = {"01.User"},
-        responses = {
-            @ApiResponse(responseCode = "200", description = "로그인 한 회원의 입양한 유기견 조회에 성공하였습니다."),
-            @ApiResponse(responseCode = "401", description = "현재 로그인 한 회원의 계정이 유효하지 않습니다."),
-        }
-    )
-    public ResponseEntity<AdoptionDogRes> getDogsByUser(@PathVariable String userId) {
-
-        if (!userId.equals("admin")) {
-            throw new UserNotLoginException();
-        }
-
-        AdoptionDogRes response = AdoptionDogRes.builder()
-            .adoptedDays(290)
-//            .answerCount(10)
-//            .memoryCount(9)
-            .build();
-
-        return ResponseEntity
-            .status(OK)
-            .body(response);
-    }
 
     /**
      * User 인증 필터 테스트용 메서드입니다.
@@ -112,26 +75,6 @@ public class UserController {
             .body(userService.updateField(req));
     }
 
-    /**
-     * 현재 로그인한 회원의 반려견을 조회하는 컨트롤러 메서드입니다.
-     *
-     * @param userNo 유저 번호
-     * @return 반려견 정보 응답 객체
-     */
-    @GetMapping("/dogs/{userNo}")
-    @Operation(summary = "로그인 한 회원의 입양한 유기견 조회",
-        description = "<strong>로그인 한 회원이 입양한 유기견</strong>을 조회한다.",
-        tags = {"01.User"},
-        responses = {
-            @ApiResponse(responseCode = "200", description = "로그인 한 회원의 입양한 유기견 조회에 성공하였습니다."),
-            @ApiResponse(responseCode = "401", description = "현재 로그인 한 회원의 계정이 유효하지 않습니다."),
-        }
-    )
-    public ResponseEntity<AdoptionDogRes> getAdoptedDogByUserNo(@PathVariable Integer userNo) {
-        return ResponseEntity
-            .status(OK)
-            .body(adoptDogService.getAdoptedDogByUserNo(userNo));
-    }
 
     /**
      * 리프레시 토큰을 갱신하는 컨트롤러 메서드입니다.
@@ -185,30 +128,6 @@ public class UserController {
             .body(BaseResponseBody.of(OK, "로그아웃 완료"));
     }
 
-//    @PostMapping("/adopt")
-//    public ResponseEntity<AdoptionRes> adoptDog(@RequestBody AdoptionReq req) {
-//
-//
-//        return
-//    }
-
-//    @PatchMapping("/{userId}")
-//    public ResponseEntity<UserUpdateRes> modifyUser(@PathVariable String userId,
-//                                                    @RequestBody UserUpdatePatchReq updateInfo,
-//                                                    Authentication authentication) {
-//
-//        // 로그인 한 사용자가 아닐 경우
-//        if (Objects.isNull(authentication.getDetails())) {
-//            throw new UserNotLoginException();
-//        }
-//
-//        // 회원 정보수정 성공했을 경우
-//        userService.updateUser(userId, updateInfo);
-//        return ResponseEntity
-//            .status(OK)
-//            .body(UserUpdateRes.of(OK, "Success"));
-//    }
-//
 //    @DeleteMapping("/{userId}")
 //    public ResponseEntity<UserCheckRes> deleteUser(@PathVariable String userId,
 //                                                   Authentication authentication) {
