@@ -1,9 +1,9 @@
-import * as c from '@src/components/style/QuestionDetailStyle'
 import { useQuery } from '@tanstack/react-query'
+import { useParams } from 'react-router-dom'
 import { useAtomValue } from 'jotai/index'
 import { userAtom } from '@src/stores/atoms/user'
 import { fetchQuestionDetail } from '@src/apis/question'
-import { useParams } from 'react-router-dom'
+import * as c from '@src/components/style/QuestionDetailStyle'
 
 const QuestionDetail = () => {
   const { questionNo } = useParams()
@@ -15,24 +15,27 @@ const QuestionDetail = () => {
     userNo,
   }
 
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ['QuestionDetail'],
     queryFn: () => fetchQuestionDetail(fetchData),
   })
 
   return (
-    <c.Container>
-      {!isLoading ? (
-        <c.Body>
-          <c.Number>{data.questionNo}번 질문</c.Number>
-          <c.Content>{data.questionContent}</c.Content>
-          <c.Answer>{data.answerContent}</c.Answer>
-          <c.Date>{data.createdAt}</c.Date>
-        </c.Body>
+    <div>
+      {data ? (
+        <c.Container>
+          <c.Header>
+            <c.Number>Q{data.questionNo}.</c.Number>
+            <c.Content>{data.questionContent}</c.Content>
+          </c.Header>
+          <c.Body>
+            <c.Answer>{data.answerContent}</c.Answer>
+          </c.Body>
+        </c.Container>
       ) : (
-        <div>로딩중입니다..</div>
+        <div>로딩중입니다.</div>
       )}
-    </c.Container>
+    </div>
   )
 }
 

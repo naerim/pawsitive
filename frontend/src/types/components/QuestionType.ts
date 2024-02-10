@@ -17,8 +17,13 @@ export type QuestionType = {
   createdAt: number
 }
 
-// 디테일
 export type QuestionDetailFetchType = {
   questionNo: number
   userNo: number
+}
+
+export type QuestionSubmitFetchType = {
+  userNo: number
+  questionNo: number
+  answerContent: string
 }
