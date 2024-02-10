@@ -3,8 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { DogType } from '@src/types/dogType'
 import { fetchDogDetails } from '@src/apis/dog'
+import { useAtom } from 'jotai/index'
+import { userAtom } from '@src/stores/atoms/user'
 
 const ChattingRoomHeader = (props: { dogNo: number }) => {
+  const [user] = useAtom(userAtom)
   const { dogNo } = props
   const navigate = useNavigate()
 
@@ -24,6 +27,7 @@ const ChattingRoomHeader = (props: { dogNo: number }) => {
           <>
             <c.TopWrap>
               <img
+                className="arrow"
                 src="/icon/icon_black_arrow_left.png"
                 alt=""
                 onClick={goBack}
@@ -31,6 +35,12 @@ const ChattingRoomHeader = (props: { dogNo: number }) => {
               <span>
                 {data.userName} - {data.name}
               </span>
+              <img
+                className="call"
+                src="/icon/icon_phone.png"
+                alt=""
+                onClick={goBack}
+              />
             </c.TopWrap>
             <c.InfoWrap>
               <c.InfoDetailWrap>
@@ -48,6 +58,9 @@ const ChattingRoomHeader = (props: { dogNo: number }) => {
                 <button type="button" onClick={goCreateAdoptedAppointment}>
                   입양약속 잡기
                 </button>
+                {user.role === 'SHELTER' && (
+                  <button type="button">입양설문 보기</button>
+                )}
               </c.ButtonWrap>
             </c.InfoWrap>
           </>

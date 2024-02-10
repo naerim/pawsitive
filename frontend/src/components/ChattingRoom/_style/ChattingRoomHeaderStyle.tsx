@@ -5,7 +5,7 @@ export const Container = styled.header`
   position: fixed;
   top: 0;
   width: 390px;
-  height: 120px;
+  height: 150px;
   z-index: 100;
   border-bottom: 1px solid #ebebeb;
   background-color: #fff;
@@ -21,26 +21,33 @@ export const Wrap = styled.div`
 
 export const TopWrap = styled.div`
   display: flex;
-  height: 40px;
+  height: 60px;
   align-items: center;
+  justify-content: space-between;
 
-  img {
+  .arrow {
     width: 14px;
     height: 18px;
     cursor: pointer;
   }
 
   span {
-    margin-left: 10px;
+    margin-left: 16px;
     font-size: 1em;
     font-weight: 500;
+  }
+
+  .call {
+    width: 14px;
+    height: 16px;
+    cursor: pointer;
   }
 `
 
 export const InfoWrap = styled.div`
   display: flex;
   flex-direction: column;
-  height: 80px;
+  height: 90px;
 `
 
 export const InfoDetailWrap = styled.div`
@@ -77,5 +84,6 @@ export const ButtonWrap = styled.div`
     border-radius: 2px;
     padding: 4px 10px;
     font-size: 0.8em;
+    margin-right: 10px;
   }
 `
