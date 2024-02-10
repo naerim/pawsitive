@@ -39,4 +39,7 @@ export const LastMsg = styled.div`
   color: #7b7b7b;
   font-size: 0.9em;
   margin-top: 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 210px;
 `
