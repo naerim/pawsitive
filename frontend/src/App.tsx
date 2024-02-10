@@ -37,6 +37,7 @@ import QuestionListPage from '@src/pages/QuestionListPage'
 import ChattingRoomPage from '@src/pages/ChattingRoomPage'
 import ChattingPage from '@src/pages/ChattingPage'
 import AboutSameDogChatListPage from '@src/pages/AboutSameDogChatListPage'
+import ScrollToTop from '@src/hooks/ScrollToTop'
 // import { userAtom } from '@src/stores/atoms/user'
 
 // 로그인된 경우 접근할 수 있는 url
@@ -104,6 +105,7 @@ const App = () => {
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyle />
       <BrowserRouter>
+        <ScrollToTop />
         {user ? <AuthRoutes /> : <HomeRoutes />}
         <ReactQueryDevtools initialIsOpen={false} />
       </BrowserRouter>
