@@ -19,15 +19,16 @@ const CreateDogContainer = () => {
   const { mutate } = useMutation({
     mutationKey: ['createDog'],
     mutationFn: createDog,
-    onSuccess() {
+    onSuccess(result) {
       console.log('유기견 추가 성공')
+      navigate(`/dogs/${result.dogNo}`)
     },
     onError(error) {
       console.error('유기견 추가 실패:', error)
     },
   })
 
-  const handleCreateDog = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateDog = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData()
 
@@ -41,8 +42,7 @@ const CreateDogContainer = () => {
     for (let i = 0; i < file.length; i += 1) {
       formData.append('files', file[i])
     }
-
-    mutate(formData)
+    await mutate(formData)
   }
 
   const renderStepComponent = () => {
