@@ -32,9 +32,8 @@ export type BasicDogType = {
   name: string
   kind: string
   age: number
-  statusName: string
   statusNo: number
-  image: string
+  file: string
   sex: string
   neutralized: boolean
 }

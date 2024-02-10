@@ -22,7 +22,7 @@ const DogDetailContainer = () => {
   // const location = useLocation()
   // const dogNo = location.state?.dogNo
   const { dogNo } = useParams<{ dogNo: string }>()
-  const [, setDogDetail] = useAtom(dogDetailAtom)
+  const [dogDetail, setDogDetail] = useAtom(dogDetailAtom)
 
   const { data, isLoading } = useQuery<DogType | null>({
     queryKey: ['dogDetail'],
@@ -44,7 +44,7 @@ const DogDetailContainer = () => {
           <DogAdditionalInfo />
           <ShelterInfoSection />
           <TipSection />
-          <SameShelterDogs />
+          <SameShelterDogs dogDetail={dogDetail} />
           <ChatStartButton />
         </>
       )}
