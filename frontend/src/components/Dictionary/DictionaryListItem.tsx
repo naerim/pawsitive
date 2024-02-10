@@ -1,5 +1,5 @@
 import { DictionaryItemType } from '@src/types/components/DictionaryType'
-import * as c from '@src/components/style/DictionaryListItem'
+import * as c from '@src/components/style/DictionaryListItemStyle'
 
 const DictionaryListItem = (props: { data: DictionaryItemType }) => {
   const { data } = props

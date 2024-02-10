@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
 import { fetchDictionaryList } from '@src/apis/dictionary'
 import {
   DictionaryListParamsType,
@@ -9,8 +10,13 @@ import DictionaryListSection from '@src/components/Dictionary/DictionaryListSect
 import DictionaryCategorySection from '@src/components/Dictionary/DictionaryCategorySection'
 import * as c from '@src/container/style/DictionaryListContainerStyle'
 
-// 무한 스크롤 아직 구현 못함
 const DictionaryListContainer = () => {
+  const navigate = useNavigate()
+
+  const handlePrevStep = () => {
+    navigate('/')
+  }
+
   const [category, setCategory] = useState(0)
 
   const { data, isLoading, refetch } = useQuery<DictionaryResType>({
@@ -33,9 +39,13 @@ const DictionaryListContainer = () => {
   return (
     <c.Container>
       <c.Wrap>
-        <c.Top>
-          <p>펫과사전</p>
-        </c.Top>
+        <c.TopContainer>
+          <c.BackButtonWrap onClick={handlePrevStep}>
+            <img src="/icon/icon_gray_arrow_left.png" alt="" />
+          </c.BackButtonWrap>
+          <c.Title>펫과사전</c.Title>
+          <c.Span />
+        </c.TopContainer>
         <DictionaryCategorySection
           category={category}
           setCategory={setCategory}
