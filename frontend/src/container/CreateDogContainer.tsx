@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useAtom, useAtomValue } from 'jotai'
+import { useState } from 'react'
+import { useAtom } from 'jotai'
 import { useMutation } from '@tanstack/react-query'
 import { createDogInfoAtom, createDogStepAtom } from '@src/stores/atoms/dog'
 import { createDog } from '@src/apis/dog'
@@ -9,13 +9,11 @@ import CreateDogNote from '@src/components/CreateDog/CreateDogNote'
 import CreateDogFile from '@src/components/CreateDog/CreateDogFile'
 import * as c from '@src/container/style/CreateDogContainerStyle'
 import { useNavigate } from 'react-router-dom'
-import { userAtom } from '@src/stores/atoms/user'
 
 const CreateDogContainer = () => {
   const navigate = useNavigate()
   const [createDogInfo, setCreateDogInfo] = useAtom(createDogInfoAtom)
   const [createDogStep, setCreateDogStep] = useAtom(createDogStepAtom)
-  const user = useAtomValue(userAtom)
   const [file, setFile] = useState<File[]>([])
 
   const { mutate } = useMutation({
