@@ -16,11 +16,6 @@ const CreateDogInfo = () => {
     setCreateDogData(prevData => ({ ...prevData, age: ageInput }))
   }
 
-  const handleKindChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const kindInput = e.target.value
-    setCreateDogData(prevData => ({ ...prevData, kind: kindInput }))
-  }
-
   const handleSexChange = (sex: string) => {
     setCreateDogData(prevData => ({ ...prevData, sex }))
   }
@@ -55,7 +50,7 @@ const CreateDogInfo = () => {
         <select>
           <option>말티즈</option>
           <option>비숑</option>
-          <option>치와아</option>
+          <option>치와와</option>
           <option>푸들</option>
           <option>포메라니안</option>
           <option>시바견</option>
@@ -64,12 +59,6 @@ const CreateDogInfo = () => {
           <option>리트리버</option>
           <option>기타</option>
         </select>
-        <s.Input
-          type="text"
-          value={createDogData.kind}
-          onChange={handleKindChange}
-          placeholder="닮은 강아지 품종을 적어줘도 좋아요!"
-        />
       </s.InputContainer>
       <s.TwoInputContainer>
         <s.InputContainer>
