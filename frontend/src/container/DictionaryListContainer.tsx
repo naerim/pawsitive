@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
+import { useAtom } from 'jotai'
+import { DictionaryCategoryAtom } from '@src/stores/atoms/dictionary'
 import { fetchDictionaryList } from '@src/apis/dictionary'
 import {
   DictionaryListParamsType,
@@ -17,7 +19,7 @@ const DictionaryListContainer = () => {
     navigate('/')
   }
 
-  const [category, setCategory] = useState(0)
+  const [category] = useAtom(DictionaryCategoryAtom)
 
   const { data, isLoading, refetch } = useQuery<DictionaryResType>({
     queryKey: ['dictionaryList'],
@@ -46,10 +48,7 @@ const DictionaryListContainer = () => {
           <c.Title>펫과사전</c.Title>
           <c.Span />
         </c.TopContainer>
-        <DictionaryCategorySection
-          category={category}
-          setCategory={setCategory}
-        />
+        <DictionaryCategorySection />
         {isLoading || !data ? (
           <p>Loading...</p>
         ) : (
