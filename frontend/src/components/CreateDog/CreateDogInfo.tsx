@@ -63,6 +63,7 @@ const CreateDogInfo = () => {
           value={createDogData.kind}
           onChange={handleKindSelectChange}
         >
+          <option>선택</option>
           <option value="말티즈">말티즈</option>
           <option value="비숑">비숑</option>
           <option value="치와와">치와와</option>
