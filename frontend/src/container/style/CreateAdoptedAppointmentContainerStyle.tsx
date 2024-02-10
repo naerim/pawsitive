@@ -29,23 +29,22 @@ export const Title = styled.div`
 `
 
 export const Row = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    padding: 20px 0;
-    border-bottom: 1px solid #CBCBCB;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid #cbcbcb;
 
-    input {
-        border: none;
-        outline: none;
-    }
+  input {
+    border: none;
+    outline: none;
+  }
 
-    select {
-        border: none;
-        outline: none;
-    }
-}
+  select {
+    border: none;
+    outline: none;
+  }
 `
 
 export const SubmitButton = styled.button`
