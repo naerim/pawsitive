@@ -33,5 +33,5 @@ export const createDogInfoAtom = atom<CreateDogInfoType>({
   aw: true,
   fc: true,
   sex: 'M',
-  age: 2021,
+  age: 0,
 })
