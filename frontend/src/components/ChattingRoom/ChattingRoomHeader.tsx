@@ -19,16 +19,34 @@ const ChattingRoomHeader = (props: { dogNo: number }) => {
     <c.Container>
       <c.Wrap>
         {!isLoading && data && (
-          <c.Top>
-            <img
-              src="/icon/icon_black_arrow_left.png"
-              alt=""
-              onClick={goBack}
-            />
-            <span>
-              {data.userName} - {data.name}
-            </span>
-          </c.Top>
+          <>
+            <c.TopWrap>
+              <img
+                src="/icon/icon_black_arrow_left.png"
+                alt=""
+                onClick={goBack}
+              />
+              <span>
+                {data.userName} - {data.name}
+              </span>
+            </c.TopWrap>
+            <c.InfoWrap>
+              <c.InfoDetailWrap>
+                <img src={data.files[0]} alt="" />
+                <span>
+                  <div className="name">{data.name}</div>
+                  <div>
+                    {data.sex === 'f' ? '암컷' : '수컷'} ∙ 중성화{' '}
+                    {data.neutralized ? '0' : 'X'} ∙ {data.age}
+                    (년생) ∙ {data.kind}
+                  </div>
+                </span>
+              </c.InfoDetailWrap>
+              <c.ButtonWrap>
+                <button type="button">입양약속 잡기</button>
+              </c.ButtonWrap>
+            </c.InfoWrap>
+          </>
         )}
       </c.Wrap>
     </c.Container>
