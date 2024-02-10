@@ -10,6 +10,7 @@ import SockJS from 'sockjs-client'
 import MessageItem from '@src/components/ChattingRoom/MessageItem'
 import * as c from '@src/container/style/ChattingRoomContainerStyle'
 import ChattingRoomHeader from '@src/components/ChattingRoom/ChattingRoomHeader'
+import InputSection from '@src/components/ChattingRoom/InputSection.tsx'
 
 const ChattingRoomContainer = () => {
   const location = useLocation()
@@ -31,6 +32,14 @@ const ChattingRoomContainer = () => {
     isRead: false,
   })
 
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  const scrollToBottom = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+    }
+  }
+
   // fetchHistoryMessage
   const { refetch } = useQuery({
     queryKey: ['fetchHistoryMessage'],
@@ -40,6 +49,7 @@ const ChattingRoomContainer = () => {
   useEffect(() => {
     refetch().then(res => {
       setMessages(res.data)
+      scrollToBottom()
     })
   }, [refetch])
 
@@ -70,6 +80,8 @@ const ChattingRoomContainer = () => {
                 isRead: false,
               },
             ])
+            console.log('sss')
+            scrollToBottom()
           },
         )
       },
@@ -107,21 +119,25 @@ const ChattingRoomContainer = () => {
       isRead: false,
       dogNo: 0,
     })
-    console.log(messages)
+    scrollToBottom()
   }
 
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
+
   return (
-    <div>
+    <c.Container>
       <ChattingRoomHeader dogNo={dogNo} />
-      <c.MessageSection>
+      <c.MessageSection ref={scrollRef}>
         {messages.map(message => (
           <MessageItem item={message} key={message.chatNo} />
         ))}
       </c.MessageSection>
-      <input
-        type="text"
-        value={newMessage.message}
-        onChange={e =>
+      <InputSection
+        onClick={sendHandler}
+        message={newMessage.message}
+        onChange={(e: { target: { value: any } }) =>
           setNewMessage({
             userNo: user.userNo,
             message: e.target.value,
@@ -135,10 +151,7 @@ const ChattingRoomContainer = () => {
           })
         }
       />
-      <button type="button" onClick={sendHandler}>
-        전송
-      </button>
-    </div>
+    </c.Container>
   )
 }
 
