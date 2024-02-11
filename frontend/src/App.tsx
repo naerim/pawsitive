@@ -1,6 +1,5 @@
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ThemeProvider } from 'styled-components'
 import { darkTheme, lightTheme } from '@src/style/theme.'
 import { GlobalStyle } from '@src/style/GlobalStyles'
@@ -114,7 +113,7 @@ const App = () => {
       <BrowserRouter>
         <ScrollToTop />
         {user ? <AuthRoutes /> : <HomeRoutes />}
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </BrowserRouter>
     </ThemeProvider>
   )

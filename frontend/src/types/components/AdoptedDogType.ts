@@ -7,6 +7,8 @@ export type AdoptedDog = {
   weight: number
   age: number
   adoptedDays: number
+  sex: string
+  neutralized: boolean
 }
 
 export type ModData = {

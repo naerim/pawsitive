@@ -26,12 +26,24 @@ import SurveyQuestionSection1 from '@src/components/AdoptionSurvey/SurveyQuestio
 import SurveyQuestionSection2 from '@src/components/AdoptionSurvey/SurveyQuestionSection2'
 import { useEffect } from 'react'
 import SurveyProgress from '@src/components/AdoptionSurvey/SurveyProgress'
+import { useMutation } from '@tanstack/react-query'
+import { updateUserStage } from '@src/apis/user'
 
 const AdoptionSurveyContainer = () => {
   const [surveyStep, setSurveyStep] = useAtom(surveyStepAtom)
   const [user, setUser] = useAtom(userAtom)
   const navigate = useNavigate()
   const [surveyData, setSurveyData] = useAtom(surveyDataAtom)
+
+  const { mutate } = useMutation({
+    mutationKey: ['updateUserStage'],
+    mutationFn: updateUserStage,
+    onSuccess: () => {
+      setUser(currentUser => ({ ...currentUser, stage: 2 }))
+      navigate('/mypage/survey/done')
+    },
+    onError: error => console.error('user stage update 1-2 fail : ', error),
+  })
 
   useEffect(() => {
     setSurveyData(prevData => ({
@@ -53,10 +65,12 @@ const AdoptionSurveyContainer = () => {
   }
 
   const goDone = () => {
-    // console.log(surveyData)
-    setUser(currentUser => ({ ...currentUser, stage: 2 }))
     console.log(surveyData)
-    navigate('/mypage/survey/done')
+    mutate({
+      userNo: user.userNo,
+      field: 'stage',
+      value: 2,
+    })
   }
 
   const renderStepComponent = () => {
