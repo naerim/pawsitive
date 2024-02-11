@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useSetAtom } from 'jotai/index'
+import { useAtom } from 'jotai/index'
 import { userAtom } from '@src/stores/atoms/user'
 import Lottie from 'react-lottie'
 import coolGoldBadge from '@src/assets/lotties/cool_gold_badge.json'
@@ -9,7 +9,7 @@ import { updateUserStage } from '@src/apis/user'
 
 const ConfirmPawsitiveContainer = () => {
   const navigate = useNavigate()
-  const setUser = useSetAtom(userAtom)
+  const [currentUser, setUser] = useAtom(userAtom)
 
   const { mutate } = useMutation({
     mutationKey: ['updateUserStage'],
@@ -26,7 +26,7 @@ const ConfirmPawsitiveContainer = () => {
   // 확인했어요 버튼 클릭 시
   const onClickOkButton = () =>
     mutate({
-      userNo: 1,
+      userNo: currentUser.userNo,
       field: 'stage',
       value: 1,
     })

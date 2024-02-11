@@ -1,7 +1,9 @@
 import { publicRequest } from '@src/hooks/requestMethods'
-import { ModData } from '@src/types/components/AdoptedDogType'
+import { AdoptedDog, ModData } from '@src/types/components/AdoptedDogType'
 
-export const fetchAdoptedDogDetail = async (num: number) => {
+export const fetchAdoptedDogDetail = async (
+  num: number,
+): Promise<AdoptedDog> => {
   return publicRequest
     .get(`/adopt-dogs/users/${num}`)
     .then(res => res.data)
