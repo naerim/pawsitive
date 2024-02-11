@@ -4,12 +4,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
-
-export const Button = styled.button`
-  margin-bottom: 10px;
-  padding: 10px;
-  font-size: 16px;
+  width: 90%;
+  margin: 0 auto;
+  height: 100vh;
 `
 
 export const WebcamContainer = styled.div`
@@ -56,4 +53,34 @@ export const NextButton = styled.button`
   font-size: 17px;
   font-weight: normal;
   color: #ffffff;
+`
+
+export const DoneWrap = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+`
+
+export const BackButtonWrap = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 40px;
+
+  img {
+    width: 10px;
+  }
+`
+
+export const PrevWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: 100vh;
+`
+
+export const StartButton = styled.button`
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 16px;
 `

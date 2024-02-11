@@ -145,10 +145,15 @@ const FindSimilarDog = () => {
     },
   }
 
+  const goBack = () => navigate('/mypage')
+
   return (
     <f.Container>
+      <f.BackButtonWrap>
+        <img src="/icon/icon_gray_arrow_left.png" alt="" onClick={goBack} />
+      </f.BackButtonWrap>
       {started ? (
-        <>
+        <f.DoneWrap>
           <f.WebcamContainer id="webcam-container" />
           <f.BarContainer>
             <Bar data={data} options={options} />
@@ -160,17 +165,19 @@ const FindSimilarDog = () => {
               결과화면보기
             </f.NextButton>
           </f.ActionButtons>
-        </>
+        </f.DoneWrap>
       ) : (
-        <f.Button
-          type="button"
-          onClick={() => {
-            setStarted(true)
-            init()
-          }}
-        >
-          시작하기
-        </f.Button>
+        <f.PrevWrap>
+          <f.StartButton
+            type="button"
+            onClick={() => {
+              setStarted(true)
+              init()
+            }}
+          >
+            시작하기
+          </f.StartButton>
+        </f.PrevWrap>
       )}
     </f.Container>
   )
