@@ -5,7 +5,9 @@ interface ButtonProps {
 }
 
 export const Container = styled.div`
-  margin: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
 `
 
 export const SectionContainer = styled.div`

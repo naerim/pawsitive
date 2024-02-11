@@ -31,8 +31,16 @@ export const RoleButton = styled.button<{ selected: boolean }>`
   background-color: ${props => (props.selected ? '#ff9232' : '#FFFFFF')};
   border: 1px solid ${props => (props.selected ? '#FF9232' : '#cbcbcb')};
   border-radius: 5px;
-  outline: none;
+
   cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    border-color: #ff9232;
+  }
 `
 
 export const TwoInputContainer = styled.div`
