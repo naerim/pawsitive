@@ -1,6 +1,6 @@
 import { atom } from 'jotai'
 import { CreateDogInfoType } from '@src/types/components/CreateDogType'
-import { DogListFilterParamsType, DogType } from '@src/types/dogType'
+import { BasicDogListParamsType, DogType } from '@src/types/dogType'
 
 export const dogDetailAtom = atom<DogType>({
   dogNo: 0,
@@ -36,7 +36,10 @@ export const createDogInfoAtom = atom<CreateDogInfoType>({
   age: 0,
 })
 
-export const dogListFilterAtom = atom<DogListFilterParamsType>({
+export const dogListParamsAtom = atom<BasicDogListParamsType>({
+  page: 1,
+  size: 10,
+  sort: ['string'],
   kind: [
     '말티즈',
     '비숑',

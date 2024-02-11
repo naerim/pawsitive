@@ -42,9 +42,6 @@ export type BasicDogListParamsType = {
   page: number
   size: number
   sort: string[]
-}
-
-export type DogListFilterParamsType = {
   kind: string[]
   sex: number
   neutralized: number
