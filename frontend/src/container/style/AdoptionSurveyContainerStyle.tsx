@@ -58,11 +58,12 @@ export const Question = styled.h1`
   font-size: 16px;
 `
 export const Step = styled.div`
-  font-size: 16px;
+  display: flex;
+  width: 90%;
+  margin: 20px auto 0;
   font-weight: 500;
   text-align: center;
   color: #ff9232;
-  margin: 45px 0 0 0;
 `
 
 export const InputContainer = styled.div`

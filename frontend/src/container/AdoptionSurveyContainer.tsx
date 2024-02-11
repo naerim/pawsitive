@@ -131,9 +131,9 @@ const AdoptionSurveyContainer = () => {
         )}
       </c.BackButtonContainer>
       <SurveyProgress step={surveyStep} />
+      <c.Step>{surveyStep} / 21</c.Step>
       <c.InputContainer>
         {renderStepComponent()}
-        <c.Step>{surveyStep} / 21</c.Step>
         <c.ButtonContainer>
           {surveyStep < 21 && (
             <c.Button onClick={handleNextStep}>다음</c.Button>
