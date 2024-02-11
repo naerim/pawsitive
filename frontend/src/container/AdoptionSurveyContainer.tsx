@@ -25,6 +25,7 @@ import SurveyQuestionNo19 from '@src/components/AdoptionSurvey/SurveyQuestionNo1
 import SurveyQuestionSection1 from '@src/components/AdoptionSurvey/SurveyQuestionSection1'
 import SurveyQuestionSection2 from '@src/components/AdoptionSurvey/SurveyQuestionSection2'
 import { useEffect } from 'react'
+import SurveyProgress from '@src/components/AdoptionSurvey/SurveyProgress.tsx'
 
 const AdoptionSurveyContainer = () => {
   const [surveyStep, setSurveyStep] = useAtom(surveyStepAtom)
@@ -129,7 +130,7 @@ const AdoptionSurveyContainer = () => {
           </c.BackButton>
         )}
       </c.BackButtonContainer>
-
+      <SurveyProgress step={surveyStep} />
       <c.InputContainer>
         {renderStepComponent()}
         <c.Step>{surveyStep} / 21</c.Step>

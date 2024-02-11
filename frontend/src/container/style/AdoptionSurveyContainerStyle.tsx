@@ -68,23 +68,22 @@ export const Step = styled.div`
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  position: relative;
-  width: 100%;
-  height: 570px;
-  margin-top: 20px;
+  width: 90%;
+  margin: 0 auto;
+  height: calc(100vh - 100px);
 `
 
 export const ButtonContainer = styled.div`
   width: 100%;
-  position: absolute;
-  bottom: 0;
+  margin-top: auto;
+  padding-bottom: 80px;
 `
 
 export const Button = styled.button`
   background-color: #ff9232;
   color: #fff;
   width: 100%;
-  padding: 10px 0;
+  height: 40px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
