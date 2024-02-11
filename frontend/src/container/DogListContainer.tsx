@@ -11,54 +11,48 @@ import { dogListParamsAtom } from '@src/stores/atoms/dog'
 const DogListContainer = () => {
   const [basicDogListParams, setBasicDogListParams] = useAtom(dogListParamsAtom)
   const [basicDogList, setBasicDogList] = useState<DogListType[]>([])
-  const [totalPageCnt, setTotalPageCnt] = useState(7)
+  // const [totalPageCnt, setTotalPageCnt] = useState(7)
   const [isFilter, setIsFilter] = useState(false)
 
-  const { data, isLoading, isFetching } = useQuery<DogListType[]>({
+  const { isLoading, isFetching, refetch } = useQuery<DogListType[]>({
     queryKey: ['basicDogList'],
     queryFn: async () => {
       const result = await fetchBasicDogList(basicDogListParams)
-      setTotalPageCnt(result.totalPages)
+      // setTotalPageCnt(result.totalPages)
       return result.content
     },
   })
 
   useEffect(() => {
-    if (!isFetching && data) {
-      if (basicDogListParams.page === 0) {
-        setBasicDogList(data)
-      } else {
-        setBasicDogList(prevList => [...prevList, ...data])
-      }
-    }
-  }, [isFetching, basicDogListParams, data])
+    refetch().then(r => r)
+  }, [basicDogListParams, refetch])
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        totalPageCnt > basicDogListParams.page &&
-        Math.ceil(window.innerHeight + window.scrollY) >=
-          document.documentElement.offsetHeight
-      ) {
-        setBasicDogListParams(prevParams => {
-          const newParams = {
-            ...prevParams,
-            page: prevParams.page + 1,
-          }
-
-          if (newParams.page <= totalPageCnt) {
-            return newParams
-          }
-          return prevParams
-        })
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [basicDogListParams, totalPageCnt])
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (
+  //       totalPageCnt > basicDogListParams.page &&
+  //       Math.ceil(window.innerHeight + window.scrollY) >=
+  //         document.documentElement.offsetHeight
+  //     ) {
+  //       setBasicDogListParams(prevParams => {
+  //         const newParams = {
+  //           ...prevParams,
+  //           page: prevParams.page + 1,
+  //         }
+  //
+  //         if (newParams.page <= totalPageCnt) {
+  //           return newParams
+  //         }
+  //         return prevParams
+  //       })
+  //     }
+  //   }
+  //
+  //   window.addEventListener('scroll', handleScroll)
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll)
+  //   }
+  // }, [basicDogListParams, totalPageCnt])
 
   const showFilterHandle = () => {
     setIsFilter(!isFilter)
