@@ -46,5 +46,5 @@ public class AdoptDog {
     private double weight;
 
     @Column(name = "age", insertable = false)
-    private int age;
+    private Integer age;
 }
