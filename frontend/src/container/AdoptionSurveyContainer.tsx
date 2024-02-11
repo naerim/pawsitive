@@ -112,20 +112,20 @@ const AdoptionSurveyContainer = () => {
     <c.Container>
       <c.BackButtonContainer>
         {surveyStep > 1 ? (
-          <c.BackButton
-            type="button"
-            onClick={handlePrevStep}
-            aria-label="Previous Step"
-          >
-            <img src="/icon/icon_black_arrow_left.png" alt="" />
+          <c.BackButton aria-label="Previous Step">
+            <img
+              src="/icon/icon_gray_arrow_left.png"
+              alt=""
+              onClick={handlePrevStep}
+            />
           </c.BackButton>
         ) : (
-          <c.BackButton
-            type="button"
-            onClick={handlePrevPage}
-            aria-label="Previous Step"
-          >
-            <img src="/icon/icon_black_arrow_left.png" alt="" />
+          <c.BackButton aria-label="Previous Step">
+            <img
+              src="/icon/icon_gray_arrow_left.png"
+              alt=""
+              onClick={handlePrevPage}
+            />
           </c.BackButton>
         )}
       </c.BackButtonContainer>

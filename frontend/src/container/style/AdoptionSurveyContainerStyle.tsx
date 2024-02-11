@@ -3,26 +3,28 @@ import styled from 'styled-components'
 export const Container = styled.div``
 
 export const BackButtonContainer = styled.div`
-  width: 100%;
-  border-bottom: 3.5px solid rgb(255, 212, 175);
+  display: flex;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+  height: 100px;
 
   &:focus,
   &:active {
     outline: none;
   }
-
-  img {
-    width: 26px;
-    margin: 40px 0 20px 25px;
-  }
 `
 
-export const BackButton = styled.button`
+export const BackButton = styled.div`
   background-color: white;
   border: none;
   margin: 10px 0 0 0;
   border-radius: 5px;
   cursor: pointer;
+
+  img {
+    width: 10px;
+  }
 
   &:disabled {
     background-color: #bebebe;
