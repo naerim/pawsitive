@@ -7,13 +7,16 @@ import com.pawsitive.chatgroup.dto.request.ChatRoomCreateReq;
 import com.pawsitive.chatgroup.dto.response.ChatRes;
 import com.pawsitive.chatgroup.dto.response.ChatRoomListRes;
 import com.pawsitive.chatgroup.dto.response.ChatRoomRes;
+import com.pawsitive.chatgroup.dto.response.ChatSessionRes;
+import com.pawsitive.chatgroup.dto.response.ChatTokenRes;
 import com.pawsitive.chatgroup.service.ChatRoomService;
+import io.openvidu.java.client.OpenViduHttpException;
+import io.openvidu.java.client.OpenViduJavaClientException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
 import java.util.List;
-
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -71,5 +74,35 @@ public class ChatRoomController {
             .body(chatRoomService.createChatRoom(chatRoomCreateReq, authentication));
     }
 
+    @PostMapping("/sessions")
+    @Operation(summary = "화상 채팅방 커넥션 생성", description = "화상 채팅방 커넥션을 생성해 sessionId를 반환합니다.",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "화상 채팅방 커넥션 생성 성공"),
+        }
+    )
+    public ResponseEntity<ChatSessionRes> createSessions(
+        @RequestBody(required = false) Map<String, Object> params)
+        throws OpenViduJavaClientException, OpenViduHttpException {
+
+        return ResponseEntity
+            .status(OK)
+            .body(chatRoomService.createSessions(params));
+    }
+
+    @PostMapping("/sessions/{sessionId}/connections")
+    @Operation(summary = "화상 채팅방 토큰 얻기", description = "sessionId에 대한 화상 채팅방 토큰을 반환합니다.",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "화상 채팅방 토큰 조회 성공"),
+        }
+    )
+    public ResponseEntity<ChatTokenRes> createConnection(
+        @PathVariable("sessionId") String sessionId,
+        @RequestBody(required = false) Map<String, Object> params)
+        throws OpenViduJavaClientException, OpenViduHttpException {
+
+        return ResponseEntity
+            .status(OK)
+            .body(chatRoomService.getToken(sessionId, params));
+    }
 
 }
