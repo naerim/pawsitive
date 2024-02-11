@@ -20,7 +20,17 @@ public class MemberDogLikeRepositoryImpl extends QuerydslRepositorySupport imple
         return from(qMemberDogLike)
             .select(qMemberDogLike.dog.dogNo)
             .where(qMemberDogLike.member.userNo.eq(userNo))
+            .orderBy(qMemberDogLike.dog.dogNo.asc())
             .fetch();
     }
+
+    @Override
+    public MemberDogLike getUserDogLiked(Integer dogNo, Integer userNo) {
+        return from(qMemberDogLike)
+            .select(qMemberDogLike)
+            .where(qMemberDogLike.dog.dogNo.eq(dogNo), qMemberDogLike.member.userNo.eq(userNo))
+            .fetchOne();
+    }
+
 
 }
