@@ -5,7 +5,7 @@ import { ChatRoomType } from '@src/types/chatType'
 import { fetchChatRooms } from '@src/apis/chat'
 import ChattingListItem from '@src/components/Chatting/ChattingListItem'
 import * as c from '@src/container/style/ChattingContainerStyle'
-import ChattingListHeader from '@src/components/Chatting/ChattingListHeader'
+import ChattingListHeader from '@src/common/ChattingListHeader'
 
 const ChattingContainer = () => {
   const [user] = useAtom(userAtom)
