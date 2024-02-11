@@ -24,6 +24,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.NoSuchElementException;
+
 /**
  * rest controller 에서 예외발생시 종합적인 처리를 해주기 위한 클래스입니다.
  */
@@ -40,7 +42,7 @@ public class RestControllerAdvisor {
      * @return 에러메세지를 response entity 에 담아서 전송합니다.
      */
     @ExceptionHandler({MethodArgumentNotValidException.class, InvalidRequestException.class,
-        InvalidSurveyValueException.class})
+        InvalidSurveyValueException.class, NoSuchElementException.class})
     public ResponseEntity<BaseResponseBody> badRequestException400(
         MethodArgumentNotValidException e) {
 
