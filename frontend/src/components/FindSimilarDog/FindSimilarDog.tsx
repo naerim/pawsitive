@@ -90,7 +90,7 @@ const FindSimilarDog = () => {
     maxPredictions = model.getTotalClasses()
 
     const flip = true
-    webcam = new tmImage.Webcam(200, 200, flip)
+    webcam = new tmImage.Webcam(260, 260, flip)
     await webcam.setup()
     await webcam.play()
     isPredictingRef.current = true

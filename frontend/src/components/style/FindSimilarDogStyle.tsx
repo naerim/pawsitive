@@ -11,6 +11,13 @@ export const Container = styled.div`
 
 export const WebcamContainer = styled.div`
   margin-bottom: 100px;
+  margin-top: 40px;
+
+  height: 300px;
+
+  canvas {
+    border-radius: 100%;
+  }
 `
 
 export const BarContainer = styled.div`
