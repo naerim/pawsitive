@@ -17,6 +17,7 @@ export const Top = styled.div`
 export const BackButtonContainer = styled.div`
   img {
     width: 10px;
+    cursor: pointer;
   }
 `
 
@@ -43,6 +44,11 @@ export const Button = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
 
   &:disabled {
     background-color: #bebebe;
