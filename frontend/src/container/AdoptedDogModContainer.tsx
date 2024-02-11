@@ -11,8 +11,7 @@ const AdoptedDogModContainer = () => {
     queryFn: () => fetchAdoptedDogDetail(user.userNo),
   })
 
-  console.log(data)
-  return <div>{!isLoading && <AdoptedDogMod data={data} />} </div>
+  return <div>{!isLoading && data && <AdoptedDogMod data={data} />} </div>
 }
 
 export default AdoptedDogModContainer

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-// import { useAtom } from 'jotai/index'
-// import { userAtom } from '@src/stores/atoms/user'
+import { useAtom } from 'jotai/index'
+import { userAtom } from '@src/stores/atoms/user'
 import { useMutation } from '@tanstack/react-query'
 import { fetchAdoptedDogMod } from '@src/apis/adoptDog'
 import { AdoptedDog, ModData } from '@src/types/components/AdoptedDogType'
@@ -9,7 +9,7 @@ import React, { useState } from 'react'
 const AdoptedDogMod = (props: { data: AdoptedDog }) => {
   const { data } = props
   const navigate = useNavigate()
-  // const [, setUser] = useAtom(userAtom)
+  const [, setUser] = useAtom(userAtom)
   const [dataForm, setDataForm] = useState<ModData>({
     fetchData: {
       name: data.name,
@@ -56,12 +56,12 @@ const AdoptedDogMod = (props: { data: AdoptedDog }) => {
     }))
   }
 
-  // const changeUserStage = (num: number) =>
-  //   setUser(user => ({ ...user, stage: num }))
+  const changeUserStage = (num: number) =>
+    setUser(user => ({ ...user, stage: num }))
 
   const HandleUserStage = () => {
     mutate(dataForm)
-    // changeUserStage(4)
+    changeUserStage(4)
     navigate('/')
   }
   return (
