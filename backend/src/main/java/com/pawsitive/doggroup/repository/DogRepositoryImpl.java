@@ -12,9 +12,11 @@ import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQuery;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -69,6 +71,14 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
             .fetchOne();
 
         return new PageImpl<>(content, pageable, count);
+    }
+
+    @Override
+    public List<DogListRes> getDogListIn(List<Integer> dogList) {
+        return getQueryDogList()
+            .where(qDog.dogNo.in(dogList))
+            .orderBy(qDog.createdAt.desc())
+            .fetch();
     }
 
     private BooleanExpression eqSex(Integer sex) {
