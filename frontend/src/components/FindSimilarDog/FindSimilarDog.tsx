@@ -168,6 +168,9 @@ const FindSimilarDog = () => {
         </f.DoneWrap>
       ) : (
         <f.PrevWrap>
+          <f.PrevImg src="/img/img_main_house.png" alt="" />
+          <f.PrevTitle>나와 가장 닮은 강아지는?</f.PrevTitle>
+          <f.PrevDesc>얼굴로 보는 인공지능 강아지상 테스트</f.PrevDesc>
           <f.StartButton
             type="button"
             onClick={() => {

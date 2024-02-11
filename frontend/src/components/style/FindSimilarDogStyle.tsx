@@ -77,10 +77,32 @@ export const PrevWrap = styled.div`
   flex-direction: column;
   width: 90%;
   height: 100vh;
+  align-items: center;
+`
+
+export const PrevImg = styled.img`
+  width: 180px;
+  height: 180px;
+  margin-top: 50%;
+`
+
+export const PrevTitle = styled.div`
+  font-weight: 500;
+  font-size: 1.3em;
+  margin-top: 30px;
+`
+
+export const PrevDesc = styled.div`
+  color: #848484;
+  margin-top: 20px;
+  font-size: 1em;
 `
 
 export const StartButton = styled.button`
-  margin-bottom: 10px;
-  padding: 10px;
-  font-size: 16px;
+  height: 40px;
+  color: #fff;
+  margin-top: auto;
+  margin-bottom: 40px;
+  width: 100%;
+  background-color: #ff9232;
 `
