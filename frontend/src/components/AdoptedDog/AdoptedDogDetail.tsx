@@ -4,12 +4,16 @@ import { useAtomValue } from 'jotai'
 import { useQuery } from '@tanstack/react-query'
 import { fetchAdoptedDogDetail } from '@src/apis/adoptDog'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import AdoptedDogModModal from '@src/components/AdoptedDog/AdoptedDogModModal'
 
 const AdoptedDogDetail = () => {
   const user = useAtomValue(userAtom)
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const [message, setMessage] = useState('')
+
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['adoptedDogDetail'],
     queryFn: () => fetchAdoptedDogDetail(user.userNo),
@@ -19,9 +23,9 @@ const AdoptedDogDetail = () => {
     refetch().then(r => r)
   }, [data, refetch])
 
-  const goToMod = () => {
-    navigate('/adopted-dog/mod')
-  }
+  // const goToMod = () => {
+  //   navigate('/adopted-dog/mod')
+  // }
   useEffect(() => {
     if (data) {
       if (data.name.length > 5) {
@@ -56,9 +60,10 @@ const AdoptedDogDetail = () => {
               <a.Text>나이: {data.age}살</a.Text>
               <a.Text>무게: {data.weight}kg</a.Text>
               <a.Text>중성화: {data.neutralized ? '했음' : '안했음'}</a.Text>
-              <a.ModButton type="button" onClick={goToMod}>
+              <a.ModButton type="button" onClick={handleOpen}>
                 수정하기
               </a.ModButton>
+              <AdoptedDogModModal open={open} setOpen={setOpen} />
             </a.BackCard>
           </a.Card>
         )}

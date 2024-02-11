@@ -86,15 +86,38 @@ const LogoutModal = () => {
             id="modal-modal-title"
             variant="h6"
             component="h2"
-            sx={{ color: 'black' }}
+            sx={{
+              color: 'black',
+              fontFamily: 'SCDream',
+            }}
           >
             로그아웃 하시겠습니까?
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <ButtonValue type="button" onClick={handleLogout}>
+            <ButtonValue
+              type="button"
+              onClick={handleLogout}
+              sx={{
+                fontFamily: 'SCDream',
+                fontWeight: '400',
+                '&:hover': {
+                  color: '#646cff',
+                },
+              }}
+            >
               예
             </ButtonValue>
-            <ButtonValue type="button" onClick={handleClose}>
+            <ButtonValue
+              type="button"
+              onClick={handleClose}
+              sx={{
+                fontFamily: 'SCDream',
+                fontWeight: '400',
+                '&:hover': {
+                  color: '#646cff',
+                },
+              }}
+            >
               아니요
             </ButtonValue>
           </Typography>
