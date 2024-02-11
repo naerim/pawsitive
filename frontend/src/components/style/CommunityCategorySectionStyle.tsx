@@ -6,7 +6,7 @@ export const Container = styled.div`
   width: 100%;
   white-space: nowrap;
   -ms-overflow-style: none;
-  padding: 10px 0;
+  height: 40px;
 
   &::-webkit-scrollbar {
     display: none;
@@ -15,7 +15,9 @@ export const Container = styled.div`
 
 export const Item = styled.div<{ $select: boolean }>`
   display: flex;
+  height: 28px;
   cursor: pointer;
+  align-items: center;
   justify-content: center;
   font-size: 0.9em;
   padding: 6px 8px;
