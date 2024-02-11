@@ -44,6 +44,7 @@ public class AdoptDogServiceImpl implements AdoptDogService {
     }
 
     @Override
+    @Transactional
     public AdoptionDogRes createAdoptDog(AdoptionReq adoptionReq) {
         AdoptDog adoptDog = new AdoptDog();
         Dog dog = dogService.getDogEntityByDogNo(adoptionReq.getDogNo());
@@ -61,6 +62,7 @@ public class AdoptDogServiceImpl implements AdoptDogService {
     }
 
     @Override
+    @Transactional
     public AdoptionDogRes updateInformation(int adoptDogNo, UpdateAdoptDogRes updateAdoptDogRes) {
         AdoptDog adoptDogEntity = getAdoptDogEntity(adoptDogNo);
 
