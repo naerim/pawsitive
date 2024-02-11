@@ -1,7 +1,12 @@
 package com.pawsitive.usergroup.service;
 
 import com.pawsitive.doggroup.dto.request.MemberDogLikeReq;
+import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.dto.response.MemberDogLikeRes;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface MemberDogLikeService {
 
@@ -11,5 +16,9 @@ public interface MemberDogLikeService {
      * @param req 찜 요청 DTO 객체
      */
     MemberDogLikeRes createMemberDogLike(MemberDogLikeReq req);
+
+    MemberDogLikeRes deleteMemberDogLike(MemberDogLikeReq req);
+
+    List<DogListRes> getMemberDogLikeList(int userNo);
 
 }

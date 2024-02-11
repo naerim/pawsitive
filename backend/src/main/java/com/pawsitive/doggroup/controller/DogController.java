@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.common.dto.response.PageResponse;
+import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.request.MemberDogLikeReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
@@ -25,6 +26,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -116,16 +118,47 @@ public class DogController {
         })
     public ResponseEntity<MemberDogLikeRes> memberDogLike(@RequestBody MemberDogLikeReq req, Authentication authentication) {
 
-//        User user = (User) authentication.getPrincipal();
-//        String email = user.getUsername();
-//
-//        if (req.getEmail().equals(email)) {
-//            throw new NotSavedException();
-//        }
-        
+
         return ResponseEntity
             .status(OK)
             .body(memberDogLikeService.createMemberDogLike(req));
+    }
+
+    @PostMapping("/unlike")
+    @Operation(summary = "유기견 공고 찜 취소", description = "이미 찜 되어있는 유기견 공고에 대해 찜을 취소한다.",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "찜 정상 취소 완료"),
+            @ApiResponse(responseCode = "400", description = "파라미터 오류"),
+            @ApiResponse(responseCode = "401", description = "권한 없음"),
+            @ApiResponse(responseCode = "500", description = "서버 에러")
+        })
+    public ResponseEntity<MemberDogLikeRes> deleteMemberDogLike(@RequestBody MemberDogLikeReq req, Authentication authentication) {
+        return ResponseEntity
+            .status(OK)
+            .body(memberDogLikeService.deleteMemberDogLike(req));
+    }
+
+    @GetMapping("/like/{userNo}")
+    @Operation(summary = "찜한 유기견 리스트 전체 조회", description = "이미 찜 되어있는 유기견 공고에 대해 찜을 취소한다.",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "찜 정상 취소 완료"),
+            @ApiResponse(responseCode = "400", description = "파라미터 오류"),
+            @ApiResponse(responseCode = "401", description = "권한 없음"),
+            @ApiResponse(responseCode = "500", description = "서버 에러")
+        })
+    public ResponseEntity<List<DogListRes>> getDogLikeList(@PathVariable int userNo) {
+        return ResponseEntity
+            .status(OK)
+            .body(memberDogLikeService.getMemberDogLikeList(userNo));
+    }
+
+    private void checkUserAuthentication(Authentication authentication, String inputEmail) {
+        User user = (User) authentication.getPrincipal();
+        String email = user.getUsername();
+
+        if (inputEmail.equals(email)) {
+            throw new NotSavedException();
+        }
     }
 
 }
