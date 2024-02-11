@@ -48,7 +48,7 @@ export const loginData = async (loginDatas: LoginUserType) => {
 
 // const JWT_EXPIRY_TIME = 24 * 3600 * 1000
 // 5분에 한 번 저장
-const JWT_EXPIRY_TIME = 300 * 1000
+const JWT_EXPIRY_TIME = 3600 * 1000
 
 export const onLoginSuccess = async (res: JwtTokenType) => {
   const storage = localStorage.getItem('currentUser')
