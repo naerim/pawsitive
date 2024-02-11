@@ -3,26 +3,28 @@ import styled from 'styled-components'
 export const Container = styled.div``
 
 export const BackButtonContainer = styled.div`
-  width: 100%;
-  border-bottom: 3.5px solid rgb(255, 212, 175);
+  display: flex;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+  height: 100px;
 
   &:focus,
   &:active {
     outline: none;
   }
-
-  img {
-    width: 26px;
-    margin: 40px 0 20px 25px;
-  }
 `
 
-export const BackButton = styled.button`
+export const BackButton = styled.div`
   background-color: white;
   border: none;
   margin: 10px 0 0 0;
   border-radius: 5px;
   cursor: pointer;
+
+  img {
+    width: 10px;
+  }
 
   &:disabled {
     background-color: #bebebe;
@@ -56,33 +58,33 @@ export const Question = styled.h1`
   font-size: 16px;
 `
 export const Step = styled.div`
-  font-size: 16px;
+  display: flex;
+  width: 90%;
+  margin: 20px auto 0;
   font-weight: 500;
   text-align: center;
   color: #ff9232;
-  margin: 45px 0 0 0;
 `
 
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  position: relative;
-  width: 100%;
-  height: 570px;
-  margin-top: 20px;
+  width: 90%;
+  margin: 0 auto;
+  height: calc(100vh - 100px);
 `
 
 export const ButtonContainer = styled.div`
   width: 100%;
-  position: absolute;
-  bottom: 0;
+  margin-top: auto;
+  padding-bottom: 80px;
 `
 
 export const Button = styled.button`
   background-color: #ff9232;
   color: #fff;
   width: 100%;
-  padding: 10px 0;
+  height: 40px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
