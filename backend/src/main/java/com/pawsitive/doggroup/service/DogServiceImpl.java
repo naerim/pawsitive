@@ -7,25 +7,25 @@ import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.entity.Dog;
-import com.pawsitive.doggroup.entity.DogFile;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.doggroup.transfer.DogTransfer;
-import com.pawsitive.usergroup.entity.MemberDogLike;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.repository.MemberDogLikeRepository;
 import com.pawsitive.usergroup.repository.MemberDogMatrixRepository;
-import com.pawsitive.usergroup.service.MemberDogLikeService;
+import com.pawsitive.usergroup.repository.UserRepository;
 import com.pawsitive.usergroup.service.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.pawsitive.usergroup.service.UserVisitedService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,6 +39,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Transactional(readOnly = true)
 @Slf4j
 public class DogServiceImpl implements DogService {
+    private final UserRepository userRepository;
     private final MemberDogMatrixRepository memberDogMatrixRepository;
 
     private final MemberDogLikeRepository memberDogLikeRepository;
@@ -46,6 +47,7 @@ public class DogServiceImpl implements DogService {
 
     private final UserService userService;
     private final DogFileService dogFileService;
+    private final UserVisitedService userVisitedService;
 
     private final S3BucketUtil s3BucketUtil;
 
@@ -74,7 +76,7 @@ public class DogServiceImpl implements DogService {
 
     @Override
     @Transactional
-    public DogDetailRes getDogByDogNo(int dogNo, Integer userNo) {
+    public DogDetailRes getDogByDogNo(int dogNo, Authentication authentication) {
         // 엔티티 객체 가져오기
         Dog dog = dogRepository.findByDogNo(dogNo).orElseThrow(DogNotFoundException::new);
 
@@ -87,8 +89,14 @@ public class DogServiceImpl implements DogService {
 
         DogDetailRes res = DogTransfer.entityToDto(dog);
 
-        if (!Objects.isNull(memberDogLikeRepository.getUserDogLiked(dogNo, userNo))) {
-            res.setUserLiked(true);
+        if (!Objects.isNull(authentication)) {
+            UserDetails user = (UserDetails) authentication.getPrincipal();
+            String email = user.getUsername();
+            Integer userNo = userRepository.findUserNoByEmail(email);
+
+            if (!Objects.isNull(memberDogLikeRepository.getUserDogLiked(dogNo, userNo))) {
+                res.setUserLiked(true);
+            }
         }
 
         // Res 객체 만들기
@@ -116,7 +124,7 @@ public class DogServiceImpl implements DogService {
 
     @Override
     public Page<DogListRes> getDogList(Pageable pageable, List<String> kind, Integer sex,
-                                       Integer neutralized, Integer userNo) {
+                                       Integer neutralized, Authentication authentication) {
 
         //        if (Objects.isNull(kind)) {
 //            dogList = dogRepository.getDogList(pageable, , , );
@@ -125,7 +133,14 @@ public class DogServiceImpl implements DogService {
 //        }
         Page<DogListRes> dogList = dogRepository.getDogList(pageable, kind, sex, neutralized);
         setThumbnailImage(dogList);
-        setLiked(dogList, memberDogLikeRepository.getLikedDogList(userNo));
+
+        if (!Objects.isNull(authentication)) {
+            UserDetails user = (UserDetails) authentication.getPrincipal();
+            String email = user.getUsername();
+            Integer userNo = userRepository.findUserNoByEmail(email);
+
+            setLiked(dogList, memberDogLikeRepository.getLikedDogList(userNo));
+        }
 
         return dogList;
     }
@@ -140,10 +155,6 @@ public class DogServiceImpl implements DogService {
         }
         setThumbnailImage(dogList);
         return dogList;
-    }
-
-    private void setLiked(DogDetailRes res, List<Integer> likedList) {
-
     }
 
     private void setLiked(Iterable<DogListRes> dogList, List<Integer> likedList) {

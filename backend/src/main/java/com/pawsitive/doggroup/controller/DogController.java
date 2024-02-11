@@ -65,9 +65,9 @@ public class DogController {
             @ApiResponse(responseCode = "200", description = "유기견 고유 번호에 해당하는 강아지 상세 조회 성공"),
             @ApiResponse(responseCode = "400", description = "유기견 고유 번호에 해당하는 강아지가 없음")
         })
-    public ResponseEntity<DogDetailRes> getDogByDogNo(@PathVariable int dogNo, @RequestParam(required = false) Integer userNo) {
+    public ResponseEntity<DogDetailRes> getDogByDogNo(@PathVariable int dogNo, Authentication authentication) {
 
-        return ResponseEntity.status(OK).body(dogService.getDogByDogNo(dogNo, userNo));
+        return ResponseEntity.status(OK).body(dogService.getDogByDogNo(dogNo, authentication));
     }
 
     @GetMapping("/recommendation")
@@ -96,9 +96,8 @@ public class DogController {
                                                                Integer sex,
                                                                @RequestParam(required = false)
                                                                Integer neutralized,
-                                                               @RequestParam(required = false)
-                                                               Integer userNo) {
-        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind, sex, neutralized, userNo);
+                                                               Authentication authentication) {
+        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind, sex, neutralized, authentication);
 
         return ResponseEntity.status(OK).body(new PageResponse<>(dogPage));
 

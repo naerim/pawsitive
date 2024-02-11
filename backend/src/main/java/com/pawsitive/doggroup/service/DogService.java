@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -32,7 +33,7 @@ public interface DogService {
      * @param dogNo 조회할 유기견 고유 번호
      * @return 유기견 고유 번호로 조회한 유기견 상세 정보
      */
-    DogDetailRes getDogByDogNo(int dogNo, Integer userNo);
+    DogDetailRes getDogByDogNo(int dogNo, Authentication authentication);
 
     /**
      * 유기견 엔터티를 유기견 고유 번호로 상세조회하는 메서드입니다.
@@ -58,7 +59,7 @@ public interface DogService {
      * @return 해당 페이지 유기견 리스트
      */
     Page<DogListRes> getDogList(Pageable pageable, List<String> kind, Integer sex,
-                                Integer neutralized, Integer userNo);
+                                Integer neutralized, Authentication authentication);
 
     /**
      * 보호소 기준 유기견 공고 목록을 조회하는 메서드입니다.
