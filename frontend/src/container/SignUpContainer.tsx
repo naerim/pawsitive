@@ -102,11 +102,15 @@ const SignUpContainer = () => {
 
   return (
     <s.Container>
-      <s.BackButtonContainer>
-        <button type="button" onClick={handlePrevStep}>
-          &lt;
-        </button>
-      </s.BackButtonContainer>
+      <s.Top>
+        <s.BackButtonContainer>
+          <img
+            src="/icon/icon_gray_arrow_left.png"
+            alt=""
+            onClick={handlePrevStep}
+          />
+        </s.BackButtonContainer>
+      </s.Top>
       <s.InputContainer>
         {renderStepComponent()}
         <s.ButtonContainer>

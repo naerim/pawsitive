@@ -4,12 +4,21 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 90%;
-  padding: 15px;
-  margin: 40px auto;
+  margin: 0 auto;
+`
+
+export const Top = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: 100px;
 `
 
 export const BackButtonContainer = styled.div`
-  font-size: 20px;
+  img {
+    width: 10px;
+    cursor: pointer;
+  }
 `
 
 export const InputContainer = styled.div`
@@ -35,6 +44,11 @@ export const Button = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
 
   &:disabled {
     background-color: #bebebe;
