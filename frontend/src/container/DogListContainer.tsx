@@ -4,6 +4,7 @@ import { DogListType } from '@src/types/dogType'
 import BasicDogInfoCard from '@src/common/BasicDogInfoCard'
 import { useQuery } from '@tanstack/react-query'
 import { fetchBasicDogList } from '@src/apis/dog'
+import Filter from '@src/components/DogList/Filter'
 import { useAtom } from 'jotai'
 import { dogListParamsAtom } from '@src/stores/atoms/dog'
 
@@ -11,6 +12,7 @@ const DogListContainer = () => {
   const [basicDogListParams, setBasicDogListParams] = useAtom(dogListParamsAtom)
   const [basicDogList, setBasicDogList] = useState<DogListType[]>([])
   const [totalPageCnt, setTotalPageCnt] = useState(7)
+  const [isFilter, setIsFilter] = useState(false)
 
   const { data, isLoading, isFetching } = useQuery<DogListType[]>({
     queryKey: ['basicDogList'],
@@ -58,9 +60,19 @@ const DogListContainer = () => {
     }
   }, [basicDogListParams, totalPageCnt])
 
+  const showFilterHandle = () => {
+    setIsFilter(!isFilter)
+  }
+
   if (isLoading && basicDogList.length === 0) {
     return (
       <d.Container>
+        <div>
+          <button type="button" onClick={showFilterHandle}>
+            필터링
+          </button>
+          {isFilter && <Filter />}
+        </div>
         {Array.from({ length: 2 }, (_, index) => (
           <d.FakeDiv key={index} />
         ))}
@@ -70,6 +82,12 @@ const DogListContainer = () => {
 
   return (
     <d.Container>
+      <div>
+        <button type="button" onClick={showFilterHandle}>
+          필터링
+        </button>
+        {isFilter && <Filter />}
+      </div>
       {basicDogList.map(basicDogInfo => (
         <BasicDogInfoCard key={basicDogInfo.dogNo} dogInfo={basicDogInfo} />
       ))}
