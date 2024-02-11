@@ -11,6 +11,7 @@ import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.service.DogService;
 import com.pawsitive.usergroup.service.UserService;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
@@ -38,12 +39,13 @@ public class AdoptDogServiceImpl implements AdoptDogService {
         AdoptionDogRes adoptionDogRes =
             adoptDogRepository.getAdoptedDogByUserNo(userNo).orElseThrow(DogNotFoundException::new);
 
-        setAdoptedDays(adoptionDogRes);
+        adoptionDogRes.setAdoptedDays(getAdoptedDays(adoptionDogRes.getCreatedAt()));
 
         return adoptionDogRes;
     }
 
     @Override
+    @Transactional
     public AdoptionDogRes createAdoptDog(AdoptionReq adoptionReq) {
         AdoptDog adoptDog = new AdoptDog();
         Dog dog = dogService.getDogEntityByDogNo(adoptionReq.getDogNo());
@@ -55,12 +57,13 @@ public class AdoptDogServiceImpl implements AdoptDogService {
 
         AdoptDog saved = adoptDogRepository.save(adoptDog);
         AdoptionDogRes adoptionDogRes = AdoptDogTransfer.entityToDto(saved);
-        setAdoptedDays(adoptionDogRes);
+        adoptionDogRes.setAdoptedDays(getAdoptedDays(adoptDog.getCreatedAt()));
 
         return adoptionDogRes;
     }
 
     @Override
+    @Transactional
     public AdoptionDogRes updateInformation(int adoptDogNo, UpdateAdoptDogRes updateAdoptDogRes) {
         AdoptDog adoptDogEntity = getAdoptDogEntity(adoptDogNo);
 
@@ -76,7 +79,7 @@ public class AdoptDogServiceImpl implements AdoptDogService {
 
         AdoptDog updatedDog = adoptDogRepository.save(adoptDogEntity);
         AdoptionDogRes adoptionDogRes = AdoptDogTransfer.entityToDto(updatedDog);
-        setAdoptedDays(adoptionDogRes);
+        adoptionDogRes.setAdoptedDays(getAdoptedDays(adoptDogEntity.getCreatedAt()));
 
         return adoptionDogRes;
     }
@@ -89,13 +92,13 @@ public class AdoptDogServiceImpl implements AdoptDogService {
 
 
     /**
-     * 오늘 날짜로, 몇일 지났는지 계산해서 AdoptedDays에 넣어주기
+     * 입양일자로부터 오늘까지 몇일 지났는지 계산한 값을 반환
      *
-     * @param adoptionDogRes
+     * @param createdAt 입양일자
      */
-    private static void setAdoptedDays(AdoptionDogRes adoptionDogRes) {
-        adoptionDogRes.setAdoptedDays(
-            (int) ChronoUnit.DAYS.between(LocalDateTime.now(), adoptionDogRes.getCreatedAt()));
+    private int getAdoptedDays(LocalDateTime createdAt) {
+        return (int) ChronoUnit.DAYS.between(createdAt.toLocalDate(), LocalDate.now());
+
     }
 
 }

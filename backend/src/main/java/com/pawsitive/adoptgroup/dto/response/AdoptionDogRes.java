@@ -43,4 +43,9 @@ public class AdoptionDogRes {
     @Schema(description = "입양한 날로부터의 일 수")
     private int adoptedDays;
 
+    private String sex;
+
+    private boolean isNeutralized;
+
+
 }
