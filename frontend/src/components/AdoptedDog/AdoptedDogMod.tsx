@@ -5,11 +5,12 @@ import { useMutation } from '@tanstack/react-query'
 import { fetchAdoptedDogMod } from '@src/apis/adoptDog'
 import { AdoptedDog, ModData } from '@src/types/components/AdoptedDogType'
 import React, { useState } from 'react'
+import { updateUserStage } from '@src/apis/user'
 
 const AdoptedDogMod = (props: { data: AdoptedDog }) => {
   const { data } = props
   const navigate = useNavigate()
-  const [, setUser] = useAtom(userAtom)
+  const [user, setUser] = useAtom(userAtom)
   const [dataForm, setDataForm] = useState<ModData>({
     fetchData: {
       name: data.name,
@@ -18,9 +19,22 @@ const AdoptedDogMod = (props: { data: AdoptedDog }) => {
     },
     adoptDogNo: data.adoptDogNo,
   })
-  const { mutate } = useMutation({
+  const { mutate: adoptedDogMod } = useMutation({
     mutationKey: ['adoptedDogMod'],
     mutationFn: (modData: ModData) => fetchAdoptedDogMod(modData),
+    onSuccess: () => {
+      navigate('/')
+    },
+  })
+
+  const { mutate: updateStage } = useMutation({
+    mutationKey: ['updateUserStage'],
+    mutationFn: updateUserStage,
+    onSuccess: () => {
+      setUser(user => ({ ...user, stage: 4 }))
+      navigate('/')
+    },
+    onError: error => console.error('user stage update 3-4 fail : ', error),
   })
 
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,13 +70,13 @@ const AdoptedDogMod = (props: { data: AdoptedDog }) => {
     }))
   }
 
-  const changeUserStage = (num: number) =>
-    setUser(user => ({ ...user, stage: num }))
-
   const HandleUserStage = () => {
-    mutate(dataForm)
-    changeUserStage(4)
-    navigate('/')
+    adoptedDogMod(dataForm)
+    updateStage({
+      userNo: user.userNo,
+      field: 'stage',
+      value: 4,
+    })
   }
   return (
     <div>
