@@ -17,7 +17,7 @@ const ChattingContainer = () => {
 
   return (
     <c.Container>
-      <ChattingListHeader />
+      <ChattingListHeader title="채팅" />
       <c.Wrap>
         {!isLoading &&
           data &&
