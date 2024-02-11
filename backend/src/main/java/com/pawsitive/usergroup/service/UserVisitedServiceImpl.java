@@ -27,6 +27,7 @@ public class UserVisitedServiceImpl implements UserVisitedService {
     private final String USER_VISITED_LIST_PREFIX = "Visited ";
 
     @Scheduled(cron = "0 0 0 * * *")
+    @Transactional
     @Override
     public void removeTodayVisited() {
         List<Object> todayVisitedUserList = redisService.getList(TODAY_VISITED_USER_KEY);
@@ -38,6 +39,11 @@ public class UserVisitedServiceImpl implements UserVisitedService {
         }
     }
 
+//    @Override
+//    @Transactional
+//    public boolean manageVisited(String email, )
+
+    @Transactional
     @Override
     public void updateMatrix(Dog dog) {
         //
