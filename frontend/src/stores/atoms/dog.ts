@@ -38,7 +38,7 @@ export const createDogInfoAtom = atom<CreateDogInfoType>({
 
 export const dogListParamsAtom = atom<BasicDogListParamsType>({
   page: 1,
-  size: 10,
+  size: 100,
   sort: ['string'],
   kind: [
     '말티즈',
