@@ -22,7 +22,7 @@ const AboutSameDogChatListContainer = () => {
 
   return (
     <c.Container>
-      <h1>현재 진행중인 채팅방</h1>
+      <ChattingListHeader title="현재 진행중인 채팅방" />
       <c.Wrap>
         {!isLoading &&
           sameDogChatList &&
