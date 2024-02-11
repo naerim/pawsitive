@@ -92,7 +92,7 @@ public class ChatRoomController {
     @PostMapping("/sessions/{sessionId}/connections")
     @Operation(summary = "화상 채팅방 토큰 얻기", description = "sessionId에 대한 화상 채팅방 토큰을 반환합니다.",
         responses = {
-            @ApiResponse(responseCode = "200", description = "화상 채팅방 토큰 조회 성공"),
+            @ApiResponse(responseCode = "200", description = "화상 채팅방 토 조회 성공"),
         }
     )
     public ResponseEntity<ChatTokenRes> createConnection(

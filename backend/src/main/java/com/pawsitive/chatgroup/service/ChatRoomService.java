@@ -1,5 +1,6 @@
 package com.pawsitive.chatgroup.service;
 
+import com.pawsitive.adoptgroup.dto.request.AppointmentReq;
 import com.pawsitive.chatgroup.dto.request.ChatRoomCreateReq;
 import com.pawsitive.chatgroup.dto.response.ChatRes;
 import com.pawsitive.chatgroup.dto.response.ChatRoomListRes;
@@ -7,7 +8,6 @@ import com.pawsitive.chatgroup.dto.response.ChatRoomRes;
 import com.pawsitive.chatgroup.dto.response.ChatSessionRes;
 import com.pawsitive.chatgroup.dto.response.ChatTokenRes;
 import com.pawsitive.chatgroup.entity.ChatRoom;
-import com.pawsitive.surveygroup.dto.request.AppointmentReq;
 import io.openvidu.java.client.OpenViduHttpException;
 import io.openvidu.java.client.OpenViduJavaClientException;
 import java.util.List;

@@ -8,9 +8,11 @@ import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ChatServiceImpl implements ChatService {
     private final ChatRepository chatRepository;
     private final ChatRoomService chatRoomService;
@@ -22,6 +24,7 @@ public class ChatServiceImpl implements ChatService {
      * @return 생성한 채팅방
      */
     @Override
+    @Transactional
     public ChatRes createChat(ChatCreateReq chatReq) {
         User user = userService.getUserByUserNo(chatReq.getSenderNo());
         Chat chat = new Chat();

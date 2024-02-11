@@ -1,6 +1,7 @@
 package com.pawsitive.chatgroup.service;
 
 
+import com.pawsitive.adoptgroup.dto.request.AppointmentReq;
 import com.pawsitive.auth.Role;
 import com.pawsitive.chatgroup.dto.request.ChatRoomCreateReq;
 import com.pawsitive.chatgroup.dto.response.ChatRes;
@@ -17,7 +18,6 @@ import com.pawsitive.common.dto.response.BaseResponseMessage;
 import com.pawsitive.common.exception.InvalidRequestDataException;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.service.DogService;
-import com.pawsitive.surveygroup.dto.request.AppointmentReq;
 import com.pawsitive.usergroup.service.UserService;
 import io.openvidu.java.client.Connection;
 import io.openvidu.java.client.ConnectionProperties;
@@ -29,6 +29,7 @@ import io.openvidu.java.client.SessionProperties;
 import jakarta.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +94,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         room.setName(dog.getUser().getName() + "보호소 - " + dog.getName());
         room.setDogNo(dogNo);
         room.setUserNo(userNo);
+        room.setIsPromiseAccepted(null);
+        room.setPromiseCreatedAt(null);
         ChatRoom chatRoom = chatRoomRepository.save(room);
 
         return ChatGroupTransfer.entityToDto(chatRoom);
@@ -160,15 +163,22 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     @Override
+    @Transactional
     public String createAppointment(AppointmentReq appointmentReq) {
         ChatRoom chatRoom = getChatRoomEntityByChatRoomNo(appointmentReq.getChatRoomNo());
-        chatRoom.setPromiseCreatedAt(LocalDateTime.now());
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalDateTime createdAt =
+            LocalDateTime.of(LocalDate.parse(appointmentReq.getDate(), dateFormatter),
+                LocalTime.parse(appointmentReq.getTime(), timeFormatter));
+        chatRoom.setPromiseCreatedAt(createdAt);
         chatRoom.setIsPromiseAccepted(false);
         chatRoomRepository.save(chatRoom);
         return BaseResponseMessage.SUCCESS.getMessage();
     }
 
     @Override
+    @Transactional
     public String acceptAppointment(AppointmentReq appointmentReq) {
         ChatRoom chatRoom = getChatRoomEntityByChatRoomNo(appointmentReq.getChatRoomNo());
         chatRoom.setIsPromiseAccepted(true);

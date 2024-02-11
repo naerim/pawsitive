@@ -2,12 +2,12 @@ package com.pawsitive.adoptgroup.controller;
 
 import static org.springframework.http.HttpStatus.OK;
 
+import com.pawsitive.adoptgroup.dto.request.AppointmentReq;
 import com.pawsitive.adoptgroup.dto.request.UpdateAdoptDogRes;
 import com.pawsitive.adoptgroup.dto.response.AdoptionDogRes;
 import com.pawsitive.adoptgroup.service.AdoptDogService;
 import com.pawsitive.chatgroup.service.ChatRoomService;
 import com.pawsitive.common.dto.BaseResponseBody;
-import com.pawsitive.surveygroup.dto.request.AppointmentReq;
 import com.pawsitive.usergroup.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -68,7 +68,7 @@ public class MemberAdoptionController {
     }
 
     @PutMapping("/{adoptDogNo}")
-    @Operation(summary = "유기견 정보 수정", description = "전달받은 유기견 입양 번호로 유기견 정보를 수정한다",
+    @Operation(summary = "반려견 정보 수정", description = "전달받은 유기견 입양 번호로 반려견 정보를 수정한다",
         responses = {
             @ApiResponse(responseCode = "200", description = "반려견 정보 수정 여부를 정상 반환한다.")
         })

@@ -36,7 +36,8 @@ public class ChatRoomRepositoryImpl extends QuerydslRepositorySupport
                     ExpressionUtils.as(from(qUser)
                         .select(qUser.image)
                         .where(qUser.userNo.eq(userNo)), "memberProfileImage"),
-                    qDog.user.image.as("shelterProfileImage")))
+                    qDog.user.image.as("shelterProfileImage"),
+                    qChatRoom.isPromiseAccepted, qChatRoom.promiseCreatedAt))
                 .where(qChatRoom.userNo.eq(userNo).or(qDog.user.userNo.eq(userNo)))
                 .fetch();
     }
@@ -53,7 +54,8 @@ public class ChatRoomRepositoryImpl extends QuerydslRepositorySupport
                         .where(qUser.userNo.eq(qChatRoom.userNo))
                         .select(qUser.image)
                         .where(qUser.userNo.eq(qDog.user.userNo)), "memberProfileImage"),
-                    qDog.user.image.as("shelterProfileImage")))
+                    qDog.user.image.as("shelterProfileImage"), qChatRoom.isPromiseAccepted,
+                    qChatRoom.promiseCreatedAt))
                 .where(qDog.dogNo.eq(dogNo))
                 .orderBy(qChatRoom.createdAt.desc())
                 .fetch();
