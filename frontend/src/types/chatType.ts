@@ -35,3 +35,7 @@ export type ChattingInputSectionType = {
   message: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
+
+export type ChattingListHeaderPropsType = {
+  title: string
+}
