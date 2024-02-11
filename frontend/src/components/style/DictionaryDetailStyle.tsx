@@ -30,7 +30,7 @@ export const ImageContainer = styled.div`
 `
 
 export const Container = styled.div`
-  width: 95%;
+  width: 90%;
   margin: 30px auto;
   padding: 20px;
 `
@@ -66,6 +66,7 @@ export const Desc = styled.div`
   flex-direction: column;
   gap: 10px;
   margin-bottom: 15px;
+  line-height: 1.2;
 `
 
 export const Remarks = styled.div`
@@ -73,6 +74,7 @@ export const Remarks = styled.div`
   flex-direction: column;
   gap: 10px;
   margin-bottom: 15px;
+  line-height: 1.2;
 
   p {
     font-weight: 550;
@@ -85,6 +87,7 @@ export const Symptom = styled.div`
   flex-direction: column;
   gap: 10px;
   margin-bottom: 15px;
+  line-height: 1.2;
 
   p {
     font-weight: 550;
@@ -97,6 +100,7 @@ export const Prevent = styled.div`
   flex-direction: column;
   gap: 10px;
   margin-bottom: 15px;
+  line-height: 1.2;
 
   p {
     font-weight: 550;

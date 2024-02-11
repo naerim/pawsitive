@@ -8,7 +8,3 @@ export const Wrap = styled.div`
   display: flex;
   flex-direction: column;
 `
-
-export const Box = styled.div`
-  height: 40px;
-`

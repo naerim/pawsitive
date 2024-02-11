@@ -31,6 +31,7 @@ const FindSimilarDog = () => {
   const [resultData, setResultData] = useState<
     { label: string; probability: number }[]
   >([])
+  const [check, setCheck] = useState<boolean>(false)
 
   const navigate = useNavigate()
   const handleNextButtonClick = () => {
@@ -71,6 +72,11 @@ const FindSimilarDog = () => {
     setResultData(updatedResultData)
   }
 
+  const onClickCamera = () => {
+    stop()
+    setCheck(true)
+  }
+
   async function loop() {
     if (isPredictingRef.current) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -90,7 +96,7 @@ const FindSimilarDog = () => {
     maxPredictions = model.getTotalClasses()
 
     const flip = true
-    webcam = new tmImage.Webcam(200, 200, flip)
+    webcam = new tmImage.Webcam(260, 260, flip)
     await webcam.setup()
     await webcam.play()
     isPredictingRef.current = true
@@ -145,32 +151,46 @@ const FindSimilarDog = () => {
     },
   }
 
+  const goBack = () => navigate('/mypage')
+
   return (
     <f.Container>
+      <f.BackButtonWrap>
+        <img src="/icon/icon_gray_arrow_left.png" alt="" onClick={goBack} />
+      </f.BackButtonWrap>
       {started ? (
-        <>
-          <f.WebcamContainer id="webcam-container" />
-          <f.BarContainer>
-            <Bar data={data} options={options} />
-          </f.BarContainer>
-          <f.LabelContainer id="label-container" />
+        <f.DoneWrap>
+          <f.FixWrap>
+            <f.WebcamContainer id="webcam-container" />
+            <f.BarContainer>
+              <Bar data={data} options={options} />
+            </f.BarContainer>
+            <f.LabelContainer id="label-container" />
+          </f.FixWrap>
+
           <f.ActionButtons>
-            <f.CaptureButton onClick={stop}>촬영하기</f.CaptureButton>
-            <f.NextButton onClick={handleNextButtonClick}>
+            <f.CaptureButton onClick={onClickCamera}>촬영하기</f.CaptureButton>
+            <f.NextButton onClick={handleNextButtonClick} disabled={!check}>
               결과화면보기
             </f.NextButton>
           </f.ActionButtons>
-        </>
+          <f.SmallDesc>*촬영하기 버튼을 먼저 눌러주세요!</f.SmallDesc>
+        </f.DoneWrap>
       ) : (
-        <f.Button
-          type="button"
-          onClick={() => {
-            setStarted(true)
-            init()
-          }}
-        >
-          시작하기
-        </f.Button>
+        <f.PrevWrap>
+          <f.PrevImg src="/img/img_main_house.png" alt="" />
+          <f.PrevTitle>나와 가장 닮은 강아지는?</f.PrevTitle>
+          <f.PrevDesc>얼굴로 보는 인공지능 강아지상 테스트</f.PrevDesc>
+          <f.StartButton
+            type="button"
+            onClick={() => {
+              setStarted(true)
+              init()
+            }}
+          >
+            시작하기
+          </f.StartButton>
+        </f.PrevWrap>
       )}
     </f.Container>
   )

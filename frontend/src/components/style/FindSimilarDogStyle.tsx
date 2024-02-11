@@ -4,16 +4,25 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
-
-export const Button = styled.button`
-  margin-bottom: 10px;
-  padding: 10px;
-  font-size: 16px;
+  width: 90%;
+  margin: 0 auto;
+  height: 100vh;
 `
 
 export const WebcamContainer = styled.div`
-  margin-bottom: 100px;
+  margin-top: 40px;
+  height: 340px;
+
+  canvas {
+    border-radius: 100%;
+  }
+`
+
+export const FixWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 600px;
 `
 
 export const BarContainer = styled.div`
@@ -56,4 +65,65 @@ export const NextButton = styled.button`
   font-size: 17px;
   font-weight: normal;
   color: #ffffff;
+
+  &:disabled {
+    background-color: #bebebe;
+  }
+`
+
+export const DoneWrap = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+`
+
+export const SmallDesc = styled.div`
+  color: #a9a9a9;
+  margin-top: 10px;
+`
+
+export const BackButtonWrap = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 40px;
+
+  img {
+    width: 10px;
+  }
+`
+
+export const PrevWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: 100vh;
+  align-items: center;
+`
+
+export const PrevImg = styled.img`
+  width: 180px;
+  height: 180px;
+  margin-top: 50%;
+`
+
+export const PrevTitle = styled.div`
+  font-weight: 500;
+  font-size: 1.3em;
+  margin-top: 30px;
+`
+
+export const PrevDesc = styled.div`
+  color: #848484;
+  margin-top: 20px;
+  font-size: 1em;
+`
+
+export const StartButton = styled.button`
+  height: 40px;
+  color: #fff;
+  margin-top: auto;
+  margin-bottom: 40px;
+  width: 100%;
+  background-color: #ff9232;
 `
