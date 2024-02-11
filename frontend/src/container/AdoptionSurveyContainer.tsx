@@ -25,7 +25,7 @@ import SurveyQuestionNo19 from '@src/components/AdoptionSurvey/SurveyQuestionNo1
 import SurveyQuestionSection1 from '@src/components/AdoptionSurvey/SurveyQuestionSection1'
 import SurveyQuestionSection2 from '@src/components/AdoptionSurvey/SurveyQuestionSection2'
 import { useEffect } from 'react'
-import SurveyProgress from '@src/components/AdoptionSurvey/SurveyProgress.tsx'
+import SurveyProgress from '@src/components/AdoptionSurvey/SurveyProgress'
 
 const AdoptionSurveyContainer = () => {
   const [surveyStep, setSurveyStep] = useAtom(surveyStepAtom)
@@ -38,7 +38,7 @@ const AdoptionSurveyContainer = () => {
       ...prevData,
       user_no: user.userNo,
     }))
-  }, [])
+  }, [setSurveyData, user.userNo])
 
   const handlePrevPage = () => {
     navigate(-1)
@@ -54,7 +54,7 @@ const AdoptionSurveyContainer = () => {
 
   const goDone = () => {
     // console.log(surveyData)
-    setUser(user => ({ ...user, stage: 2 }))
+    setUser(currentUser => ({ ...currentUser, stage: 2 }))
     console.log(surveyData)
     navigate('/mypage/survey/done')
   }
