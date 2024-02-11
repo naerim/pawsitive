@@ -3,38 +3,48 @@ import { userAtom } from '@src/stores/atoms/user'
 import { useAtomValue } from 'jotai'
 import { useQuery } from '@tanstack/react-query'
 import { fetchAdoptedDogDetail } from '@src/apis/adoptDog'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const AdoptedDogDetail = () => {
   const user = useAtomValue(userAtom)
   const navigate = useNavigate()
-  const { data, isLoading } = useQuery({
+  const [message, setMessage] = useState('')
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['adoptedDogDetail'],
     queryFn: () => fetchAdoptedDogDetail(user.userNo),
   })
-  const [isFlipped, setIsFlipped] = useState(false)
 
-  const handleCardClick = () => {
-    setIsFlipped(!isFlipped)
-  }
+  useEffect(() => {
+    refetch().then(r => r)
+  }, [data, refetch])
+
   const goToMod = () => {
     navigate('/adopted-dog/mod')
   }
-
-  console.log(data)
+  useEffect(() => {
+    if (data) {
+      if (data.name.length > 5) {
+        setMessage('와')
+      } else if (data.name.length > 3) {
+        setMessage('와 함께')
+      } else {
+        setMessage('와 함께한지')
+      }
+    }
+  }, [data])
 
   return (
     <a.Flip>
       <a.Container>
-        {!isLoading && (
-          <a.Card onClick={handleCardClick}>
+        {!isLoading && data && (
+          <a.Card>
             <a.FrontCard>
               <a.DogImage src="img/image_sample_dog.png" />
               <a.TextContainer>
                 <a.TogetherContainer>
                   <a.DogName>{data.name}</a.DogName>
-                  <a.Together>와 함께한지</a.Together>
+                  <a.Together>{message}</a.Together>
                 </a.TogetherContainer>
                 <a.Day> {data.adoptedDays}일</a.Day>
               </a.TextContainer>
@@ -42,10 +52,10 @@ const AdoptedDogDetail = () => {
 
             <a.BackCard>
               <a.Text>이름: {data.name}</a.Text>
-              <a.Text>성별: {data.name}</a.Text>
-              <a.Text>중성화: {data.name}</a.Text>
-              <a.Text>나이: {data.age}</a.Text>
-              <a.Text>무게: {data.weight}</a.Text>
+              <a.Text>성별: {data.sex === 'F' ? '암컷' : '수컷'}</a.Text>
+              <a.Text>나이: {data.age}살</a.Text>
+              <a.Text>무게: {data.weight}kg</a.Text>
+              <a.Text>중성화: {data.neutralized ? '했음' : '안했음'}</a.Text>
               <a.ModButton type="button" onClick={goToMod}>
                 수정하기
               </a.ModButton>
