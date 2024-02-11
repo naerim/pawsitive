@@ -17,9 +17,13 @@ const DogListContainer = () => {
   const { isLoading, isFetching, refetch } = useQuery<DogListType[]>({
     queryKey: ['basicDogList'],
     queryFn: async () => {
-      const result = await fetchBasicDogList(basicDogListParams)
-      // setTotalPageCnt(result.totalPages)
-      return result.content
+      if (basicDogListParams) {
+        const result = await fetchBasicDogList(basicDogListParams)
+        setBasicDogList(result.content || [])
+        // setTotalPageCnt(result.totalPages)
+        return result.content || []
+      }
+      return []
     },
   })
 
