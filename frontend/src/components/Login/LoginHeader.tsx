@@ -8,9 +8,10 @@ const LoginHeader = () => {
   return (
     <c.Header>
       <c.ReturnButton type="button" onClick={onReturn}>
-        &lt;
+        <img src="/icon/icon_gray_arrow_left.png" alt="" />
       </c.ReturnButton>
-      <c.H1>로그인</c.H1>
+      <c.Title>로그인</c.Title>
+      <div />
     </c.Header>
   )
 }
