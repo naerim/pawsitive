@@ -1,4 +1,4 @@
-import * as a from '@src/components/style/AdoptInfoStyle'
+import * as a from '@src/components/style/AdoptedDogDetailStyle'
 import { userAtom } from '@src/stores/atoms/user'
 import { useAtomValue } from 'jotai'
 import { useQuery } from '@tanstack/react-query'

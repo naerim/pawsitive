@@ -1,8 +1,11 @@
 import styled from 'styled-components'
 
-export const Flip = styled.div``
+export const Flip = styled.div`
+  width: 56%;
+  margin-right: 13px;
+`
 export const Container = styled.div`
-  width: 188px;
+  width: 100%;
   height: 225px;
   display: flex;
   flex-direction: column;
@@ -25,7 +28,7 @@ export const Card = styled.div`
   }
 `
 export const FrontCard = styled.div`
-  width: 188px;
+  width: 100%;
   height: 225px;
   position: absolute;
   padding: 11px;
@@ -35,13 +38,12 @@ export const FrontCard = styled.div`
   backface-visibility: hidden;
 `
 export const BackCard = styled.div`
-  width: 188px;
+  width: 100%;
   height: 225px;
-  margin: 0 0 0 5px;
+  margin: 2px 2px 2px 7px;
   // 앞, 뒤 카드 같은 위치에 둠
   position: absolute;
   padding: 11px;
-  margin: 2px;
   border-radius: 9px;
   background: #ff9232;
   //  앞면에 반전된 뒷 면의 글들을 투영시키지 않기 위해
@@ -51,7 +53,7 @@ export const BackCard = styled.div`
 `
 
 export const DogImage = styled.img`
-  width: 166px;
+  width: 100%;
   height: 166px;
   border-radius: 7px;
 `
