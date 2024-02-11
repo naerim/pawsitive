@@ -16,6 +16,12 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Redis 관련 값 설정 Service 클래스입니다.
+ *
+ * @author 천세진
+ * @since 1.0
+ */
 @Slf4j
 @Component
 @Transactional(readOnly = true)

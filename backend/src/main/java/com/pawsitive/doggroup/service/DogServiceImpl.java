@@ -1,5 +1,6 @@
 package com.pawsitive.doggroup.service;
 
+
 import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.common.util.S3BucketUtil;
 import com.pawsitive.doggroup.dogenum.DogStatusEnum;
@@ -15,11 +16,11 @@ import com.pawsitive.usergroup.repository.MemberDogLikeRepository;
 import com.pawsitive.usergroup.repository.MemberDogMatrixRepository;
 import com.pawsitive.usergroup.repository.UserRepository;
 import com.pawsitive.usergroup.service.UserService;
+import com.pawsitive.usergroup.service.MemberDogVisitService;
 
 import java.util.List;
 import java.util.Objects;
 
-import com.pawsitive.usergroup.service.UserVisitedService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -30,24 +31,26 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+
 /**
+ * DogService 구현 클래스입니다.
+ *
  * @author 이하늬
  * @since 1.0
  */
-@Service
+@Service("dogService")
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Slf4j
 public class DogServiceImpl implements DogService {
     private final UserRepository userRepository;
-    private final MemberDogMatrixRepository memberDogMatrixRepository;
 
     private final MemberDogLikeRepository memberDogLikeRepository;
     private final DogRepository dogRepository;
 
     private final UserService userService;
     private final DogFileService dogFileService;
-    private final UserVisitedService userVisitedService;
+    private final MemberDogVisitService memberDogVisitService;
 
     private final S3BucketUtil s3BucketUtil;
 
@@ -80,6 +83,21 @@ public class DogServiceImpl implements DogService {
         // 엔티티 객체 가져오기
         Dog dog = dogRepository.findByDogNo(dogNo).orElseThrow(DogNotFoundException::new);
 
+        String email = null;
+        Integer userNo = null;
+
+        // Authentication에서 권한 확인
+        if (!Objects.isNull(authentication)) {
+            UserDetails user = (UserDetails) authentication.getPrincipal();
+            email = user.getUsername();
+            userNo = userRepository.findUserNoByEmail(email);
+        }
+
+        // 로그인 된 유저일 때 조회수 테이블 처리
+        if (!Objects.isNull(email)) {
+            memberDogVisitService.processVisit(dogNo, userNo);
+        }
+
         // 조회수 증가
         int hit = dog.getHit() + 1;
         dog.setHit(hit);
@@ -89,14 +107,10 @@ public class DogServiceImpl implements DogService {
 
         DogDetailRes res = DogTransfer.entityToDto(dog);
 
-        if (!Objects.isNull(authentication)) {
-            UserDetails user = (UserDetails) authentication.getPrincipal();
-            String email = user.getUsername();
-            Integer userNo = userRepository.findUserNoByEmail(email);
-
-            if (!Objects.isNull(memberDogLikeRepository.getUserDogLiked(dogNo, userNo))) {
-                res.setUserLiked(true);
-            }
+        // 좋아요 여부 갱신
+        if (!Objects.isNull(userNo)
+            && !Objects.isNull(memberDogLikeRepository.getUserDogLiked(dogNo, userNo))) {
+            res.setUserLiked(true);
         }
 
         // Res 객체 만들기
@@ -109,16 +123,13 @@ public class DogServiceImpl implements DogService {
             .orElseThrow(DogNotFoundException::new);
     }
 
-    // TODO [Yi] 추천로직 작성 (추천기준도 정해야댐)
     @Override
     public List<DogListRes> getRecommendationDogList(Integer num) {
-        List<DogListRes> dogList;
-        if (Objects.isNull(num)) {
-            dogList = dogRepository.getRecommendationDogList();
-        } else {
-            dogList = dogRepository.getRecommendationDogList(num);
-        }
-        setThumbnailImage(dogList);
+        // 전체 dog List 가져오기
+        List<DogListRes> dogList = dogRepository.getRecommendationDogList();
+
+        // TODO : 행렬 만들기, MSD 계산하기, 최소값 2개 찾기
+//        setThumbnailImage(dogList);
         return dogList;
     }
 

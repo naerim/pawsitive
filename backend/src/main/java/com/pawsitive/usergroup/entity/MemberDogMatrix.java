@@ -55,4 +55,7 @@ public class MemberDogMatrix {
     @Column(name = "aw", insertable = false)
     private double aw;
 
+    @Column(name = "fc", insertable = false)
+    private double fc;
+
 }
