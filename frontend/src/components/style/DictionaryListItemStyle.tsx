@@ -27,6 +27,7 @@ export const Title = styled.div`
   font-size: 1em;
   font-weight: 500;
   margin: 6px 0;
+  line-height: 1.2;
   width: 210px;
   overflow: hidden;
   white-space: nowrap;
