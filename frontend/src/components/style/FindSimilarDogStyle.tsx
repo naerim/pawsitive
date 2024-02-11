@@ -10,14 +10,19 @@ export const Container = styled.div`
 `
 
 export const WebcamContainer = styled.div`
-  margin-bottom: 100px;
   margin-top: 40px;
-
-  height: 300px;
+  height: 340px;
 
   canvas {
     border-radius: 100%;
   }
+`
+
+export const FixWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 600px;
 `
 
 export const BarContainer = styled.div`
@@ -60,6 +65,10 @@ export const NextButton = styled.button`
   font-size: 17px;
   font-weight: normal;
   color: #ffffff;
+
+  &:disabled {
+    background-color: #bebebe;
+  }
 `
 
 export const DoneWrap = styled.div`
@@ -67,6 +76,11 @@ export const DoneWrap = styled.div`
   width: 100%;
   flex-direction: column;
   align-items: center;
+`
+
+export const SmallDesc = styled.div`
+  color: #a9a9a9;
+  margin-top: 10px;
 `
 
 export const BackButtonWrap = styled.div`

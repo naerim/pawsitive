@@ -31,6 +31,7 @@ const FindSimilarDog = () => {
   const [resultData, setResultData] = useState<
     { label: string; probability: number }[]
   >([])
+  const [check, setCheck] = useState<boolean>(false)
 
   const navigate = useNavigate()
   const handleNextButtonClick = () => {
@@ -69,6 +70,11 @@ const FindSimilarDog = () => {
       probability: Math.round(item * 100),
     }))
     setResultData(updatedResultData)
+  }
+
+  const onClickCamera = () => {
+    stop()
+    setCheck(true)
   }
 
   async function loop() {
@@ -154,17 +160,21 @@ const FindSimilarDog = () => {
       </f.BackButtonWrap>
       {started ? (
         <f.DoneWrap>
-          <f.WebcamContainer id="webcam-container" />
-          <f.BarContainer>
-            <Bar data={data} options={options} />
-          </f.BarContainer>
-          <f.LabelContainer id="label-container" />
+          <f.FixWrap>
+            <f.WebcamContainer id="webcam-container" />
+            <f.BarContainer>
+              <Bar data={data} options={options} />
+            </f.BarContainer>
+            <f.LabelContainer id="label-container" />
+          </f.FixWrap>
+
           <f.ActionButtons>
-            <f.CaptureButton onClick={stop}>촬영하기</f.CaptureButton>
-            <f.NextButton onClick={handleNextButtonClick}>
+            <f.CaptureButton onClick={onClickCamera}>촬영하기</f.CaptureButton>
+            <f.NextButton onClick={handleNextButtonClick} disabled={!check}>
               결과화면보기
             </f.NextButton>
           </f.ActionButtons>
+          <f.SmallDesc>*촬영하기 버튼을 먼저 눌러주세요!</f.SmallDesc>
         </f.DoneWrap>
       ) : (
         <f.PrevWrap>
