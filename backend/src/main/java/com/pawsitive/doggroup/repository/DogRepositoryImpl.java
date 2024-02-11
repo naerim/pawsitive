@@ -7,6 +7,8 @@ import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.entity.QDog;
 import com.pawsitive.doggroup.entity.QDogFile;
+import com.pawsitive.usergroup.entity.QMember;
+import com.pawsitive.usergroup.entity.QMemberDogLike;
 import com.pawsitive.usergroup.entity.QUser;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
@@ -30,6 +32,7 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
     private static final QDog qDog = QDog.dog;
     private static final QUser qUser = QUser.user;
     private static final QDogFile qDogFile = QDogFile.dogFile;
+    private static final QMemberDogLike qMemberDogLike = QMemberDogLike.memberDogLike;
 
     public DogRepositoryImpl() {
         super(Dog.class);

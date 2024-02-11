@@ -2,6 +2,7 @@ package com.pawsitive.doggroup.dto.response;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,4 +32,6 @@ public class DogDetailRes {
     private List<String> files;
     private String sex;
     private String address;
+    private boolean userLiked;
+    
 }
