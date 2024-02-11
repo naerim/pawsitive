@@ -1,4 +1,4 @@
-import AdoptInfo from '@src/components/Home/FourthStage/AdoptInfo'
+import AdoptInfo from '@src/components/Home/FourthStage/AdoptedDogDetail'
 import DailyQuestion from '@src/components/Home/FourthStage/DailyQuestion'
 import DogDiary from '@src/components/Home/FourthStage/DogDiary'
 import * as t from '@src/components/style/FourthStageIndexStyle'
