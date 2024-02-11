@@ -1,17 +1,14 @@
 import * as d from '@src/components/style/DogListContainer'
 import { useEffect, useState } from 'react'
-import { BasicDogListParamsType, DogListType } from '@src/types/dogType'
+import { DogListType } from '@src/types/dogType'
 import BasicDogInfoCard from '@src/common/BasicDogInfoCard'
 import { useQuery } from '@tanstack/react-query'
 import { fetchBasicDogList } from '@src/apis/dog'
+import { useAtom } from 'jotai'
+import { dogListParamsAtom } from '@src/stores/atoms/dog'
 
 const DogListContainer = () => {
-  const [basicDogListParams, setBasicDogListParams] =
-    useState<BasicDogListParamsType>({
-      page: 1,
-      size: 100,
-      sort: ['string'],
-    })
+  const [basicDogListParams, setBasicDogListParams] = useAtom(dogListParamsAtom)
   const [basicDogList, setBasicDogList] = useState<DogListType[]>([])
   const [totalPageCnt, setTotalPageCnt] = useState(7)
 
