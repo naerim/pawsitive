@@ -37,6 +37,7 @@ import QuestionListPage from '@src/pages/QuestionListPage'
 import ChattingRoomPage from '@src/pages/ChattingRoomPage'
 import ChattingPage from '@src/pages/ChattingPage'
 import AboutSameDogChatListPage from '@src/pages/AboutSameDogChatListPage'
+import CreateAdoptedAppointmentContainer from '@src/container/CreateAdoptedAppointmentContainer'
 import ScrollToTop from '@src/hooks/ScrollToTop'
 // import { userAtom } from '@src/stores/atoms/user'
 
@@ -66,6 +67,10 @@ const AuthRoutes = () => (
     <Route path="/chat" element={<ChattingPage />} />
     <Route path="/shelter/chat/:dogNo" element={<AboutSameDogChatListPage />} />
     <Route path="/chat/:no" element={<ChattingRoomPage />} />
+    <Route
+      path="/new/adopted-appointment"
+      element={<CreateAdoptedAppointmentContainer />}
+    />
     <Route path="/confirm/pawsitive" element={<ConfirmPawsitivePage />} />
     <Route path="/mypage/adoptionSurvey" element={<AdoptionSurveyPage />} />
     <Route path="/dictionary" element={<DictionaryListPage />} />

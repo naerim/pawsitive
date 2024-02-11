@@ -1,18 +1,27 @@
 import { useAtom } from 'jotai'
 import { createDogInfoAtom } from '@src/stores/atoms/dog'
 import * as s from '@src/components/style/CreateDogInfoStyle'
+import { useState } from 'react'
 
 const CreateDogInfo = () => {
   const [createDogData, setCreateDogData] = useAtom(createDogInfoAtom)
-
+  const [sexSelected, setSexSelected] = useState('')
+  const [naturalizedSelected, setNaturalizedSelected] = useState(undefined)
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nameInput = e.target.value
     setCreateDogData(prevData => ({ ...prevData, name: nameInput }))
   }
 
   const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const ageInput = Number(e.target.value)
-    setCreateDogData(prevData => ({ ...prevData, age: ageInput }))
+    const inputChar = e.target.value
+
+    if (!/^\d{0,4}$/.test(inputChar)) {
+      e.preventDefault()
+    } else {
+      const ageInput = e.target.value
+      const age = Number(ageInput)
+      setCreateDogData(prevData => ({ ...prevData, age }))
+    }
   }
 
   const handleKindSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -21,11 +30,16 @@ const CreateDogInfo = () => {
   }
 
   const handleSexChange = (sex: string) => {
+    setSexSelected(sex)
     setCreateDogData(prevData => ({ ...prevData, sex }))
   }
 
-  const handleIsNaturalizedChange = (isNaturalized: boolean) => {
-    setCreateDogData(prevData => ({ ...prevData, isNaturalized }))
+  const handleIsNaturalizedChange = isNaturalized => {
+    setNaturalizedSelected(isNaturalized)
+    setCreateDogData(prevData => ({
+      ...prevData,
+      isNaturalized,
+    }))
   }
 
   return (
@@ -44,7 +58,7 @@ const CreateDogInfo = () => {
         <s.Title htmlFor="age">추정 출생연도</s.Title>
         <s.Input
           type="text"
-          value={createDogData.age !== 2021 ? createDogData.age : ''}
+          value={createDogData.age !== 0 ? createDogData.age : ''}
           onChange={handleAgeChange}
           placeholder="ex) 2023"
         />
@@ -56,6 +70,7 @@ const CreateDogInfo = () => {
           value={createDogData.kind}
           onChange={handleKindSelectChange}
         >
+          <option>선택</option>
           <option value="말티즈">말티즈</option>
           <option value="비숑">비숑</option>
           <option value="치와와">치와와</option>
@@ -73,13 +88,13 @@ const CreateDogInfo = () => {
           <s.Title>성별</s.Title>
           <s.ButtonContainer>
             <s.Button
-              $isSelected={createDogData.sex === 'M'}
+              $isSelected={sexSelected === 'M'}
               onClick={() => handleSexChange('M')}
             >
               수컷
             </s.Button>
             <s.Button
-              $isSelected={createDogData.sex === 'F'}
+              $isSelected={sexSelected === 'F'}
               onClick={() => handleSexChange('F')}
             >
               암컷
@@ -90,13 +105,13 @@ const CreateDogInfo = () => {
           <s.Title>중성화 여부</s.Title>
           <s.ButtonContainer>
             <s.Button
-              $isSelected={createDogData.isNaturalized}
+              $isSelected={naturalizedSelected === true}
               onClick={() => handleIsNaturalizedChange(true)}
             >
               중성화 O
             </s.Button>
             <s.Button
-              $isSelected={!createDogData.isNaturalized}
+              $isSelected={naturalizedSelected === false}
               onClick={() => handleIsNaturalizedChange(false)}
             >
               중성화 X
