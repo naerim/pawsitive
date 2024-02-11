@@ -89,21 +89,19 @@ const LoginForm = () => {
   return (
     <c.Container>
       <c.Form onSubmit={handleSubmit}>
-        <c.InputForm>
-          <c.Input
-            id="ID"
-            type="text"
-            placeholder="아이디"
-            onChange={handleIdChange}
-          />
-          <c.Input
-            id="PW"
-            type="password"
-            placeholder="비밀번호"
-            onChange={handlePwChange}
-          />
-          {LoginError && <p className="error">{LoginError}</p>}
-        </c.InputForm>
+        <c.Input
+          id="ID"
+          type="text"
+          placeholder="아이디"
+          onChange={handleIdChange}
+        />
+        <c.Input
+          id="PW"
+          type="password"
+          placeholder="비밀번호"
+          onChange={handlePwChange}
+        />
+        {LoginError && <p className="error">{LoginError}</p>}
         <c.Button type="submit">로그인</c.Button>
       </c.Form>
       <c.NoMemoryLink to="/signUp">

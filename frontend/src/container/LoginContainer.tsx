@@ -1,12 +1,13 @@
 import LoginHeader from '@src/components/Login/LoginHeader'
 import LoginForm from '@src/components/Login/LoginForm'
+import * as l from '@src/container/style/LoginContainerStyle'
 
 const LoginContainer = () => {
   return (
-    <div>
+    <l.Container>
       <LoginHeader />
       <LoginForm />
-    </div>
+    </l.Container>
   )
 }
 export default LoginContainer
