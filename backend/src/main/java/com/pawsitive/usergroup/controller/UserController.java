@@ -5,8 +5,10 @@ import static org.springframework.http.HttpStatus.OK;
 import com.pawsitive.auth.jwt.JwtToken;
 import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.usergroup.dto.request.SilentRefreshReq;
+import com.pawsitive.usergroup.dto.request.UserSurveyReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
 import com.pawsitive.usergroup.dto.response.UpdateFieldRes;
+import com.pawsitive.usergroup.dto.response.UserSurveyRes;
 import com.pawsitive.usergroup.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,11 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -126,6 +124,41 @@ public class UserController {
         return ResponseEntity
             .status(OK)
             .body(BaseResponseBody.of(OK, "로그아웃 완료"));
+    }
+
+    @PostMapping("/survey")
+    @Operation(
+        summary = "입양 설문 저장 (등록 / 수정)",
+        description = "작성한 입양 설문을 저장한다.",
+        tags = {"01.User"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "401", description = "권한 없음"),
+            @ApiResponse(responseCode = "500", description = "서버 오류")
+        }
+    )
+    public ResponseEntity<UserSurveyRes> createSurvey(@RequestBody UserSurveyReq req) {
+        return ResponseEntity
+            .status(OK)
+            .body(userService.createSurvey(req));
+    }
+
+    @GetMapping("/survey")
+    @Operation(
+        summary = "입양 설문 조회",
+        description = "userNo에 해당하는 입양 설문을 조회한다.",
+        tags = {"01.User"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "400", description = "userNo에 해당하는 입양 설문 값이 없음"),
+            @ApiResponse(responseCode = "401", description = "권한 없음"),
+            @ApiResponse(responseCode = "500", description = "서버 오류")
+        }
+    )
+    public ResponseEntity<UserSurveyRes> getSurvey(@RequestParam int userNo) {
+        return ResponseEntity
+            .status(OK)
+            .body(userService.getSurvey(userNo));
     }
 
 //    @DeleteMapping("/{userId}")

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -21,5 +23,6 @@ public class DogListRes {
     private int statusNo;
     private String file;
     private String sex;
+    private boolean userLiked;
 
 }

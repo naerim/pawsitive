@@ -1,9 +1,12 @@
 import * as h from '@src/components/style/HomeProgressBarStyle'
 import { ProgressBarType } from '@src/types/components/HomeType'
 import StageInfoModal from '@src/common/StageInfoModal'
+import { useAtomValue } from 'jotai'
+import { userAtom } from '@src/stores/atoms/user'
 
 const HomeProgressBar = (props: ProgressBarType) => {
   const { currentStage } = props
+  const user = useAtomValue(userAtom)
 
   return (
     <h.Container>
@@ -21,7 +24,7 @@ const HomeProgressBar = (props: ProgressBarType) => {
             <StageInfoModal />
           </h.PawsitiveInfoWrap>
           <h.UserStage>
-            <b>김현지</b>님의 입양 단계
+            <b>{user.name}</b>님의 입양 단계
           </h.UserStage>
         </h.TopRightWrap>
       </h.Top>

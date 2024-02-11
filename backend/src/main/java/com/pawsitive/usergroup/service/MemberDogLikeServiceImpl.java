@@ -1,6 +1,7 @@
 package com.pawsitive.usergroup.service;
 
 import com.pawsitive.doggroup.dto.request.MemberDogLikeReq;
+import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.dto.response.MemberDogLikeRes;
 import com.pawsitive.doggroup.entity.Dog;
@@ -66,8 +67,15 @@ public class MemberDogLikeServiceImpl implements MemberDogLikeService {
         List<Integer> dogNoList = memberDogLikeRepository.getLikedDogList(userNo);
         List<DogListRes> dogListResList = dogRepository.getDogListIn(dogNoList);
         setThumbnailImage(dogListResList);
+        setLiked(dogListResList);
 
         return dogListResList;
+    }
+
+    private void setLiked(List<DogListRes> dogList) {
+        for (DogListRes dog : dogList) {
+            dog.setUserLiked(true);
+        }
     }
 
     private void setThumbnailImage(Iterable<DogListRes> dogList) {

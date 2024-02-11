@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 const AlarmFillAdoptInfo = () => {
   const navigate = useNavigate()
 
-  const handleContainerClick = () => navigate('/fill-adopt-info')
+  const handleContainerClick = () => navigate('/adopted-dog/mod')
   return (
     <f.Container onClick={handleContainerClick}>
       <f.SubTitle>오늘의 할 일</f.SubTitle>

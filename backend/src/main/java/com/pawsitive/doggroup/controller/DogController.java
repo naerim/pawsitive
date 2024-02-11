@@ -27,7 +27,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "03.Dog")
@@ -58,9 +65,9 @@ public class DogController {
             @ApiResponse(responseCode = "200", description = "유기견 고유 번호에 해당하는 강아지 상세 조회 성공"),
             @ApiResponse(responseCode = "400", description = "유기견 고유 번호에 해당하는 강아지가 없음")
         })
-    public ResponseEntity<DogDetailRes> getDogByDogNo(@PathVariable int dogNo) {
+    public ResponseEntity<DogDetailRes> getDogByDogNo(@PathVariable int dogNo, @RequestParam(required = false) Integer userNo) {
 
-        return ResponseEntity.status(OK).body(dogService.getDogByDogNo(dogNo));
+        return ResponseEntity.status(OK).body(dogService.getDogByDogNo(dogNo, userNo));
     }
 
     @GetMapping("/recommendation")
@@ -88,8 +95,10 @@ public class DogController {
                                                                @RequestParam(required = false)
                                                                Integer sex,
                                                                @RequestParam(required = false)
-                                                               Integer neutralized) {
-        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind, sex, neutralized);
+                                                               Integer neutralized,
+                                                               @RequestParam(required = false)
+                                                               Integer userNo) {
+        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind, sex, neutralized, userNo);
 
         return ResponseEntity.status(OK).body(new PageResponse<>(dogPage));
 
