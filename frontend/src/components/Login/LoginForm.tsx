@@ -55,13 +55,12 @@ const LoginForm = () => {
     },
     onError() {
       console.log('아이디, 비밀번호를 확인해주세요.')
-      setLoginError(
-        '이메일 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.',
-      )
+      setLoginError('이메일 또는 비밀번호가 맞지 않습니다. 다시 확인해 주세요.')
     },
   })
 
   const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginError('')
     const newId = e.target.value
 
     setLoginForm(prevLoginForm => ({
@@ -71,6 +70,7 @@ const LoginForm = () => {
   }
 
   const handlePwChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginError('')
     const newPw = e.target.value
 
     setLoginForm(prevLoginForm => ({
@@ -89,21 +89,19 @@ const LoginForm = () => {
   return (
     <c.Container>
       <c.Form onSubmit={handleSubmit}>
-        <c.InputForm>
-          <c.Input
-            id="ID"
-            type="text"
-            placeholder="아이디"
-            onChange={handleIdChange}
-          />
-          <c.Input
-            id="PW"
-            type="password"
-            placeholder="비밀번호"
-            onChange={handlePwChange}
-          />
-          {LoginError && <p className="error">{LoginError}</p>}
-        </c.InputForm>
+        <c.Input
+          id="ID"
+          type="text"
+          placeholder="아이디"
+          onChange={handleIdChange}
+        />
+        <c.Input
+          id="PW"
+          type="password"
+          placeholder="비밀번호"
+          onChange={handlePwChange}
+        />
+        {LoginError !== '' && <c.ErrorMessage>{LoginError}</c.ErrorMessage>}
         <c.Button type="submit">로그인</c.Button>
       </c.Form>
       <c.NoMemoryLink to="/signUp">

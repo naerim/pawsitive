@@ -2,30 +2,35 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 export const Container = styled.div`
-  margin: 10px;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 0 auto;
+  padding-bottom: 100px;
+  height: calc(100vh - 100px);
 `
 
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-`
-
-export const InputForm = styled.div`
-  margin: 40px 0px 20px;
+  margin: 40px 0 0;
 `
 
 export const Input = styled.input`
   width: 100%;
-  padding: 8px;
-  margin-bottom: 12px;
+  padding: 10px;
+  margin-bottom: 20px;
   border: none;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #cbcbcb;
   box-sizing: border-box;
 
   &:focus,
   &:active {
     outline: none;
+  }
+
+  &::placeholder {
+    color: #a9a9a9;
   }
 `
 export const Button = styled.button`
@@ -33,9 +38,11 @@ export const Button = styled.button`
   color: #fff;
   padding: 7px;
   border: none;
+  height: 40px;
+  margin-top: 20px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1em;
   transition: background-color 0.3s ease;
 
   &:hover {
@@ -64,12 +71,22 @@ export const P = styled.p`
 
 export const GoToSignUp = styled(Link)`
   display: flex;
+  margin-top: auto;
   justify-content: center;
   font-size: 14px;
-  color: black;
+  color: #000;
+
+  p {
+    color: #000;
+  }
 
   &:focus,
   &:active {
     outline: none;
   }
+`
+
+export const ErrorMessage = styled.div`
+  font-size: 0.8em;
+  color: red;
 `
