@@ -85,3 +85,8 @@ export const GoToSignUp = styled(Link)`
     outline: none;
   }
 `
+
+export const ErrorMessage = styled.div`
+  font-size: 0.8em;
+  color: red;
+`
