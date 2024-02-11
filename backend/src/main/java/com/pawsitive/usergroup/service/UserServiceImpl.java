@@ -8,30 +8,27 @@ import com.pawsitive.auth.service.MailService;
 import com.pawsitive.common.exception.NotFoundException;
 import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.common.service.RedisService;
-import com.pawsitive.usergroup.dto.request.EmailVerificationReq;
-import com.pawsitive.usergroup.dto.request.SilentRefreshReq;
-import com.pawsitive.usergroup.dto.request.UserJoinPostReq;
-import com.pawsitive.usergroup.dto.request.UserLoginPostReq;
-import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
-import com.pawsitive.usergroup.dto.response.EmailVerificationRes;
-import com.pawsitive.usergroup.dto.response.UpdateFieldRes;
-import com.pawsitive.usergroup.dto.response.UserJoinRes;
-import com.pawsitive.usergroup.dto.response.UserLoginRes;
+import com.pawsitive.usergroup.dto.request.*;
+import com.pawsitive.usergroup.dto.response.*;
+import com.pawsitive.usergroup.entity.AdoptionSurvey;
 import com.pawsitive.usergroup.entity.Member;
-import com.pawsitive.usergroup.entity.MemberDogLike;
 import com.pawsitive.usergroup.entity.MemberDogMatrix;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.exception.InvalidPasswordException;
 import com.pawsitive.usergroup.exception.UserNotFoundException;
+import com.pawsitive.usergroup.repository.AdoptionSurveyRepository;
 import com.pawsitive.usergroup.repository.MemberDogMatrixRepository;
 import com.pawsitive.usergroup.repository.MemberRepository;
 import com.pawsitive.usergroup.repository.UserRepository;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
+
+import com.pawsitive.usergroup.transfer.AdoptionSurveyTransfer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,6 +51,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final MemberRepository memberRepository;
     private final MemberDogMatrixRepository memberDogMatrixRepository;
+    private final AdoptionSurveyRepository adoptionSurveyRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
@@ -132,6 +130,7 @@ public class UserServiceImpl implements UserService {
             .build();
     }
 
+    @Transactional
     @Override
     public void signOut(String email) {
         String jwtRedisKey = REFRESH_TOKEN_PREFIX + email;
@@ -224,6 +223,7 @@ public class UserServiceImpl implements UserService {
             .orElseThrow(UserNotFoundException::new);
     }
 
+    @Transactional
     @Override
     public UpdateFieldRes updateField(UserTypeStagePatchReq req) {
 
@@ -295,6 +295,7 @@ public class UserServiceImpl implements UserService {
             .build();
     }
 
+    @Transactional
     @Override
     public JwtToken reissueJwtToken(SilentRefreshReq req, Authentication authentication) {
         String jwtRedisKey = REFRESH_TOKEN_PREFIX + req.getEmail();
@@ -315,6 +316,31 @@ public class UserServiceImpl implements UserService {
         redisService.setValues(jwtRedisKey, newToken.getRefreshToken(), Duration.ofHours(24));
 
         return newToken;
+    }
+
+    @Transactional
+    @Override
+    public UserSurveyRes createSurvey(UserSurveyReq req) {
+        Optional<AdoptionSurvey> surveyOpt = adoptionSurveyRepository.getAdoptionSurveyByUserNo(req.getUserNo());
+        AdoptionSurvey survey;
+
+        if (surveyOpt.isPresent()) { // 조회 시 테이블에 값이 존재하면 setter로 값을 수정
+            survey = surveyOpt.get();
+            AdoptionSurveyTransfer.setEntityValues(survey, req);
+        } else { // 없다면 엔티티 생성
+            survey = AdoptionSurveyTransfer.dtoToEntity(req);
+        }
+
+        adoptionSurveyRepository.save(survey);
+
+        return AdoptionSurveyTransfer.entityToDto(survey);
+    }
+
+    @Override
+    public UserSurveyRes getSurvey(int userNo) {
+        AdoptionSurvey survey = adoptionSurveyRepository.getAdoptionSurveyByUserNo(userNo).orElseThrow();
+
+        return AdoptionSurveyTransfer.entityToDto(survey);
     }
 
     //
