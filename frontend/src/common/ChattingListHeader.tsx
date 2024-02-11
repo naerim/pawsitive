@@ -1,4 +1,4 @@
-import * as c from '@src/components/Chatting/_style/ChattingListHeaderStyle'
+import * as c from '@src/common/ChattingListHeaderStyle'
 import { ChattingListHeaderPropsType } from '@src/types/chatType'
 
 const ChattingListHeader: React.FC<ChattingListHeaderPropsType> = ({
