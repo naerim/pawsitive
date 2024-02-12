@@ -22,7 +22,7 @@ const UserSurvey = () => {
     if (user.role === 'USER') {
       setUserName(user.name)
     }
-  }, [user])
+  }, [setUserName, user])
   const goBack = () => navigate(-1)
 
   return (
