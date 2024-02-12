@@ -13,3 +13,13 @@ export type CreateAppointmentModalType = {
   shelterName: string
   dogName: string
 } & CloseFunctionType
+
+// 입양약속 확인 타입
+export type ConfirmAppointmentModalType = {
+  promise: {
+    date: string
+    isAccepted: boolean | null
+    time: string
+  }
+} & CloseFunctionType &
+  CreateAppointmentModalType
