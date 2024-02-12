@@ -112,6 +112,8 @@ public class DogController {
 
 
 //        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind, sex, neutralized, authentication);
+//        log.info("DogController : pageable = {}, kind = {}, sex = {}, neutralized = {}", pageable.toString(), kind.toString(), sex.toString(), neutralized.toString());
+
         Page<DogListRes> dogPage = dogService.getDogList(pageable, kind, sex, neutralized, userNo);
 
         return ResponseEntity.status(OK).body(new PageResponse<>(dogPage));

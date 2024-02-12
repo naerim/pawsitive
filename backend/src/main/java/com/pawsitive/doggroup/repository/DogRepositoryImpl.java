@@ -13,6 +13,7 @@ import com.pawsitive.usergroup.entity.QUser;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPQLQuery;
 
 import java.util.List;
@@ -64,13 +65,13 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
                                        Integer neutralized) {
         List<DogListRes> content =
             getQueryDogList()
-                .where(Objects.requireNonNull(eqSex(sex)).or(eqSexCapital(sex)), eqNeutralized(neutralized), inKindList(kind))
+                .where(eqSex(sex).or(eqSexCapital(sex)), eqNeutralized(neutralized), inKindList(kind))
                 .orderBy(qDog.createdAt.desc())
                 .offset(pageable.getOffset()).limit(pageable.getPageSize())
                 .fetch();
 
         Long count = from(qDog).select(qDog.count())
-            .where(Objects.requireNonNull(eqSex(sex)).or(eqSexCapital(sex)),
+            .where(eqSex(sex).or(eqSexCapital(sex)),
                 eqNeutralized(neutralized),
                 inKindList(kind))
             .fetchOne();
@@ -88,14 +89,14 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
 
     private BooleanExpression eqSex(Integer sex) {
         if (Objects.isNull(sex) || sex.equals(0)) {
-            return null;
+            return Expressions.asBoolean(false).isFalse();
         }
         return qDog.sex.eq(DogSexEnum.intToString(sex));
     }
 
     private BooleanExpression eqSexCapital(Integer sex) {
         if (Objects.isNull(sex) || sex.equals(0)) {
-            return null;
+            return Expressions.asBoolean(false).isFalse();
         }
         return qDog.sex.eq(DogSexEnum.intToStringCapital(sex));
     }
