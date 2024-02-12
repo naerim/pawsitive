@@ -1,4 +1,4 @@
-export type CreateAppointmentReqType = {
+export type AppointmentReqType = {
   userNo: number
   chatRoomNo: number
   date: string
