@@ -3,13 +3,15 @@ import { useNavigate } from 'react-router-dom'
 import * as c from '@src/container/style/CommunityListInfoContainerStyle'
 import { CommunityListAtom } from '@src/stores/atoms/community'
 import { useQuery } from '@tanstack/react-query'
-import { CommunityResType } from '@src/types/communityType.ts'
-import { fetchCommunityList } from '@src/apis/community.ts'
+import { CommunityResType } from '@src/types/communityType'
+import { fetchCommunityList } from '@src/apis/community'
 import { useEffect, useState } from 'react'
-import CommunityCategorySection from '@src/components/CommunityList/CommunityCategorySection.tsx'
-import { useAtom } from 'jotai/index'
+import CommunityCategorySection from '@src/components/CommunityList/CommunityCategorySection'
+import { useAtom, useAtomValue } from 'jotai/index'
+import { userAtom } from '@src/stores/atoms/user'
 
 const CommunityMapContainer = () => {
+  const user = useAtomValue(userAtom)
   const navigate = useNavigate()
   const [category, setCategory] = useState(0)
   const [communityListValue, setcommunityList] = useAtom(CommunityListAtom)
@@ -49,9 +51,11 @@ const CommunityMapContainer = () => {
         <c.HeaderButton type="button" onClick={isMapChange}>
           목록보기
         </c.HeaderButton>
-        <c.CreateButton type="button" onClick={goCreateCommunity}>
-          작성하기
-        </c.CreateButton>
+        {user.stage > 3 && (
+          <c.CreateButton type="button" onClick={goCreateCommunity}>
+            작성하기
+          </c.CreateButton>
+        )}
       </c.Header>
 
       <c.CategoryDiv>
