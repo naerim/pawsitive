@@ -8,7 +8,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface UserRepositoryCustom {
-    Optional<User> findUserByUserId(String userId);
 
     Integer findUserNoByEmail(String email);
 

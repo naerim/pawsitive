@@ -24,5 +24,6 @@ public class DogListRes {
     private String file;
     private String sex;
     private boolean userLiked;
+    private String mbti;
 
 }
