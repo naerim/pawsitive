@@ -58,6 +58,9 @@ const ChattingRoomHeader = (props: { dogNo: number }) => {
                 <button type="button" onClick={goCreateAdoptedAppointment}>
                   입양약속 잡기
                 </button>
+                <button type="button" onClick={goCreateAdoptedAppointment}>
+                  입양약속 보기
+                </button>
                 {user.role === 'SHELTER' && (
                   <button type="button">입양설문 보기</button>
                 )}

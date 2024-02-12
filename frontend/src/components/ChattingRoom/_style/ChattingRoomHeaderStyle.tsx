@@ -82,6 +82,7 @@ export const ButtonWrap = styled.div`
     border-radius: 2px;
     padding: 4px 10px;
     font-size: 0.8em;
+    font-weight: 500;
     margin-right: 10px;
   }
 `
