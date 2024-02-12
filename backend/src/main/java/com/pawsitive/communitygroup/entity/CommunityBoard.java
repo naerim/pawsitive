@@ -53,7 +53,7 @@ public class CommunityBoard {
     @Column(name = "created_at", insertable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "hit", insertable = false)
+    @Column(name = "hit")
     private int hit;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -65,13 +65,15 @@ public class CommunityBoard {
 
     @Builder
     public CommunityBoard(Member member, String title, String content, boolean isPublic,
-                          double latitude, double longitude, CommunityCategory communityCategory) {
+                          double latitude, double longitude, int hit,
+                          CommunityCategory communityCategory) {
         this.member = member;
         this.title = title;
         this.content = content;
         this.isPublic = isPublic;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.hit = hit;
         this.communityCategory = communityCategory;
     }
 
