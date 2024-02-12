@@ -22,9 +22,7 @@ import com.pawsitive.usergroup.repository.UserRepository;
 import com.pawsitive.usergroup.service.UserService;
 import com.pawsitive.usergroup.service.MemberDogVisitService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -155,14 +153,35 @@ public class DogServiceImpl implements DogService {
         }
 
         // MSD 계산해서 최소값 2개만 가지고 있는 List를 반환하기
-//        List<Double> minList =
+        List<DogListRes> recommendedDogs = getMinMSDDogs(memberDogMatrix, dogMatrixList);
+        setThumbnailImage(recommendedDogs);
 
+        return recommendedDogs;
+    }
 
-        // TODO : 행렬 만들기, MSD 계산하기, 최소값 2개 찾기
+    private List<DogListRes> getMinMSDDogs(List<Double> memberDogMatrix, List<List<Double>> dogMatrixList) {
+        Collections.sort(dogMatrixList, (o1, o2) ->
+            Double.compare(MSD(memberDogMatrix, o1), MSD(memberDogMatrix, o2)));
 
+        List<Integer> dogNoList = new ArrayList<>();
+        dogNoList.add(dogMatrixList.get(0).get(8).intValue());
+        dogNoList.add(dogMatrixList.get(1).get(8).intValue());
 
-//        setThumbnailImage(dogList);
-        return dogList;
+        log.info("DogService : MSD 1 = {}, MSD 2 = {}",
+            MSD(memberDogMatrix, dogMatrixList.get(0)),
+            MSD(memberDogMatrix, dogMatrixList.get(1)));
+
+        return dogRepository.getDogListIn(dogNoList);
+    }
+
+    private double MSD(List<Double> m1, List<Double> m2) {
+        double result = 0.0;
+
+        for (int i = 0; i < 8; i++) {
+            result += Math.pow((m1.get(i) - m2.get(i)), 2);
+        }
+
+        return result / 8;
     }
 
     private List<Double> dogListResToMatrix(DogListRes res) {
