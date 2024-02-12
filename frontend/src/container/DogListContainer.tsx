@@ -14,6 +14,7 @@ const DogListContainer = () => {
   const [basicDogListParams] = useAtom(dogListParamsAtom)
   // const [totalPageCnt, setTotalPageCnt] = useState(7)
   const [isFilter, setIsFilter] = useState(false)
+  const [allDogList, setAllDogList] = useState([])
   const [user] = useAtom(userAtom)
 
   const { data, isLoading, refetch } = useQuery<DogListType[]>({
@@ -26,6 +27,7 @@ const DogListContainer = () => {
         })
         // setBasicDogList(result.content || [])
         // setTotalPageCnt(result.totalPages)
+        setAllDogList(result.content)
         return result.content || []
       }
     },
@@ -74,6 +76,21 @@ const DogListContainer = () => {
     </>
   )
 
+  const AlarmNoData = () => (
+    <>
+      <d.NoDataContainer>
+        <d.NoDataImg src="img/img_dog_food.png" />
+        <d.NoDataText>해당되는 유기견이 존재하지 않습니다.</d.NoDataText>
+        <d.NoDataText>전체 유기견을 보여드릴게요!</d.NoDataText>
+      </d.NoDataContainer>
+      <d.DogListContainerStyle>
+        {allDogList.map(basicDogInfo => (
+          <BasicDogInfoCard key={basicDogInfo.dogNo} dogInfo={basicDogInfo} />
+        ))}
+      </d.DogListContainerStyle>
+    </>
+  )
+
   return (
     <>
       <TextHeader title="유기견 공고 리스트" />
@@ -83,23 +100,32 @@ const DogListContainer = () => {
             필터링
             <d.ShowFilterButtonImg
               $isShow={isFilter}
-              src="public/img/img_chevron_down.png"
+              src="img/img_chevron_down.png"
             />
           </d.ShowFilterButton>
           {isFilter && <Filter />}
         </d.FilterContainer>
-        <d.DogListContainerStyle>
-          {isLoading ? (
+
+        {isLoading ? (
+          <d.DogListContainerStyle>
             <LoadingSkeleton />
-          ) : (
-            data.map(basicDogInfo => (
-              <BasicDogInfoCard
-                key={basicDogInfo.dogNo}
-                dogInfo={basicDogInfo}
-              />
-            ))
-          )}
-        </d.DogListContainerStyle>
+          </d.DogListContainerStyle>
+        ) : (
+          <>
+            {data.length === 0 || basicDogListParams.kind.length === 0 ? (
+              <AlarmNoData />
+            ) : (
+              <d.DogListContainerStyle>
+                {data.map(basicDogInfo => (
+                  <BasicDogInfoCard
+                    key={basicDogInfo.dogNo}
+                    dogInfo={basicDogInfo}
+                  />
+                ))}
+              </d.DogListContainerStyle>
+            )}
+          </>
+        )}
       </d.Container>
     </>
   )
