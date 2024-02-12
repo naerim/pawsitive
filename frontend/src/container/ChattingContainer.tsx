@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai/index'
 import { userAtom } from '@src/stores/atoms/user'
 import { useQuery } from '@tanstack/react-query'
-import { ChatRoomType } from '@src/types/chatType'
+import { ChattingListItemType } from '@src/types/chatType'
 import { fetchChatRooms } from '@src/apis/chat'
 import ChattingListItem from '@src/components/Chatting/ChattingListItem'
 import * as c from '@src/container/style/ChattingContainerStyle'
@@ -10,8 +10,8 @@ import TextHeader from '@src/common/TextHeader'
 const ChattingContainer = () => {
   const [user] = useAtom(userAtom)
 
-  const { data, isLoading } = useQuery<ChatRoomType[]>({
-    queryKey: ['fetchChatRooms'],
+  const { data, isLoading } = useQuery<ChattingListItemType[]>({
+    queryKey: ['fetchChatRooms', user.userNo],
     queryFn: () => fetchChatRooms(user.userNo),
   })
 
@@ -31,6 +31,8 @@ const ChattingContainer = () => {
               shelterProfileImage={item.shelterProfileImage}
               id={item.id}
               dogNo={item.dogNo}
+              isPromiseAccepted={item.isPromiseAccepted}
+              promiseCreatedAt={item.promiseCreatedAt}
             />
           ))}
       </c.Wrap>
