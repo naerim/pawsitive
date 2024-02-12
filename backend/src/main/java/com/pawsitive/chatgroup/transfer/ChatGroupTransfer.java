@@ -13,6 +13,8 @@ public class ChatGroupTransfer {
         res.setId(chatRoom.getId());
         res.setDogNo(chatRoom.getDogNo());
         res.setCreatedAt(chatRoom.getCreatedAt());
+        res.setPromiseCreatedAt(chatRoom.getPromiseCreatedAt());
+        res.setIsPromiseAccepted(chatRoom.getIsPromiseAccepted());
         return res;
     }
 }

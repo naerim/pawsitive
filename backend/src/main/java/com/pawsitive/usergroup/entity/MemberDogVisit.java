@@ -13,14 +13,14 @@ import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "member_dog_visit")
 public class MemberDogVisit {
 

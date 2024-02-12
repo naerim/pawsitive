@@ -65,9 +65,16 @@ public class DogController {
             @ApiResponse(responseCode = "200", description = "유기견 고유 번호에 해당하는 강아지 상세 조회 성공"),
             @ApiResponse(responseCode = "400", description = "유기견 고유 번호에 해당하는 강아지가 없음")
         })
-    public ResponseEntity<DogDetailRes> getDogByDogNo(@PathVariable int dogNo, Authentication authentication) {
+    public ResponseEntity<DogDetailRes> getDogByDogNo(@PathVariable int dogNo,
+//                                                      Authentication authentication
+                                                      @RequestParam int userNo
+    ) {
 
-        return ResponseEntity.status(OK).body(dogService.getDogByDogNo(dogNo, authentication));
+//        return ResponseEntity.status(OK).body(dogService.getDogByDogNo(dogNo, authentication));
+
+        return ResponseEntity
+            .status(OK)
+            .body(dogService.getDogByDogNo(dogNo, userNo));
     }
 
     @GetMapping("/recommendation")
@@ -76,10 +83,12 @@ public class DogController {
             @ApiResponse(responseCode = "200", description = "추천 강아지 목록을 정상적으로 반환한다."),
             @ApiResponse(responseCode = "400", description = "전달받은 페이지 값에 해당하는 추천 강아지가 없음.")
         })
-    public ResponseEntity<List<DogListRes>> getRecommendationDogList(
-        @RequestParam(required = false) Integer num) {
+    public ResponseEntity<List<DogListRes>> getRecommendationDogList(/* Authentication authentication */ @RequestParam Integer userNo) {
 
-        return ResponseEntity.status(OK).body(dogService.getRecommendationDogList(num));
+//        return ResponseEntity.status(OK).body(dogService.getRecommendationDogList(authentication));
+        return ResponseEntity
+            .status(OK)
+            .body(dogService.getRecommendationDogList(userNo));
     }
 
 
@@ -96,8 +105,16 @@ public class DogController {
                                                                Integer sex,
                                                                @RequestParam(required = false)
                                                                Integer neutralized,
-                                                               Authentication authentication) {
-        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind, sex, neutralized, authentication);
+//                                                               Authentication authentication
+                                                               @RequestParam Integer userNo
+    ) {
+//        log.warn("DogController : authentication = {}", authentication.toString());
+
+
+//        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind, sex, neutralized, authentication);
+//        log.info("DogController : pageable = {}, kind = {}, sex = {}, neutralized = {}", pageable.toString(), kind.toString(), sex.toString(), neutralized.toString());
+
+        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind, sex, neutralized, userNo);
 
         return ResponseEntity.status(OK).body(new PageResponse<>(dogPage));
 
@@ -124,9 +141,7 @@ public class DogController {
             @ApiResponse(responseCode = "401", description = "권한 없음"),
             @ApiResponse(responseCode = "500", description = "서버 에러")
         })
-    public ResponseEntity<MemberDogLikeRes> memberDogLike(@RequestBody MemberDogLikeReq req, Authentication authentication) {
-
-
+    public ResponseEntity<MemberDogLikeRes> memberDogLike(@RequestBody MemberDogLikeReq req) {
         return ResponseEntity
             .status(OK)
             .body(memberDogLikeService.createMemberDogLike(req));
@@ -140,7 +155,7 @@ public class DogController {
             @ApiResponse(responseCode = "401", description = "권한 없음"),
             @ApiResponse(responseCode = "500", description = "서버 에러")
         })
-    public ResponseEntity<MemberDogLikeRes> deleteMemberDogLike(@RequestBody MemberDogLikeReq req, Authentication authentication) {
+    public ResponseEntity<MemberDogLikeRes> deleteMemberDogLike(@RequestBody MemberDogLikeReq req) {
         return ResponseEntity
             .status(OK)
             .body(memberDogLikeService.deleteMemberDogLike(req));

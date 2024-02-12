@@ -13,6 +13,7 @@ import com.pawsitive.usergroup.entity.QUser;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPQLQuery;
 
 import java.util.List;
@@ -64,13 +65,15 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
                                        Integer neutralized) {
         List<DogListRes> content =
             getQueryDogList()
-                .where(eqSex(sex), eqNeutralized(neutralized), inKindList(kind))
+                .where(eqSex(sex).or(eqSexCapital(sex)), eqNeutralized(neutralized), inKindList(kind))
                 .orderBy(qDog.createdAt.desc())
                 .offset(pageable.getOffset()).limit(pageable.getPageSize())
                 .fetch();
 
         Long count = from(qDog).select(qDog.count())
-            .where(eqSex(sex), eqNeutralized(neutralized), inKindList(kind))
+            .where(eqSex(sex).or(eqSexCapital(sex)),
+                eqNeutralized(neutralized),
+                inKindList(kind))
             .fetchOne();
 
         return new PageImpl<>(content, pageable, count);
@@ -86,9 +89,16 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
 
     private BooleanExpression eqSex(Integer sex) {
         if (Objects.isNull(sex) || sex.equals(0)) {
-            return null;
+            return Expressions.asBoolean(false).isFalse();
         }
         return qDog.sex.eq(DogSexEnum.intToString(sex));
+    }
+
+    private BooleanExpression eqSexCapital(Integer sex) {
+        if (Objects.isNull(sex) || sex.equals(0)) {
+            return Expressions.asBoolean(false).isFalse();
+        }
+        return qDog.sex.eq(DogSexEnum.intToStringCapital(sex));
     }
 
     private BooleanExpression eqNeutralized(Integer neutralized) {
@@ -153,6 +163,7 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
                 ExpressionUtils.as(qDog.kind.stringValue(), "kind"),
                 qDog.isNeutralized, qDog.age,
                 ExpressionUtils.as(qDog.status.stringValue().castToNum(Integer.class), "statusNo"),
-                qDog.sex));
+                qDog.sex, qDog.mbti));
     }
+
 }

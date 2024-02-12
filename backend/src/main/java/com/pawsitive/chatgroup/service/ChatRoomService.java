@@ -1,11 +1,12 @@
 package com.pawsitive.chatgroup.service;
 
+import com.pawsitive.adoptgroup.dto.request.AppointmentReq;
 import com.pawsitive.chatgroup.dto.request.ChatRoomCreateReq;
 import com.pawsitive.chatgroup.dto.response.ChatRes;
+import com.pawsitive.chatgroup.dto.response.ChatRoomDetailRes;
 import com.pawsitive.chatgroup.dto.response.ChatRoomListRes;
 import com.pawsitive.chatgroup.dto.response.ChatRoomRes;
 import com.pawsitive.chatgroup.entity.ChatRoom;
-import com.pawsitive.surveygroup.dto.request.AppointmentReq;
 import java.util.List;
 import org.springframework.security.core.Authentication;
 
@@ -22,4 +23,5 @@ public interface ChatRoomService {
 
     String acceptAppointment(AppointmentReq appointmentReq);
 
+    ChatRoomDetailRes getChatRoomDetail(int chatRoomNo);
 }

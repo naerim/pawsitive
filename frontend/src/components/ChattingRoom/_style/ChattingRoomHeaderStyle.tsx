@@ -26,13 +26,11 @@ export const TopWrap = styled.div`
   justify-content: space-between;
 
   .arrow {
-    width: 14px;
-    height: 18px;
+    width: 20px;
     cursor: pointer;
   }
 
   span {
-    margin-left: 16px;
     font-size: 1em;
     font-weight: 500;
   }
@@ -84,6 +82,7 @@ export const ButtonWrap = styled.div`
     border-radius: 2px;
     padding: 4px 10px;
     font-size: 0.8em;
+    font-weight: 500;
     margin-right: 10px;
   }
 `

@@ -16,4 +16,6 @@ public class ChatRoomRes {
     private String name;
     private LocalDateTime createdAt;
     private int dogNo;
+    private LocalDateTime promiseCreatedAt;
+    private Boolean isPromiseAccepted;
 }
