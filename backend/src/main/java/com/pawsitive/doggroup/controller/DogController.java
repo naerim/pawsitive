@@ -105,9 +105,7 @@ public class DogController {
                                                                Integer neutralized,
 //                                                               Authentication authentication
                                                                @RequestParam(required = false)
-                                                               Integer userNo,
-                                                               @RequestParam(required = false)
-                                                               Integer status
+                                                               Integer userNo
     ) {
 //        log.warn("DogController : authentication = {}", authentication.toString());
 

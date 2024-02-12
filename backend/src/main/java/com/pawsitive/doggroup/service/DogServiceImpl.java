@@ -26,6 +26,7 @@ import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -274,12 +275,14 @@ public class DogServiceImpl implements DogService {
     @Override
     public Page<DogListRes> getDogList(Pageable pageable, List<String> kind, Integer sex,
                                        Integer neutralized, Integer userNo) {
+
+        if (kind == null && (sex != null || neutralized != null)) {
+            return new PageImpl<>(List.of(), pageable, 0);
+        }
+
         Page<DogListRes> dogList =
             dogRepository.getDogList(pageable, kind, sex, neutralized);
 
-        if (dogList.getContent().isEmpty()) {
-            dogList = dogRepository.getDogList(pageable, null, null, null);
-        }
         setThumbnailImage(dogList);
 
         if (userNo != null) {
