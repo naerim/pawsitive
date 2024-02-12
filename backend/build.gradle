@@ -121,6 +121,9 @@ dependencies {
     // Google SMTP
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.0.5'
 
+
+    // Openvidu
+    implementation group: 'io.openvidu', name: 'openvidu-java-client', version: '2.29.0'
 }
 
 jacocoTestReport {

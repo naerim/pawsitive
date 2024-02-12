@@ -1,9 +1,11 @@
 package com.pawsitive.chatgroup.service;
 
 
+import com.pawsitive.adoptgroup.dto.request.AppointmentReq;
 import com.pawsitive.auth.Role;
 import com.pawsitive.chatgroup.dto.request.ChatRoomCreateReq;
 import com.pawsitive.chatgroup.dto.response.ChatRes;
+import com.pawsitive.chatgroup.dto.response.ChatRoomDetailRes;
 import com.pawsitive.chatgroup.dto.response.ChatRoomListRes;
 import com.pawsitive.chatgroup.dto.response.ChatRoomRes;
 import com.pawsitive.chatgroup.dto.response.LastChatTmp;
@@ -15,10 +17,12 @@ import com.pawsitive.common.dto.response.BaseResponseMessage;
 import com.pawsitive.common.exception.InvalidRequestDataException;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.service.DogService;
-import com.pawsitive.surveygroup.dto.request.AppointmentReq;
+import com.pawsitive.usergroup.entity.Member;
+import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
@@ -36,6 +40,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final DogService dogService;
     private final UserService userService;
+
 
     /**
      * 채팅방을 생성
@@ -68,6 +73,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         room.setName(dog.getUser().getName() + "보호소 - " + dog.getName());
         room.setDogNo(dogNo);
         room.setUserNo(userNo);
+        room.setIsPromiseAccepted(null);
+        room.setPromiseCreatedAt(null);
         ChatRoom chatRoom = chatRoomRepository.save(room);
 
         return ChatGroupTransfer.entityToDto(chatRoom);
@@ -135,15 +142,22 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     @Override
+    @Transactional
     public String createAppointment(AppointmentReq appointmentReq) {
         ChatRoom chatRoom = getChatRoomEntityByChatRoomNo(appointmentReq.getChatRoomNo());
-        chatRoom.setPromiseCreatedAt(LocalDateTime.now());
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalDateTime createdAt =
+            LocalDateTime.of(LocalDate.parse(appointmentReq.getDate(), dateFormatter),
+                LocalTime.parse(appointmentReq.getTime(), timeFormatter));
+        chatRoom.setPromiseCreatedAt(createdAt);
         chatRoom.setIsPromiseAccepted(false);
         chatRoomRepository.save(chatRoom);
         return BaseResponseMessage.SUCCESS.getMessage();
     }
 
     @Override
+    @Transactional
     public String acceptAppointment(AppointmentReq appointmentReq) {
         ChatRoom chatRoom = getChatRoomEntityByChatRoomNo(appointmentReq.getChatRoomNo());
         chatRoom.setIsPromiseAccepted(true);
@@ -151,5 +165,21 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         return BaseResponseMessage.SUCCESS.getMessage();
     }
 
+    @Override
+    public ChatRoomDetailRes getChatRoomDetail(int chatRoomNo) {
+        ChatRoom chatRoom = getChatRoomEntityByChatRoomNo(chatRoomNo);
+        Dog dog = dogService.getDogEntityByDogNo(chatRoom.getDogNo());
+        User shelter = dog.getUser();
+        Member member = userService.getMemberByUserNo(chatRoom.getUserNo());
+        return ChatRoomDetailRes.builder()
+            .chatRoomId(chatRoom.getId())
+            .shelter(ChatRoomDetailRes.Shelter.of(shelter))
+            .member(ChatRoomDetailRes.Member.of(member))
+            .dog(ChatRoomDetailRes.Dog.of(dog))
+            .promise(ChatRoomDetailRes.Promise.of(chatRoom))
+            .chatList(getChatHistoryByChatRoomNo(chatRoomNo))
+            .build();
+
+    }
 
 }

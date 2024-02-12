@@ -17,14 +17,15 @@ import com.pawsitive.usergroup.exception.InvalidPasswordException;
 import com.pawsitive.usergroup.exception.UserNotFoundException;
 import com.pawsitive.usergroup.exception.UserNotLoginException;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.openvidu.java.client.OpenViduHttpException;
+import io.openvidu.java.client.OpenViduJavaClientException;
+import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.util.NoSuchElementException;
 
 /**
  * rest controller 에서 예외발생시 종합적인 처리를 해주기 위한 클래스입니다.
@@ -120,6 +121,15 @@ public class RestControllerAdvisor {
         return ResponseEntity.status(CONFLICT).body(BaseResponseBody.of(CONFLICT, e.getMessage()));
     }
 
+    @ExceptionHandler(value = {OpenViduJavaClientException.class, OpenViduHttpException.class})
+    public ResponseEntity<BaseResponseBody> openViduException500(Exception e) {
+
+        log.warn(e.getMessage());
+
+        return ResponseEntity.status(INTERNAL_SERVER_ERROR)
+            .body(BaseResponseBody.of(INTERNAL_SERVER_ERROR, "openvidu Exception"));
+    }
+
     /**
      * 500에 해당하는 예외들을 한번에 처리하는 메소드입니다.
      *
@@ -134,5 +144,4 @@ public class RestControllerAdvisor {
         return ResponseEntity.status(INTERNAL_SERVER_ERROR)
             .body(BaseResponseBody.of(INTERNAL_SERVER_ERROR, e.getMessage()));
     }
-
 }
