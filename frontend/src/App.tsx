@@ -38,6 +38,7 @@ import ChattingPage from '@src/pages/ChattingPage'
 import AboutSameDogChatListPage from '@src/pages/AboutSameDogChatListPage'
 import CreateAdoptedAppointmentContainer from '@src/container/CreateAdoptedAppointmentContainer'
 import ScrollToTop from '@src/hooks/ScrollToTop'
+import AdoptionSurveyDetailPage from '@src/pages/AdoptionSurveyDetailPage'
 // import { userAtom } from '@src/stores/atoms/user'
 
 // 로그인된 경우 접근할 수 있는 url
@@ -63,6 +64,10 @@ const AuthRoutes = () => (
     <Route path="/dogs/:dogNo" element={<DogDetailPage />} />
     <Route path="/mypage/survey" element={<AdoptionSurveyPage />} />
     <Route path="/mypage/survey/done" element={<AdoptionSurveyDonePage />} />
+    <Route
+      path="/mypage/survey/detail/:userNo"
+      element={<AdoptionSurveyDetailPage />}
+    />
     <Route path="/chat" element={<ChattingPage />} />
     <Route path="/shelter/chat/:dogNo" element={<AboutSameDogChatListPage />} />
     <Route path="/chat/:no" element={<ChattingRoomPage />} />
@@ -71,7 +76,6 @@ const AuthRoutes = () => (
       element={<CreateAdoptedAppointmentContainer />}
     />
     <Route path="/confirm/pawsitive" element={<ConfirmPawsitivePage />} />
-    <Route path="/mypage/adoptionSurvey" element={<AdoptionSurveyPage />} />
     <Route path="/dictionary" element={<DictionaryListPage />} />
     <Route path="/dictionary/:contentNo" element={<DictionaryDetailPage />} />
     <Route path="/adopted-dog/detail" element={<AdoptedDogDetailPage />} />
