@@ -73,6 +73,7 @@ public class CommunityServiceImpl implements CommunityService {
     public CommunityBoardDetailRes getCommunityBoard(int boardNo) {
         // 엔티티 가져오기
         CommunityBoard communityBoard = getCommunityBoardEntity(boardNo);
+        updateHit(communityBoard);
 
         // 응답 객체 생성
         CommunityBoardDetailRes communityBoardDetailRes =
@@ -90,8 +91,7 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Override
     @Transactional
-    public void updateHit(int boardNo) {
-        CommunityBoard board = getCommunityBoardEntity(boardNo);
+    public void updateHit(CommunityBoard board) {
         board.setHit(board.getHit() + 1);
         communityBoardRepository.save(board);
     }

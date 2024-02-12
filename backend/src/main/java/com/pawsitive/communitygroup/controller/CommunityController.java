@@ -16,6 +16,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,11 +65,11 @@ public class CommunityController {
             @ApiResponse(responseCode = "200", description = "커뮤니티 고유번호에 해당되는 커뮤니티 세부사항을 정상적으로 반환한다.")
         })
     public ResponseEntity<CommunityDetailRes> getCommunity(@PathVariable int boardNo) {
-        communityService.updateHit(boardNo);
         return ResponseEntity.status(OK).body(communityService.getCommunity(boardNo));
     }
 
-    @PostMapping
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,
+        MediaType.APPLICATION_JSON_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "커뮤니티 글 등록", description = "전달받은 입력 정보를 커뮤니티 글 테이블에 등록합니다.",
         responses = {
             @ApiResponse(responseCode = "201", description = "커뮤니티 등록 성공"),
