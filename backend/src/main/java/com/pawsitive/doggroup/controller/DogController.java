@@ -128,7 +128,7 @@ public class DogController {
         })
     public ResponseEntity<List<DogListRes>> getDogList(@PathVariable int shelterNo,
                                                        @RequestParam(required = false)
-                                                       Integer num) {
+                                                       int num) {
         return ResponseEntity.status(OK).body(dogService.getDogListByShelterNo(shelterNo, num));
 
     }

@@ -149,7 +149,7 @@ public class RedisService {
     @Transactional
     public void addList(String key, Integer no) {
         ListOperations<String, Object> listOperations = redisTemplate.opsForList();
-        listOperations.rightPush(key, no);
+        listOperations.rightPush(key, no.toString());
     }
 
     /**
