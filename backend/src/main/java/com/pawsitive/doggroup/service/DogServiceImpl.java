@@ -276,6 +276,10 @@ public class DogServiceImpl implements DogService {
                                        Integer neutralized, Integer userNo) {
         Page<DogListRes> dogList =
             dogRepository.getDogList(pageable, kind, sex, neutralized);
+
+        if (dogList.getContent().isEmpty()) {
+            dogList = dogRepository.getDogList(pageable, null, null, null);
+        }
         setThumbnailImage(dogList);
 
         if (userNo != null) {
