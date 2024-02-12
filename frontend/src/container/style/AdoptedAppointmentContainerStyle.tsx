@@ -53,9 +53,21 @@ export const Row = styled.div`
   }
 `
 
-export const SubmitButton = styled.button`
+export const BottomButtonWrap = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-top: auto;
+`
+
+export const RefuseButton = styled.button`
+  height: 40px;
+  background-color: #bebebe;
+  color: #fff;
+`
+
+export const SubmitButton = styled.button`
   height: 40px;
   background-color: #ff9232;
   color: #fff;
+  margin-top: 20px;
 `

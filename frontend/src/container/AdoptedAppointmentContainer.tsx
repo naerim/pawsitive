@@ -1,7 +1,11 @@
 import * as a from '@src/container/style/AdoptedAppointmentContainerStyle'
 import { useNavigate } from 'react-router-dom'
+import { useAtom } from 'jotai/index'
+import { userAtom } from '@src/stores/atoms/user.ts'
 
 const AdoptedAppointmentContainer = () => {
+  const [user] = useAtom(userAtom)
+
   const navigate = useNavigate()
 
   const goBack = () => navigate(-1)
@@ -26,7 +30,16 @@ const AdoptedAppointmentContainer = () => {
           <div>시간</div>
           <div>오후 2시</div>
         </a.Row>
-        <a.SubmitButton type="button">완료</a.SubmitButton>
+        <a.BottomButtonWrap>
+          {user.role === 'SHELTER' ? (
+            <>
+              <a.RefuseButton type="button">거절</a.RefuseButton>
+              <a.SubmitButton type="button">수락</a.SubmitButton>
+            </>
+          ) : (
+            <a.SubmitButton type="button">확인</a.SubmitButton>
+          )}
+        </a.BottomButtonWrap>
       </a.Wrap>
     </a.Container>
   )
