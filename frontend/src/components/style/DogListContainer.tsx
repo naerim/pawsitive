@@ -2,6 +2,29 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   width: 90%;
+  margin-top: 60px;
+`
+
+export const FilterContainer = styled.div`
+  width: 90%;
+  margin: 0 auto;
+`
+
+export const ShowFilterButton = styled.div`
+  display: flex;
+  justify-content: right;
+  height: 16px;
+  margin: 0 6px 6px 6px;
+`
+
+export const ShowFilterButtonImg = styled.img`
+  transform: ${({ isShow }) => (isShow ? 'rotate(180deg)' : 'rotate(0deg)')};
+  transition: transform 0.3s ease;
+  margin-left: 6px;
+`
+
+export const DogListContainer = styled.div`
+  width: 90%;
   margin: 0 auto 70px auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(48%, 1fr));
