@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  width: 90%;
+  width: 100%;
   margin-top: 60px;
+  padding: 0 5%;
 `
 
 export const FilterContainer = styled.div`
-  width: 90%;
-  margin: 0 auto;
+  width: 100%;
 `
 
 export const ShowFilterButton = styled.div`
@@ -23,8 +23,8 @@ export const ShowFilterButtonImg = styled.img<{ $isShow: boolean }>`
   margin-left: 6px;
 `
 
-export const DogListContainer = styled.div`
-  width: 90%;
+export const DogListContainerStyle = styled.div`
+  width: 100%;
   margin: 0 auto 70px auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(48%, 1fr));

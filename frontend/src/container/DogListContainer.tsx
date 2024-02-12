@@ -1,4 +1,4 @@
-import * as d from '@src/components/style/DogListContainer'
+import * as d from '@src/container/style/DogListContainerStyle'
 import { useEffect, useState } from 'react'
 import { DogListType } from '@src/types/dogType'
 import BasicDogInfoCard from '@src/common/BasicDogInfoCard'
@@ -74,28 +74,33 @@ const DogListContainer = () => {
   )
 
   return (
-    <d.Container>
+    <>
       <TextHeader title="유기견 공고 리스트" />
-      <d.FilterContainer>
-        <d.ShowFilterButton type="button" onClick={showFilterHandle}>
-          필터링
-          <d.ShowFilterButtonImg
-            $isShow={isFilter}
-            src="public/img/img_chevron_down.png"
-          />
-        </d.ShowFilterButton>
-        {isFilter && <Filter />}
-      </d.FilterContainer>
-      <d.DogListContainer>
-        {isLoading ? (
-          <LoadingSkeleton />
-        ) : (
-          data.map(basicDogInfo => (
-            <BasicDogInfoCard key={basicDogInfo.dogNo} dogInfo={basicDogInfo} />
-          ))
-        )}
-      </d.DogListContainer>
-    </d.Container>
+      <d.Container>
+        <d.FilterContainer>
+          <d.ShowFilterButton type="button" onClick={showFilterHandle}>
+            필터링
+            <d.ShowFilterButtonImg
+              $isShow={isFilter}
+              src="public/img/img_chevron_down.png"
+            />
+          </d.ShowFilterButton>
+          {isFilter && <Filter />}
+        </d.FilterContainer>
+        <d.DogListContainerStyle>
+          {isLoading ? (
+            <LoadingSkeleton />
+          ) : (
+            data.map(basicDogInfo => (
+              <BasicDogInfoCard
+                key={basicDogInfo.dogNo}
+                dogInfo={basicDogInfo}
+              />
+            ))
+          )}
+        </d.DogListContainerStyle>
+      </d.Container>
+    </>
   )
 }
 
