@@ -42,9 +42,15 @@ export const fetchBasicDogList = async (
 }
 
 // 같은 보호소 유기견 조회
-export const fetchSameShelterDogs = async (number: number) => {
+export const fetchSameShelterDogs = async (data: {
+  shelterNo: number
+  num: number
+  status: number
+}) => {
   return publicRequest
-    .get(`/dogs/shelters/${number}?num=2`)
+    .get(
+      `/dogs/shelters/${data.shelterNo}?num=${data.num}&status=${data.status}`,
+    )
     .then(res => res.data)
     .catch(error => {
       console.log(error)

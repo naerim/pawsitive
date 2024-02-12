@@ -8,10 +8,14 @@ import { useNavigate } from 'react-router-dom'
 const SameShelterDogs = (props: { dogDetail: DogType }) => {
   const { dogDetail } = props
   const navigate = useNavigate()
-
+  const fetchNumber = {
+    shelterNo: dogDetail.userNo,
+    num: 2,
+    status: 0,
+  }
   const { data, isLoading } = useQuery<BasicDogType[]>({
     queryKey: ['basicDogList'],
-    queryFn: async () => fetchSameShelterDogs(dogDetail.userNo),
+    queryFn: async () => fetchSameShelterDogs(fetchNumber),
   })
   const goDogList = () => navigate('/dogs')
 

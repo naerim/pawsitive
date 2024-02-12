@@ -80,6 +80,69 @@ const AdoptionSurveyContainer = () => {
     })
   }
 
+  let isDisabled: boolean = false
+  switch (surveyStep) {
+    case 2:
+      isDisabled = !surveyData.accommodationType
+      break
+    case 3:
+      isDisabled = !surveyData.carer
+      break
+    case 4:
+      isDisabled = !surveyData.reason
+      break
+    case 5:
+      isDisabled = !surveyData.familyType
+      break
+    case 6:
+      isDisabled = !surveyData.familyIntroduce
+      break
+    case 7:
+      isDisabled = !surveyData.familyAdd
+      break
+    case 8:
+      isDisabled = !surveyData.familyAgree
+      break
+    case 9:
+      isDisabled = !surveyData.aloneTime
+      break
+    case 11:
+      isDisabled = !surveyData.temporaryResidence
+      break
+    case 12:
+      isDisabled = !surveyData.raiseHistory
+      break
+    case 13:
+      isDisabled = !surveyData.raiseTerm
+      break
+    case 14:
+      isDisabled = !surveyData.petRoute
+      break
+    case 15:
+      isDisabled = !surveyData.petSociability
+      break
+    case 16:
+      isDisabled = !surveyData.raiseNoReason
+      break
+    case 17:
+      isDisabled = !surveyData.personality
+      break
+    case 18:
+      isDisabled = !surveyData.training
+      break
+    case 19:
+      isDisabled = !surveyData.hospital
+      break
+    case 20:
+      isDisabled = !surveyData.expenditure
+      break
+    case 21:
+      isDisabled = !surveyData.foreverResponsibility
+      break
+    default:
+      break
+  }
+
   const renderStepComponent = () => {
     switch (surveyStep) {
       case 1:
@@ -124,7 +187,6 @@ const AdoptionSurveyContainer = () => {
         return <SurveyQuestionNo18 />
       case 21:
         return <SurveyQuestionNo19 />
-
       default:
         return null
     }
@@ -157,10 +219,14 @@ const AdoptionSurveyContainer = () => {
         {renderStepComponent()}
         <c.ButtonContainer>
           {surveyStep < 21 && (
-            <c.Button onClick={handleNextStep}>다음</c.Button>
+            <c.Button onClick={handleNextStep} disabled={isDisabled}>
+              다음
+            </c.Button>
           )}
           {surveyStep === 21 && (
-            <c.Button onClick={goDone}>설문 작성 완료</c.Button>
+            <c.Button onClick={goDone} disabled={isDisabled}>
+              설문 작성 완료
+            </c.Button>
           )}
         </c.ButtonContainer>
       </c.InputContainer>
