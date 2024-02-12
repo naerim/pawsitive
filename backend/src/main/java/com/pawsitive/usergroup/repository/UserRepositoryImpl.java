@@ -19,14 +19,6 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
 
     }
 
-    public Optional<User> findUserByUserId(String userId) {
-//        QUser qUser = QUser.user;
-//        JPQLQuery<User> user = from(qUser).where(qUser.userId.eq(userId)).select(qUser);
-//
-//        return Optional.ofNullable(user.fetchOne());
-        return null;
-    }
-
     @Override
     public Integer findUserNoByEmail(String email) {
         return from(qUser)

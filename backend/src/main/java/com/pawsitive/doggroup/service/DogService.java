@@ -44,12 +44,11 @@ public interface DogService {
     Dog getDogEntityByDogNo(int dogNo);
 
     /**
-     * 추천 강아지를 num마리 조회하는 메서드입니다.
+     * 추천 강아지를 <strong>2</strong>마리 조회하는 메서드입니다.
      *
-     * @param num 조회할 유기견 마리 수
      * @return 추천 강아지 목록
      */
-    List<DogListRes> getRecommendationDogList(Integer num);
+    List<DogListRes> getRecommendationDogList(Authentication authentication);
 
     /**
      * 유기견 공고 목록을 조회하는 메서드입니다.

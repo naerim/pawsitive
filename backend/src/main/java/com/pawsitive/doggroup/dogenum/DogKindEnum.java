@@ -31,4 +31,14 @@ public enum DogKindEnum {
         }
         return null;
     }
+
+    public static int stringToInt(String str) {
+        for (DogKindEnum value : DogKindEnum.values()) {
+            if (value.getName().equals(str)) {
+                return value.getNo();
+            }
+        }
+        return 9;
+    }
+
 }

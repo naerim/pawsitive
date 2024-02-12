@@ -76,10 +76,9 @@ public class DogController {
             @ApiResponse(responseCode = "200", description = "추천 강아지 목록을 정상적으로 반환한다."),
             @ApiResponse(responseCode = "400", description = "전달받은 페이지 값에 해당하는 추천 강아지가 없음.")
         })
-    public ResponseEntity<List<DogListRes>> getRecommendationDogList(
-        @RequestParam(required = false) Integer num) {
+    public ResponseEntity<List<DogListRes>> getRecommendationDogList(Authentication authentication) {
 
-        return ResponseEntity.status(OK).body(dogService.getRecommendationDogList(num));
+        return ResponseEntity.status(OK).body(dogService.getRecommendationDogList(authentication));
     }
 
 
@@ -97,6 +96,9 @@ public class DogController {
                                                                @RequestParam(required = false)
                                                                Integer neutralized,
                                                                Authentication authentication) {
+        log.warn("DogController : authentication = {}", authentication.toString());
+
+
         Page<DogListRes> dogPage = dogService.getDogList(pageable, kind, sex, neutralized, authentication);
 
         return ResponseEntity.status(OK).body(new PageResponse<>(dogPage));
