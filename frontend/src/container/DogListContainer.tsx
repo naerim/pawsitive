@@ -7,6 +7,7 @@ import { fetchBasicDogList } from '@src/apis/dog'
 import Filter from '@src/components/DogList/Filter'
 import { useAtom } from 'jotai'
 import { dogListParamsAtom } from '@src/stores/atoms/dog'
+import TextHeader from '@src/common/TextHeader'
 
 const DogListContainer = () => {
   const [basicDogListParams, setBasicDogListParams] = useAtom(dogListParamsAtom)
@@ -62,39 +63,36 @@ const DogListContainer = () => {
     setIsFilter(!isFilter)
   }
 
-  if (isLoading && basicDogList.length === 0) {
-    return (
-      <d.Container>
-        <div>
-          <button type="button" onClick={showFilterHandle}>
-            필터링
-          </button>
-          {isFilter && <Filter />}
-        </div>
-        {Array.from({ length: 2 }, (_, index) => (
-          <d.FakeDiv key={index} />
-        ))}
-      </d.Container>
-    )
-  }
+  const LoadingSkeleton = () => (
+    <>
+      {Array.from({ length: 6 }, (_, index) => (
+        <d.FakeDiv key={index} />
+      ))}
+    </>
+  )
 
   return (
     <d.Container>
-      <div>
-        <button type="button" onClick={showFilterHandle}>
+      <TextHeader title="유기견 공고 리스트" />
+      <d.FilterContainer>
+        <d.ShowFilterButton type="button" onClick={showFilterHandle}>
           필터링
-        </button>
+          <d.ShowFilterButtonImg
+            isShow={isFilter}
+            src="public/img/img_chevron_down.png"
+          />
+        </d.ShowFilterButton>
         {isFilter && <Filter />}
-      </div>
-      {basicDogList.map(basicDogInfo => (
-        <BasicDogInfoCard key={basicDogInfo.dogNo} dogInfo={basicDogInfo} />
-      ))}
-      {isFetching && (
-        <>
-          <d.FakeDiv />
-          <d.FakeDiv />
-        </>
-      )}
+      </d.FilterContainer>
+      <d.DogListContainer>
+        {isLoading ? (
+          <LoadingSkeleton />
+        ) : (
+          basicDogList.map(basicDogInfo => (
+            <BasicDogInfoCard key={basicDogInfo.dogNo} dogInfo={basicDogInfo} />
+          ))
+        )}
+      </d.DogListContainer>
     </d.Container>
   )
 }

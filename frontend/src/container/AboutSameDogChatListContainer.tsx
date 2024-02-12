@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { ChatRoomType } from '@src/types/chatType'
 import { fetchSameDogChatRooms } from '@src/apis/chat'
 import { useEffect, useState } from 'react'
-import ChattingListHeader from '@src/common/ChattingListHeader'
+import TextHeader from '@src/common/TextHeader'
 
 const AboutSameDogChatListContainer = () => {
   const { dogNo } = useParams<{ dogNo: string }>()
@@ -22,7 +22,7 @@ const AboutSameDogChatListContainer = () => {
 
   return (
     <c.Container>
-      <ChattingListHeader title="현재 진행중인 채팅방" />
+      <TextHeader title="현재 진행중인 채팅방" />
       <c.Wrap>
         {!isLoading &&
           sameDogChatList &&
