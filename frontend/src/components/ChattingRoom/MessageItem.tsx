@@ -24,7 +24,7 @@ const MessageItem = ({ item }: { item: MessageType }) => {
       <m.Wrap $me={userNo === user.userNo}>
         {type === 'notice' ? (
           <m.NoticeMessageBoxWrap>
-            <b>[공지]</b>
+            <b>[안내]</b>
             {message}
           </m.NoticeMessageBoxWrap>
         ) : (

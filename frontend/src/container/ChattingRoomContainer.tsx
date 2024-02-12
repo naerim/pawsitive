@@ -118,15 +118,14 @@ const ChattingRoomContainer = () => {
     }
   }
 
-  // 약속이 생성되었을때 알람 메세지
-  const sendCreateAppointmentNotice = () => {
+  // 공지에 대한 자동 메세지
+  const sendAppointmentNotice = (text: string) => {
     client.current!.publish({
       destination: `/api/v1/chats/pub/chat`,
       body: JSON.stringify({
         chatRoomNo: no,
         senderNo: user.userNo,
-        message:
-          '새로운 입양약속이 등록되었습니다! 입양약속 보기 버튼을 눌러 날짜와 시간을 확인해보세요.',
+        message: text,
         type: 'notice',
       }),
     })
@@ -176,7 +175,7 @@ const ChattingRoomContainer = () => {
           onClose={() => setCreateAppointmentModalVisible(false)}
           dogName={data.dog.name}
           shelterName={data.shelter.name}
-          sendAlarm={sendCreateAppointmentNotice}
+          sendAlarm={sendAppointmentNotice}
         />
       )}
       {confirmAppointmentModalVisible && (
@@ -187,7 +186,7 @@ const ChattingRoomContainer = () => {
           dogName={data.dog.name}
           promise={data.promise}
           onClose={() => setConfirmAppointmentModalVisible(false)}
-          sendAlarm={sendCreateAppointmentNotice}
+          sendAlarm={sendAppointmentNotice}
         />
       )}
     </>

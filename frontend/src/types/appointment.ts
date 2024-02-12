@@ -12,7 +12,7 @@ export type CreateAppointmentModalType = {
   chatRoomNo: number
   shelterName: string
   dogName: string
-  sendAlarm: () => void
+  sendAlarm: (text: string) => void
 } & CloseFunctionType
 
 // 입양약속 확인 타입
