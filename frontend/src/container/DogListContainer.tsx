@@ -7,7 +7,7 @@ import { fetchBasicDogList } from '@src/apis/dog'
 import Filter from '@src/components/DogList/Filter'
 import { useAtom } from 'jotai'
 import { dogListParamsAtom } from '@src/stores/atoms/dog'
-import ChattingListHeader from '@src/common/ChattingListHeader'
+import TextHeader from '@src/common/TextHeader'
 
 const DogListContainer = () => {
   const [basicDogListParams, setBasicDogListParams] = useAtom(dogListParamsAtom)
@@ -81,7 +81,7 @@ const DogListContainer = () => {
 
   return (
     <d.Container>
-      <ChattingListHeader title="유기견 공고 리스트" />
+      <TextHeader title="유기견 공고 리스트" />
       <d.FilterContainer>
         <d.ShowFilterButton type="button" onClick={showFilterHandle}>
           필터링
