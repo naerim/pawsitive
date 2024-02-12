@@ -1,19 +1,8 @@
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import * as tmImage from '@teachablemachine/image'
-import {
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  Title,
-  Tooltip,
-} from 'chart.js'
-import { Bar } from 'react-chartjs-2'
+import FindSimilarDogChart from '@src/components/FindSimilarDog/FindSimilarDogChart'
 import * as f from '@src/components/style/FindSimilarDogStyle'
-
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const FindSimilarDog = () => {
   const URL = 'https://teachablemachine.withgoogle.com/models/EYgf6bU6pf/'
@@ -114,43 +103,6 @@ const FindSimilarDog = () => {
     }
   }
 
-  // 실시간 예측결과 중 최댓값 추출
-  const maxProbability: number = Math.max(...chartData)
-  const backgroundColors = chartData.map(probability =>
-    probability === maxProbability
-      ? 'rgba(255, 146, 50, 0.8)'
-      : 'rgba(241, 242, 246, 0.8)',
-  )
-
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: '예측 결과',
-        data: chartData,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: backgroundColors,
-        barThickness: 40,
-        borderRadius: 10,
-      },
-    ],
-  }
-  const options = {
-    scales: {
-      x: {
-        display: false,
-      },
-      y: {
-        display: false,
-      },
-    },
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-  }
-
   const goBack = () => navigate('/mypage')
 
   return (
@@ -163,7 +115,7 @@ const FindSimilarDog = () => {
           <f.FixWrap>
             <f.WebcamContainer id="webcam-container" />
             <f.BarContainer>
-              <Bar data={data} options={options} />
+              <FindSimilarDogChart labels={labels} chartData={chartData} />
             </f.BarContainer>
             <f.LabelContainer id="label-container" />
           </f.FixWrap>
