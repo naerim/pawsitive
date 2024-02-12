@@ -19,7 +19,6 @@ export const createChatRoom = async (
 // 채팅방 조회
 export const fetchChatRoomDetail = async (chatRoomNo: number) => {
   return publicRequest.get(`/chatrooms/${chatRoomNo}`).then(res => {
-    console.log(res.data)
     return res.data
   })
 }
