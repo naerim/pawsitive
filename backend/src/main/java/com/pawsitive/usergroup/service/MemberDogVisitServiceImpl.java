@@ -83,23 +83,63 @@ public class MemberDogVisitServiceImpl implements MemberDogVisitService {
             int originalCount = memberDogMatrix.getMemberDogCount();
             List<Double> mbtis = mbtiToDouble(dog.getMbti().toCharArray());
 
-            memberDogMatrix.setKind(calculateNewValue(memberDogMatrix.getKind(), DogKindEnum.valueOf(dog.getKind()).getNo() * 1.0, originalCount));
-            memberDogMatrix.setNeutralized(calculateNewValue(memberDogMatrix.getNeutralized(), dog.isNeutralized() ? 1.0 : 0.0, originalCount));
-            memberDogMatrix.setAge(calculateNewValue(memberDogMatrix.getAge(), dog.getAge() * 1.0, originalCount));
-            memberDogMatrix.setSex(calculateNewValue(memberDogMatrix.getSex(), DogSexEnum.valueOf(dog.getSex()).getNo() * 1.0, originalCount));
-            memberDogMatrix.setEq(calculateNewValue(memberDogMatrix.getEq(), mbtis.get(0), originalCount));
-            memberDogMatrix.setEq(calculateNewValue(memberDogMatrix.getSi(), mbtis.get(1), originalCount));
-            memberDogMatrix.setEq(calculateNewValue(memberDogMatrix.getAw(), mbtis.get(2), originalCount));
-            memberDogMatrix.setEq(calculateNewValue(memberDogMatrix.getFc(), mbtis.get(3), originalCount));
+            memberDogMatrix.setKind(calculateNewValue(memberDogMatrix.getKind(),
+                DogKindEnum.stringToInt(dog.getKind()) * 1.0, originalCount));
+            memberDogMatrix.setNeutralized(calculateNewValue(memberDogMatrix.getNeutralized(),
+                dog.isNeutralized() ? 1.0 : 0.0, originalCount));
+            memberDogMatrix.setAge(calculateNewValue(memberDogMatrix.getAge(),
+                dog.getAge() * 1.0, originalCount));
+            memberDogMatrix.setSex(calculateNewValue(memberDogMatrix.getSex(),
+                DogSexEnum.stringToInt(dog.getSex()) * 1.0, originalCount));
+            memberDogMatrix.setEq(calculateNewValue(memberDogMatrix.getEq(),
+                mbtis.get(0), originalCount));
+            memberDogMatrix.setEq(calculateNewValue(memberDogMatrix.getSi(),
+                mbtis.get(1), originalCount));
+            memberDogMatrix.setEq(calculateNewValue(memberDogMatrix.getAw(),
+                mbtis.get(2), originalCount));
+            memberDogMatrix.setEq(calculateNewValue(memberDogMatrix.getFc(),
+                mbtis.get(3), originalCount));
 
             memberDogMatrix.setMemberDogCount(originalCount + 1);
 
             // 4. DB에 저장
             memberDogMatrixRepository.save(memberDogMatrix);
+
         }
 
     }
 
+    @Override
+    public List<Double> getMatrixAsList(int userNo) {
+        List<Double> list = new ArrayList<>();
+        Optional<MemberDogMatrix> memberDogMatrixOpt = memberDogMatrixRepository
+            .getMemberDogMatrixByUserNo(userNo);
+
+        // 만약 행렬이 존재하면 값 꺼내서 가져오기
+        if (memberDogMatrixOpt.isPresent()) {
+            MemberDogMatrix memberDogMatrix = memberDogMatrixOpt.get();
+
+            list.add(memberDogMatrix.getKind());
+            list.add(memberDogMatrix.getNeutralized());
+            list.add(memberDogMatrix.getAge());
+            list.add(memberDogMatrix.getSex());
+            list.add(memberDogMatrix.getEq());
+            list.add(memberDogMatrix.getSi());
+            list.add(memberDogMatrix.getAw());
+            list.add(memberDogMatrix.getFc());
+        } else {
+            // 행렬 존재하지 않으면 (조회 하나도 안 한 상태라면) 테이블 생성하고 행렬은 초기값으로 반환
+            memberDogMatrixRepository.save(MemberDogMatrix.builder()
+                .userNo(userNo)
+                .build());
+
+            for (int i = 0; i < 8; i++) {
+                list.add(0.0);
+            }
+        }
+
+        return list;
+    }
 
     @Scheduled(cron = "0 0 0 * * *")
     @Transactional

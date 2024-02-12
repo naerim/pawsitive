@@ -3,6 +3,8 @@ package com.pawsitive.doggroup.service;
 
 import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.common.util.S3BucketUtil;
+import com.pawsitive.doggroup.dogenum.DogKindEnum;
+import com.pawsitive.doggroup.dogenum.DogSexEnum;
 import com.pawsitive.doggroup.dogenum.DogStatusEnum;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
@@ -12,12 +14,15 @@ import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.doggroup.transfer.DogTransfer;
 import com.pawsitive.usergroup.entity.User;
+import com.pawsitive.usergroup.exception.UserNotFoundException;
+import com.pawsitive.usergroup.exception.UserNotLoginException;
 import com.pawsitive.usergroup.repository.MemberDogLikeRepository;
 import com.pawsitive.usergroup.repository.MemberDogMatrixRepository;
 import com.pawsitive.usergroup.repository.UserRepository;
 import com.pawsitive.usergroup.service.UserService;
 import com.pawsitive.usergroup.service.MemberDogVisitService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -53,6 +58,8 @@ public class DogServiceImpl implements DogService {
     private final MemberDogVisitService memberDogVisitService;
 
     private final S3BucketUtil s3BucketUtil;
+
+    private final Double MATRIX_MAX_VALUE = 15.0;
 
     @Override
     @Transactional
@@ -124,13 +131,63 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
-    public List<DogListRes> getRecommendationDogList(Integer num) {
+    public List<DogListRes> getRecommendationDogList(Authentication authentication) {
+
+        if (Objects.isNull(authentication)) { // 인증 정보가 없으면 예외처리
+            throw new UserNotLoginException();
+        }
+
+        UserDetails user = (UserDetails) authentication.getPrincipal();
+        String email = user.getUsername();
+        Integer userNo = userRepository.findUserNoByEmail(email);
+
+        // MemberDogMatrix 가져오기
+        List<Double> memberDogMatrix = memberDogVisitService.getMatrixAsList(userNo);
+
         // 전체 dog List 가져오기
         List<DogListRes> dogList = dogRepository.getRecommendationDogList();
 
+        // DogListRes를 List<Double> 타입으로 변환하기
+        List<List<Double>> dogMatrixList = new ArrayList<>();
+
+        for (DogListRes res : dogList) {
+            dogMatrixList.add(dogListResToMatrix(res));
+        }
+
+        // MSD 계산해서 최소값 2개만 가지고 있는 List를 반환하기
+//        List<Double> minList =
+
+
         // TODO : 행렬 만들기, MSD 계산하기, 최소값 2개 찾기
+
+
 //        setThumbnailImage(dogList);
         return dogList;
+    }
+
+    private List<Double> dogListResToMatrix(DogListRes res) {
+        List<Double> list = new ArrayList<>();
+
+        list.add(DogKindEnum.stringToInt(res.getKind()) / MATRIX_MAX_VALUE);
+        list.add(res.isNeutralized() ? 1.0 / MATRIX_MAX_VALUE : 0.0);
+        list.add(res.getAge() / MATRIX_MAX_VALUE);
+        list.add(DogSexEnum.stringToInt(res.getSex()) / MATRIX_MAX_VALUE);
+        list.addAll(mbtiToDouble(res.getMbti().toCharArray()));
+
+        // 마지막에 dogNo를 넣어주기 (어떤 강아지인지 식별하기 위함)
+        list.add(res.getDogNo() * 1.0);
+
+        return list;
+    }
+
+    private List<Double> mbtiToDouble(char[] mbti) {
+        List<Double> list = new ArrayList<>();
+        list.add(mbti[0] == 'E' ? 1.0 / MATRIX_MAX_VALUE : 0.0);
+        list.add(mbti[1] == 'S' ? 1.0 / MATRIX_MAX_VALUE : 0.0);
+        list.add(mbti[2] == 'A' ? 1.0 / MATRIX_MAX_VALUE : 0.0);
+        list.add(mbti[3] == 'F' ? 1.0 / MATRIX_MAX_VALUE : 0.0);
+
+        return list;
     }
 
     @Override
