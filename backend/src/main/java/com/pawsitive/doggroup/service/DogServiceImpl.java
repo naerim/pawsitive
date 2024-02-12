@@ -122,6 +122,7 @@ public class DogServiceImpl implements DogService {
         return res;
     }
 
+    @Transactional
     @Override
     public DogDetailRes getDogByDogNo(int dogNo, int userNo) {
         Dog dog = dogRepository.findByDogNo(dogNo).orElseThrow(DogNotFoundException::new);

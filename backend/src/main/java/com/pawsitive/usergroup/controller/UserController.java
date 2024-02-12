@@ -7,8 +7,12 @@ import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.usergroup.dto.request.SilentRefreshReq;
 import com.pawsitive.usergroup.dto.request.UserSurveyReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
+import com.pawsitive.usergroup.dto.response.MemberDogVisitListRes;
+import com.pawsitive.usergroup.dto.response.MemberDogVisitRes;
 import com.pawsitive.usergroup.dto.response.UpdateFieldRes;
 import com.pawsitive.usergroup.dto.response.UserSurveyRes;
+import com.pawsitive.usergroup.entity.MemberDogVisit;
+import com.pawsitive.usergroup.service.MemberDogVisitService;
 import com.pawsitive.usergroup.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -30,6 +36,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+
+    private final MemberDogVisitService memberDogVisitService;
 
     /**
      * User 인증 필터 테스트용 메서드입니다.
@@ -51,11 +59,32 @@ public class UserController {
             .body(new BaseResponseBody(OK, "이 유저는 로그인 되어 있습니다."));
     }
 
+    @GetMapping("/matrix/{userNo}")
+    @Operation(summary = "유저 행렬 가져오기 (테스트용)",
+        description = "조회에 따라 행렬이 잘 들어가는지 확인하기 위해서 만들었습니다.",
+        tags = {"01.User"}
+    )
+    public ResponseEntity<List<Double>> getMemberDogMatrix(@PathVariable int userNo) {
+        return ResponseEntity
+            .status(OK)
+            .body(memberDogVisitService.getMatrixAsList(userNo));
+    }
+
+    @GetMapping("/visited/{userNo}")
+    @Operation(summary = "유저 방문기록 가져오기 (테스트용)",
+        description = "조회에 따라 방문기록이 잘 들어가는지 확인하기 위해서 만들었습니다.",
+        tags = {"01.User"}
+    )
+    public ResponseEntity<MemberDogVisitListRes> getMemberDogVisit(@PathVariable int userNo) {
+        return ResponseEntity
+            .status(OK)
+            .body(memberDogVisitService.getVisitList(userNo));
+    }
+
     /**
      * 유저 정보를 수정하는 컨트롤러 메서드입니다.
      *
-     * @param userNo 유저 고유번호
-     * @param req    수정할 값을 가지고 있는 요청 DTO 객체
+     * @param req 수정할 값을 가지고 있는 요청 DTO 객체
      * @return OK 응답객체
      */
     @PostMapping("/update")
