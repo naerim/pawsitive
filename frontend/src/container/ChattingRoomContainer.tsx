@@ -126,7 +126,7 @@ const ChattingRoomContainer = () => {
         chatRoomNo: no,
         senderNo: user.userNo,
         message:
-          '[안내] 새로운 입양약속이 생겼어요. "입양약속 보기" 버튼을 눌러 확인해보세요.',
+          '새로운 입양약속이 등록되었습니다! 입양약속 보기 버튼을 눌러 날짜와 시간을 확인해보세요.',
         type: 'notice',
       }),
     })

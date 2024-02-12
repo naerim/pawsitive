@@ -4,7 +4,7 @@ import { useAtom } from 'jotai/index'
 import { userAtom } from '@src/stores/atoms/user'
 
 const MessageItem = ({ item }: { item: MessageType }) => {
-  const { message, userNo, chatNo, createdAt } = item
+  const { message, userNo, chatNo, createdAt, type } = item
   const [user] = useAtom(userAtom)
 
   const extractTime = (date: string) => {
@@ -22,8 +22,17 @@ const MessageItem = ({ item }: { item: MessageType }) => {
   return (
     <m.Container key={chatNo}>
       <m.Wrap $me={userNo === user.userNo}>
-        <m.MessageBox $me={userNo === user.userNo}>{message}</m.MessageBox>
-        <span>{extractTime(createdAt)}</span>
+        {type === 'notice' ? (
+          <m.NoticeMessageBoxWrap>
+            <b>[공지]</b>
+            {message}
+          </m.NoticeMessageBoxWrap>
+        ) : (
+          <>
+            <m.MessageBox $me={userNo === user.userNo}>{message}</m.MessageBox>
+            <span>{extractTime(createdAt)}</span>
+          </>
+        )}
       </m.Wrap>
     </m.Container>
   )
