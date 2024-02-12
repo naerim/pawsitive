@@ -83,7 +83,7 @@ const DogListContainer = () => {
         <d.ShowFilterButton type="button" onClick={showFilterHandle}>
           필터링
           <d.ShowFilterButtonImg
-            isShow={isFilter}
+            $isShow={isFilter}
             src="public/img/img_chevron_down.png"
           />
         </d.ShowFilterButton>
