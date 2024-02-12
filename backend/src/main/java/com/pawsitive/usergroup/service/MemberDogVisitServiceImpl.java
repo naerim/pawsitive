@@ -72,10 +72,7 @@ public class MemberDogVisitServiceImpl implements MemberDogVisitService {
             // MemberDogMatrix 갱신을 위해 가져오기 (없으면 생성)
             MemberDogMatrix memberDogMatrix = memberDogMatrixRepository
                 .getMemberDogMatrixByUserNo(userNo)
-                .orElse(MemberDogMatrix.builder()
-                    .user(member.getUser())
-                    .userNo(member.getUserNo())
-                    .build());
+                .orElse(MemberDogMatrix.builder().userNo(member.getUserNo()).build());
 
             // 1. 조회한 유기견 공고를 행렬로 만들기
             // 2. 해당 행렬 정규화 (0~1 사이 값 가지게 MATRIX_MAX_VALUE로 나누기)
