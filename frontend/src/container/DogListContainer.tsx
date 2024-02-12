@@ -14,6 +14,7 @@ const DogListContainer = () => {
   const [basicDogListParams] = useAtom(dogListParamsAtom)
   // const [totalPageCnt, setTotalPageCnt] = useState(7)
   const [isFilter, setIsFilter] = useState(false)
+  const [allDogList, setAllDogList] = useState([])
   const [user] = useAtom(userAtom)
 
   const { data, isLoading, refetch } = useQuery<DogListType[]>({
@@ -26,6 +27,7 @@ const DogListContainer = () => {
         })
         // setBasicDogList(result.content || [])
         // setTotalPageCnt(result.totalPages)
+        setAllDogList(result.content)
         return result.content || []
       }
     },
