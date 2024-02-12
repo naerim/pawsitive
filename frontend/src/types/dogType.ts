@@ -45,4 +45,5 @@ export type BasicDogListParamsType = {
   kind: string[]
   sex: number
   neutralized: number
+  userNo: number
 }
