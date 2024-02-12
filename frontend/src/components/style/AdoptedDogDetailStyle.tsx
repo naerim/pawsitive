@@ -40,16 +40,23 @@ export const FrontCard = styled.div`
 export const BackCard = styled.div`
   width: 100%;
   height: 225px;
-  margin: 2px 2px 2px 7px;
+  margin: 2px 2px 2px 0;
   // 앞, 뒤 카드 같은 위치에 둠
   position: absolute;
   padding: 11px;
   border-radius: 9px;
   background: #ff9232;
+  overflow: hidden;
   //  앞면에 반전된 뒷 면의 글들을 투영시키지 않기 위해
   backface-visibility: hidden;
   // 뒤집힌 상태로 둠
   transform: rotateY(180deg);
+`
+
+export const BackCardDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 300px;
 `
 
 export const DogImage = styled.img`
@@ -91,17 +98,44 @@ export const Day = styled.div`
   line-height: normal;
 `
 
-export const Text = styled.div`
-  margin: 10px;
-  font-size: 18px;
+export const BackDogName = styled.div`
+  margin: 20px 8px 15px;
+  font-size: 32px;
   font-weight: 400;
+  color: #fff;
+`
+export const Text = styled.div`
+  margin: 8px 10px;
+  font-size: 13px;
+  font-weight: 200;
   color: #fff;
 `
 
 export const ModButton = styled.button`
-  margin: 5px 10px 10px 10px;
-  padding: 2px 5px;
-  color: #f59021;
-  font-weight: 600;
-  background-color: white;
+  margin: 20px 0 0 5px;
+  text-decoration: underline;
+  padding: 20px 5px;
+  color: white;
+  font-weight: 300;
+  background: #ff9232;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+`
+
+export const BackContent = styled.div`
+  position: relative;
+  width: 200px;
+`
+
+export const BackImgDiv = styled.div``
+
+export const BackSex = styled.img`
+  width: 200px;
+  height: auto;
+  margin: 20px 0 0 0;
+  position: absolute;
+  left: 60px;
 `
