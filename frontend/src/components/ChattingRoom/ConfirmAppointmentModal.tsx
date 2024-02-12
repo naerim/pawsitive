@@ -2,7 +2,7 @@ import XModal from '@src/common/XModal'
 import * as c from '@src/components/ChattingRoom/_style/ConfirmAppointmentModalStyle'
 import { useAtom } from 'jotai'
 import { userAtom } from '@src/stores/atoms/user'
-import { CloseFunctionType } from '@src/types/components/ModalType'
+import { CloseFunctionType } from '@src/types/commonType'
 
 const ConfirmAppointmentModal = (props: CloseFunctionType) => {
   const { onClose } = props

@@ -1,11 +1,11 @@
 import * as c from '@src/components/ChattingRoom/_style/CreateAppointmentModalStyle'
 import XModal from '@src/common/XModal'
 import { ChangeEvent, useState } from 'react'
-import { CreateAppointmentModalType } from '@src/types/components/ModalType'
 import { useMutation } from '@tanstack/react-query'
 import { createAppointment } from '@src/apis/appointment'
 import { useAtom } from 'jotai'
 import { userAtom } from '@src/stores/atoms/user'
+import { CreateAppointmentModalType } from '@src/types/appointment'
 
 const CreateAppointmentModal = (props: CreateAppointmentModalType) => {
   const [user] = useAtom(userAtom)

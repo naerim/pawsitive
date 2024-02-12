@@ -1,6 +1,6 @@
 import * as x from '@src/common/style/XModalStyle'
 import { ChildrenType } from '@src/types/propsType'
-import { CloseFunctionType } from '@src/types/components/ModalType'
+import { CloseFunctionType } from '@src/types/commonType'
 
 const XModal = ({ children, onClose }: ChildrenType & CloseFunctionType) => {
   return (

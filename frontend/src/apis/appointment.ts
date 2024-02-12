@@ -11,7 +11,7 @@ export const createAppointment = async (
 }
 
 // 보호소회원이 유기견 입양약속 수락
-export const AcceptAppointment = async (
+export const acceptAppointment = async (
   acceptAppointmentReq: AppointmentReqType,
 ) => {
   return publicRequest
