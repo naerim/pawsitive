@@ -1,8 +1,8 @@
 import * as c from '@src/components/Chatting/_style/ChattingListItemStyle'
-import { ChatRoomType } from '@src/types/chatType'
+import { ChattingListItemType } from '@src/types/chatType'
 import { useNavigate } from 'react-router-dom'
 
-const ChattingListItem = (props: ChatRoomType) => {
+const ChattingListItem = (props: ChattingListItemType) => {
   const {
     chatRoomNo,
     name,
@@ -10,12 +10,11 @@ const ChattingListItem = (props: ChatRoomType) => {
     shelterProfileImage,
     lastChat,
     id,
-    dogNo,
   } = props
 
   const navigate = useNavigate()
   const goChatRoom = () => {
-    navigate(`/chat/${chatRoomNo}`, { state: { chatRoomNo, dogNo } })
+    navigate(`/chat/${chatRoomNo}`)
   }
 
   return (

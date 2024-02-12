@@ -1,4 +1,4 @@
-import * as d from '@src/components/style/DogListContainer'
+import * as d from '@src/container/style/DogListContainerStyle'
 import { useEffect, useState } from 'react'
 import { DogListType } from '@src/types/dogType'
 import BasicDogInfoCard from '@src/common/BasicDogInfoCard'
@@ -8,28 +8,26 @@ import Filter from '@src/components/DogList/Filter'
 import { useAtom } from 'jotai'
 import { dogListParamsAtom } from '@src/stores/atoms/dog'
 import TextHeader from '@src/common/TextHeader'
+import { userAtom } from '@src/stores/atoms/user'
 
 const DogListContainer = () => {
-  const [basicDogListParams, setBasicDogListParams] = useAtom(dogListParamsAtom)
-  const [basicDogList, setBasicDogList] = useState<DogListType[]>([])
+  const [basicDogListParams] = useAtom(dogListParamsAtom)
   // const [totalPageCnt, setTotalPageCnt] = useState(7)
   const [isFilter, setIsFilter] = useState(false)
-  const { userNo } = JSON.parse(window.localStorage.getItem('currentUser'))
+  const [user] = useAtom(userAtom)
 
-  const { isLoading, refetch } = useQuery<DogListType[]>({
+  const { data, isLoading, refetch } = useQuery<DogListType[]>({
     queryKey: ['basicDogList'],
     queryFn: async () => {
       if (basicDogListParams) {
-        setBasicDogListParams({ ...basicDogListParams, userNo })
         const result = await fetchBasicDogList({
           ...basicDogListParams,
-          userNo,
+          userNo: user.userNo,
         })
-        setBasicDogList(result.content || [])
+        // setBasicDogList(result.content || [])
         // setTotalPageCnt(result.totalPages)
         return result.content || []
       }
-      return []
     },
   })
 
@@ -77,28 +75,33 @@ const DogListContainer = () => {
   )
 
   return (
-    <d.Container>
+    <>
       <TextHeader title="유기견 공고 리스트" />
-      <d.FilterContainer>
-        <d.ShowFilterButton type="button" onClick={showFilterHandle}>
-          필터링
-          <d.ShowFilterButtonImg
-            $isShow={isFilter}
-            src="public/img/img_chevron_down.png"
-          />
-        </d.ShowFilterButton>
-        {isFilter && <Filter />}
-      </d.FilterContainer>
-      <d.DogListContainer>
-        {isLoading ? (
-          <LoadingSkeleton />
-        ) : (
-          basicDogList.map(basicDogInfo => (
-            <BasicDogInfoCard key={basicDogInfo.dogNo} dogInfo={basicDogInfo} />
-          ))
-        )}
-      </d.DogListContainer>
-    </d.Container>
+      <d.Container>
+        <d.FilterContainer>
+          <d.ShowFilterButton type="button" onClick={showFilterHandle}>
+            필터링
+            <d.ShowFilterButtonImg
+              $isShow={isFilter}
+              src="public/img/img_chevron_down.png"
+            />
+          </d.ShowFilterButton>
+          {isFilter && <Filter />}
+        </d.FilterContainer>
+        <d.DogListContainerStyle>
+          {isLoading ? (
+            <LoadingSkeleton />
+          ) : (
+            data.map(basicDogInfo => (
+              <BasicDogInfoCard
+                key={basicDogInfo.dogNo}
+                dogInfo={basicDogInfo}
+              />
+            ))
+          )}
+        </d.DogListContainerStyle>
+      </d.Container>
+    </>
   )
 }
 
