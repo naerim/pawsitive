@@ -155,6 +155,7 @@ const ChattingRoomContainer = () => {
       </c.Container>
       {createAppointmentModalVisible && (
         <CreateAppointmentModal
+          chatRoomNo={Number(no)}
           onClose={() => setCreateAppointmentModalVisible(false)}
           dogName={data.dog.name}
           shelterName={data.shelter.name}
