@@ -163,6 +163,11 @@ const ChattingRoomContainer = () => {
       )}
       {confirmAppointmentModalVisible && (
         <ConfirmAppointmentModal
+          memberName={data.member.name}
+          chatRoomNo={Number(no)}
+          shelterName={data.shelter.name}
+          dogName={data.dog.name}
+          promise={data.promise}
           onClose={() => setConfirmAppointmentModalVisible(false)}
         />
       )}

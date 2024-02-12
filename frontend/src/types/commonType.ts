@@ -8,3 +8,7 @@ export type LightColorMoveCardType = {
   title: string
   url: string
 }
+
+export type CloseFunctionType = {
+  onClose: () => void
+}
