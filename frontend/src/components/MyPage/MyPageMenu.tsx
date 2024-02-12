@@ -46,6 +46,15 @@ const MyPageMenu = () => {
           </m.MenuItem>
         )}
 
+        {user.role === 'USER' && user.stage > 1 && (
+          <m.MenuItem to={`/mypage/survey/detail/${user.userNo}`}>
+            <m.MenuItemDiv>
+              작성한 입양설문 보기
+              <m.RightArrow src="/icon/icon_black_arrow_right.png" />
+            </m.MenuItemDiv>
+          </m.MenuItem>
+        )}
+
         {user.role === 'SHELTER' && (
           <m.MenuItem to="/dogs">
             <m.MenuItemDiv>

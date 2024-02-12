@@ -6,6 +6,7 @@ import com.pawsitive.doggroup.dogenum.DogSexEnum;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.repository.DogRepository;
+import com.pawsitive.usergroup.dto.response.MemberDogVisitListRes;
 import com.pawsitive.usergroup.entity.Member;
 import com.pawsitive.usergroup.entity.MemberDogMatrix;
 import com.pawsitive.usergroup.entity.MemberDogVisit;
@@ -64,10 +65,12 @@ public class MemberDogVisitServiceImpl implements MemberDogVisitService {
             Member member = memberRepository.findMemberByUserNo(userNo).orElseThrow();
             Dog dog = dogRepository.findByDogNo(dogNo).orElseThrow();
 
-            memberDogVisitRepository.save(MemberDogVisit.builder()
+            MemberDogVisit memberDogVisit = MemberDogVisit.builder()
                 .member(member)
                 .dog(dog)
-                .build());
+                .build();
+
+            memberDogVisitRepository.save(memberDogVisit);
 
             // MemberDogMatrix 갱신을 위해 가져오기 (없으면 생성)
             MemberDogMatrix memberDogMatrix = memberDogMatrixRepository
@@ -136,6 +139,11 @@ public class MemberDogVisitServiceImpl implements MemberDogVisitService {
         }
 
         return list;
+    }
+
+    @Override
+    public MemberDogVisitListRes getVisitList(int userNo) {
+        return memberDogVisitRepository.getMemberDogVisitedList(userNo);
     }
 
     @Scheduled(cron = "0 0 0 * * *")

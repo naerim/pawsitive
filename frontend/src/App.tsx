@@ -38,6 +38,7 @@ import ChattingPage from '@src/pages/ChattingPage'
 import AboutSameDogChatListPage from '@src/pages/AboutSameDogChatListPage'
 import CreateAdoptedAppointmentContainer from '@src/container/CreateAdoptedAppointmentContainer'
 import ScrollToTop from '@src/hooks/ScrollToTop'
+import AdoptionSurveyDetailPage from '@src/pages/AdoptionSurveyDetailPage'
 import AdoptedAppointmentContainer from '@src/container/AdoptedAppointmentContainer'
 // import { userAtom } from '@src/stores/atoms/user'
 
@@ -64,6 +65,10 @@ const AuthRoutes = () => (
     <Route path="/dogs/:dogNo" element={<DogDetailPage />} />
     <Route path="/mypage/survey" element={<AdoptionSurveyPage />} />
     <Route path="/mypage/survey/done" element={<AdoptionSurveyDonePage />} />
+    <Route
+      path="/mypage/survey/detail/:userNo"
+      element={<AdoptionSurveyDetailPage />}
+    />
     <Route path="/chat" element={<ChattingPage />} />
     <Route path="/shelter/chat/:dogNo" element={<AboutSameDogChatListPage />} />
     <Route path="/chat/:no" element={<ChattingRoomPage />} />
@@ -76,7 +81,6 @@ const AuthRoutes = () => (
       element={<AdoptedAppointmentContainer />}
     />
     <Route path="/confirm/pawsitive" element={<ConfirmPawsitivePage />} />
-    <Route path="/mypage/adoptionSurvey" element={<AdoptionSurveyPage />} />
     <Route path="/dictionary" element={<DictionaryListPage />} />
     <Route path="/dictionary/:contentNo" element={<DictionaryDetailPage />} />
     <Route path="/adopted-dog/detail" element={<AdoptedDogDetailPage />} />

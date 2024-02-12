@@ -23,10 +23,11 @@ const DogDetailContainer = () => {
   // const dogNo = location.state?.dogNo
   const { dogNo } = useParams<{ dogNo: string }>()
   const [dogDetail, setDogDetail] = useAtom(dogDetailAtom)
+  const { userNo } = JSON.parse(window.localStorage.getItem('currentUser'))
 
   const { data, isLoading } = useQuery<DogType | null>({
     queryKey: ['dogDetail'],
-    queryFn: () => fetchDogDetails(Number(dogNo)),
+    queryFn: () => fetchDogDetails(Number(dogNo), userNo),
   })
 
   useEffect(() => {

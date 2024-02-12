@@ -17,8 +17,8 @@ export const ShowFilterButton = styled.div`
   margin: 0 6px 6px 6px;
 `
 
-export const ShowFilterButtonImg = styled.img`
-  transform: ${({ isShow }) => (isShow ? 'rotate(180deg)' : 'rotate(0deg)')};
+export const ShowFilterButtonImg = styled.img<{ $isShow: boolean }>`
+  transform: ${props => (props.$isShow ? 'rotate(180deg)' : 'rotate(0deg)')};
   transition: transform 0.3s ease;
   margin-left: 6px;
 `

@@ -54,4 +54,5 @@ export const dogListParamsAtom = atom<BasicDogListParamsType>({
   ],
   sex: 0,
   neutralized: 0,
+  userNo: 0,
 })

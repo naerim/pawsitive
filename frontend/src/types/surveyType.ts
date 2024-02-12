@@ -1,22 +1,22 @@
 export type SurveyFormType = {
-  user_no: number
-  accommodation_type: string
+  userNo: number
+  accommodationType: string
   carer: string
   reason: string
-  family_type: string
-  family_introduce: string
-  family_add: string
-  family_agree: string
-  alone_time: string
-  temporary_residence: string
-  raise_history: string
-  raise_term: string
-  raise_no_reason: string
-  pet_sociability: string
-  pet_route: string
+  familyType: string
+  familyIntroduce: string
+  familyAdd: string
+  familyAgree: string
+  aloneTime: string
+  temporaryResidence: string
+  raiseHistory: string
+  raiseTerm: string
+  petRoute: string
+  petSociability: string
+  raiseNoReason: string
   personality: string
   training: string
   hospital: string
   expenditure: string
-  forever_responsibility: string
+  foreverResponsibility: string
 }

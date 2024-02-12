@@ -12,7 +12,7 @@ const SurveyQuestionNo12 = () => {
     setSelectedValue(value)
     setSurveyData(prevData => ({
       ...prevData,
-      pet_route: value,
+      petRoute: value,
     }))
   }
   return (
