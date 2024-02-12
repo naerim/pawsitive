@@ -27,7 +27,9 @@ const DogListContainer = () => {
         })
         // setBasicDogList(result.content || [])
         // setTotalPageCnt(result.totalPages)
-        setAllDogList(result.content)
+        if (allDogList.length === 0) {
+          setAllDogList(result.content || [])
+        }
         return result.content || []
       }
     },
