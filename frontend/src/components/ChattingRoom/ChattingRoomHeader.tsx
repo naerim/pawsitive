@@ -20,6 +20,8 @@ const ChattingRoomHeader = (props: { dogNo: number }) => {
 
   const goCreateAdoptedAppointment = () => navigate('/new/adopted-appointment')
 
+  const goAdoptedAppointment = () => navigate('/adopted-appointment/1')
+
   return (
     <c.Container>
       <c.Wrap>
@@ -58,7 +60,7 @@ const ChattingRoomHeader = (props: { dogNo: number }) => {
                 <button type="button" onClick={goCreateAdoptedAppointment}>
                   입양약속 잡기
                 </button>
-                <button type="button" onClick={goCreateAdoptedAppointment}>
+                <button type="button" onClick={goAdoptedAppointment}>
                   입양약속 보기
                 </button>
                 {user.role === 'SHELTER' && (
