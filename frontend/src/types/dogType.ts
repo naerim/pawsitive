@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react'
+
 export type DogType = {
   dogNo: number
   userNo: number
@@ -45,4 +47,9 @@ export type BasicDogListParamsType = {
   kind: string[]
   sex: number
   neutralized: number
+}
+
+export type DogStatusSectionType = {
+  statusNumber: number
+  setStatusNumber: Dispatch<SetStateAction<number>>
 }

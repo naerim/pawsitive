@@ -56,9 +56,9 @@ const MyPageMenu = () => {
         )}
 
         {user.role === 'SHELTER' && (
-          <m.MenuItem to="/dogs">
+          <m.MenuItem to="/shelter/dogs">
             <m.MenuItemDiv>
-              입양 완료 강아지
+              내 보호소 강아지 보기
               <m.RightArrow src="/icon/icon_black_arrow_right.png" />
             </m.MenuItemDiv>
           </m.MenuItem>
