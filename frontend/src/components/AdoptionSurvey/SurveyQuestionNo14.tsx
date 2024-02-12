@@ -11,7 +11,7 @@ const SurveyQuestionNo14 = () => {
     setSelectedValue(value)
     setSurveyData(prevData => ({
       ...prevData,
-      raise_no_reason: value,
+      raiseNoReason: value,
     }))
   }
   return (

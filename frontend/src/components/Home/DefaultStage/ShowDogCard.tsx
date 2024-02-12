@@ -1,9 +1,15 @@
 import * as s from '@src/components/style/ShowDogCardStyle'
 import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 const ShowDogCard = () => {
-  const userRole = JSON.parse(window.localStorage.getItem('currentUser')).role
-
+  const [userRole, setUserRole] = useState('')
+  // 로그인 안한 상태로, 로컬스토리지 비어있으면 에러떠서 임시로 수정해두었습니다.
+  useEffect(() => {
+    if (window.localStorage.getItem('currentUser')) {
+      setUserRole(JSON.parse(window.localStorage.getItem('currentUser')).role)
+    }
+  }, [])
   const showDogCardInfo =
     userRole === 'USER'
       ? {
