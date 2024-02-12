@@ -5,8 +5,10 @@ import {
 } from '@src/types/dogType'
 import queryString from 'query-string'
 
-export const fetchDogDetails = async (dogNo: number) => {
-  return publicRequest.get(`/dogs/${dogNo}`).then(res => res.data)
+export const fetchDogDetails = async (dogNo: number, userNo: number) => {
+  return publicRequest
+    .get(`/dogs/${dogNo}/?userNo=${userNo}`)
+    .then(res => res.data)
 }
 
 // 유기견 등록

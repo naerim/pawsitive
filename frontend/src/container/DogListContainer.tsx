@@ -14,12 +14,17 @@ const DogListContainer = () => {
   const [basicDogList, setBasicDogList] = useState<DogListType[]>([])
   // const [totalPageCnt, setTotalPageCnt] = useState(7)
   const [isFilter, setIsFilter] = useState(false)
+  const { userNo } = JSON.parse(window.localStorage.getItem('currentUser'))
 
-  const { isLoading, isFetching, refetch } = useQuery<DogListType[]>({
+  const { isLoading, refetch } = useQuery<DogListType[]>({
     queryKey: ['basicDogList'],
     queryFn: async () => {
       if (basicDogListParams) {
-        const result = await fetchBasicDogList(basicDogListParams)
+        setBasicDogListParams({ ...basicDogListParams, userNo })
+        const result = await fetchBasicDogList({
+          ...basicDogListParams,
+          userNo,
+        })
         setBasicDogList(result.content || [])
         // setTotalPageCnt(result.totalPages)
         return result.content || []
@@ -78,7 +83,7 @@ const DogListContainer = () => {
         <d.ShowFilterButton type="button" onClick={showFilterHandle}>
           필터링
           <d.ShowFilterButtonImg
-            isShow={isFilter}
+            $isShow={isFilter}
             src="public/img/img_chevron_down.png"
           />
         </d.ShowFilterButton>
