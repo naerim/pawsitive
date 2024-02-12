@@ -1,5 +1,8 @@
 import { publicRequest } from '@src/hooks/requestMethods'
-import { BasicDogListParamsType } from '@src/types/dogType'
+import {
+  BasicDogListParamsType,
+  DogListKindParamsType,
+} from '@src/types/dogType'
 import queryString from 'query-string'
 
 export const fetchDogDetails = async (dogNo: number) => {
@@ -43,5 +46,16 @@ export const fetchSameShelterDogs = async (number: number) => {
     .catch(error => {
       console.log(error)
       throw new Error('같은 보호소 유기견')
+    })
+}
+
+// 유기견 품종별 리스트 조회
+export const fetchKindDogList = async (params: DogListKindParamsType) => {
+  return publicRequest
+    .get(`/dogs?${queryString.stringify(params)}`)
+    .then(res => res.data)
+    .catch(error => {
+      console.log(error)
+      throw new Error('유기견 조회')
     })
 }
