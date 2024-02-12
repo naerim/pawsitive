@@ -63,21 +63,13 @@ const DogListContainer = () => {
     setIsFilter(!isFilter)
   }
 
-  if (isLoading && basicDogList.length === 0) {
-    return (
-      <d.DogListContainer>
-        <div>
-          <button type="button" onClick={showFilterHandle}>
-            필터링
-          </button>
-          {isFilter && <Filter />}
-        </div>
-        {Array.from({ length: 2 }, (_, index) => (
-          <d.FakeDiv key={index} />
-        ))}
-      </d.DogListContainer>
-    )
-  }
+  const LoadingSkeleton = () => (
+    <>
+      {Array.from({ length: 6 }, (_, index) => (
+        <d.FakeDiv key={index} />
+      ))}
+    </>
+  )
 
   return (
     <d.Container>
@@ -93,14 +85,12 @@ const DogListContainer = () => {
         {isFilter && <Filter />}
       </d.FilterContainer>
       <d.DogListContainer>
-        {basicDogList.map(basicDogInfo => (
-          <BasicDogInfoCard key={basicDogInfo.dogNo} dogInfo={basicDogInfo} />
-        ))}
-        {isFetching && (
-          <>
-            <d.FakeDiv />
-            <d.FakeDiv />
-          </>
+        {isLoading ? (
+          <LoadingSkeleton />
+        ) : (
+          basicDogList.map(basicDogInfo => (
+            <BasicDogInfoCard key={basicDogInfo.dogNo} dogInfo={basicDogInfo} />
+          ))
         )}
       </d.DogListContainer>
     </d.Container>
