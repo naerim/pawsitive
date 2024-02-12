@@ -46,7 +46,7 @@ const AdoptedDogModModal = (props: PropsType) => {
     mutationKey: ['updateUserStage'],
     mutationFn: updateUserStage,
     onSuccess: () => {
-      setUser(user => ({ ...user, stage: 4 }))
+      setUser(prevData => ({ ...prevData, stage: 4 }))
       navigate('/')
       handleClose()
     },
