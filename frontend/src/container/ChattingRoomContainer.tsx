@@ -116,7 +116,7 @@ const ChattingRoomContainer = () => {
       scrollToBottom()
     }
   }
-  console.log(data)
+
   useEffect(() => {
     scrollToBottom()
   }, [messages])
@@ -163,8 +163,9 @@ const ChattingRoomContainer = () => {
       )}
       {confirmAppointmentModalVisible && (
         <ConfirmAppointmentModal
+          memberName={data.member.name}
           chatRoomNo={Number(no)}
-          shelterName={data.shetle.name}
+          shelterName={data.shelter.name}
           dogName={data.dog.name}
           promise={data.promise}
           onClose={() => setConfirmAppointmentModalVisible(false)}

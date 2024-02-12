@@ -16,6 +16,7 @@ export type CreateAppointmentModalType = {
 
 // 입양약속 확인 타입
 export type ConfirmAppointmentModalType = {
+  memberName: string
   promise: {
     date: string
     isAccepted: boolean | null
