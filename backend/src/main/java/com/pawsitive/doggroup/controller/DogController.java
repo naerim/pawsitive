@@ -96,6 +96,9 @@ public class DogController {
                                                                @RequestParam(required = false)
                                                                Integer neutralized,
                                                                Authentication authentication) {
+        log.warn("DogController : authentication = {}", authentication.toString());
+
+
         Page<DogListRes> dogPage = dogService.getDogList(pageable, kind, sex, neutralized, authentication);
 
         return ResponseEntity.status(OK).body(new PageResponse<>(dogPage));
