@@ -10,12 +10,11 @@ const ChattingListItem = (props: ChattingListItemType) => {
     shelterProfileImage,
     lastChat,
     id,
-    dogNo,
   } = props
 
   const navigate = useNavigate()
   const goChatRoom = () => {
-    navigate(`/chat/${chatRoomNo}`, { state: { chatRoomNo, dogNo } })
+    navigate(`/chat/${chatRoomNo}`)
   }
 
   return (
