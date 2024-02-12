@@ -39,62 +39,68 @@ const Filter = () => {
 
   const renderGenderButtons = () => (
     <div>
-      성별:
-      {['전체', '수컷', '암컷'].map((label, index) => (
-        <f.Item
-          key={index}
-          $select={Number(basicDogListParams.sex) === index}
-          onClick={() => handleGenderChange(index)}
-        >
-          {label}
-        </f.Item>
-      ))}
+      <f.Title>성별</f.Title>
+      <f.SexNeuteredItemList>
+        {['전체', '수컷', '암컷'].map((label, index) => (
+          <f.Item
+            key={index}
+            $select={Number(basicDogListParams.sex) === index}
+            onClick={() => handleGenderChange(index)}
+          >
+            {label}
+          </f.Item>
+        ))}
+      </f.SexNeuteredItemList>
     </div>
   )
 
   const renderNeuteredButtons = () => (
     <div>
-      중성화:
-      {['전체', '0', 'X'].map((label, index) => (
-        <f.Item
-          key={index}
-          $select={Number(basicDogListParams.neutralized) === index}
-          onClick={() => handleNeuteredChange(index)}
-        >
-          {label}
-        </f.Item>
-      ))}
+      <f.Title>중성화</f.Title>
+      <f.SexNeuteredItemList>
+        {['전체', '했음', '안했음'].map((label, index) => (
+          <f.Item
+            key={index}
+            $select={Number(basicDogListParams.neutralized) === index}
+            onClick={() => handleNeuteredChange(index)}
+          >
+            {label}
+          </f.Item>
+        ))}
+      </f.SexNeuteredItemList>
     </div>
   )
 
   const renderKindCheckboxes = () => (
     <div>
-      종류:
-      {kindList.map(kind => (
-        <f.Item key={kind} $select={basicDogListParams.kind.includes(kind)}>
-          <input
-            type="checkbox"
-            value={kind}
-            checked={basicDogListParams.kind.includes(kind)}
-            onChange={() =>
+      <f.Title>종류</f.Title>
+      <f.KindItemList>
+        {kindList.map(kind => (
+          <f.Item
+            key={kind}
+            $select={basicDogListParams.kind.includes(kind)}
+            onClick={() =>
               handleKindChange({
                 kind,
                 checked: !basicDogListParams.kind.includes(kind),
               })
             }
-          />
-          {kind}
-        </f.Item>
-      ))}
+          >
+            {kind}
+          </f.Item>
+        ))}
+      </f.KindItemList>
     </div>
   )
 
   return (
-    <div>
-      {renderGenderButtons()}
-      {renderNeuteredButtons()}
-      {renderKindCheckboxes()}
-    </div>
+    <>
+      <f.SexNeuteredContainer>
+        {renderGenderButtons()}
+        {renderNeuteredButtons()}
+      </f.SexNeuteredContainer>
+      <f.KindContainer>{renderKindCheckboxes()}</f.KindContainer>
+    </>
   )
 }
 

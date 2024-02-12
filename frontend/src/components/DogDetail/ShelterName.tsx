@@ -55,20 +55,28 @@ const ShelterName = () => {
 
   return (
     <s.Container>
-      <s.Circle />
-      <s.Right>
-        <s.Title>{dogDetail.userName}</s.Title>
-        <s.Address>{dogDetail.address}</s.Address>
-      </s.Right>
-      {dogDetail.userLiked ? (
-        <s.Image src="/img/img_paw.png" alt="/" onClick={handelPostUnLikeDog} />
-      ) : (
-        <s.Image
-          src="/img/img_empty_paw.png"
-          alt="/"
-          onClick={handelPostLikeDog}
-        />
-      )}
+      <s.InfoWrap>
+        <s.Circle />
+        <s.Right>
+          <s.Title>{dogDetail.userName}</s.Title>
+          <s.Address>{dogDetail.address}</s.Address>
+        </s.Right>
+      </s.InfoWrap>
+      <s.ImageWrap>
+        {dogDetail.userLiked ? (
+          <s.Image
+            src="/img/img_paw.png"
+            alt="/"
+            onClick={handelPostUnLikeDog}
+          />
+        ) : (
+          <s.Image
+            src="/img/img_empty_paw.png"
+            alt="/"
+            onClick={handelPostLikeDog}
+          />
+        )}
+      </s.ImageWrap>
     </s.Container>
   )
 }

@@ -7,15 +7,18 @@ import { ChattingRoomHeaderType } from '@src/types/chatType'
 const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
   const [user] = useAtom(userAtom)
 
-  const { dog, member, promise, shelter } = props
+  const {
+    dog,
+    member,
+    promise,
+    shelter,
+    onOpenCreateAppointmentModal,
+    onOpenConfirmAppointmentModal,
+  } = props
 
   const navigate = useNavigate()
 
   const goBack = () => navigate('/chat')
-
-  const goCreateAdoptedAppointment = () => navigate('/new/adopted-appointment')
-
-  const goAdoptedAppointment = () => navigate('/adopted-appointment/1')
 
   return (
     <c.Container>
@@ -51,13 +54,13 @@ const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
             </span>
           </c.InfoDetailWrap>
           <c.ButtonWrap>
-            {promise.isAccepted ? (
-              <button type="button" onClick={goAdoptedAppointment}>
+            {promise.isAccepted !== null ? (
+              <button type="button" onClick={onOpenConfirmAppointmentModal}>
                 입양약속 보기
               </button>
             ) : (
               user.role === 'USER' && (
-                <button type="button" onClick={goCreateAdoptedAppointment}>
+                <button type="button" onClick={onOpenCreateAppointmentModal}>
                   입양약속 잡기
                 </button>
               )
