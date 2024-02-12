@@ -100,7 +100,8 @@ const ChattingRoomContainer = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
 
-  const sendHandler = () => {
+  // 일반 텍스트 매새지 보내기
+  const sendTextMessage = () => {
     // 빈 문자 았는지 확인
     if (newMessage.message.trim() !== '') {
       client.current!.publish({
@@ -115,6 +116,22 @@ const ChattingRoomContainer = () => {
       setNewMessage(defaultMessage)
       scrollToBottom()
     }
+  }
+
+  // 약속이 생성되었을때 알람 메세지
+  const sendCreateAppointmentNotice = () => {
+    client.current!.publish({
+      destination: `/api/v1/chats/pub/chat`,
+      body: JSON.stringify({
+        chatRoomNo: no,
+        senderNo: user.userNo,
+        message:
+          '[안내] 새로운 입양약속이 생겼어요. "입양약속 보기" 버튼을 눌러 확인해보세요.',
+        type: 'notice',
+      }),
+    })
+    setNewMessage(defaultMessage)
+    scrollToBottom()
   }
 
   useEffect(() => {
@@ -144,7 +161,7 @@ const ChattingRoomContainer = () => {
               ))}
             </c.MessageSection>
             <InputSection
-              onClick={sendHandler}
+              onClick={sendTextMessage}
               message={newMessage.message}
               onChange={e =>
                 setNewMessage(prev => ({ ...prev, message: e.target.value }))
@@ -159,6 +176,7 @@ const ChattingRoomContainer = () => {
           onClose={() => setCreateAppointmentModalVisible(false)}
           dogName={data.dog.name}
           shelterName={data.shelter.name}
+          sendAlarm={sendCreateAppointmentNotice}
         />
       )}
       {confirmAppointmentModalVisible && (
@@ -169,6 +187,7 @@ const ChattingRoomContainer = () => {
           dogName={data.dog.name}
           promise={data.promise}
           onClose={() => setConfirmAppointmentModalVisible(false)}
+          sendAlarm={sendCreateAppointmentNotice}
         />
       )}
     </>
