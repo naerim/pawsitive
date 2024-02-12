@@ -11,7 +11,8 @@ import MessageItem from '@src/components/ChattingRoom/MessageItem'
 import * as c from '@src/container/style/ChattingRoomContainerStyle'
 import InputSection from '@src/components/ChattingRoom/InputSection'
 import ChattingRoomHeader from '@src/components/ChattingRoom/ChattingRoomHeader'
-import CreateAppointmentModal from '@src/components/ChattingRoom/CreateAppointmentModal.tsx'
+import CreateAppointmentModal from '@src/components/ChattingRoom/CreateAppointmentModal'
+import ConfirmAppointmentModal from '@src/components/ChattingRoom/ConfirmAppointmentModal'
 
 const ChattingRoomContainer = () => {
   const { no } = useParams()
@@ -20,6 +21,8 @@ const ChattingRoomContainer = () => {
   const client = useRef<Client | null>(null)
 
   const [createAppointmentModalVisible, setCreateAppointmentModalVisible] =
+    useState<boolean>(false)
+  const [confirmAppointmentModalVisible, setConfirmAppointmentModalVisible] =
     useState<boolean>(false)
 
   const defaultMessage = {
@@ -131,6 +134,9 @@ const ChattingRoomContainer = () => {
               onOpenCreateAppointmentModal={() =>
                 setCreateAppointmentModalVisible(true)
               }
+              onOpenConfirmAppointmentModal={() =>
+                setConfirmAppointmentModalVisible(true)
+              }
             />
             <c.MessageSection ref={scrollRef}>
               {messages.map(message => (
@@ -152,6 +158,11 @@ const ChattingRoomContainer = () => {
           onClose={() => setCreateAppointmentModalVisible(false)}
           dogName={data.dog.name}
           shelterName={data.shelter.name}
+        />
+      )}
+      {confirmAppointmentModalVisible && (
+        <ConfirmAppointmentModal
+          onClose={() => setConfirmAppointmentModalVisible(false)}
         />
       )}
     </>

@@ -40,6 +40,7 @@ export type ChattingRoomInfoType = {
 
 export type ChattingRoomHeaderType = {
   onOpenCreateAppointmentModal: () => void
+  onOpenConfirmAppointmentModal: () => void
 } & ChattingRoomInfoType
 
 // 채팅방 타입
