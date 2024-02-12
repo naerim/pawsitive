@@ -36,7 +36,6 @@ import QuestionListPage from '@src/pages/QuestionListPage'
 import ChattingRoomPage from '@src/pages/ChattingRoomPage'
 import ChattingPage from '@src/pages/ChattingPage'
 import AboutSameDogChatListPage from '@src/pages/AboutSameDogChatListPage'
-import CreateAdoptedAppointmentContainer from '@src/container/CreateAdoptedAppointmentContainer'
 import ScrollToTop from '@src/hooks/ScrollToTop'
 import AdoptionSurveyDetailPage from '@src/pages/AdoptionSurveyDetailPage'
 import AdoptedAppointmentContainer from '@src/container/AdoptedAppointmentContainer'
@@ -72,10 +71,6 @@ const AuthRoutes = () => (
     <Route path="/chat" element={<ChattingPage />} />
     <Route path="/shelter/chat/:dogNo" element={<AboutSameDogChatListPage />} />
     <Route path="/chat/:no" element={<ChattingRoomPage />} />
-    <Route
-      path="/new/adopted-appointment"
-      element={<CreateAdoptedAppointmentContainer />}
-    />
     <Route
       path="/adopted-appointment/:id"
       element={<AdoptedAppointmentContainer />}

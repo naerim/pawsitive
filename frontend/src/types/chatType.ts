@@ -12,7 +12,7 @@ export type MessageType = {
   userNo: number
 }
 
-export type ChattingRoomHeaderType = {
+export type ChattingRoomInfoType = {
   dog: {
     age: number
     image: string
@@ -38,11 +38,15 @@ export type ChattingRoomHeaderType = {
   }
 }
 
+export type ChattingRoomHeaderType = {
+  onOpenCreateAppointmentModal: () => void
+} & ChattingRoomInfoType
+
 // 채팅방 타입
 export type ChatRoomType = {
   chatList: MessageType[]
   chatRoomId: string
-} & ChattingRoomHeaderType
+} & ChattingRoomInfoType
 
 // 채팅리스트 아이템 타입
 export type ChattingListItemType = {
