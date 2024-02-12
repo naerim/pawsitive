@@ -8,12 +8,13 @@ import Filter from '@src/components/DogList/Filter'
 import { useAtom } from 'jotai'
 import { dogListParamsAtom } from '@src/stores/atoms/dog'
 import TextHeader from '@src/common/TextHeader'
+import { userAtom } from '@src/stores/atoms/user'
 
 const DogListContainer = () => {
   const [basicDogListParams] = useAtom(dogListParamsAtom)
   // const [totalPageCnt, setTotalPageCnt] = useState(7)
   const [isFilter, setIsFilter] = useState(false)
-  const { userNo } = JSON.parse(window.localStorage.getItem('currentUser'))
+  const [user] = useAtom(userAtom)
 
   const { data, isLoading, refetch } = useQuery<DogListType[]>({
     queryKey: ['basicDogList'],
@@ -21,7 +22,7 @@ const DogListContainer = () => {
       if (basicDogListParams) {
         const result = await fetchBasicDogList({
           ...basicDogListParams,
-          userNo,
+          userNo: user.userNo,
         })
         // setBasicDogList(result.content || [])
         // setTotalPageCnt(result.totalPages)
