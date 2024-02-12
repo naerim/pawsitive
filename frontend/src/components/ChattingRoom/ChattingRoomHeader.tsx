@@ -54,7 +54,7 @@ const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
             </span>
           </c.InfoDetailWrap>
           <c.ButtonWrap>
-            {promise.isAccepted ? (
+            {promise.isAccepted !== null ? (
               <button type="button" onClick={onOpenConfirmAppointmentModal}>
                 입양약속 보기
               </button>
