@@ -3,11 +3,39 @@ import * as c from '@src/components/ChattingRoom/_style/ConfirmAppointmentModalS
 import { useAtom } from 'jotai'
 import { userAtom } from '@src/stores/atoms/user'
 import { ConfirmAppointmentModalType } from '@src/types/appointment'
+import { useMutation } from '@tanstack/react-query'
+import { acceptAppointment } from '@src/apis/appointment.ts'
 
 const ConfirmAppointmentModal = (props: ConfirmAppointmentModalType) => {
   const { onClose, chatRoomNo, dogName, shelterName, memberName, promise } =
     props
   const [user] = useAtom(userAtom)
+
+  const { mutate } = useMutation({
+    mutationKey: ['acceptAppointment'],
+    mutationFn: acceptAppointment,
+    onSuccess(res) {
+      console.log('입양약속 수락 성공', res)
+    },
+    onError(error) {
+      console.error('입양약속 수락 실패:', error)
+    },
+  })
+
+  const onClickAccept = () => {
+    const answer = confirm(
+      `${promise.date} ${promise.time} 입양약속을 수락하시겠습니까`,
+    )
+    if (answer) {
+      mutate({
+        userNo: user.userNo,
+        chatRoomNo,
+        date: promise.date,
+        time: promise.time,
+      })
+      onClose()
+    }
+  }
 
   return (
     <XModal onClose={onClose}>
@@ -31,10 +59,14 @@ const ConfirmAppointmentModal = (props: ConfirmAppointmentModalType) => {
         {user.role === 'SHELTER' ? (
           <>
             <c.RefuseButton type="button">거절</c.RefuseButton>
-            <c.SubmitButton type="button">수락</c.SubmitButton>
+            <c.SubmitButton type="button" onClick={onClickAccept}>
+              수락
+            </c.SubmitButton>
           </>
         ) : (
-          <c.SubmitButton type="button">확인</c.SubmitButton>
+          <c.SubmitButton type="button" onClick={onClose}>
+            확인
+          </c.SubmitButton>
         )}
       </c.BottomButtonWrap>
     </XModal>
