@@ -11,7 +11,7 @@ const ChattingContainer = () => {
   const [user] = useAtom(userAtom)
 
   const { data, isLoading } = useQuery<ChattingListItemType[]>({
-    queryKey: ['fetchChatRooms'],
+    queryKey: ['fetchChatRooms', user.userNo],
     queryFn: () => fetchChatRooms(user.userNo),
   })
 
