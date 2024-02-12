@@ -24,6 +24,7 @@ public class CommunityImageServiceImpl implements CommunityImageService {
     private final String FOLDER_NAME = "community";
 
     @Override
+    @Transactional
     public CommunityBoard createCommunityImage(CommunityBoard communityBoard,
                                                MultipartFile[] images) {
         List<CommunityImage> imageList = new ArrayList<>();

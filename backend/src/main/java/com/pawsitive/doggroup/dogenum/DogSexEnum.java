@@ -4,14 +4,12 @@ import lombok.Getter;
 
 @Getter
 public enum DogSexEnum {
-    MALE("m", "M", 1), FEMALE("f", "F", 2);
-    private final String smallName;
-    private final String bigName;
+    MALE("m", 1), FEMALE("f", 2);
+    private final String name;
     private final int no;
 
-    DogSexEnum(String smallName, String bigName, int no) {
-        this.smallName = smallName;
-        this.bigName = bigName;
+    DogSexEnum(String name, int no) {
+        this.name = name;
         this.no = no;
     }
 
@@ -24,22 +22,7 @@ public enum DogSexEnum {
     public static String intToString(int n) {
         for (DogSexEnum value : DogSexEnum.values()) {
             if (value.getNo() == n) {
-                return value.getSmallName();
-            }
-        }
-        return null;
-    }
-
-    /**
-     * n에 해당하는 대무자 성별을 반환하는 메서드입니다.
-     *
-     * @param n 숫자
-     * @return 대문자 성별 문자
-     */
-    public static String intToStringCapital(int n) {
-        for (DogSexEnum value : DogSexEnum.values()) {
-            if (value.getNo() == n) {
-                return value.getBigName();
+                return value.getName();
             }
         }
         return null;
@@ -53,7 +36,7 @@ public enum DogSexEnum {
      */
     public static int stringToInt(String str) {
         for (DogSexEnum value : DogSexEnum.values()) {
-            if (value.getBigName().equals(str) || value.getSmallName().equals(str)) {
+            if (value.getName().equalsIgnoreCase(str)) {
                 return value.getNo();
             }
         }

@@ -86,8 +86,7 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
         if (sex == null || sex.equals(0)) {
             return null;
         }
-        return qDog.sex.eq(DogSexEnum.intToString(sex))
-            .or(qDog.sex.eq(DogSexEnum.intToStringCapital(sex)));
+        return qDog.sex.toLowerCase().eq(DogSexEnum.intToString(sex));
     }
 
     private BooleanExpression eqNeutralized(Integer neutralized) {

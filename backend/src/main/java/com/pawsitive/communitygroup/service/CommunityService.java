@@ -3,6 +3,7 @@ package com.pawsitive.communitygroup.service;
 import com.pawsitive.communitygroup.dto.request.CommunityCreateReq;
 import com.pawsitive.communitygroup.dto.response.CommunityBoardDetailRes;
 import com.pawsitive.communitygroup.dto.response.CommunityDetailRes;
+import com.pawsitive.communitygroup.entity.CommunityBoard;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,6 +36,10 @@ public interface CommunityService {
     CommunityDetailRes getCommunity(int boardNo);
 
     CommunityBoardDetailRes getCommunityBoard(int boardNo);
+
+    CommunityBoard getCommunityBoardEntity(int boardNo);
+
+    void updateHit(int boardNo);
 
     /**
      * 조회수가 높은 순으로 추천 게시물을 조회합니다.

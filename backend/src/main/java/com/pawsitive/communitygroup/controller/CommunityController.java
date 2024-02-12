@@ -12,9 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -66,6 +64,7 @@ public class CommunityController {
             @ApiResponse(responseCode = "200", description = "커뮤니티 고유번호에 해당되는 커뮤니티 세부사항을 정상적으로 반환한다.")
         })
     public ResponseEntity<CommunityDetailRes> getCommunity(@PathVariable int boardNo) {
+        communityService.updateHit(boardNo);
         return ResponseEntity.status(OK).body(communityService.getCommunity(boardNo));
     }
 
