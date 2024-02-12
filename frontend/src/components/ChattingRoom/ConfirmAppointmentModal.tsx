@@ -4,7 +4,7 @@ import { useAtom } from 'jotai'
 import { userAtom } from '@src/stores/atoms/user'
 import { ConfirmAppointmentModalType } from '@src/types/appointment'
 import { useMutation } from '@tanstack/react-query'
-import { acceptAppointment } from '@src/apis/appointment.ts'
+import { acceptAppointment } from '@src/apis/appointment'
 
 const ConfirmAppointmentModal = (props: ConfirmAppointmentModalType) => {
   const { onClose, chatRoomNo, dogName, shelterName, memberName, promise } =
@@ -16,6 +16,8 @@ const ConfirmAppointmentModal = (props: ConfirmAppointmentModalType) => {
     mutationFn: acceptAppointment,
     onSuccess(res) {
       console.log('입양약속 수락 성공', res)
+      window.location.reload()
+      onClose()
     },
     onError(error) {
       console.error('입양약속 수락 실패:', error)
@@ -33,7 +35,6 @@ const ConfirmAppointmentModal = (props: ConfirmAppointmentModalType) => {
         date: promise.date,
         time: promise.time,
       })
-      onClose()
     }
   }
 

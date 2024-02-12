@@ -29,6 +29,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalType) => {
     mutationFn: createAppointment,
     onSuccess(res) {
       console.log('입양약속 등록 성공', res)
+      window.location.reload()
     },
     onError(error) {
       console.error('입양약속 등록 실패:', error)
