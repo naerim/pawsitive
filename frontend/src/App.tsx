@@ -38,6 +38,7 @@ import ChattingPage from '@src/pages/ChattingPage'
 import AboutSameDogChatListPage from '@src/pages/AboutSameDogChatListPage'
 import CreateAdoptedAppointmentContainer from '@src/container/CreateAdoptedAppointmentContainer'
 import ScrollToTop from '@src/hooks/ScrollToTop'
+import AdoptedAppointmentContainer from '@src/container/AdoptedAppointmentContainer.tsx'
 // import { userAtom } from '@src/stores/atoms/user'
 
 // 로그인된 경우 접근할 수 있는 url
@@ -69,6 +70,10 @@ const AuthRoutes = () => (
     <Route
       path="/new/adopted-appointment"
       element={<CreateAdoptedAppointmentContainer />}
+    />
+    <Route
+      path="/adopted-appointment/:id"
+      element={<AdoptedAppointmentContainer />}
     />
     <Route path="/confirm/pawsitive" element={<ConfirmPawsitivePage />} />
     <Route path="/mypage/adoptionSurvey" element={<AdoptionSurveyPage />} />
