@@ -35,6 +35,8 @@ public interface DogService {
      */
     DogDetailRes getDogByDogNo(int dogNo, Authentication authentication);
 
+    DogDetailRes getDogByDogNo(int dogNo, int userNo);
+
     /**
      * 유기견 엔터티를 유기견 고유 번호로 상세조회하는 메서드입니다.
      *
@@ -50,6 +52,9 @@ public interface DogService {
      */
     List<DogListRes> getRecommendationDogList(Authentication authentication);
 
+    List<DogListRes> getRecommendationDogList(Integer userNo);
+
+
     /**
      * 유기견 공고 목록을 조회하는 메서드입니다.
      *
@@ -59,6 +64,9 @@ public interface DogService {
      */
     Page<DogListRes> getDogList(Pageable pageable, List<String> kind, Integer sex,
                                 Integer neutralized, Authentication authentication);
+
+    Page<DogListRes> getDogList(Pageable pageable, List<String> kind, Integer sex,
+                                Integer neutralized, Integer userNo);
 
     /**
      * 보호소 기준 유기견 공고 목록을 조회하는 메서드입니다.
