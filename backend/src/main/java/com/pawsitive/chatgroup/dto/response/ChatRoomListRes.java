@@ -1,5 +1,6 @@
 package com.pawsitive.chatgroup.dto.response;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,8 @@ public class ChatRoomListRes {
     private String name;
     private String memberProfileImage;
     private String shelterProfileImage;
+    private Boolean isPromiseAccepted;
+    private LocalDateTime promiseCreatedAt;
     private LastChat lastChat;
 
     @AllArgsConstructor

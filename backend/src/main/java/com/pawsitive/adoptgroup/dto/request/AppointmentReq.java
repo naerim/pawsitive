@@ -1,4 +1,4 @@
-package com.pawsitive.surveygroup.dto.request;
+package com.pawsitive.adoptgroup.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,4 +12,6 @@ import lombok.Getter;
 public class AppointmentReq {
     private int userNo;
     private int chatRoomNo;
+    private String date;
+    private String time;
 }

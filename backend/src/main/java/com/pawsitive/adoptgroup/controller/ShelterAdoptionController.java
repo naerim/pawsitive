@@ -4,11 +4,11 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 import com.pawsitive.adoptgroup.dto.request.AdoptionReq;
+import com.pawsitive.adoptgroup.dto.request.AppointmentReq;
 import com.pawsitive.adoptgroup.dto.response.AdoptionDogRes;
 import com.pawsitive.adoptgroup.service.AdoptDogService;
 import com.pawsitive.chatgroup.service.ChatRoomService;
 import com.pawsitive.common.dto.BaseResponseBody;
-import com.pawsitive.surveygroup.dto.request.AppointmentReq;
 import com.pawsitive.usergroup.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
