@@ -175,8 +175,10 @@ public class UserServiceImpl implements UserService {
                 .gender(userJoinPostReq.getGender())
                 .build());
 
+            log.info("UserServiceImpl : userNo = {}", user.getUserNo());
+
             // 회원가입 시 행렬평균 테이블도 같이 생성해서 추가하기
-            memberDogMatrixRepository.save(MemberDogMatrix.builder().user(user).userNo(user.getUserNo()).build());
+            memberDogMatrixRepository.save(MemberDogMatrix.builder().userNo(user.getUserNo()).build());
 
             return UserJoinRes.builder()
                 .userNo(user.getUserNo())
