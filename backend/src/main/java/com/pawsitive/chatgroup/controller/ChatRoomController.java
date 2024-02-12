@@ -4,7 +4,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 import com.pawsitive.chatgroup.dto.request.ChatRoomCreateReq;
-import com.pawsitive.chatgroup.dto.response.ChatRes;
+import com.pawsitive.chatgroup.dto.response.ChatRoomDetailRes;
 import com.pawsitive.chatgroup.dto.response.ChatRoomListRes;
 import com.pawsitive.chatgroup.dto.response.ChatRoomRes;
 import com.pawsitive.chatgroup.service.ChatRoomService;
@@ -50,10 +50,10 @@ public class ChatRoomController {
             @ApiResponse(responseCode = "400", description = "전달받은 채팅방 고유 번호에 해당하는 채팅방이 없음"),
         }
     )
-    public ResponseEntity<List<ChatRes>> getChatRoomByChatRoomNo(@PathVariable int chatRoomNo) {
+    public ResponseEntity<ChatRoomDetailRes> getChatRoomByChatRoomNo(@PathVariable int chatRoomNo) {
         return ResponseEntity
             .status(OK)
-            .body(chatRoomService.getChatHistoryByChatRoomNo(chatRoomNo));
+            .body(chatRoomService.getChatRoomDetail(chatRoomNo));
     }
 
     @PostMapping
