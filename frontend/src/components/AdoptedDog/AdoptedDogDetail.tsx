@@ -55,14 +55,24 @@ const AdoptedDogDetail = () => {
             </a.FrontCard>
 
             <a.BackCard>
-              <a.Text>이름: {data.name}</a.Text>
-              <a.Text>성별: {data.sex === 'F' ? '암컷' : '수컷'}</a.Text>
-              <a.Text>나이: {data.age}살</a.Text>
-              <a.Text>무게: {data.weight}kg</a.Text>
-              <a.Text>중성화: {data.neutralized ? '했음' : '안했음'}</a.Text>
-              <a.ModButton type="button" onClick={handleOpen}>
-                수정하기
-              </a.ModButton>
+              <a.BackCardDiv>
+                <a.BackContent>
+                  <a.BackDogName>{data.name}</a.BackDogName>
+                  <a.Text>{data.age}살</a.Text>
+                  <a.Text>{data.weight}kg</a.Text>
+                  <a.Text>중성화 {data.neutralized ? 'O' : 'X'}</a.Text>
+                  <a.ModButton type="button" onClick={handleOpen}>
+                    수정하기
+                  </a.ModButton>
+                </a.BackContent>
+                <a.BackImgDiv>
+                  {data.sex === 'F' ? (
+                    <a.BackSex src="/icon/icon_female.png" />
+                  ) : (
+                    <a.BackSex src="/icon/icon_male.png" />
+                  )}
+                </a.BackImgDiv>
+              </a.BackCardDiv>
               <AdoptedDogModModal open={open} setOpen={setOpen} />
             </a.BackCard>
           </a.Card>

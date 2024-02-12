@@ -46,7 +46,7 @@ const AdoptedDogModModal = (props: PropsType) => {
     mutationKey: ['updateUserStage'],
     mutationFn: updateUserStage,
     onSuccess: () => {
-      setUser(user => ({ ...user, stage: 4 }))
+      setUser(prevData => ({ ...prevData, stage: 4 }))
       navigate('/')
       handleClose()
     },
@@ -118,7 +118,7 @@ const AdoptedDogModModal = (props: PropsType) => {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    height: 200,
+    height: 370,
     borderRadius: '10px',
     bgcolor: 'background.paper',
     '&:focus': {
@@ -127,17 +127,22 @@ const AdoptedDogModModal = (props: PropsType) => {
     p: 4,
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    // alignItems: 'center',
   }
 
   const ButtonValue = styled(Button)({
-    color: '#000000',
+    color: '#ffffff',
+    backgroundColor: '#f59021',
+    width: '100%',
+    height: '50px',
     fontFamily: 'SCDream',
     cursor: 'pointer',
-    margin: '10px 0 0 ',
+    margin: '45px 0 0 ',
     '&:focus': {
       outline: 'none',
-      color: '#f59021',
+    },
+    '&:hover': {
+      backgroundColor: 'rgba(253,151,78,0.83)',
     },
   })
 
@@ -153,42 +158,51 @@ const AdoptedDogModModal = (props: PropsType) => {
           >
             <Box sx={style}>
               <a.InputContainer>
-                <label htmlFor="name">이름 </label>
+                <a.Label htmlFor="name">이름</a.Label>
                 <a.Input
                   id="name"
                   value={dataForm.fetchData.name}
                   onChange={handleName}
+                  placeholder="아이의 평생 이름을 알려주세요"
                 />
-                &nbsp;&nbsp;&nbsp;&nbsp;
               </a.InputContainer>
+              <a.Column>
+                <a.InputContainer>
+                  <a.Label htmlFor="name">나이</a.Label>
+                  <a.Column>
+                    <a.InputNum
+                      id="age"
+                      type="number"
+                      value={dataForm.fetchData.age}
+                      onChange={handleAge}
+                      placeholder="예상 나이여도 좋아요"
+                    />
+                    <a.PlaceWord>살</a.PlaceWord>
+                  </a.Column>
+                </a.InputContainer>
 
-              <a.InputContainer>
-                <label htmlFor="weight">무게 </label>
-                <a.Input
-                  id="weight"
-                  type="number"
-                  value={dataForm.fetchData.weight}
-                  onChange={handleWeight}
-                />
-                kg
-              </a.InputContainer>
-              <a.InputContainer>
-                <label htmlFor="name">나이 </label>
-                <a.Input
-                  id="age"
-                  type="number"
-                  value={dataForm.fetchData.age}
-                  onChange={handleAge}
-                />
-                세
-              </a.InputContainer>
+                <a.InputContainer>
+                  <a.Label htmlFor="weight">무게</a.Label>
+                  <a.Column>
+                    <a.InputNum
+                      id="weight"
+                      type="number"
+                      value={dataForm.fetchData.weight}
+                      onChange={handleWeight}
+                      placeholder="몸무게"
+                    />
+                    <a.PlaceWord>kg</a.PlaceWord>
+                  </a.Column>
+                </a.InputContainer>
+              </a.Column>
+
               <a.ButtonContainer>
                 <ButtonValue type="button" onClick={HandleUserStage}>
                   확인
                 </ButtonValue>
-                <ButtonValue type="button" onClick={handleClose}>
-                  취소
-                </ButtonValue>
+                {/* <ButtonValue type="button" onClick={handleClose}> */}
+                {/*  취소 */}
+                {/* </ButtonValue> */}
               </a.ButtonContainer>
             </Box>
           </Modal>
