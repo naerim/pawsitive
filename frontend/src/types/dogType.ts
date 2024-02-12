@@ -46,3 +46,19 @@ export type BasicDogListParamsType = {
   sex: number
   neutralized: number
 }
+
+export type DogListKindParamsType = {
+  page: number
+  size: number
+  sort: string[]
+  kind: string
+  userNo: number
+}
+
+export type DogListKindResType = {
+  content: DogListType[]
+  totalPages: number
+  number: number
+  previous: boolean
+  next: boolean
+}
