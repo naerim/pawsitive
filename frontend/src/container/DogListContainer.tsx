@@ -10,26 +10,23 @@ import { dogListParamsAtom } from '@src/stores/atoms/dog'
 import TextHeader from '@src/common/TextHeader'
 
 const DogListContainer = () => {
-  const [basicDogListParams, setBasicDogListParams] = useAtom(dogListParamsAtom)
-  const [basicDogList, setBasicDogList] = useState<DogListType[]>([])
+  const [basicDogListParams] = useAtom(dogListParamsAtom)
   // const [totalPageCnt, setTotalPageCnt] = useState(7)
   const [isFilter, setIsFilter] = useState(false)
   const { userNo } = JSON.parse(window.localStorage.getItem('currentUser'))
 
-  const { isLoading, refetch } = useQuery<DogListType[]>({
+  const { data, isLoading, refetch } = useQuery<DogListType[]>({
     queryKey: ['basicDogList'],
     queryFn: async () => {
       if (basicDogListParams) {
-        setBasicDogListParams({ ...basicDogListParams, userNo })
         const result = await fetchBasicDogList({
           ...basicDogListParams,
           userNo,
         })
-        setBasicDogList(result.content || [])
+        // setBasicDogList(result.content || [])
         // setTotalPageCnt(result.totalPages)
         return result.content || []
       }
-      return []
     },
   })
 
@@ -93,7 +90,7 @@ const DogListContainer = () => {
         {isLoading ? (
           <LoadingSkeleton />
         ) : (
-          basicDogList.map(basicDogInfo => (
+          data.map(basicDogInfo => (
             <BasicDogInfoCard key={basicDogInfo.dogNo} dogInfo={basicDogInfo} />
           ))
         )}
