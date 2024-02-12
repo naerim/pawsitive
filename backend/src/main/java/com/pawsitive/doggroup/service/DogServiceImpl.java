@@ -226,6 +226,8 @@ public class DogServiceImpl implements DogService {
             String email = user.getUsername();
             Integer userNo = userRepository.findUserNoByEmail(email);
 
+            log.warn("DogService : user = {}, email = {}, userNo = {}", user.toString(), email, userNo.toString());
+
             setLiked(dogList, memberDogLikeRepository.getLikedDogList(userNo));
         }
 
