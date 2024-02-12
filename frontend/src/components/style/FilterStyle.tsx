@@ -10,6 +10,7 @@ export const Container = styled.div`
 `
 
 export const Item = styled.div<{ $select: boolean }>`
+  width: fit-content;
   display: flex;
   height: 28px;
   cursor: pointer;
@@ -18,18 +19,42 @@ export const Item = styled.div<{ $select: boolean }>`
   font-size: 0.9em;
   padding: 6px 8px;
   border-radius: 28px;
-  margin-right: 10px;
-  border: 1px solid #eaeaea;
-  color: ${props => (props.$select ? '#eaeaea' : '#fffff')};
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border: 1px solid ${props => (props.$select ? '#ffffff' : '#C3C3C3')};
+  font-weight: 300;
+  color: ${props => (props.$select ? '#ffffff' : '#C3C3C3')};
   background-color: ${props => (props.$select ? '#FF9232' : 'transparent')};
+`
 
-  img {
-    width: 12px;
-    height: 12px;
-  }
+export const SexNeuteredContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+`
 
-  span {
-    font-weight: 500;
-    margin-left: 4px;
-  }
+export const Title = styled.div`
+  font-weight: 450;
+  margin-bottom: 5px;
+`
+
+export const KindTitle = styled.div``
+
+export const SexNeuteredItemList = styled.div`
+  display: flex;
+`
+
+export const KindItemList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`
+
+export const KindContainer = styled.div`
+  width: 100%;
+  padding: 0 3%;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
 `
