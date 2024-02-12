@@ -1,16 +1,34 @@
-import * as r from '@src/components/style/ResultDogRecommendStyle'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { fetchRecommendDogs } from '@src/apis/dog'
-import { DogType } from '@src/types/dogType'
-import { useNavigate } from 'react-router-dom'
+import { fetchKindDogList } from '@src/apis/dog'
+import { DogListKindResType, DogListType } from '@src/types/dogType'
+import * as r from '@src/components/style/ResultDogRecommendStyle'
 
 const ResultDogRecommend = () => {
-  const navigate = useNavigate()
-  const goDogs = () => navigate('/dogs')
+  const location = useLocation()
+  const { resultData } = location.state
+  const sortedResultData = [...resultData].sort(
+    (a, b) => b.probability - a.probability,
+  )
 
-  const { data } = useQuery({
-    queryKey: ['recommendDog'],
-    queryFn: () => fetchRecommendDogs(2),
+  const navigate = useNavigate()
+  const handleGoDogDetail = (dogNo: number) => {
+    navigate(`/dogs/${dogNo}`)
+  }
+  const handleGoDogList = () => {
+    navigate('/dogs')
+  }
+
+  const { data } = useQuery<DogListKindResType>({
+    queryKey: ['recommendKindDog'],
+    queryFn: async () =>
+      fetchKindDogList({
+        page: 0,
+        size: 2,
+        sort: ['string'],
+        kind: sortedResultData[0].label,
+        userNo: 0,
+      }),
   })
 
   return (
@@ -19,10 +37,13 @@ const ResultDogRecommend = () => {
       <r.Title>당신과 비슷한 강아지 여기 있어요!</r.Title>
       <r.Wrap>
         {data &&
-          data.map((item: DogType, index: number) => (
-            <r.Item key={item.dogNo || index}>
-              {item.images && item.images.length > 0 && (
-                <img src={item.images[0]} alt="" />
+          data.content.map((item: DogListType) => (
+            <r.Item
+              key={item.dogNo}
+              onClick={() => handleGoDogDetail(item.dogNo)}
+            >
+              {item.file && item.file.length > 0 && (
+                <img src={item.file[0]} alt="" />
               )}
               <r.ItemTitle>{item.name}</r.ItemTitle>
               <r.ItemSubTitle>
@@ -34,7 +55,7 @@ const ResultDogRecommend = () => {
             </r.Item>
           ))}
       </r.Wrap>
-      <r.Button type="button" onClick={goDogs}>
+      <r.Button type="button" onClick={handleGoDogList}>
         더 많은 강아지 찾아보기
       </r.Button>
     </r.Container>
