@@ -1,13 +1,10 @@
 package com.pawsitive.doggroup.service;
 
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
-import com.pawsitive.doggroup.dto.request.MemberDogLikeReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.entity.Dog;
-
 import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -35,7 +32,7 @@ public interface DogService {
      */
     DogDetailRes getDogByDogNo(int dogNo, Authentication authentication);
 
-    DogDetailRes getDogByDogNo(int dogNo, int userNo);
+    DogDetailRes getDogByDogNo(int dogNo, Integer userNo);
 
     /**
      * 유기견 엔터티를 유기견 고유 번호로 상세조회하는 메서드입니다.
@@ -73,9 +70,10 @@ public interface DogService {
      *
      * @param shelterNo 조회할 유기견 보호소 고유번호
      * @param num
+     * @param status
      * @return 유기견 리스트
      */
-    List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num);
+    List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num, Integer status);
 
 
 }

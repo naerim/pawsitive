@@ -14,16 +14,15 @@ import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.doggroup.transfer.DogTransfer;
 import com.pawsitive.usergroup.entity.User;
-import com.pawsitive.usergroup.exception.UserNotFoundException;
 import com.pawsitive.usergroup.exception.UserNotLoginException;
 import com.pawsitive.usergroup.repository.MemberDogLikeRepository;
-import com.pawsitive.usergroup.repository.MemberDogMatrixRepository;
 import com.pawsitive.usergroup.repository.UserRepository;
-import com.pawsitive.usergroup.service.UserService;
 import com.pawsitive.usergroup.service.MemberDogVisitService;
-
-import java.util.*;
-
+import com.pawsitive.usergroup.service.UserService;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -64,10 +63,9 @@ public class DogServiceImpl implements DogService {
     public DogDetailRes createDog(DogCreateReq req, MultipartFile[] files) {
         User user = userService.getUserByUserNo(req.getUserNo());
 
-        Dog dog = Dog.builder().user(user).name(req.getName())
-            .kind(req.getKind()).isNeutralized(req.getIsNaturalized())
-            .note(req.getNote()).mbti(getMbti(req)).status(DogStatusEnum.TODO)
-            .sex(req.getSex()).age(req.getAge()).build();
+        Dog dog = Dog.builder().user(user).name(req.getName()).kind(req.getKind())
+            .isNeutralized(req.getIsNaturalized()).note(req.getNote()).mbti(getMbti(req))
+            .status(DogStatusEnum.TODO).sex(req.getSex()).age(req.getAge()).build();
 
         Dog savedDog;
         try {
@@ -113,8 +111,8 @@ public class DogServiceImpl implements DogService {
         DogDetailRes res = DogTransfer.entityToDto(dog);
 
         // 좋아요 여부 갱신
-        if (!Objects.isNull(userNo)
-            && !Objects.isNull(memberDogLikeRepository.getUserDogLiked(dogNo, userNo))) {
+        if (!Objects.isNull(userNo) &&
+            !Objects.isNull(memberDogLikeRepository.getUserDogLiked(dogNo, userNo))) {
             res.setUserLiked(true);
         }
 
@@ -124,7 +122,7 @@ public class DogServiceImpl implements DogService {
 
     @Transactional
     @Override
-    public DogDetailRes getDogByDogNo(int dogNo, int userNo) {
+    public DogDetailRes getDogByDogNo(int dogNo, Integer userNo) {
         Dog dog = dogRepository.findByDogNo(dogNo).orElseThrow(DogNotFoundException::new);
 
         memberDogVisitService.processVisit(dogNo, userNo);
@@ -145,8 +143,7 @@ public class DogServiceImpl implements DogService {
 
     @Override
     public Dog getDogEntityByDogNo(int dogNo) {
-        return dogRepository.findByDogNo(dogNo)
-            .orElseThrow(DogNotFoundException::new);
+        return dogRepository.findByDogNo(dogNo).orElseThrow(DogNotFoundException::new);
     }
 
     @Override
@@ -202,16 +199,16 @@ public class DogServiceImpl implements DogService {
         return recommendedDogs;
     }
 
-    private List<DogListRes> getMinMSDDogs(List<Double> memberDogMatrix, List<List<Double>> dogMatrixList) {
-        Collections.sort(dogMatrixList, (o1, o2) ->
-            Double.compare(MSD(memberDogMatrix, o1), MSD(memberDogMatrix, o2)));
+    private List<DogListRes> getMinMSDDogs(List<Double> memberDogMatrix,
+                                           List<List<Double>> dogMatrixList) {
+        Collections.sort(dogMatrixList,
+            (o1, o2) -> Double.compare(MSD(memberDogMatrix, o1), MSD(memberDogMatrix, o2)));
 
         List<Integer> dogNoList = new ArrayList<>();
         dogNoList.add(dogMatrixList.get(0).get(8).intValue());
         dogNoList.add(dogMatrixList.get(1).get(8).intValue());
 
-        log.info("DogService : MSD 1 = {}, MSD 2 = {}",
-            MSD(memberDogMatrix, dogMatrixList.get(0)),
+        log.info("DogService : MSD 1 = {}, MSD 2 = {}", MSD(memberDogMatrix, dogMatrixList.get(0)),
             MSD(memberDogMatrix, dogMatrixList.get(1)));
 
         return dogRepository.getDogListIn(dogNoList);
@@ -256,12 +253,8 @@ public class DogServiceImpl implements DogService {
     public Page<DogListRes> getDogList(Pageable pageable, List<String> kind, Integer sex,
                                        Integer neutralized, Authentication authentication) {
 
-        //        if (Objects.isNull(kind)) {
-//            dogList = dogRepository.getDogList(pageable, , , );
-//        } else {
-//            dogList = dogRepository.getDogListByKindNo(pageable, kind);
-//        }
-        Page<DogListRes> dogList = dogRepository.getDogList(pageable, kind, sex, neutralized);
+        Page<DogListRes> dogList =
+            dogRepository.getDogList(pageable, kind, sex, neutralized);
         setThumbnailImage(dogList);
 
         if (!Objects.isNull(authentication)) {
@@ -269,7 +262,8 @@ public class DogServiceImpl implements DogService {
             String email = user.getUsername();
             Integer userNo = userRepository.findUserNoByEmail(email);
 
-            log.warn("DogService : user = {}, email = {}, userNo = {}", user.toString(), email, userNo.toString());
+            log.warn("DogService : user = {}, email = {}, userNo = {}", user.toString(), email,
+                userNo.toString());
 
             setLiked(dogList, memberDogLikeRepository.getLikedDogList(userNo));
         }
@@ -278,23 +272,21 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
-    public Page<DogListRes> getDogList(Pageable pageable, List<String> kind, Integer sex, Integer neutralized, Integer userNo) {
-        Page<DogListRes> dogList = dogRepository.getDogList(pageable, kind, sex, neutralized);
+    public Page<DogListRes> getDogList(Pageable pageable, List<String> kind, Integer sex,
+                                       Integer neutralized, Integer userNo) {
+        Page<DogListRes> dogList =
+            dogRepository.getDogList(pageable, kind, sex, neutralized);
         setThumbnailImage(dogList);
 
-        setLiked(dogList, memberDogLikeRepository.getLikedDogList(userNo));
-
+        if (userNo != null) {
+            setLiked(dogList, memberDogLikeRepository.getLikedDogList(userNo));
+        }
         return dogList;
     }
 
     @Override
-    public List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num) {
-        List<DogListRes> dogList;
-        if (Objects.isNull(num)) {
-            dogList = dogRepository.getDogListByShelterNo(shelterNo);
-        } else {
-            dogList = dogRepository.getDogListByShelterNo(shelterNo, num);
-        }
+    public List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num, Integer status) {
+        List<DogListRes> dogList = dogRepository.getDogListByShelterNo(shelterNo, num, status);
         setThumbnailImage(dogList);
         return dogList;
     }
