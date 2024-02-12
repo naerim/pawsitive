@@ -9,7 +9,7 @@ const SurveyQuestionNo19 = () => {
 
   const handleButtonClick = (value: string) => {
     setSelectedValue(value)
-    setSurveyData(prevData => ({ ...prevData, forever_responsibility: value }))
+    setSurveyData(prevData => ({ ...prevData, foreverResponsibility: value }))
   }
   return (
     <c.Container>

@@ -11,7 +11,7 @@ const SurveyQuestionNo10 = () => {
     setSelectedValue(value)
     setSurveyData(prevData => ({
       ...prevData,
-      raise_history: value,
+      raiseHistory: value,
     }))
   }
   return (
