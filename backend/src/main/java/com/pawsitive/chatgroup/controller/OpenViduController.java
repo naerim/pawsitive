@@ -9,7 +9,6 @@ import io.openvidu.java.client.OpenViduHttpException;
 import io.openvidu.java.client.OpenViduJavaClientException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 이하늬
  * @since 1.0
  */
-@Tag(name = "11.Openvidu")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/openvidu/api/sessions")

@@ -3,7 +3,6 @@ package com.pawsitive.doggroup.controller;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
-import com.pawsitive.common.dto.BaseResponseBody;
 import com.pawsitive.common.dto.response.PageResponse;
 import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
@@ -17,9 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -67,7 +64,7 @@ public class DogController {
         })
     public ResponseEntity<DogDetailRes> getDogByDogNo(@PathVariable int dogNo,
 //                                                      Authentication authentication
-                                                      @RequestParam int userNo
+                                                      @RequestParam(required = false) Integer userNo
     ) {
 
 //        return ResponseEntity.status(OK).body(dogService.getDogByDogNo(dogNo, authentication));
@@ -83,7 +80,8 @@ public class DogController {
             @ApiResponse(responseCode = "200", description = "추천 강아지 목록을 정상적으로 반환한다."),
             @ApiResponse(responseCode = "400", description = "전달받은 페이지 값에 해당하는 추천 강아지가 없음.")
         })
-    public ResponseEntity<List<DogListRes>> getRecommendationDogList(/* Authentication authentication */ @RequestParam Integer userNo) {
+    public ResponseEntity<List<DogListRes>> getRecommendationDogList(/* Authentication authentication */
+        @RequestParam Integer userNo) {
 
 //        return ResponseEntity.status(OK).body(dogService.getRecommendationDogList(authentication));
         return ResponseEntity
@@ -106,7 +104,8 @@ public class DogController {
                                                                @RequestParam(required = false)
                                                                Integer neutralized,
 //                                                               Authentication authentication
-                                                               @RequestParam Integer userNo
+                                                               @RequestParam(required = false)
+                                                               Integer userNo
     ) {
 //        log.warn("DogController : authentication = {}", authentication.toString());
 
@@ -114,7 +113,8 @@ public class DogController {
 //        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind, sex, neutralized, authentication);
 //        log.info("DogController : pageable = {}, kind = {}, sex = {}, neutralized = {}", pageable.toString(), kind.toString(), sex.toString(), neutralized.toString());
 
-        Page<DogListRes> dogPage = dogService.getDogList(pageable, kind, sex, neutralized, userNo);
+        Page<DogListRes> dogPage =
+            dogService.getDogList(pageable, kind, sex, neutralized, userNo);
 
         return ResponseEntity.status(OK).body(new PageResponse<>(dogPage));
 
@@ -128,8 +128,10 @@ public class DogController {
         })
     public ResponseEntity<List<DogListRes>> getDogList(@PathVariable int shelterNo,
                                                        @RequestParam(required = false)
-                                                       int num) {
-        return ResponseEntity.status(OK).body(dogService.getDogListByShelterNo(shelterNo, num));
+                                                       Integer num, @RequestParam(required = false)
+                                                       Integer status) {
+        return ResponseEntity.status(OK)
+            .body(dogService.getDogListByShelterNo(shelterNo, num, status));
 
     }
 

@@ -1,13 +1,16 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  width: 90%;
+  width: 100%;
   margin-top: 60px;
+  padding: 0 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 
 export const FilterContainer = styled.div`
-  width: 90%;
-  margin: 0 auto;
+  width: 100%;
 `
 
 export const ShowFilterButton = styled.div`
@@ -23,8 +26,8 @@ export const ShowFilterButtonImg = styled.img<{ $isShow: boolean }>`
   margin-left: 6px;
 `
 
-export const DogListContainer = styled.div`
-  width: 90%;
+export const DogListContainerStyle = styled.div`
+  width: 100%;
   margin: 0 auto 70px auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(48%, 1fr));
@@ -45,4 +48,29 @@ export const FakeDiv = styled.div`
   align-items: center;
   height: 244px;
   justify-content: center;
+`
+
+export const NoDataContainer = styled.div`
+  width: 94%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #fff3e9;
+  border-radius: 10px;
+  padding: 5%;
+  margin-bottom: 3%;
+`
+
+export const NoDataImg = styled.img`
+  width: 20%;
+  margin-bottom: 3%;
+`
+
+export const NoDataText = styled.div`
+  text-align: center;
+  color: #4f4f4f;
+  font-weight: 500;
+  font-size: 13px;
+  margin-bottom: 3%;
 `

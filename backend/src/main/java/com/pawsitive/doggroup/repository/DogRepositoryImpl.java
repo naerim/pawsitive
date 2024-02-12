@@ -2,24 +2,20 @@ package com.pawsitive.doggroup.repository;
 
 import com.pawsitive.doggroup.dogenum.DogNeutralizedEnum;
 import com.pawsitive.doggroup.dogenum.DogSexEnum;
+import com.pawsitive.doggroup.dogenum.DogStatusEnum;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.entity.QDog;
 import com.pawsitive.doggroup.entity.QDogFile;
-import com.pawsitive.usergroup.entity.QMember;
 import com.pawsitive.usergroup.entity.QMemberDogLike;
 import com.pawsitive.usergroup.entity.QUser;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPQLQuery;
-
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -65,15 +61,13 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
                                        Integer neutralized) {
         List<DogListRes> content =
             getQueryDogList()
-                .where(eqSex(sex).or(eqSexCapital(sex)), eqNeutralized(neutralized), inKindList(kind))
+                .where(eqSex(sex), eqNeutralized(neutralized), inKindList(kind))
                 .orderBy(qDog.createdAt.desc())
                 .offset(pageable.getOffset()).limit(pageable.getPageSize())
                 .fetch();
 
         Long count = from(qDog).select(qDog.count())
-            .where(eqSex(sex).or(eqSexCapital(sex)),
-                eqNeutralized(neutralized),
-                inKindList(kind))
+            .where(eqSex(sex), eqNeutralized(neutralized), inKindList(kind))
             .fetchOne();
 
         return new PageImpl<>(content, pageable, count);
@@ -87,29 +81,24 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
             .fetch();
     }
 
-    private BooleanExpression eqSex(Integer sex) {
-        if (Objects.isNull(sex) || sex.equals(0)) {
-            return Expressions.asBoolean(false).isFalse();
-        }
-        return qDog.sex.eq(DogSexEnum.intToString(sex));
-    }
 
-    private BooleanExpression eqSexCapital(Integer sex) {
-        if (Objects.isNull(sex) || sex.equals(0)) {
-            return Expressions.asBoolean(false).isFalse();
+    private BooleanExpression eqSex(Integer sex) {
+        if (sex == null || sex.equals(0)) {
+            return null;
         }
-        return qDog.sex.eq(DogSexEnum.intToStringCapital(sex));
+        return qDog.sex.eq(DogSexEnum.intToString(sex))
+            .or(qDog.sex.eq(DogSexEnum.intToStringCapital(sex)));
     }
 
     private BooleanExpression eqNeutralized(Integer neutralized) {
-        if (Objects.isNull(neutralized) || neutralized.equals(0)) {
+        if (neutralized == null || neutralized.equals(0)) {
             return null;
         }
         return qDog.isNeutralized.eq(DogNeutralizedEnum.intToBoolean(neutralized));
     }
 
     BooleanExpression inKindList(List<String> kind) {
-        if (Objects.isNull(kind) || kind.isEmpty()) {
+        if (kind == null || kind.isEmpty()) {
             return null;
         }
         return qDog.kind.in(kind);
@@ -130,20 +119,32 @@ public class DogRepositoryImpl extends QuerydslRepositorySupport implements DogR
     }
 
     @Override
-    public List<DogListRes> getDogListByShelterNo(int shelterNo) {
+    public List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num, Integer status) {
+        if (num != null) {
+            return getQueryDogList()
+                .orderBy(qDog.createdAt.desc())
+                .where(eqUserNo(shelterNo), eqStatus(status))
+                .limit(num)
+                .fetch();
+        }
         return getQueryDogList()
             .orderBy(qDog.createdAt.desc())
-            .where(qDog.user.userNo.eq(shelterNo))
+            .where(eqUserNo(shelterNo), eqStatus(status))
             .fetch();
     }
 
-    @Override
-    public List<DogListRes> getDogListByShelterNo(int shelterNo, Integer num) {
-        return getQueryDogList()
-            .orderBy(qDog.createdAt.desc())
-            .where(qDog.user.userNo.eq(shelterNo))
-            .limit(num)
-            .fetch();
+    private BooleanExpression eqUserNo(Integer shelterNo) {
+        if (shelterNo.equals(0)) {
+            return null;
+        }
+        return qDog.user.userNo.eq(shelterNo);
+    }
+
+    private BooleanExpression eqStatus(Integer status) {
+        if (status == null || status.equals(0)) {
+            return null;
+        }
+        return qDog.status.eq(DogStatusEnum.intToEnum(status - 1));
     }
 
     private JPQLQuery<DogDetailRes> getQueryDogDetailList() {

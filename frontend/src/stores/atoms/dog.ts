@@ -18,6 +18,7 @@ export const dogDetailAtom = atom<DogType>({
   sex: '',
   neutralized: false,
   address: '',
+  userLiked: false,
 })
 
 export const createDogStepAtom = atom<number>(1)

@@ -2,15 +2,27 @@ import * as c from '@src/components/style/UserSurveyStyle'
 import { useQuery } from '@tanstack/react-query'
 import { fetchSurveyGet } from '@src/apis/survey'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useAtom, useAtomValue } from 'jotai/index'
+import { userAtom } from '@src/stores/atoms/user'
+import { userNameAtom } from '@src/stores/atoms/survey'
+import { useEffect } from 'react'
 
 const UserSurvey = () => {
   const { userNo } = useParams()
   const navigate = useNavigate()
+  const user = useAtomValue(userAtom)
+  const [userName, setUserName] = useAtom(userNameAtom)
+
   const { data, isLoading } = useQuery({
     queryKey: ['userSurveyData'],
     queryFn: () => fetchSurveyGet(Number(userNo)),
   })
 
+  useEffect(() => {
+    if (user.role === 'USER') {
+      setUserName(user.name)
+    }
+  }, [setUserName, user])
   const goBack = () => navigate(-1)
 
   return (
@@ -25,7 +37,7 @@ const UserSurvey = () => {
                 onClick={goBack}
               />
             </c.BackButton>
-            <c.Header>000님의 입양 설문</c.Header>
+            <c.Header>{userName}님의 입양 설문</c.Header>
           </c.HeaderDiv>
           <c.Question>
             <c.Number>&nbsp;&nbsp;1.</c.Number>
