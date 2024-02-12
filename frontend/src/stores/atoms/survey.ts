@@ -25,3 +25,5 @@ export const surveyDataAtom = atom<SurveyFormType>({
 })
 
 export const surveyStepAtom = atom<number>(1)
+
+export const userNameAtom = atom<string>('')
