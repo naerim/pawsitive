@@ -80,7 +80,7 @@ public class SecurityConfig {
             .httpBasic(HttpBasicConfigurer::disable)
             .csrf(CsrfConfigurer::disable) // csrf 설정 disable
             .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer.loginPage(
-                "/api/v1/auth/no-auth"))
+                "/login"))
             .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource))
             .sessionManagement(
                 configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -89,8 +89,8 @@ public class SecurityConfig {
                     .requestMatchers("/ws/chat/**", "/pub/**", "/sub/**").permitAll()
                     .requestMatchers("/api/v1/auth/no-auth").permitAll()
                     .requestMatchers("/api/v1/surveys/**").permitAll()
-                    .requestMatchers("/api/v1/users/**").authenticated()
-                    .requestMatchers("/api/v1/dogs/**").authenticated()
+//                    .requestMatchers("/api/v1/users/**").authenticated()
+//                    .requestMatchers("/api/v1/dogs/**").authenticated()
                     .anyRequest().permitAll()
 //                .anyRequest().authenticated()
             )
