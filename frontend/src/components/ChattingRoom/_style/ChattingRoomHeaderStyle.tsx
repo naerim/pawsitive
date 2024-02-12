@@ -26,13 +26,11 @@ export const TopWrap = styled.div`
   justify-content: space-between;
 
   .arrow {
-    width: 14px;
-    height: 18px;
+    width: 20px;
     cursor: pointer;
   }
 
   span {
-    margin-left: 16px;
     font-size: 1em;
     font-weight: 500;
   }
