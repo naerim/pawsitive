@@ -7,8 +7,15 @@ import { useMutation } from '@tanstack/react-query'
 import { acceptAppointment } from '@src/apis/appointment'
 
 const ConfirmAppointmentModal = (props: ConfirmAppointmentModalType) => {
-  const { onClose, chatRoomNo, dogName, shelterName, memberName, promise } =
-    props
+  const {
+    onClose,
+    chatRoomNo,
+    dogName,
+    shelterName,
+    memberName,
+    promise,
+    sendAlarm,
+  } = props
   const [user] = useAtom(userAtom)
 
   const { mutate } = useMutation({
@@ -16,6 +23,9 @@ const ConfirmAppointmentModal = (props: ConfirmAppointmentModalType) => {
     mutationFn: acceptAppointment,
     onSuccess(res) {
       console.log('입양약속 수락 성공', res)
+      sendAlarm(
+        '입양약속이 성사되었습니다! 함께한 약속 시간을 소중히 지켜주세요.',
+      )
       window.location.reload()
       onClose()
     },

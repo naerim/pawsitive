@@ -10,7 +10,7 @@ import { CreateAppointmentModalType } from '@src/types/appointment'
 const CreateAppointmentModal = (props: CreateAppointmentModalType) => {
   const [user] = useAtom(userAtom)
 
-  const { onClose, shelterName, dogName, chatRoomNo } = props
+  const { onClose, shelterName, dogName, chatRoomNo, sendAlarm } = props
 
   const [date, setDate] = useState('')
   const [time, setTime] = useState('10:00')
@@ -29,6 +29,9 @@ const CreateAppointmentModal = (props: CreateAppointmentModalType) => {
     mutationFn: createAppointment,
     onSuccess(res) {
       console.log('입양약속 등록 성공', res)
+      sendAlarm(
+        '새로운 입양약속이 등록되었습니다! 입양약속 보기 버튼을 눌러 날짜와 시간을 확인해보세요.',
+      )
       window.location.reload()
     },
     onError(error) {
