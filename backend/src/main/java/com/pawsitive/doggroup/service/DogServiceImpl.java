@@ -123,6 +123,26 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
+    public DogDetailRes getDogByDogNo(int dogNo, int userNo) {
+        Dog dog = dogRepository.findByDogNo(dogNo).orElseThrow(DogNotFoundException::new);
+
+        memberDogVisitService.processVisit(dogNo, userNo);
+
+        int hit = dog.getHit() + 1;
+        dog.setHit(hit);
+
+        dogRepository.save(dog);
+
+        DogDetailRes res = DogTransfer.entityToDto(dog);
+
+        if (!Objects.isNull(memberDogLikeRepository.getUserDogLiked(dogNo, userNo))) {
+            res.setUserLiked(true);
+        }
+
+        return res;
+    }
+
+    @Override
     public Dog getDogEntityByDogNo(int dogNo) {
         return dogRepository.findByDogNo(dogNo)
             .orElseThrow(DogNotFoundException::new);
@@ -139,6 +159,28 @@ public class DogServiceImpl implements DogService {
         String email = user.getUsername();
         Integer userNo = userRepository.findUserNoByEmail(email);
 
+        // MemberDogMatrix 가져오기
+        List<Double> memberDogMatrix = memberDogVisitService.getMatrixAsList(userNo);
+
+        // 전체 dog List 가져오기
+        List<DogListRes> dogList = dogRepository.getRecommendationDogList();
+
+        // DogListRes를 List<Double> 타입으로 변환하기
+        List<List<Double>> dogMatrixList = new ArrayList<>();
+
+        for (DogListRes res : dogList) {
+            dogMatrixList.add(dogListResToMatrix(res));
+        }
+
+        // MSD 계산해서 최소값 2개만 가지고 있는 List를 반환하기
+        List<DogListRes> recommendedDogs = getMinMSDDogs(memberDogMatrix, dogMatrixList);
+        setThumbnailImage(recommendedDogs);
+
+        return recommendedDogs;
+    }
+
+    @Override
+    public List<DogListRes> getRecommendationDogList(Integer userNo) {
         // MemberDogMatrix 가져오기
         List<Double> memberDogMatrix = memberDogVisitService.getMatrixAsList(userNo);
 
@@ -230,6 +272,16 @@ public class DogServiceImpl implements DogService {
 
             setLiked(dogList, memberDogLikeRepository.getLikedDogList(userNo));
         }
+
+        return dogList;
+    }
+
+    @Override
+    public Page<DogListRes> getDogList(Pageable pageable, List<String> kind, Integer sex, Integer neutralized, Integer userNo) {
+        Page<DogListRes> dogList = dogRepository.getDogList(pageable, kind, sex, neutralized);
+        setThumbnailImage(dogList);
+
+        setLiked(dogList, memberDogLikeRepository.getLikedDogList(userNo));
 
         return dogList;
     }
