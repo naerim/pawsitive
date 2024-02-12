@@ -56,11 +56,12 @@ public class ChatRoomDetailRes {
         public static Promise of(ChatRoom chatRoom) {
             Promise promise = new Promise();
             promise.setIsAccepted(chatRoom.getIsPromiseAccepted());
-            if (chatRoom.getCreatedAt() != null) {
+            if (chatRoom.getPromiseCreatedAt() != null) {
                 promise.setDate(
-                    chatRoom.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                    chatRoom.getPromiseCreatedAt()
+                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
                 promise.setTime(
-                    chatRoom.getCreatedAt().format(DateTimeFormatter.ofPattern("HH:mm")));
+                    chatRoom.getPromiseCreatedAt().format(DateTimeFormatter.ofPattern("HH:mm")));
             }
             return promise;
         }
