@@ -11,7 +11,7 @@ const SurveyQuestionNo7 = () => {
     setSelectedValue(value)
     setSurveyData(prevData => ({
       ...prevData,
-      family_agree: value,
+      familyAgree: value,
     }))
   }
   return (

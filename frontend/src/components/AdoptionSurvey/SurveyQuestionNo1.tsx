@@ -12,7 +12,7 @@ const SurveyQuestionNo1 = () => {
     setSelectedValue(value)
     setSurveyData(prevData => ({
       ...prevData,
-      accommodation_type: value,
+      accommodationType: value,
     }))
   }
   return (

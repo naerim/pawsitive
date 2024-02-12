@@ -28,6 +28,8 @@ import { useEffect } from 'react'
 import SurveyProgress from '@src/components/AdoptionSurvey/SurveyProgress'
 import { useMutation } from '@tanstack/react-query'
 import { updateUserStage } from '@src/apis/user'
+import { fetchSurveySubmit } from '@src/apis/survey'
+import { SurveyFormType } from '@src/types/surveyType'
 
 const AdoptionSurveyContainer = () => {
   const [surveyStep, setSurveyStep] = useAtom(surveyStepAtom)
@@ -35,7 +37,12 @@ const AdoptionSurveyContainer = () => {
   const navigate = useNavigate()
   const [surveyData, setSurveyData] = useAtom(surveyDataAtom)
 
-  const { mutate } = useMutation({
+  const { mutate: surveySubmitMutate } = useMutation({
+    mutationKey: ['surveySubmit'],
+    mutationFn: (Data: SurveyFormType) => fetchSurveySubmit(Data),
+  })
+
+  const { mutate: updateStageMutate } = useMutation({
     mutationKey: ['updateUserStage'],
     mutationFn: updateUserStage,
     onSuccess: () => {
@@ -48,7 +55,7 @@ const AdoptionSurveyContainer = () => {
   useEffect(() => {
     setSurveyData(prevData => ({
       ...prevData,
-      user_no: user.userNo,
+      userNo: user.userNo,
     }))
   }, [setSurveyData, user.userNo])
 
@@ -65,8 +72,8 @@ const AdoptionSurveyContainer = () => {
   }
 
   const goDone = () => {
-    console.log(surveyData)
-    mutate({
+    surveySubmitMutate(surveyData)
+    updateStageMutate({
       userNo: user.userNo,
       field: 'stage',
       value: 2,
