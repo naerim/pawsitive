@@ -1,7 +1,7 @@
 import * as a from '@src/container/style/AdoptedAppointmentContainerStyle'
 import { useNavigate } from 'react-router-dom'
 import { useAtom } from 'jotai/index'
-import { userAtom } from '@src/stores/atoms/user.ts'
+import { userAtom } from '@src/stores/atoms/user'
 
 const AdoptedAppointmentContainer = () => {
   const [user] = useAtom(userAtom)
