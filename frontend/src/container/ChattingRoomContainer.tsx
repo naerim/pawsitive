@@ -11,13 +11,19 @@ import MessageItem from '@src/components/ChattingRoom/MessageItem'
 import * as c from '@src/container/style/ChattingRoomContainerStyle'
 import InputSection from '@src/components/ChattingRoom/InputSection'
 import ChattingRoomHeader from '@src/components/ChattingRoom/ChattingRoomHeader'
+import CreateAppointmentModal from '@src/components/ChattingRoom/CreateAppointmentModal'
+import ConfirmAppointmentModal from '@src/components/ChattingRoom/ConfirmAppointmentModal'
 
 const ChattingRoomContainer = () => {
-  const params = useParams()
-  const { no } = params
+  const { no } = useParams()
 
   const [user] = useAtom(userAtom)
   const client = useRef<Client | null>(null)
+
+  const [createAppointmentModalVisible, setCreateAppointmentModalVisible] =
+    useState<boolean>(false)
+  const [confirmAppointmentModalVisible, setConfirmAppointmentModalVisible] =
+    useState<boolean>(false)
 
   const defaultMessage = {
     chatNo: 0,
@@ -116,30 +122,51 @@ const ChattingRoomContainer = () => {
   }, [messages])
 
   return (
-    <c.Container>
-      {!isLoading && data && (
-        <>
-          <ChattingRoomHeader
-            dog={data.dog}
-            member={data.member}
-            promise={data.promise}
-            shelter={data.shelter}
-          />
-          <c.MessageSection ref={scrollRef}>
-            {messages.map(message => (
-              <MessageItem item={message} key={message.chatNo} />
-            ))}
-          </c.MessageSection>
-          <InputSection
-            onClick={sendHandler}
-            message={newMessage.message}
-            onChange={e =>
-              setNewMessage(prev => ({ ...prev, message: e.target.value }))
-            }
-          />
-        </>
+    <>
+      <c.Container>
+        {!isLoading && data && (
+          <>
+            <ChattingRoomHeader
+              dog={data.dog}
+              member={data.member}
+              promise={data.promise}
+              shelter={data.shelter}
+              onOpenCreateAppointmentModal={() =>
+                setCreateAppointmentModalVisible(true)
+              }
+              onOpenConfirmAppointmentModal={() =>
+                setConfirmAppointmentModalVisible(true)
+              }
+            />
+            <c.MessageSection ref={scrollRef}>
+              {messages.map(message => (
+                <MessageItem item={message} key={message.chatNo} />
+              ))}
+            </c.MessageSection>
+            <InputSection
+              onClick={sendHandler}
+              message={newMessage.message}
+              onChange={e =>
+                setNewMessage(prev => ({ ...prev, message: e.target.value }))
+              }
+            />
+          </>
+        )}
+      </c.Container>
+      {createAppointmentModalVisible && (
+        <CreateAppointmentModal
+          chatRoomNo={Number(no)}
+          onClose={() => setCreateAppointmentModalVisible(false)}
+          dogName={data.dog.name}
+          shelterName={data.shelter.name}
+        />
       )}
-    </c.Container>
+      {confirmAppointmentModalVisible && (
+        <ConfirmAppointmentModal
+          onClose={() => setConfirmAppointmentModalVisible(false)}
+        />
+      )}
+    </>
   )
 }
 
