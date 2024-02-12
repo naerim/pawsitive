@@ -40,7 +40,7 @@ import CreateAdoptedAppointmentContainer from '@src/container/CreateAdoptedAppoi
 import ScrollToTop from '@src/hooks/ScrollToTop'
 import AdoptionSurveyDetailPage from '@src/pages/AdoptionSurveyDetailPage'
 import AdoptedAppointmentContainer from '@src/container/AdoptedAppointmentContainer'
-import ShelterDogsPage from '@src/pages/ShelterDogsPage.tsx'
+import ShelterDogsPage from '@src/pages/ShelterDogsPage'
 // import { userAtom } from '@src/stores/atoms/user'
 
 // 로그인된 경우 접근할 수 있는 url

@@ -33,7 +33,7 @@ const CommunityMapContainer = () => {
       const listValue = data.content
       setcommunityList(listValue)
     }
-  }, [data])
+  }, [data, setcommunityList])
 
   const isMapChange = () => {
     navigate('/community')
