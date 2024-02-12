@@ -1,4 +1,5 @@
-import { useAtom } from 'jotai'
+import * as f from '@src/components/style/FilterStyle'
+import { useAtom } from 'jotai/index'
 import { dogListParamsAtom } from '@src/stores/atoms/dog'
 
 const Filter = () => {
@@ -14,104 +15,85 @@ const Filter = () => {
     '리트리버',
     '기타',
   ]
+
   const [basicDogListParams, setBasicDogListParams] = useAtom(dogListParamsAtom)
 
-  const handleGenderChange = event => {
-    setBasicDogListParams({ ...basicDogListParams, sex: event.target.value })
+  const handleGenderChange = value => {
+    setBasicDogListParams({ ...basicDogListParams, sex: value })
   }
 
-  const handleNeuteredChange = event => {
+  const handleNeuteredChange = value => {
     setBasicDogListParams({
       ...basicDogListParams,
-      neutralized: event.target.value,
+      neutralized: value,
     })
   }
 
-  const handleKindChange = event => {
-    const selectedKinds = event.target.checked
-      ? [...basicDogListParams.kind, event.target.value]
-      : basicDogListParams.kind.filter(kind => kind !== event.target.value)
+  const handleKindChange = value => {
+    const selectedKinds = value.checked
+      ? [...basicDogListParams.kind, value.kind]
+      : basicDogListParams.kind.filter(kind => kind !== value.kind)
 
     setBasicDogListParams({ ...basicDogListParams, kind: selectedKinds })
   }
 
+  const renderGenderButtons = () => (
+    <div>
+      성별:
+      {['전체', '수컷', '암컷'].map((label, index) => (
+        <f.Item
+          key={index}
+          $select={Number(basicDogListParams.sex) === index}
+          onClick={() => handleGenderChange(index)}
+        >
+          {label}
+        </f.Item>
+      ))}
+    </div>
+  )
+
+  const renderNeuteredButtons = () => (
+    <div>
+      중성화:
+      {['전체', '0', 'X'].map((label, index) => (
+        <f.Item
+          key={index}
+          $select={Number(basicDogListParams.neutralized) === index}
+          onClick={() => handleNeuteredChange(index)}
+        >
+          {label}
+        </f.Item>
+      ))}
+    </div>
+  )
+
+  const renderKindCheckboxes = () => (
+    <div>
+      종류:
+      {kindList.map(kind => (
+        <f.Item key={kind} $select={basicDogListParams.kind.includes(kind)}>
+          <input
+            type="checkbox"
+            value={kind}
+            checked={basicDogListParams.kind.includes(kind)}
+            onChange={() =>
+              handleKindChange({
+                kind,
+                checked: !basicDogListParams.kind.includes(kind),
+              })
+            }
+          />
+          {kind}
+        </f.Item>
+      ))}
+    </div>
+  )
+
   return (
     <div>
-      <div>
-        성별:
-        <label>
-          <input
-            type="radio"
-            value="0"
-            checked={Number(basicDogListParams.sex) === 0}
-            onChange={handleGenderChange}
-          />
-          전체
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="1"
-            checked={Number(basicDogListParams.sex) === 1}
-            onChange={handleGenderChange}
-          />
-          수컷
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="2"
-            checked={Number(basicDogListParams.sex) === 2}
-            onChange={handleGenderChange}
-          />
-          암컷
-        </label>
-      </div>
-
-      <div>
-        중성화:
-        <label>
-          <input
-            type="radio"
-            value="0"
-            checked={Number(basicDogListParams.neutralized) === 0}
-            onChange={handleNeuteredChange}
-          />
-          전체
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="1"
-            checked={Number(basicDogListParams.neutralized) === 1}
-            onChange={handleNeuteredChange}
-          />
-          0
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="2"
-            checked={Number(basicDogListParams.neutralized) === 2}
-            onChange={handleNeuteredChange}
-          />
-          X
-        </label>
-      </div>
-      <div>
-        종류:
-        {kindList.map(kind => (
-          <label key={kind}>
-            <input
-              type="checkbox"
-              value={kind}
-              checked={basicDogListParams.kind.includes(kind)}
-              onChange={handleKindChange}
-            />
-            {kind}
-          </label>
-        ))}
-      </div>
+      {renderGenderButtons()}
+      {renderNeuteredButtons()}
+      {renderKindCheckboxes()}
     </div>
   )
 }
