@@ -16,8 +16,8 @@ export const createChatRoom = async (
   return publicRequest.post(`/chatrooms`, chatRoomParams).then(res => res.data)
 }
 
-// 채팅방 채팅 이력 조회
-export const fetchHistoryMessage = async (chatRoomNo: number) => {
+// 채팅방 조회
+export const fetchChatRoomDetail = async (chatRoomNo: number) => {
   return publicRequest.get(`/chatrooms/${chatRoomNo}`).then(res => {
     console.log(res.data)
     return res.data

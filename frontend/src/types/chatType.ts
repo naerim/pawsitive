@@ -12,10 +12,7 @@ export type MessageType = {
   userNo: number
 }
 
-// 채팅방 타입
-export type ChatRoomType = {
-  chatList: MessageType[]
-  chatRoomId: string
+export type ChattingRoomHeaderType = {
   dog: {
     age: number
     image: string
@@ -40,6 +37,12 @@ export type ChatRoomType = {
     userNo: number
   }
 }
+
+// 채팅방 타입
+export type ChatRoomType = {
+  chatList: MessageType[]
+  chatRoomId: string
+} & ChattingRoomHeaderType
 
 // 채팅리스트 아이템 타입
 export type ChattingListItemType = {
