@@ -2,6 +2,7 @@ import { publicRequest } from '@src/hooks/requestMethods'
 import {
   BasicDogListParamsType,
   DogListKindParamsType,
+  LikeDogsParamsType,
 } from '@src/types/dogType'
 import queryString from 'query-string'
 
@@ -60,4 +61,14 @@ export const fetchKindDogList = async (params: DogListKindParamsType) => {
       console.log(error)
       throw new Error('유기견 조회')
     })
+}
+
+// 유기견 찜 등록
+export const fetchLikeDog = async (params: LikeDogsParamsType) => {
+  return publicRequest.post('/dogs/like', params).then(res => res.data)
+}
+
+// 유기견 찜 취소
+export const fetchUnLikeDog = async (params: LikeDogsParamsType) => {
+  return publicRequest.post('/dogs/unlike', params).then(res => res.data)
 }

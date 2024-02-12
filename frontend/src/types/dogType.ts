@@ -14,6 +14,7 @@ export type DogType = {
   sex: string
   neutralized: boolean
   address: string
+  userLiked: boolean
 }
 
 export type DogListType = {
@@ -48,6 +49,7 @@ export type BasicDogListParamsType = {
   userNo: number
 }
 
+// 닮은 강아지상 찾기 - 유기견 품종별 추천
 export type DogListKindParamsType = {
   page: number
   size: number
@@ -62,4 +64,16 @@ export type DogListKindResType = {
   number: number
   previous: boolean
   next: boolean
+}
+
+// 유기견 찜 등록
+export type LikeDogsParamsType = {
+  userNo: number
+  email: string
+  dogNo: number
+}
+
+export type LikeDogsResType = {
+  dogNo: number
+  totalLikeCount: number
 }
