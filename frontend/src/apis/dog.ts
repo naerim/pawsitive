@@ -4,7 +4,7 @@ import queryString from 'query-string'
 
 export const fetchDogDetails = async (dogNo: number, userNo: number) => {
   return publicRequest
-    .get(`/dogs/${dogNo}/?userNo=${userNo}`)
+    .get(`/dogs/${dogNo}?userNo=${userNo}`)
     .then(res => res.data)
 }
 
