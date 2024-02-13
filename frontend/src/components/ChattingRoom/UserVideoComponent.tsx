@@ -13,18 +13,11 @@ const UserVideoComponent = (props: UserVideoComponentType) => {
     }
   }, [streamManager])
 
-  const getNicknameTag = () =>
-    streamManager !== undefined &&
-    JSON.parse(streamManager.stream.connection.data).clientData
-
   return (
     <u.Container>
       <video autoPlay={autoplay} ref={videoRef}>
         <track kind="captions" />
       </video>
-      <div>
-        <p>{getNicknameTag()}</p>
-      </div>
     </u.Container>
   )
 }

@@ -7,13 +7,27 @@ export const Container = styled.div`
   top: 0;
   height: 100vh;
   z-index: 100;
-  background-color: #fff;
+  background-color: #282c34;
   width: 390px;
 `
 
 export const Wrap = styled.div`
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+`
+
+export const ButtonWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 10%;
+`
+
+export const VideoWrap = styled.div`
   height: 100%;
+  padding: 20px;
 `
 
 export const PrevContainer = styled.div`
@@ -70,4 +84,13 @@ export const PrevCancelButton = styled.button`
   border-radius: 20px;
   background-color: red;
   color: #fff;
+`
+
+export const DoneButton = styled.button`
+  background-color: red;
+  color: #fff;
+  bottom: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
 `

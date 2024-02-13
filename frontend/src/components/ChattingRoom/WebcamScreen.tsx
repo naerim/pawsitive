@@ -176,26 +176,25 @@ const WebcamScreen = (props: WebcamScreenType) => {
   return (
     <>
       <w.Container>
-        <button type="button" onClick={onClickEndCall}>
-          종료
-        </button>
-
         {session !== undefined && (
           <w.Wrap>
-            <div>
-              {publisher !== undefined && (
-                <div>
-                  <UserVideoComponent streamManager={publisher} />
-                </div>
-              )}
-              {subscriber !== undefined && (
-                <div>
-                  <UserVideoComponent streamManager={subscriber} />
-                </div>
-              )}
-            </div>
+            {publisher !== undefined && (
+              <w.VideoWrap>
+                <UserVideoComponent streamManager={publisher} />
+              </w.VideoWrap>
+            )}
+            {subscriber !== undefined && (
+              <w.VideoWrap>
+                <UserVideoComponent streamManager={subscriber} />
+              </w.VideoWrap>
+            )}
           </w.Wrap>
         )}
+        <w.ButtonWrap>
+          <w.DoneButton type="button" onClick={onClickEndCall}>
+            종료
+          </w.DoneButton>
+        </w.ButtonWrap>
       </w.Container>
       {preScreenVisible && (
         <w.PrevContainer>
