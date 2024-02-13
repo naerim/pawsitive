@@ -38,8 +38,7 @@ const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
   const onClickConfirmAdopt = () => {
     const result = confirm('입양을 확정하시겠습니까?')
     if (result) {
-      mutate({ userNo: user.userNo, dogNo: dog.age })
-      // registerShelterAdoption
+      mutate({ userNo: member.userNo, dogNo: dog.dogNo })
     }
   }
 
