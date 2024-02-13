@@ -30,8 +30,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws/chat")   //SockJS 연결 주소
             .addInterceptors(new StompHandshakeInterceptor())
-            .setAllowedOriginPatterns("http://localhost:3000", "https://i10c111.p.ssafy.io/**",
-                "http://i10c111.p.ssafy.io:9000/**")
+            .setAllowedOrigins(
+                "http://localhost:3000", "http://localhost:8080",
+                "https://i10c111.p.ssafy.io", "https://c111pawsitive.netlify.app")
+            .setAllowedOriginPatterns(
+                "http://localhost:3000/**", "http://localhost:8080/**",
+                "https://i10c111.p.ssafy.io/**", "https://c111pawsitive.netlify.app/**")
+//            .setAllowedOriginPatterns("http://localhost:3000", "https://i10c111.p.ssafy.io/**",
+//                "http://i10c111.p.ssafy.io:9000/**")
             .withSockJS()
             .setDisconnectDelay(30 * 1000)
             .setClientLibraryUrl(
