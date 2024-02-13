@@ -86,7 +86,7 @@ export type DogStatusSectionType = {
 }
 
 export type MonthDogCardType = {
-  // dogNo: number
+  dogNo: number
   file: string
   name: string
   sex: string

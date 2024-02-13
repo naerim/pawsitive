@@ -9,13 +9,17 @@ export type AdoptedDog = {
   adoptedDays: number
   sex: string
   neutralized: boolean
+  image: string
 }
 
-export type ModData = {
-  fetchData: {
-    name: string
-    weight: number
-    age: number
+export type ModDataType = {
+  formData: {
+    updateAdoptDogRes: {
+      name: string
+      weight: number
+      age: number
+    }
+    file: string
   }
   adoptDogNo: number
 }

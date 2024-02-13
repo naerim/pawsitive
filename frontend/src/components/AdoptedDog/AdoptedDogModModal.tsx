@@ -3,7 +3,7 @@ import { useAtom } from 'jotai/index'
 import { userAtom } from '@src/stores/atoms/user'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { fetchAdoptedDogDetail, fetchAdoptedDogMod } from '@src/apis/adoptDog'
-import { ModData } from '@src/types/components/AdoptedDogType'
+import { ModDataType } from '@src/types/components/AdoptedDogType'
 import React, { useEffect, useState } from 'react'
 import { updateUserStage } from '@src/apis/user'
 import * as a from '@src/components/style/AdoptedDogModModalStyle'
@@ -19,27 +19,30 @@ interface PropsType {
 }
 
 const AdoptedDogModModal = (props: PropsType) => {
-  const navigate = useNavigate()
-  const [user, setUser] = useAtom(userAtom)
   const { open, setOpen } = props
   const handleClose = () => setOpen(false)
-  const [dataForm, setDataForm] = useState<ModData>({
-    fetchData: {
-      name: '',
-      weight: 0,
-      age: 0,
-    },
+  const navigate = useNavigate()
+  const [user, setUser] = useAtom(userAtom)
+  const [imageFilesValue, setImageFiles] = useState<File[]>([])
+  const [imageViewValue, setImageView] = useState<string[]>([])
+  const [updateAdoptDogRes, setUpdateAdoptDogRes] = useState({
+    name: '',
+    weight: 0,
+    age: 0,
+  })
+  const [submitData, setSubmitData] = useState({
     adoptDogNo: 0,
+    formData: {},
   })
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['adoptedDogDetail'],
     queryFn: () => fetchAdoptedDogDetail(user.userNo),
   })
 
   const { mutate: adoptedDogMod } = useMutation({
     mutationKey: ['adoptedDogMod'],
-    mutationFn: (modData: ModData) => fetchAdoptedDogMod(modData),
+    mutationFn: (modData: ModDataType) => fetchAdoptedDogMod(modData),
   })
 
   const { mutate: updateStage } = useMutation({
@@ -53,62 +56,60 @@ const AdoptedDogModModal = (props: PropsType) => {
     onError: error => console.error('user stage update 3-4 fail : ', error),
   })
 
+  useEffect(() => {
+    refetch().then(r => r)
+  }, [refetch()])
+
   // useQuery로 받아 온 data 값을 저장해서 input에 넣기
   useEffect(() => {
     if (data) {
-      setDataForm(prevData => ({
+      setUpdateAdoptDogRes(prevData => ({
         ...prevData,
-        fetchData: {
-          ...prevData.fetchData,
-          name: data.name,
-          weight: data.weight,
-          age: data.age,
-        },
+        name: data.name,
+        weight: data.weight,
+        age: data.age,
+      }))
+      setSubmitData(prevData => ({
+        ...prevData,
         adoptDogNo: data.adoptDogNo,
       }))
     }
   }, [data])
 
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target
+    const imageUrlLists: string[] = []
+    if (files) {
+      const fileArray = Array.from(files, f => f as File)
+      setImageFiles(fileArray)
+      const currentImageUrl = URL.createObjectURL(files[0])
+      imageUrlLists.push(currentImageUrl)
+    }
+    setImageView(imageUrlLists)
+  }
+
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nameChange = e.target.value
-    setDataForm(prevData => ({
+    setUpdateAdoptDogRes(prevData => ({
       ...prevData,
-      fetchData: {
-        ...prevData.fetchData,
-        name: nameChange,
-      },
+      name: nameChange,
     }))
   }
 
   const handleWeight = (e: React.ChangeEvent<HTMLInputElement>) => {
     const weightChange = Number(e.target.value)
-    setDataForm(prevData => ({
+    setUpdateAdoptDogRes(prevData => ({
       ...prevData,
-      fetchData: {
-        ...prevData.fetchData,
-        weight: weightChange,
-      },
+      weight: weightChange,
     }))
   }
 
   const handleAge = (e: React.ChangeEvent<HTMLInputElement>) => {
     const ageChange = Number(e.target.value)
-    setDataForm(prevData => ({
+    setUpdateAdoptDogRes(prevData => ({
       ...prevData,
-      fetchData: {
-        ...prevData.fetchData,
-        age: ageChange,
-      },
+      age: ageChange,
     }))
-  }
-
-  const HandleUserStage = () => {
-    adoptedDogMod(dataForm)
-    updateStage({
-      userNo: user.userNo,
-      field: 'stage',
-      value: 4,
-    })
   }
 
   // 모달 크기 및 색상
@@ -118,7 +119,7 @@ const AdoptedDogModModal = (props: PropsType) => {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    height: 370,
+    height: 480,
     borderRadius: '10px',
     bgcolor: 'background.paper',
     '&:focus': {
@@ -146,6 +147,27 @@ const AdoptedDogModModal = (props: PropsType) => {
     },
   })
 
+  const HandleUserStage = () => {
+    const formData: FormData = new FormData()
+    formData.append('file', imageFilesValue[0])
+    formData.append(
+      'updateAdoptDogRes',
+      new Blob([JSON.stringify(updateAdoptDogRes)], {
+        type: 'application/json',
+      }),
+    )
+
+    submitData.formData = formData
+
+    // @ts-ignore
+    adoptedDogMod(submitData)
+    updateStage({
+      userNo: user.userNo,
+      field: 'stage',
+      value: 4,
+    })
+  }
+
   return (
     <div>
       {!isLoading && data && (
@@ -157,11 +179,34 @@ const AdoptedDogModModal = (props: PropsType) => {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
+              {/* 이미지 등록 로직 */}
+              <a.ImgContainer>
+                <a.ImgLabel htmlFor="image">
+                  <a.ImgBox>
+                    {!imageViewValue ? (
+                      <img className="img" src="/icon/icon_camera.png" alt="" />
+                    ) : (
+                      <img
+                        alt=""
+                        src={imageViewValue[0]}
+                        style={{ height: '100px', width: '100px' }}
+                      />
+                    )}
+                  </a.ImgBox>
+                </a.ImgLabel>
+                <a.ImageInput
+                  id="image"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileUpload}
+                />
+              </a.ImgContainer>
+
               <a.InputContainer>
                 <a.Label htmlFor="name">이름</a.Label>
                 <a.Input
                   id="name"
-                  value={dataForm.fetchData.name}
+                  value={updateAdoptDogRes.name}
                   onChange={handleName}
                   placeholder="아이의 평생 이름을 알려주세요"
                 />
@@ -173,7 +218,7 @@ const AdoptedDogModModal = (props: PropsType) => {
                     <a.InputNum
                       id="age"
                       type="number"
-                      value={dataForm.fetchData.age}
+                      value={updateAdoptDogRes.age}
                       onChange={handleAge}
                       placeholder="예상 나이여도 좋아요"
                     />
@@ -187,7 +232,7 @@ const AdoptedDogModModal = (props: PropsType) => {
                     <a.InputNum
                       id="weight"
                       type="number"
-                      value={dataForm.fetchData.weight}
+                      value={updateAdoptDogRes.weight}
                       onChange={handleWeight}
                       placeholder="몸무게"
                     />

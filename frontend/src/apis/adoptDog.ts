@@ -1,7 +1,7 @@
 import { publicRequest } from '@src/hooks/requestMethods'
 import {
   AdoptedDog,
-  ModData,
+  ModDataType,
   ShelterAdoptionReqType,
 } from '@src/types/components/AdoptedDogType'
 
@@ -17,9 +17,9 @@ export const fetchAdoptedDogDetail = async (
 }
 
 // 반려견 정보 수정
-export const fetchAdoptedDogMod = async (modData: ModData) => {
+export const fetchAdoptedDogMod = async (modData: ModDataType) => {
   return publicRequest
-    .put(`/adopt-dogs/${modData.adoptDogNo}`, modData.fetchData)
+    .put(`/adopt-dogs/${modData.adoptDogNo}`, modData.formData)
     .then(res => res.data)
     .catch(error => {
       throw new Error(error)

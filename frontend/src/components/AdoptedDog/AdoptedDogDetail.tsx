@@ -44,7 +44,9 @@ const AdoptedDogDetail = () => {
         {!isLoading && data && (
           <a.Card>
             <a.FrontCard>
-              <a.DogImage src="img/img_dog1.png" />
+              <a.DogImage
+                src={data.image ? `${data.image}` : 'img/img_dog1.png'}
+              />
               <a.TextContainer>
                 <a.TogetherContainer>
                   <a.DogName>{data.name}</a.DogName>

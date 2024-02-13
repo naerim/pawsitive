@@ -2,15 +2,16 @@ import * as s from '@src/components/CommunityDetail/_style/UserNameStyle'
 
 interface PropsType {
   memberName: string
-  memberStage: number
   memberAddress: string
 }
 
 const UserName = (props: PropsType) => {
-  const { memberName, memberStage, memberAddress } = props
+  const { memberName, memberAddress } = props
   return (
     <s.Container>
-      <s.Circle>{memberStage}</s.Circle>
+      <s.Image>
+        <img src="/img/img_circle_dog.png" alt="" />
+      </s.Image>
       <s.Right>
         <s.Title>{memberName}</s.Title>
         <s.Address>{memberAddress}</s.Address>

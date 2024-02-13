@@ -63,3 +63,41 @@ export const ButtonContainer = styled.div`
   gap: 10px;
   margin-top: 10px;
 `
+
+// 이미지
+export const ImgContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin: auto;
+  padding: 20px 0;
+`
+
+export const ImgLabel = styled.label`
+  border-radius: 5px;
+`
+
+export const ImgBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  width: 100px;
+  height: 100px;
+
+  .img {
+    width: 16px;
+  }
+
+  .p {
+    font-size: 0.6em;
+    margin-top: 6px;
+    color: #878787;
+  }
+`
+
+export const ImageInput = styled.input`
+  opacity: 0;
+  width: 0;
+  height: 0;
+`
