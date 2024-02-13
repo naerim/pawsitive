@@ -39,7 +39,7 @@ export const PrevContainer = styled.div`
   top: 0;
   height: 100vh;
   z-index: 100;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: #282c34;
   width: 390px;
 `
 
