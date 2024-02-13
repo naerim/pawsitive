@@ -3,10 +3,12 @@ package com.pawsitive.communitygroup.dto.request;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 
 @AllArgsConstructor
 @Getter
+@ToString
 public class CommunityCreateReq {
 
     private int userNo;
