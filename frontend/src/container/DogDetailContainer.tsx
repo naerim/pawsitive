@@ -10,44 +10,64 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { DogType } from '@src/types/dogType'
 import { fetchDogDetails } from '@src/apis/dog'
-import { useAtom } from 'jotai'
-import { dogDetailAtom } from '@src/stores/atoms/dog'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { dogDetailAtom, dogLikedAtom } from '@src/stores/atoms/dog'
 import { useEffect } from 'react'
+import { userAtom } from '@src/stores/atoms/user'
 
 const Container = styled.div`
   padding-bottom: 80px;
 `
 
 const DogDetailContainer = () => {
-  // const location = useLocation()
-  // const dogNo = location.state?.dogNo
+  const user = useAtomValue(userAtom)
   const { dogNo } = useParams<{ dogNo: string }>()
   const [dogDetail, setDogDetail] = useAtom(dogDetailAtom)
-  const { userNo, name, role } = JSON.parse(
-    window.localStorage.getItem('currentUser'),
-  )
+  const setUserLike = useSetAtom(dogLikedAtom)
 
-  const { data, isLoading } = useQuery<DogType | null>({
-    queryKey: ['dogDetail'],
-    queryFn: () => fetchDogDetails(Number(dogNo), userNo),
+  const { data, isLoading, refetch } = useQuery<DogType | null>({
+    queryKey: ['dogDetail', user.userNo, dogNo],
+    queryFn: () => fetchDogDetails(Number(dogNo), user.userNo),
   })
 
   useEffect(() => {
     if (!isLoading && data) {
       setDogDetail(data)
+      setUserLike(data.userLiked)
     }
-  }, [data, isLoading, setDogDetail])
+  }, [data, isLoading, dogDetail, setDogDetail, setUserLike])
 
-  const isDifferentShelter = role === 'SHELTER' && name === dogDetail.userName
+  useEffect(() => {
+    refetch().then(r => r)
+  }, [refetch])
+
+  const isDifferentShelter =
+    user.role === 'SHELTER' && user.name === dogDetail.userName
 
   return (
     <Container>
-      {!isLoading && (
+      {!isLoading && data && (
         <>
-          <DogFileSection />
-          <ShelterName />
-          <DogAdditionalInfo />
-          <ShelterInfoSection />
+          <DogFileSection
+            files={data.files}
+            name={data.name}
+            sex={data.sex}
+            neutralized={data.neutralized}
+            kind={data.kind}
+            hit={data.hit}
+            age={data.age}
+          />
+          <ShelterName
+            userName={data.userName}
+            address={data.address}
+            dogNo={data.dogNo}
+          />
+          <DogAdditionalInfo note={data.note} />
+          <ShelterInfoSection
+            address={data.address}
+            createdAt={data.createdAt}
+            userName={data.userName}
+          />
           <TipSection />
           <SameShelterDogs dogDetail={dogDetail} />
           {!isDifferentShelter && <ChatStartButton />}
