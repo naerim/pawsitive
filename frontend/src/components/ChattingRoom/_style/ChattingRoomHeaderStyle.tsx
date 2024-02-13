@@ -69,6 +69,17 @@ export const InfoDetailWrap = styled.div`
     }
   }
 `
+export const DoneText = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 4px 10px;
+  font-size: 0.8em;
+  color: #ff9232;
+  border: 1px solid #ff9232;
+  background-color: #fff;
+  font-weight: 500;
+`
+
 export const ButtonWrap = styled.div`
   display: flex;
   margin-top: 8px;
@@ -77,7 +88,7 @@ export const ButtonWrap = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #ebebeb;
+    border: 1px solid #d9d9d9;
     background-color: #fff;
     border-radius: 2px;
     padding: 4px 10px;

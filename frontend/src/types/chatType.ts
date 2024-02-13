@@ -14,6 +14,8 @@ export type MessageType = {
 
 export type ChattingRoomInfoType = {
   dog: {
+    dogNo: number
+    status: number
     age: number
     image: string
     isNeutralized: boolean
