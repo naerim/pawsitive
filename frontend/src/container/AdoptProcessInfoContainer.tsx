@@ -18,7 +18,7 @@ const AdoptProcessInfoContainer = () => {
         </a.StepSubTitle>
       </a.StepContainer>
 
-      <a.ChevronDownImg src="img/img_chevron_right.png" />
+      <a.ChevronDownImg src="icon/icon_orange_arrow_right.png" />
 
       <a.StepContainer>
         <a.StepImg src="img/img_step_survey.png" />
@@ -35,7 +35,7 @@ const AdoptProcessInfoContainer = () => {
         </a.StepSubTitle>
       </a.StepContainer>
 
-      <a.ChevronDownImg src="img/img_chevron_right.png" />
+      <a.ChevronDownImg src="icon/icon_orange_arrow_right.png" />
 
       <a.StepContainer>
         <a.StepImg src="img/img_step_talk.png" />
@@ -57,7 +57,7 @@ const AdoptProcessInfoContainer = () => {
         </a.StepSubTitle>
       </a.StepContainer>
 
-      <a.ChevronDownImg src="img/img_chevron_right.png" />
+      <a.ChevronDownImg src="icon/icon_orange_arrow_right.png" />
 
       <a.StepContainer>
         <a.StepImg src="img/img_step_heart.png" />
