@@ -1,6 +1,5 @@
 package com.pawsitive.communitygroup.service;
 
-import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.communitygroup.dto.request.CommunityCreateReq;
 import com.pawsitive.communitygroup.dto.response.CommunityBoardDetailRes;
 import com.pawsitive.communitygroup.dto.response.CommunityCommentDetailRes;
@@ -75,11 +74,11 @@ public class CommunityServiceImpl implements CommunityService {
     public CommunityBoardDetailRes getCommunityBoard(int boardNo) {
         // 엔티티 가져오기
         CommunityBoard communityBoard = getCommunityBoardEntity(boardNo);
-        CommunityBoard saved = updateHit(communityBoard);
+//        CommunityBoard saved = updateHit(boardNo);
 
         // 응답 객체 생성
         CommunityBoardDetailRes communityBoardDetailRes =
-            CommunityTransfer.entityToDto(saved);
+            CommunityTransfer.entityToDto(communityBoard);
         setAddress(communityBoardDetailRes);
 
         return communityBoardDetailRes;
@@ -93,7 +92,8 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Override
     @Transactional
-    public CommunityBoard updateHit(CommunityBoard board) {
+    public CommunityBoard updateHit(int boardNo) {
+        CommunityBoard board = getCommunityBoardEntity(boardNo);
         board.setHit(board.getHit() + 1);
         return communityBoardRepository.save(board);
     }
@@ -113,24 +113,16 @@ public class CommunityServiceImpl implements CommunityService {
     @Transactional
     public CommunityBoardDetailRes createCommunityBoard(CommunityCreateReq req,
                                                         MultipartFile[] images) {
-        CommunityBoard savedBoard;
-
-        try {
-            savedBoard = communityBoardRepository.save(CommunityBoard.builder()
-                .member(userService.getMemberByUserNo(req.getUserNo()))
-                .title(req.getTitle())
-                .content(req.getContent())
-                .isPublic(req.getIsPublic())
-                .latitude(req.getLatitude())
-                .longitude(req.getLongitude())
-                .hit(0)
-                .communityCategory(categoryService.getCategoryByCategoryNo(req.getCategoryNo()))
-                .build());
-        } catch (Exception e) {
-            throw new NotSavedException();
-        }
-
-        log.info("CommunityService : savedBoard = {}", savedBoard);
+        CommunityBoard savedBoard = communityBoardRepository.save(CommunityBoard.builder()
+            .member(userService.getMemberByUserNo(req.getUserNo()))
+            .title(req.getTitle())
+            .content(req.getContent())
+            .isPublic(req.getIsPublic())
+            .latitude(req.getLatitude())
+            .longitude(req.getLongitude())
+            .hit(0)
+            .communityCategory(categoryService.getCategoryByCategoryNo(req.getCategoryNo()))
+            .build());
 
         communityImageService.createCommunityImage(savedBoard, images);
 
@@ -162,5 +154,5 @@ public class CommunityServiceImpl implements CommunityService {
 
         return communityList;
     }
-    
+
 }

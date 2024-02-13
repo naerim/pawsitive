@@ -67,6 +67,7 @@ public class CommunityController {
             @ApiResponse(responseCode = "200", description = "커뮤니티 고유번호에 해당되는 커뮤니티 세부사항을 정상적으로 반환한다.")
         })
     public ResponseEntity<CommunityDetailRes> getCommunity(@PathVariable int boardNo) {
+        communityService.updateHit(boardNo);
         return ResponseEntity.status(OK).body(communityService.getCommunity(boardNo));
     }
 
@@ -80,8 +81,6 @@ public class CommunityController {
     public ResponseEntity<CommunityBoardDetailRes> createCommunity(
         @Valid @RequestPart CommunityCreateReq req,
         @RequestPart(required = false) MultipartFile[] files) {
-
-        log.info("CommunityController : req = {}", req);
 
         return ResponseEntity.status(CREATED)
             .body(communityService.createCommunityBoard(req, files));
