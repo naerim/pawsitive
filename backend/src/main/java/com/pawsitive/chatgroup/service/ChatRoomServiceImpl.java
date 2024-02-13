@@ -116,6 +116,11 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
         if ("dogNo".equals(type)) {
             chatRooms = chatRoomRepository.getChatRoomListByDogNo(value);
+            for (ChatRoomListRes chatRoom : chatRooms) {
+                User user = userService.getUserByUserNo(chatRoom.getMemberNo());
+                chatRoom.setMemberName(user.getName());
+                chatRoom.setMemberProfileImage(user.getImage());
+            }
         } else if ("userNo".equals(type)) {
             chatRooms = chatRoomRepository.getChatRoomListByUserNo(value);
         } else {
