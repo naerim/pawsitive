@@ -13,9 +13,13 @@ import lombok.Setter;
 public class ChatRoomListRes {
     private int chatRoomNo;
     private int dogNo;
+    private String dogName;
     private String id;
     private String name;
     private String memberProfileImage;
+    private int memberNo;
+    private String memberName;
+    private String shelterName;
     private String shelterProfileImage;
     private Boolean isPromiseAccepted;
     private LocalDateTime promiseCreatedAt;

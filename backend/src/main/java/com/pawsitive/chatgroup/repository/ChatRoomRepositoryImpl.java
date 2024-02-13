@@ -28,70 +28,60 @@ public class ChatRoomRepositoryImpl extends QuerydslRepositorySupport
     @Override
     public List<ChatRoomListRes> getChatRoomListByUserNo(int userNo) {
 
-        return
-            from(qChatRoom, qDog)
-                .where(qChatRoom.dogNo.eq(qDog.dogNo))
-                .select(Projections.fields(ChatRoomListRes.class,
-                    qChatRoom.chatRoomNo, qChatRoom.dogNo, qChatRoom.id, qChatRoom.name,
-                    ExpressionUtils.as(from(qUser)
-                        .select(qUser.image)
-                        .where(qUser.userNo.eq(userNo)), "memberProfileImage"),
-                    qDog.user.image.as("shelterProfileImage"),
-                    qChatRoom.isPromiseAccepted, qChatRoom.promiseCreatedAt))
-                .where(qChatRoom.userNo.eq(userNo).or(qDog.user.userNo.eq(userNo)))
-                .fetch();
+        return from(qChatRoom, qDog).where(qChatRoom.dogNo.eq(qDog.dogNo)).select(
+                Projections.fields(ChatRoomListRes.class, qChatRoom.chatRoomNo, qChatRoom.dogNo,
+                    qChatRoom.id, qChatRoom.name, qDog.name.as("dogName"),
+                    ExpressionUtils.as(from(qUser).select(qUser.image).where(qUser.userNo.eq(userNo)),
+                        "memberProfileImage"),
+                    ExpressionUtils.as(from(qUser).select(qUser.name).where(qUser.userNo.eq(userNo)),
+                        "memberName"), qDog.user.image.as("shelterProfileImage"),
+                    qDog.user.name.as("shelterName"), qChatRoom.isPromiseAccepted,
+                    qChatRoom.promiseCreatedAt))
+            .where(qChatRoom.userNo.eq(userNo).or(qDog.user.userNo.eq(userNo))).fetch();
     }
 
     @Override
     public List<ChatRoomListRes> getChatRoomListByDogNo(int dogNo) {
 
-        return
-            from(qChatRoom, qDog)
-                .where(qChatRoom.dogNo.eq(qDog.dogNo))
-                .select(Projections.fields(ChatRoomListRes.class,
-                    qChatRoom.chatRoomNo, qChatRoom.dogNo, qChatRoom.id, qChatRoom.name,
-                    ExpressionUtils.as(from(qUser, qChatRoom)
-                        .where(qUser.userNo.eq(qChatRoom.userNo))
-                        .select(qUser.image)
-                        .where(qUser.userNo.eq(qDog.user.userNo)), "memberProfileImage"),
+        return from(qChatRoom, qDog).where(qChatRoom.dogNo.eq(qDog.dogNo)).select(
+                Projections.fields(ChatRoomListRes.class, qChatRoom.chatRoomNo, qChatRoom.dogNo,
+                    qChatRoom.id, qChatRoom.name, qDog.name.as("dogName"),
+                    qChatRoom.userNo.as("memberNo"),
+//                    ExpressionUtils.as(from(qUser, qChatRoom)
+//                        .where(qUser.userNo.eq(qChatRoom.userNo))
+//                        .select(qUser.image)
+//                        .where(qUser.userNo.eq(qChatRoom.userNo)), "memberProfileImage"),
+//                    ExpressionUtils.as(from(qUser, qChatRoom)
+//                        .where(qUser.userNo.eq(qChatRoom.userNo))
+//                        .select(qUser.name)
+//                        .where(qUser.userNo.eq(qChatRoom.userNo)), "memberName"),
                     qDog.user.image.as("shelterProfileImage"), qChatRoom.isPromiseAccepted,
-                    qChatRoom.promiseCreatedAt))
-                .where(qDog.dogNo.eq(dogNo))
-                .orderBy(qChatRoom.createdAt.desc())
-                .fetch();
+                    qDog.user.name.as("shelterName"), qChatRoom.promiseCreatedAt))
+            .where(qDog.dogNo.eq(dogNo)).orderBy(qChatRoom.createdAt.desc()).fetch();
     }
 
     @Override
     public List<ChatRes> getChatHistoryByChatRoomNo(int roomNo) {
-        return from(qChat)
-            .innerJoin(qChat.room, qChatRoom)
-            .innerJoin(qChat.user, qUser)
-            .select(Projections.constructor(ChatRes.class, qChat.chatNo, qUser.userNo, qUser.name,
-                qUser.image, qChat.type, qChat.message, qChat.createdAt, qChat.isRead))
-            .where(qChatRoom.chatRoomNo.eq(roomNo))
-            .orderBy(qChat.createdAt.asc())
-            .fetch();
+        return from(qChat).innerJoin(qChat.room, qChatRoom).innerJoin(qChat.user, qUser).select(
+                Projections.constructor(ChatRes.class, qChat.chatNo, qUser.userNo, qUser.name,
+                    qUser.image, qChat.type, qChat.message, qChat.createdAt, qChat.isRead))
+            .where(qChatRoom.chatRoomNo.eq(roomNo)).orderBy(qChat.createdAt.asc()).fetch();
     }
 
     @Override
     public boolean isDuplicateChatRoom(int userNo, int dogNo) {
-        Long cnt = from(qChatRoom)
-            .select(qChatRoom.chatRoomNo.count())
-            .where(qChatRoom.userNo.eq(userNo))
-            .where(qChatRoom.dogNo.eq(dogNo))
-            .fetchOne();
+        Long cnt =
+            from(qChatRoom).select(qChatRoom.chatRoomNo.count()).where(qChatRoom.userNo.eq(userNo))
+                .where(qChatRoom.dogNo.eq(dogNo)).fetchOne();
 
         return cnt > 0;
     }
 
     @Override
     public LastChatTmp getLastChat(int chatRoomNo) {
-        return from(qChat)
-            .innerJoin(qChat.room, qChatRoom)
-            .select(Projections.constructor(LastChatTmp.class,
-                qChat.message, qChat.createdAt))
-            .where(qChatRoom.chatRoomNo.eq(chatRoomNo))
-            .orderBy(qChat.createdAt.desc())
+        return from(qChat).innerJoin(qChat.room, qChatRoom)
+            .select(Projections.constructor(LastChatTmp.class, qChat.message, qChat.createdAt))
+            .where(qChatRoom.chatRoomNo.eq(chatRoomNo)).orderBy(qChat.createdAt.desc())
             .fetchFirst();
     }
 }
