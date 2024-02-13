@@ -9,7 +9,6 @@ import { publicRequest } from '@src/hooks/requestMethods'
 import * as w from '@src/components/ChattingRoom/_style/WebcamScreenStyle'
 import { WebcamScreenType } from '@src/types/callType'
 import UserVideoComponent from '@src/components/ChattingRoom/UserVideoComponent'
-import axios from 'axios'
 
 const WebcamScreen = (props: WebcamScreenType) => {
   const { mySessionId, setMySessionId, setWebcamVisible } = props
@@ -23,8 +22,8 @@ const WebcamScreen = (props: WebcamScreenType) => {
   const [session, setSession] = useState<OVSession | undefined>(undefined)
 
   const sendLeave = async (sessionId: string) => {
-    const url = ` https://i10c111.p.ssafy.io:8443/sessions/${sessionId}/disconnections`
-    return axios.post(url, {})
+    const url = ` /sessions/${sessionId}/disconnections`
+    return publicRequest.post(url, {})
   }
 
   const createToken = async (id: string) => {
