@@ -94,3 +94,16 @@ export type MonthDogCardType = {
   age: number
   kind: string
 }
+
+export type RecommendDogResType = {
+  dogNo: number
+  name: string
+  kind: string
+  age: number
+  statusNo: number
+  file: string
+  sex: string
+  userLiked: boolean
+  mbti: string
+  neutralized: boolean
+}

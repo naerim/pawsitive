@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 90%;
-  margin: 29px auto 0 auto;
+  margin: 29px auto 0;
   border-top: 1px solid #e8e8e8;
 `
 
@@ -36,11 +36,10 @@ export const Item = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #ffffff;
-  border-radius: 10px;
   width: 158px;
   padding: 9px 0;
   border: 1px solid #ebebeb;
+  border-radius: 10px;
   box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.1);
 
   img {
@@ -55,7 +54,7 @@ export const Item = styled.div`
 export const ItemTitle = styled.div`
   color: #000000;
   font-weight: 500;
-  font-size: 1em;
+  font-size: 1.1em;
   line-height: 1em;
 `
 export const ItemSubTitle = styled.div`
