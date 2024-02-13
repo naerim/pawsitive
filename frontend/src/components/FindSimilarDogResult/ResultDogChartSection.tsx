@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom'
 import {
   BarElement,
   CategoryScale,
@@ -8,16 +9,21 @@ import {
   Tooltip,
 } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
+import { ResultDataType } from '@src/types/components/FindSimilarDog'
+import * as r from '@src/components/style/ResultDogChartSectionStyle'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
-const FindSimilarDogChart = (props: {
-  labels: string[]
-  chartData: number[]
-}) => {
-  const { labels, chartData } = props
-  const maxProbability = Math.max(...chartData)
-  const backgroundColors = chartData.map(probability =>
+const ResultDogChartSection = () => {
+  const location = useLocation()
+  // const { resultData } = location.state
+  const { resultData } = location.state as { resultData: ResultDataType[] }
+
+  const labels: string[] = ['말티즈', '비숑', '치와와', '푸들', '리트리버']
+  const result = resultData.map(item => item.probability)
+
+  const maxProbability: number = Math.max(...result)
+  const backgroundColors = result.map((probability: number) =>
     probability === maxProbability
       ? 'rgba(255, 146, 50, 0.8)'
       : 'rgba(241, 242, 246, 0.8)',
@@ -28,7 +34,7 @@ const FindSimilarDogChart = (props: {
     datasets: [
       {
         label: '예측 결과',
-        data: chartData,
+        data: result,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: backgroundColors,
         barThickness: 40,
@@ -71,7 +77,7 @@ const FindSimilarDogChart = (props: {
       },
       y: {
         display: false,
-        grace: 0.3,
+        grace: '50%',
       },
     },
     plugins: {
@@ -80,8 +86,21 @@ const FindSimilarDogChart = (props: {
       },
     },
   }
-
-  return <Bar data={data} options={options} plugins={[bgImage]} />
+  return (
+    <r.Container>
+      <r.BarContainer>
+        <Bar data={data} options={options} plugins={[bgImage]} />
+      </r.BarContainer>
+      <r.LabelContainer>
+        {labels.map((label: string, index: number) => (
+          <r.DataContainer key={label}>
+            <div>{label}</div>
+            <div>{`${result[index]}%`}</div>
+          </r.DataContainer>
+        ))}
+      </r.LabelContainer>
+    </r.Container>
+  )
 }
 
-export default FindSimilarDogChart
+export default ResultDogChartSection

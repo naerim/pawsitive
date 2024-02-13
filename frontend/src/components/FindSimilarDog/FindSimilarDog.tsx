@@ -1,10 +1,22 @@
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import * as tmImage from '@teachablemachine/image'
-import FindSimilarDogChart from '@src/components/FindSimilarDog/FindSimilarDogChart'
+import {
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  Title,
+  Tooltip,
+} from 'chart.js'
+import { Bar } from 'react-chartjs-2'
 import * as f from '@src/components/style/FindSimilarDogStyle'
 
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
+
 const FindSimilarDog = () => {
+  const navigate = useNavigate()
   const URL = 'https://teachablemachine.withgoogle.com/models/EYgf6bU6pf/'
 
   let model: tmImage.CustomMobileNet | null = null
@@ -22,10 +34,14 @@ const FindSimilarDog = () => {
   >([])
   const [check, setCheck] = useState<boolean>(false)
 
-  const navigate = useNavigate()
+  // 페이지 이동 버튼
+  const goBack = () => navigate('/mypage')
   const handleNextButtonClick = () => {
     navigate('/mypage/findSimilarDog/result', { state: { resultData } })
   }
+
+  console.log(resultData)
+  console.log(chartData)
 
   async function predict() {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -103,7 +119,69 @@ const FindSimilarDog = () => {
     }
   }
 
-  const goBack = () => navigate('/mypage')
+  const maxProbability = Math.max(...chartData)
+  const backgroundColors = chartData.map(probability =>
+    probability === maxProbability
+      ? 'rgba(255, 146, 50, 0.8)'
+      : 'rgba(241, 242, 246, 0.8)',
+  )
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: '예측 결과',
+        data: chartData,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: backgroundColors,
+        barThickness: 40,
+        borderRadius: 10,
+        cutcout: '90%',
+        images: [
+          '/img/img_maltese.png',
+          '/img/img_bichon.png',
+          '/img/img_chihuahua.png',
+          '/img/img_poodle.png',
+          '/img/img_retriever.png',
+        ],
+      },
+    ],
+  }
+
+  const bgImage = {
+    id: 'bgImage',
+    beforeDatasetDraw(chart: ChartJS): boolean | void {
+      const { ctx } = chart
+
+      if (chart.getDatasetMeta(0).data[0]) {
+        data.datasets[0].images.forEach((_: string, index: number) => {
+          const xPos = chart.getDatasetMeta(0).data[index].x
+          const yPos = chart.getDatasetMeta(0).data[index].y
+          const chartImage = new Image()
+          chartImage.src = data.datasets[0].images[index]
+
+          ctx.drawImage(chartImage, xPos - 20, yPos - 50, 40, 40)
+        })
+      }
+    },
+  }
+
+  const options = {
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        display: false,
+      },
+      y: {
+        display: false,
+        grace: '50%',
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  }
 
   return (
     <f.Container>
@@ -115,7 +193,7 @@ const FindSimilarDog = () => {
           <f.FixWrap>
             <f.WebcamContainer id="webcam-container" />
             <f.BarContainer>
-              <FindSimilarDogChart labels={labels} chartData={chartData} />
+              <Bar data={data} options={options} plugins={[bgImage]} />
             </f.BarContainer>
             <f.LabelContainer id="label-container" />
           </f.FixWrap>
