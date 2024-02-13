@@ -143,6 +143,14 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
+    @Transactional
+    public Dog updateStatus(int dogNo, DogStatusEnum dogStatusEnum) {
+        Dog dog = getDogEntityByDogNo(dogNo);
+        dog.setStatus(dogStatusEnum);
+        return dogRepository.save(dog);
+    }
+
+    @Override
     public Dog getDogEntityByDogNo(int dogNo) {
         return dogRepository.findByDogNo(dogNo).orElseThrow(DogNotFoundException::new);
     }

@@ -7,6 +7,7 @@ import com.pawsitive.adoptgroup.entity.AdoptDog;
 import com.pawsitive.adoptgroup.exception.AdoptDogNotFoundException;
 import com.pawsitive.adoptgroup.repository.AdoptDogRepository;
 import com.pawsitive.adoptgroup.transfer.AdoptDogTransfer;
+import com.pawsitive.doggroup.dogenum.DogStatusEnum;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.service.DogService;
@@ -48,7 +49,7 @@ public class AdoptDogServiceImpl implements AdoptDogService {
     @Transactional
     public AdoptionDogRes createAdoptDog(AdoptionReq adoptionReq) {
         AdoptDog adoptDog = new AdoptDog();
-        Dog dog = dogService.getDogEntityByDogNo(adoptionReq.getDogNo());
+        Dog dog = dogService.updateStatus(adoptionReq.getDogNo(), DogStatusEnum.DONE);
         adoptDog.setDog(dog);
         adoptDog.setMember(userService.getMemberByUserNo(adoptionReq.getUserNo()));
         adoptDog.setName(dog.getName());

@@ -15,6 +15,7 @@ import com.pawsitive.chatgroup.repository.ChatRoomRepository;
 import com.pawsitive.chatgroup.transfer.ChatGroupTransfer;
 import com.pawsitive.common.dto.response.BaseResponseMessage;
 import com.pawsitive.common.exception.InvalidRequestDataException;
+import com.pawsitive.doggroup.dogenum.DogStatusEnum;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.service.DogService;
 import com.pawsitive.usergroup.entity.Member;
@@ -167,6 +168,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         ChatRoom chatRoom = getChatRoomEntityByChatRoomNo(appointmentReq.getChatRoomNo());
         chatRoom.setIsPromiseAccepted(true);
         chatRoomRepository.save(chatRoom);
+        dogService.updateStatus(chatRoom.getDogNo(), DogStatusEnum.INPROGRESS);
         return BaseResponseMessage.SUCCESS.getMessage();
     }
 
