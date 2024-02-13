@@ -46,6 +46,7 @@ public class AdoptionDogRes {
     private String sex;
 
     private boolean isNeutralized;
+    private String image;
 
 
 }

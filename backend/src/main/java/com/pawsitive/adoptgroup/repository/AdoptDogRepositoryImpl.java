@@ -34,7 +34,7 @@ public class AdoptDogRepositoryImpl extends QuerydslRepositorySupport
             .innerJoin(qAdoptDog.dog, qDog)
             .select(Projections.fields(AdoptionDogRes.class, qAdoptDog.adoptDogNo, qMember.userNo,
                 qDog.dogNo, qAdoptDog.name, qAdoptDog.createdAt, qAdoptDog.weight, qAdoptDog.age,
-                qDog.sex, qDog.isNeutralized))
+                qDog.sex, qDog.isNeutralized, qAdoptDog.image))
             .where(qMember.userNo.eq(userNo))
             .fetchOne());
     }
