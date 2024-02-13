@@ -9,11 +9,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
-public class ChatCreateReq {
+public class SessionCreateReq {
 
     private int chatRoomNo;
-    private int senderNo;
-    private String type;
-    private String message;
 
 }

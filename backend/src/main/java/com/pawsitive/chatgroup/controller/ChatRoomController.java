@@ -56,6 +56,7 @@ public class ChatRoomController {
             .body(chatRoomService.getChatRoomDetail(chatRoomNo));
     }
 
+
     @PostMapping
     @Operation(summary = "채팅방 생성/등록", description = "채팅방을 생성/등록합니다.",
         responses = {

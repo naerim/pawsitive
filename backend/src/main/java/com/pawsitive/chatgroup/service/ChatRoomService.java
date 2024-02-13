@@ -24,4 +24,8 @@ public interface ChatRoomService {
     String acceptAppointment(AppointmentReq appointmentReq);
 
     ChatRoomDetailRes getChatRoomDetail(int chatRoomNo);
+
+    String getSessionId(int chatRoomNo);
+
+    void updateSessionId(int chatRoomNo, String sessionId);
 }

@@ -44,4 +44,7 @@ public class ChatRoom {
     @Column(name = "is_promise_accepted")
     private Boolean isPromiseAccepted;
 
+    @Column(name = "session_id")
+    private String sessionId;
+
 }
