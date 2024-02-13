@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import { useAtom } from 'jotai/index'
 import { userAtom } from '@src/stores/atoms/user'
 import { ChattingRoomHeaderType } from '@src/types/chatType'
+import { useMutation } from '@tanstack/react-query'
+import { registerShelterAdoption } from '@src/apis/adoptDog'
 
 const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
-  const [user] = useAtom(userAtom)
+  const [user, setUser] = useAtom(userAtom)
 
   const {
     dog,
@@ -18,7 +20,27 @@ const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
 
   const navigate = useNavigate()
 
+  const adopt = false
+
   const goBack = () => navigate('/chat')
+
+  const { mutate } = useMutation({
+    mutationKey: ['registerShelterAdoption'],
+    mutationFn: registerShelterAdoption,
+    onSuccess: () => {
+      setUser(currentUser => ({ ...currentUser, stage: 3 }))
+      window.location.reload()
+    },
+    onError: error => console.error('보호소의 입양확정 실패 : ', error),
+  })
+
+  // 입양확전 버튼 클릭시
+  const onClickConfirmAdopt = () => {
+    const result = confirm('입양을 확정하시겠습니까?')
+    if (result) {
+      mutate({ userNo: member.userNo, dogNo: dog.dogNo })
+    }
+  }
 
   return (
     <c.Container>
@@ -68,6 +90,12 @@ const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
             {user.role === 'SHELTER' && (
               <button type="button">입양설문 보기</button>
             )}
+            {user.role === 'SHELTER' && promise.isAccepted && !adopt && (
+              <button type="button" onClick={onClickConfirmAdopt}>
+                입양확정 하기
+              </button>
+            )}
+            {adopt && <c.DoneText>입양확정</c.DoneText>}
           </c.ButtonWrap>
         </c.InfoWrap>
       </c.Wrap>
