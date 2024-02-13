@@ -81,6 +81,7 @@ public class CommunityController {
         @Valid @RequestPart CommunityCreateReq req,
         @RequestPart(required = false) MultipartFile[] files) {
 
+        log.info("CommunityController : req = {}", req);
 
         return ResponseEntity.status(CREATED)
             .body(communityService.createCommunityBoard(req, files));
