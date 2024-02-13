@@ -13,6 +13,7 @@ import com.pawsitive.usergroup.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class CommunityServiceImpl implements CommunityService {
     private final CommunityBoardRepository communityBoardRepository;
     private final CommunityCategoryService categoryService;
@@ -111,19 +113,24 @@ public class CommunityServiceImpl implements CommunityService {
     @Transactional
     public CommunityBoardDetailRes createCommunityBoard(CommunityCreateReq req,
                                                         MultipartFile[] images) {
-        CommunityBoard board =
-            CommunityBoard.builder().member(userService.getMemberByUserNo(req.getUserNo()))
-                .title(req.getTitle()).content(req.getContent()).isPublic(req.getIsPublic())
-                .latitude(req.getLatitude()).longitude(req.getLongitude()).hit(0)
-                .communityCategory(categoryService.getCategoryByCategoryNo(req.getCategoryNo()))
-                .build();
         CommunityBoard savedBoard;
 
         try {
-            savedBoard = communityBoardRepository.save(board);
+            savedBoard = communityBoardRepository.save(CommunityBoard.builder()
+                .member(userService.getMemberByUserNo(req.getUserNo()))
+                .title(req.getTitle())
+                .content(req.getContent())
+                .isPublic(req.getIsPublic())
+                .latitude(req.getLatitude())
+                .longitude(req.getLongitude())
+                .hit(0)
+                .communityCategory(categoryService.getCategoryByCategoryNo(req.getCategoryNo()))
+                .build());
         } catch (Exception e) {
             throw new NotSavedException();
         }
+
+        log.info("CommunityService : savedBoard = {}", savedBoard);
 
         communityImageService.createCommunityImage(savedBoard, images);
 
@@ -155,4 +162,5 @@ public class CommunityServiceImpl implements CommunityService {
 
         return communityList;
     }
+    
 }
