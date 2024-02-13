@@ -36,6 +36,7 @@ import org.springframework.context.annotation.Configuration;
         @Tag(name = "08.Surveys", description = "설문 기능"),
         @Tag(name = "09.Member-Adoption", description = "회원 입양 기능"),
         @Tag(name = "10.Shelter-Adoption", description = "보호소 입양 기능"),
+        @Tag(name = "11.Openvidu", description = "화상채팅 기능")
     }
 )
 @SecurityRequirement(name = "JWT")

@@ -9,6 +9,7 @@ import io.openvidu.java.client.OpenViduHttpException;
 import io.openvidu.java.client.OpenViduJavaClientException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,15 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 이하늬
  * @since 1.0
  */
+@Tag(name = "11.Openvidu")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/openvidu/api/sessions")
+@RequestMapping("/api/v1/sessions")
 public class OpenViduController {
     private final OpenviduService openviduService;
 
 
     @PostMapping
-    @Operation(summary = "화상 채팅방 커넥션 생성", description = "화상 채팅방 커넥션을 생성해 sessionId를 반환합니다.",
+    @Operation(summary = "화상 채팅방 커넥션 생성", description = "화상 채팅방 커넥션을 생성해 sessionId를 반환합니다. request body에 chatRoomNo를 담아 요청을 보냅니다.",
         responses = {
             @ApiResponse(responseCode = "200", description = "화상 채팅방 커넥션 생성 성공"),
         }

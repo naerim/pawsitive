@@ -180,14 +180,29 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         Dog dog = dogService.getDogEntityByDogNo(chatRoom.getDogNo());
         User shelter = dog.getUser();
         Member member = userService.getMemberByUserNo(chatRoom.getUserNo());
-        return ChatRoomDetailRes.builder()
-            .chatRoomId(chatRoom.getId())
+        return ChatRoomDetailRes.builder().chatRoomId(chatRoom.getId())
             .shelter(ChatRoomDetailRes.Shelter.of(shelter))
-            .member(ChatRoomDetailRes.Member.of(member))
-            .dog(ChatRoomDetailRes.Dog.of(dog))
+            .member(ChatRoomDetailRes.Member.of(member)).dog(ChatRoomDetailRes.Dog.of(dog))
             .promise(ChatRoomDetailRes.Promise.of(chatRoom))
-            .chatList(getChatHistoryByChatRoomNo(chatRoomNo))
-            .build();
+            .chatList(getChatHistoryByChatRoomNo(chatRoomNo)).build();
     }
+
+    @Override
+    public String getSessionId(int chatRoomNo) {
+        ChatRoom chatRoom = getChatRoomEntityByChatRoomNo(chatRoomNo);
+        if (chatRoom.getSessionId() == null) {
+            return null;
+        }
+        return chatRoom.getSessionId();
+    }
+
+    @Override
+    @Transactional
+    public void updateSessionId(int chatRoomNo, String sessionId) {
+        ChatRoom chatRoom = getChatRoomEntityByChatRoomNo(chatRoomNo);
+        chatRoom.setSessionId(sessionId);
+        chatRoomRepository.save(chatRoom);
+    }
+
 
 }

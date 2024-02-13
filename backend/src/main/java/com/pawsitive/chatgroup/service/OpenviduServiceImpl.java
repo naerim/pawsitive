@@ -31,6 +31,7 @@ public class OpenviduServiceImpl implements OpenviduService {
     private String OPENVIDU_SECRET;
 
     private OpenVidu openvidu;
+    private final ChatRoomService chatRoomService;
 
     @PostConstruct
     public void init() {
@@ -40,8 +41,14 @@ public class OpenviduServiceImpl implements OpenviduService {
     @Override
     public ChatSessionRes createSessions(Map<String, Object> params)
         throws OpenViduJavaClientException, OpenViduHttpException {
+        int chatRoomNo = (int) params.get("chatRoomNo");
+        String sessionId = chatRoomService.getSessionId(chatRoomNo);
+        if (sessionId != null) {
+            return new ChatSessionRes(sessionId);
+        }
         SessionProperties properties = SessionProperties.fromJson(params).build();
         Session session = openvidu.createSession(properties);
+        chatRoomService.updateSessionId(chatRoomNo, session.getSessionId());
         return new ChatSessionRes(session.getSessionId());
     }
 
