@@ -16,4 +16,7 @@ public interface OpenviduService {
 
     ChatTokenRes getToken(String sessionId, Map<String, Object> params)
         throws OpenViduJavaClientException, OpenViduHttpException;
+
+    String disconnectSessions(String sessionId)
+        throws OpenViduJavaClientException, OpenViduHttpException;
 }

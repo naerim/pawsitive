@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.OK;
 import com.pawsitive.chatgroup.dto.response.ChatSessionRes;
 import com.pawsitive.chatgroup.dto.response.ChatTokenRes;
 import com.pawsitive.chatgroup.service.OpenviduService;
+import com.pawsitive.common.dto.BaseResponseBody;
 import io.openvidu.java.client.OpenViduHttpException;
 import io.openvidu.java.client.OpenViduJavaClientException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,33 +33,36 @@ public class OpenViduController {
 
 
     @PostMapping
-    @Operation(summary = "화상 채팅방 커넥션 생성", description = "화상 채팅방 커넥션을 생성해 sessionId를 반환합니다. request body에 chatRoomNo를 담아 요청을 보냅니다.",
-        responses = {
-            @ApiResponse(responseCode = "200", description = "화상 채팅방 커넥션 생성 성공"),
-        }
-    )
+    @Operation(summary = "화상 채팅방 커넥션 생성", description = "화상 채팅방 커넥션을 생성해 sessionId를 반환합니다. request body에 chatRoomNo를 담아 요청을 보냅니다.", responses = {
+        @ApiResponse(responseCode = "200", description = "화상 채팅방 커넥션 생성 성공"),})
     public ResponseEntity<ChatSessionRes> createSessions(
         @RequestBody(required = false) Map<String, Object> params)
         throws OpenViduJavaClientException, OpenViduHttpException {
 
-        return ResponseEntity
-            .status(OK)
-            .body(openviduService.createSessions(params));
+        return ResponseEntity.status(OK).body(openviduService.createSessions(params));
+
     }
 
     @PostMapping("/{sessionId}/connections")
-    @Operation(summary = "화상 채팅방 토큰 얻기", description = "sessionId에 대한 화상 채팅방 토큰을 반환합니다.",
-        responses = {
-            @ApiResponse(responseCode = "200", description = "화상 채팅방 토 조회 성공"),
-        }
-    )
+    @Operation(summary = "화상 채팅방 토큰 얻기", description = "sessionId에 대한 화상 채팅방 토큰을 반환합니다.", responses = {
+        @ApiResponse(responseCode = "200", description = "화상 채팅방 토큰 조회 성공"),})
     public ResponseEntity<ChatTokenRes> createConnection(
         @PathVariable("sessionId") String sessionId,
         @RequestBody(required = false) Map<String, Object> params)
         throws OpenViduJavaClientException, OpenViduHttpException {
 
-        return ResponseEntity
-            .status(OK)
-            .body(openviduService.getToken(sessionId, params));
+        return ResponseEntity.status(OK).body(openviduService.getToken(sessionId, params));
+    }
+
+    @PostMapping("/{sessionId}/disconnections")
+    @Operation(summary = "화상 채팅방 커넥션 해제", description = "화상 채팅방 커넥션을 해제합니다.", responses = {
+        @ApiResponse(responseCode = "200", description = "화상 채팅방 커넥션 해제 성공"),})
+    public ResponseEntity<BaseResponseBody> deleteConnection(
+        @PathVariable("sessionId") String sessionId)
+        throws OpenViduJavaClientException, OpenViduHttpException {
+
+        return ResponseEntity.status(OK)
+            .body(BaseResponseBody.of(OK, openviduService.disconnectSessions(sessionId)));
+
     }
 }

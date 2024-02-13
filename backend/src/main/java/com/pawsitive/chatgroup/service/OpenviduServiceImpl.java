@@ -11,6 +11,7 @@ import io.openvidu.java.client.OpenViduJavaClientException;
 import io.openvidu.java.client.Session;
 import io.openvidu.java.client.SessionProperties;
 import jakarta.annotation.PostConstruct;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -62,5 +63,17 @@ public class OpenviduServiceImpl implements OpenviduService {
         ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
         Connection connection = session.createConnection(properties);
         return new ChatTokenRes(connection.getToken());
+    }
+
+    @Override
+    public String disconnectSessions(String sessionId)
+        throws OpenViduJavaClientException, OpenViduHttpException {
+        Map<String, Object> check = new HashMap<>();
+        Session session = openvidu.getActiveSession(sessionId);
+        if (session == null) {
+            throw new InvalidRequestDataException("유효하지 않은 sessionId입니다.");
+        }
+        session.close();
+        return "성공";
     }
 }
