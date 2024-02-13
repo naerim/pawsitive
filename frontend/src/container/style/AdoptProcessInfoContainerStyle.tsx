@@ -7,6 +7,36 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
 `
+
+export const HeaderContainer = styled.div`
+  display: flex;
+  position: fixed;
+  top: 0;
+  width: 390px;
+  height: 60px;
+  z-index: 100;
+  background-color: #fff;
+  padding-left: 15px;
+`
+
+export const HeaderText = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  margin: 0 auto;
+  font-weight: 500;
+  font-size: 1.1em;
+`
+
+export const GoBackButton = styled.img`
+  width: 36px;
+  height: 28px;
+  margin: auto;
+  padding: 4px 7px 5px 5px;
+`
+
 export const StepContainer = styled.div`
   display: flex;
   flex-direction: column;

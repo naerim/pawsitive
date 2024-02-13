@@ -1,10 +1,20 @@
-import TextHeader from '@src/common/TextHeader'
 import * as a from '@src/container/style/AdoptProcessInfoContainerStyle'
+import { useNavigate } from 'react-router-dom'
 
 const AdoptProcessInfoContainer = () => {
+  const navigate = useNavigate()
+  const buttonClickHandler = () => {
+    navigate(-1)
+  }
   return (
     <a.Container>
-      <TextHeader title="입양 단계 안내" />
+      <a.HeaderContainer>
+        <a.GoBackButton
+          src="icon/icon_black_arrow_left.png"
+          onClick={buttonClickHandler}
+        />
+        <a.HeaderText>입양 단계 안내</a.HeaderText>
+      </a.HeaderContainer>
       <a.StepContainer>
         <a.StepImg src="img/img_step_speaker.png" />
         <a.StepTitle>공고확인</a.StepTitle>
