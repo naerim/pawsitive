@@ -27,6 +27,7 @@ export const FixWrap = styled.div`
 
 export const BarContainer = styled.div`
   width: 300px;
+  height: 200px;
   margin-bottom: 10px;
 `
 

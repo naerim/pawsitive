@@ -33,17 +33,45 @@ const FindSimilarDogChart = (props: {
         backgroundColor: backgroundColors,
         barThickness: 40,
         borderRadius: 10,
+        cutcout: '90%',
+        images: [
+          '/img/img_maltese.png',
+          '/img/img_bichon.png',
+          '/img/img_chihuahua.png',
+          '/img/img_poodle.png',
+          '/img/img_retriever.png',
+        ],
       },
     ],
   }
 
+  const bgImage = {
+    id: 'bgImage',
+    beforeDatasetDraw(chart: ChartJS): boolean | void {
+      const { ctx } = chart
+
+      if (chart.getDatasetMeta(0).data[0]) {
+        data.datasets[0].images.forEach((_: string, index: number) => {
+          const xPos = chart.getDatasetMeta(0).data[index].x
+          const yPos = chart.getDatasetMeta(0).data[index].y
+          const chartImage = new Image()
+          chartImage.src = data.datasets[0].images[index]
+
+          ctx.drawImage(chartImage, xPos - 20, yPos - 50, 40, 40)
+        })
+      }
+    },
+  }
+
   const options = {
+    maintainAspectRatio: false,
     scales: {
       x: {
         display: false,
       },
       y: {
         display: false,
+        grace: 0.3,
       },
     },
     plugins: {
@@ -53,7 +81,7 @@ const FindSimilarDogChart = (props: {
     },
   }
 
-  return <Bar data={data} options={options} />
+  return <Bar data={data} options={options} plugins={[bgImage]} />
 }
 
 export default FindSimilarDogChart
