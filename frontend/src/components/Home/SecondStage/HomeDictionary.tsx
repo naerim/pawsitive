@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom'
 import LightColorMoveCard from '@src/common/LightColorMoveCard'
 import * as h from '@src/components/style/HomeDictionaryStyle'
-import { useAtom } from 'jotai/index'
+import { useAtom, useAtomValue } from 'jotai/index'
 import { DictionaryCategoryAtom } from '@src/stores/atoms/dictionary'
+import { userAtom } from '@src/stores/atoms/user'
 
 const HomeDictionary = () => {
   const navigate = useNavigate()
   const [, setCategory] = useAtom(DictionaryCategoryAtom)
-
+  const user = useAtomValue(userAtom)
   const cardClick = (num: number) => {
     setCategory(num)
     navigate(`/dictionary`)
@@ -16,7 +17,9 @@ const HomeDictionary = () => {
   return (
     <h.Container>
       <h.SubTitle>펫과사전 행동교육</h.SubTitle>
-      <h.Title>다양한 내용들을 미리 알아봐요!</h.Title>
+      <h.Title>
+        다양한 내용들을 {user.stage < 3 ? '미리' : ''} 알아봐요!
+      </h.Title>
       <h.Wrap>
         <h.Item onClick={() => cardClick(1)}>
           <h.ItemTitle>펫티켓</h.ItemTitle>

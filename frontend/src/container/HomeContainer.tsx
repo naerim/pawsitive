@@ -3,7 +3,6 @@ import { userAtom } from '@src/stores/atoms/user'
 import DefaultStage from '@src/components/Home/DefaultStage'
 import FirstStage from '@src/components/Home/FirstStage'
 import HomeLayout from '@src/components/Home/HomeLayout'
-import HomePopularCommunity from '@src/components/Home/HomePopularCommunity'
 import SecondStage from '@src/components/Home/SecondStage'
 import ThirdStage from '@src/components/Home/ThirdStage'
 import FourthStage from 'src/components/Home/FourthStage'
@@ -33,12 +32,7 @@ const HomeContainer = () => {
       currentStageComponent = <div />
   }
 
-  return (
-    <HomeLayout>
-      {currentStageComponent}
-      <HomePopularCommunity />
-    </HomeLayout>
-  )
+  return <HomeLayout>{currentStageComponent}</HomeLayout>
 }
 
 export default HomeContainer
