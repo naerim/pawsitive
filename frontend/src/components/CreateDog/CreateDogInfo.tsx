@@ -1,12 +1,14 @@
 import { useAtom } from 'jotai'
 import { createDogInfoAtom } from '@src/stores/atoms/dog'
 import * as s from '@src/components/style/CreateDogInfoStyle'
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 const CreateDogInfo = () => {
   const [createDogData, setCreateDogData] = useAtom(createDogInfoAtom)
   const [sexSelected, setSexSelected] = useState('')
-  const [naturalizedSelected, setNaturalizedSelected] = useState(undefined)
+  const [naturalizedSelected, setNaturalizedSelected] = useState<
+    boolean | undefined
+  >(undefined)
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nameInput = e.target.value
     setCreateDogData(prevData => ({ ...prevData, name: nameInput }))
@@ -34,7 +36,7 @@ const CreateDogInfo = () => {
     setCreateDogData(prevData => ({ ...prevData, sex }))
   }
 
-  const handleIsNaturalizedChange = isNaturalized => {
+  const handleIsNaturalizedChange = (isNaturalized: boolean) => {
     setNaturalizedSelected(isNaturalized)
     setCreateDogData(prevData => ({
       ...prevData,
