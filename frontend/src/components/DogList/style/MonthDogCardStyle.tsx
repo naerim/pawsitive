@@ -1,16 +1,22 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 export const Container = styled.div`
   width: 200px;
   min-width: 200px;
+  height: 135px;
   display: flex;
   background-color: white;
-  padding: 3%;
+  padding: 7px;
   border-radius: 10px;
   margin: 0 10px;
+  color: black;
 `
+
+export const CardLink = styled(Link)``
+
 export const ImgContainer = styled.div`
-  width: 60%;
+  width: 55%;
 `
 
 export const DogImage = styled.img`
@@ -18,7 +24,6 @@ export const DogImage = styled.img`
   height: 120px;
   object-fit: cover;
   border-radius: 10px;
-  margin: -2px;
 `
 
 export const TextInfoContainer = styled.div`
@@ -27,7 +32,7 @@ export const TextInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-left: 5%;
+  margin: 7px 7px 3px 7px;
 `
 
 export const DogName = styled.div`

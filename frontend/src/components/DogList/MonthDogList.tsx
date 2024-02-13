@@ -32,8 +32,10 @@ const MonthDogList = () => {
         {!isLoading &&
           data &&
           array.map(item => (
+            // <Link to={`/dogs/${item.dogNo}`} key={item.dogNo}>
             <MonthDogCard
               key={item.dogNo}
+              dogNo={item.dogNo}
               file={item.file}
               name={item.name}
               sex={item.sex}
@@ -41,6 +43,7 @@ const MonthDogList = () => {
               age={item.age}
               kind={item.kind}
             />
+            // </Link>
           ))}
       </m.CardList>
     </m.Container>
