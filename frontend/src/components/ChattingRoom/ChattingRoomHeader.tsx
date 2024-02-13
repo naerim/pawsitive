@@ -5,6 +5,7 @@ import { userAtom } from '@src/stores/atoms/user'
 import { ChattingRoomHeaderType } from '@src/types/chatType'
 import { useMutation } from '@tanstack/react-query'
 import { registerShelterAdoption } from '@src/apis/adoptDog'
+import { publicRequest } from '@src/hooks/requestMethods'
 
 const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
   const [user, setUser] = useAtom(userAtom)
@@ -16,6 +17,9 @@ const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
     shelter,
     onOpenCreateAppointmentModal,
     onOpenConfirmAppointmentModal,
+    setWebcamVisible,
+    chatRoomNo,
+    setMySessionId,
   } = props
 
   const navigate = useNavigate()
@@ -42,6 +46,19 @@ const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
     }
   }
 
+  // 세선 엳기
+  const getSession = async () => {
+    const url = '/sessions'
+    const response = await publicRequest.post(url, { chatRoomNo })
+    setMySessionId(response.data.sessionId)
+  }
+
+  const onClickCall = () => {
+    getSession().then(() => {
+      setWebcamVisible(true)
+    })
+  }
+
   return (
     <c.Container>
       <c.Wrap>
@@ -60,7 +77,7 @@ const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
             className="call"
             src="/icon/icon_phone.png"
             alt=""
-            onClick={goBack}
+            onClick={onClickCall}
           />
         </c.TopWrap>
         <c.InfoWrap>
