@@ -8,14 +8,13 @@ export const Container = styled.div`
   height: 60px;
   z-index: 100;
   background-color: #fff;
-  padding: 0 5%;
 `
 
 export const Wrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  width: 90%;
   margin: 0 auto;
   font-weight: 500;
   font-size: 1.1em;
