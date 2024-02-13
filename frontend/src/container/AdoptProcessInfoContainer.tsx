@@ -1,7 +1,7 @@
 import TextHeader from '@src/common/TextHeader'
-import * as a from '@src/container/style/AdoptProgressInfoContainerStyle'
+import * as a from '@src/container/style/AdoptProcessInfoContainerStyle'
 
-const AdoptProgressInfoContainer = () => {
+const AdoptProcessInfoContainer = () => {
   return (
     <a.Container>
       <TextHeader title="입양 단계 안내" />
@@ -51,4 +51,4 @@ const AdoptProgressInfoContainer = () => {
   )
 }
 
-export default AdoptProgressInfoContainer
+export default AdoptProcessInfoContainer
