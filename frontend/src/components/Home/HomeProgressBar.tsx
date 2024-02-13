@@ -2,11 +2,16 @@ import * as h from '@src/components/style/HomeProgressBarStyle'
 import { ProgressBarType } from '@src/types/components/HomeType'
 import { useAtomValue } from 'jotai'
 import { userAtom } from '@src/stores/atoms/user'
+import { useNavigate } from 'react-router-dom'
 
 const HomeProgressBar = (props: ProgressBarType) => {
+  const navigate = useNavigate()
   const { currentStage } = props
   const user = useAtomValue(userAtom)
 
+  const handleClick = () => {
+    navigate('/adopt-process-info')
+  }
   return (
     <h.Container>
       <h.Top>
@@ -20,7 +25,13 @@ const HomeProgressBar = (props: ProgressBarType) => {
         <h.TopRightWrap>
           <h.PawsitiveInfoWrap>
             <div className="title">예비 포지티버</div>
-            <div className="stage">단계 안내</div>
+            <div
+              className="stage"
+              onClick={handleClick}
+              style={{ cursor: 'pointer' }}
+            >
+              단계 안내
+            </div>
           </h.PawsitiveInfoWrap>
           <h.UserStage>
             <b>{user.name}</b>님의 입양 단계
