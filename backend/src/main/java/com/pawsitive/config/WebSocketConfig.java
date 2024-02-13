@@ -36,13 +36,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
             .setAllowedOriginPatterns(
                 "http://localhost:3000/**", "http://localhost:8080/**",
                 "https://i10c111.p.ssafy.io/**", "https://c111pawsitive.netlify.app/**")
-//            .setAllowedOriginPatterns("http://localhost:3000", "https://i10c111.p.ssafy.io/**",
-//                "http://i10c111.p.ssafy.io:9000/**")
             .withSockJS()
             .setDisconnectDelay(30 * 1000)
             .setClientLibraryUrl(
                 "https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.4/sockjs.min.js");
-
 //        registry.setErrorHandler(chatErrorHandler);
     }
 

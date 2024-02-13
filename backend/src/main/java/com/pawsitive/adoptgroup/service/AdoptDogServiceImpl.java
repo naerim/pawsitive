@@ -96,8 +96,8 @@ public class AdoptDogServiceImpl implements AdoptDogService {
         } catch (Exception e) {
             if (fileKey != null) {
                 s3BucketUtil.deleteFile(fileKey, FOLDER_NAME);
-                throw new NotSavedException();
             }
+            throw new NotSavedException();
         }
 
         AdoptionDogRes adoptionDogRes = AdoptDogTransfer.entityToDto(updatedDog);
