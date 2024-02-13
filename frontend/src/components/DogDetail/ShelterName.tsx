@@ -1,13 +1,15 @@
 import { useAtom, useAtomValue } from 'jotai/index'
 import { useMutation } from '@tanstack/react-query'
-import { dogDetailAtom } from '@src/stores/atoms/dog'
 import { userAtom } from '@src/stores/atoms/user'
 import { fetchLikeDog, fetchUnLikeDog } from '@src/apis/dog'
 import * as s from '@src/components/DogDetail/style/ShelterNameStyle'
+import { ShelterNameType } from '@src/types/components/DogDetailType'
+import { dogLikedAtom } from '@src/stores/atoms/dog'
 
-const ShelterName = () => {
-  const [dogDetail, setDogDetail] = useAtom(dogDetailAtom)
+const ShelterName = (props: ShelterNameType) => {
+  const { userName, address, dogNo } = props
   const user = useAtomValue(userAtom)
+  const [userLike, setUserLike] = useAtom(dogLikedAtom)
 
   // 찜 등록
   const { mutate: likeMutate } = useMutation({
@@ -15,7 +17,7 @@ const ShelterName = () => {
     mutationFn: fetchLikeDog,
     onSuccess() {
       console.log('찜 성공')
-      setDogDetail(prev => ({ ...prev, userLiked: true }))
+      setUserLike(true)
     },
     onError() {
       console.log('찜 실패')
@@ -26,7 +28,7 @@ const ShelterName = () => {
     const params = {
       userNo: user.userNo,
       email: user.email,
-      dogNo: dogDetail.dogNo,
+      dogNo,
     }
     likeMutate(params)
   }
@@ -37,7 +39,7 @@ const ShelterName = () => {
     mutationFn: fetchUnLikeDog,
     onSuccess() {
       console.log('찜 취소 성공')
-      setDogDetail(prev => ({ ...prev, userLiked: false }))
+      setUserLike(false)
     },
     onError() {
       console.log('찜 취소 실패')
@@ -48,7 +50,7 @@ const ShelterName = () => {
     const params = {
       userNo: user.userNo,
       email: user.email,
-      dogNo: dogDetail.dogNo,
+      dogNo,
     }
     UnlikeMutate(params)
   }
@@ -58,12 +60,12 @@ const ShelterName = () => {
       <s.InfoWrap>
         <s.Circle />
         <s.Right>
-          <s.Title>{dogDetail.userName}</s.Title>
-          <s.Address>{dogDetail.address}</s.Address>
+          <s.Title>{userName}</s.Title>
+          <s.Address>{address}</s.Address>
         </s.Right>
       </s.InfoWrap>
       <s.ImageWrap>
-        {dogDetail.userLiked ? (
+        {userLike ? (
           <s.Image
             src="/img/img_paw.png"
             alt="/"
