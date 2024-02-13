@@ -26,7 +26,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -135,7 +134,10 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     private void setLastChat(List<ChatRoomListRes> chatRooms) {
         for (ChatRoomListRes chatRoom : chatRooms) {
             LastChatTmp lastChat = chatRoomRepository.getLastChat(chatRoom.getChatRoomNo());
-            if (Objects.nonNull(lastChat)) {
+            if (lastChat != null) {
+                if (lastChat.getCreatedDate() == null) {
+                    continue;
+                }
                 if (lastChat.getCreatedDate().toLocalDate().isEqual(LocalDate.now())) {
                     chatRoom.setLastChat(new ChatRoomListRes.LastChat(lastChat.getMessage(),
                         LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
