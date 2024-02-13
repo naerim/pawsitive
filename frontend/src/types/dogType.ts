@@ -84,3 +84,13 @@ export type DogStatusSectionType = {
   statusNumber: number
   setStatusNumber: Dispatch<SetStateAction<number>>
 }
+
+export type MonthDogCardType = {
+  // dogNo: number
+  file: string
+  name: string
+  sex: string
+  neutralized: boolean
+  age: number
+  kind: string
+}

@@ -14,7 +14,11 @@ export const ImgContainer = styled.div`
 `
 
 export const DogImage = styled.img`
-  width: 100%;
+  width: 100px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: -2px;
 `
 
 export const TextInfoContainer = styled.div`
