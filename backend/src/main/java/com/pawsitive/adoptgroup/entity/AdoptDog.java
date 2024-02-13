@@ -47,4 +47,7 @@ public class AdoptDog {
 
     @Column(name = "age")
     private Integer age;
+
+    @Column(name = "image")
+    private String image;
 }

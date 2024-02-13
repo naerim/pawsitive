@@ -17,11 +17,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "09.Member-Adoption")
 @RestController
@@ -73,19 +74,13 @@ public class MemberAdoptionController {
             @ApiResponse(responseCode = "200", description = "반려견 정보 수정 여부를 정상 반환한다.")
         })
     public ResponseEntity<AdoptionDogRes> updateDogInformation(@PathVariable int adoptDogNo,
-                                                               @RequestBody
-                                                               UpdateAdoptDogRes updateAdoptDogRes) {
+                                                               @RequestPart
+                                                               UpdateAdoptDogRes updateAdoptDogRes,
+                                                               @RequestPart
+                                                               MultipartFile file) {
         return ResponseEntity
             .status(OK)
-            .body(adoptDogService.updateInformation(adoptDogNo, updateAdoptDogRes));
+            .body(adoptDogService.updateInformation(adoptDogNo, updateAdoptDogRes, file));
     }
-
-    @PostMapping("/form")
-    public ResponseEntity<BaseResponseBody> submitForm() {
-        return ResponseEntity
-            .status(OK)
-            .body(BaseResponseBody.of(OK, "성공"));
-    }
-
 
 }

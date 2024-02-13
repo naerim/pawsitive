@@ -1,5 +1,6 @@
 package com.pawsitive.doggroup.service;
 
+import com.pawsitive.doggroup.dogenum.DogStatusEnum;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
@@ -33,6 +34,8 @@ public interface DogService {
     DogDetailRes getDogByDogNo(int dogNo, Authentication authentication);
 
     DogDetailRes getDogByDogNo(int dogNo, Integer userNo);
+    
+    Dog updateStatus(int dogNo, DogStatusEnum dogStatusEnum);
 
     /**
      * 유기견 엔터티를 유기견 고유 번호로 상세조회하는 메서드입니다.

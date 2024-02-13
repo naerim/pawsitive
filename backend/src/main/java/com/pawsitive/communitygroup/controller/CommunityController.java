@@ -86,5 +86,20 @@ public class CommunityController {
             .body(communityService.createCommunityBoard(req, files));
     }
 
+/*    @PutMapping(value = "/{boardNo}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,
+        MediaType.APPLICATION_JSON_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "커뮤니티 글 수정", description = "전달받은 입력 정보를 커뮤니티 글 테이블에 수정합니다.",
+        responses = {
+            @ApiResponse(responseCode = "201", description = "커뮤니티 수정 성공"),
+            @ApiResponse(responseCode = "400", description = "커뮤니티 글 수정에 필요한 정보가 유효하지 않음")
+        })
+    public ResponseEntity<CommunityBoardDetailRes> updateCommunity(
+        @Valid @RequestPart CommunityUpdateReq req,
+        @RequestPart(required = false) MultipartFile[] files) {
+
+        return ResponseEntity.status(OK)
+            .body(communityService.createCommunityBoard(req, files));
+    }*/
+
 
 }

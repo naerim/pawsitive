@@ -7,6 +7,9 @@ import com.pawsitive.adoptgroup.entity.AdoptDog;
 import com.pawsitive.adoptgroup.exception.AdoptDogNotFoundException;
 import com.pawsitive.adoptgroup.repository.AdoptDogRepository;
 import com.pawsitive.adoptgroup.transfer.AdoptDogTransfer;
+import com.pawsitive.common.exception.NotSavedException;
+import com.pawsitive.common.util.S3BucketUtil;
+import com.pawsitive.doggroup.dogenum.DogStatusEnum;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.service.DogService;
@@ -18,6 +21,7 @@ import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * AdoptDogService 구현 클래스 입니다.
@@ -33,6 +37,8 @@ public class AdoptDogServiceImpl implements AdoptDogService {
     private final AdoptDogRepository adoptDogRepository;
     private final DogService dogService;
     private final UserService userService;
+    private final S3BucketUtil s3BucketUtil;
+    private final String FOLDER_NAME = "adoptdogs";
 
     @Override
     public AdoptionDogRes getAdoptedDogByUserNo(int userNo) {
@@ -48,7 +54,7 @@ public class AdoptDogServiceImpl implements AdoptDogService {
     @Transactional
     public AdoptionDogRes createAdoptDog(AdoptionReq adoptionReq) {
         AdoptDog adoptDog = new AdoptDog();
-        Dog dog = dogService.getDogEntityByDogNo(adoptionReq.getDogNo());
+        Dog dog = dogService.updateStatus(adoptionReq.getDogNo(), DogStatusEnum.DONE);
         adoptDog.setDog(dog);
         adoptDog.setMember(userService.getMemberByUserNo(adoptionReq.getUserNo()));
         adoptDog.setName(dog.getName());
@@ -64,7 +70,8 @@ public class AdoptDogServiceImpl implements AdoptDogService {
 
     @Override
     @Transactional
-    public AdoptionDogRes updateInformation(int adoptDogNo, UpdateAdoptDogRes updateAdoptDogRes) {
+    public AdoptionDogRes updateInformation(int adoptDogNo, UpdateAdoptDogRes updateAdoptDogRes,
+                                            MultipartFile file) {
         AdoptDog adoptDogEntity = getAdoptDogEntity(adoptDogNo);
 
         if (Objects.nonNull(updateAdoptDogRes.getAge())) {
@@ -76,8 +83,23 @@ public class AdoptDogServiceImpl implements AdoptDogService {
         if (Objects.nonNull(updateAdoptDogRes.getWeight())) {
             adoptDogEntity.setWeight(updateAdoptDogRes.getWeight());
         }
+        String fileKey = null;
+        if (Objects.nonNull(file)) {
+            // 버킷에 업로드한 뒤 파일 명 가져오기
+            fileKey = s3BucketUtil.uploadFile(file, FOLDER_NAME);
 
-        AdoptDog updatedDog = adoptDogRepository.save(adoptDogEntity);
+            adoptDogEntity.setImage(s3BucketUtil.getFileUrl(fileKey, FOLDER_NAME));
+        }
+        AdoptDog updatedDog = null;
+        try {
+            updatedDog = adoptDogRepository.save(adoptDogEntity);
+        } catch (Exception e) {
+            if (fileKey != null) {
+                s3BucketUtil.deleteFile(fileKey, FOLDER_NAME);
+            }
+            throw new NotSavedException();
+        }
+
         AdoptionDogRes adoptionDogRes = AdoptDogTransfer.entityToDto(updatedDog);
         adoptionDogRes.setAdoptedDays(getAdoptedDays(adoptDogEntity.getCreatedAt()));
 
