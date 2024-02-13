@@ -22,7 +22,6 @@ const FindSimilarDogChart = (props: {
       ? 'rgba(255, 146, 50, 0.8)'
       : 'rgba(241, 242, 246, 0.8)',
   )
-
   const data = {
     labels,
     datasets: [
@@ -71,7 +70,7 @@ const FindSimilarDogChart = (props: {
       },
       y: {
         display: false,
-        grace: 0.3,
+        grace: '50%',
       },
     },
     plugins: {
