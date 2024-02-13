@@ -21,6 +21,7 @@ const DogListContainer = () => {
 
   const { data, isLoading, refetch } = useQuery<DogListType[]>({
     queryKey: ['basicDogList'],
+    // eslint-disable-next-line consistent-return
     queryFn: async () => {
       if (basicDogListParams) {
         const result = await fetchBasicDogList({
@@ -77,7 +78,7 @@ const DogListContainer = () => {
       <TextHeader title="유기견 공고 리스트" />
       <d.Container>
         <d.FilterContainer>
-          <d.ShowFilterButton type="button" onClick={showFilterHandle}>
+          <d.ShowFilterButton onClick={showFilterHandle}>
             필터링
             <d.ShowFilterButtonImg
               $isShow={isFilter}
@@ -87,6 +88,7 @@ const DogListContainer = () => {
           {isFilter && <Filter />}
         </d.FilterContainer>
 
+        {/* eslint-disable-next-line no-nested-ternary */}
         {isLoading ? (
           <d.DogListContainerStyle>
             <LoadingSkeleton />
