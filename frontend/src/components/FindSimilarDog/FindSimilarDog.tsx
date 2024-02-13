@@ -119,7 +119,6 @@ const FindSimilarDog = () => {
             </f.BarContainer>
             <f.LabelContainer id="label-container" />
           </f.FixWrap>
-
           <f.ActionButtons>
             <f.CaptureButton onClick={onClickCamera}>촬영하기</f.CaptureButton>
             <f.NextButton onClick={handleNextButtonClick} disabled={!check}>
