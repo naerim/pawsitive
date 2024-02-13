@@ -1,8 +1,8 @@
 import * as c from '@src/components/Chatting/_style/ChattingListItemStyle'
 import { ChattingListItemType } from '@src/types/chatType'
 import { useNavigate } from 'react-router-dom'
-import { useAtom } from 'jotai/index'
-import { userAtom } from '@src/stores/atoms/user.ts'
+import { useAtom } from 'jotai'
+import { userAtom } from '@src/stores/atoms/user'
 
 const ChattingListItem = (props: ChattingListItemType) => {
   const {
