@@ -53,6 +53,7 @@ export const PawsitiveInfoWrap = styled.div`
 
   .stage {
     color: #582900;
+    font-size: 12px;
     text-decoration: underline;
   }
 `
