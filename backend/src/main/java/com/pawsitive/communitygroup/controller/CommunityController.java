@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
@@ -31,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/v1/community")
 @RequiredArgsConstructor
+@Slf4j
 public class CommunityController {
     private final CommunityService communityService;
 
@@ -78,6 +80,8 @@ public class CommunityController {
     public ResponseEntity<CommunityBoardDetailRes> createCommunity(
         @Valid @RequestPart CommunityCreateReq req,
         @RequestPart(required = false) MultipartFile[] files) {
+
+
         return ResponseEntity.status(CREATED)
             .body(communityService.createCommunityBoard(req, files));
     }
