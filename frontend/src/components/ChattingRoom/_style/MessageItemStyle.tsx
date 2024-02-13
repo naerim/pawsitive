@@ -32,6 +32,7 @@ export const MessageBox = styled.div<{ $me: boolean }>`
   justify-content: center;
   word-break: break-word;
   line-height: 1.2;
+  font-size: 0.9em;
 `
 
 export const NoticeMessageBoxWrap = styled.div`

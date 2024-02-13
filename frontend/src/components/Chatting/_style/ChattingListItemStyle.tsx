@@ -42,4 +42,7 @@ export const LastMsg = styled.div`
   text-overflow: ellipsis;
   overflow: hidden;
   width: 210px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `
