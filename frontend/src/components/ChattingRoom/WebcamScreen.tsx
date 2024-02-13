@@ -4,7 +4,7 @@ import {
   Session as OVSession,
   Subscriber,
 } from 'openvidu-browser'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { publicRequest } from '@src/hooks/requestMethods'
 import * as w from '@src/components/ChattingRoom/_style/WebcamScreenStyle'
 import { WebcamScreenType } from '@src/types/callType'
@@ -20,6 +20,8 @@ const WebcamScreen = (props: WebcamScreenType) => {
   )
   const [publisher, setPublisher] = useState<Publisher | undefined>(undefined)
   const [session, setSession] = useState<OVSession | undefined>(undefined)
+
+  const [preScreenVisible, setPrevScreenVisible] = useState<boolean>(true)
 
   const sendLeave = async (sessionId: string) => {
     const url = ` /sessions/${sessionId}/disconnections`
@@ -38,6 +40,7 @@ const WebcamScreen = (props: WebcamScreenType) => {
   }
 
   const joinSession = () => {
+    setPrevScreenVisible(false)
     // 1. openvidu 객체 생성
     const newOV = new OpenVidu()
     // socket 통신 과정에서 많은 log를 남기게 되는데 필요하지 않은 log를 띄우지 않게 하는 모드
@@ -123,6 +126,7 @@ const WebcamScreen = (props: WebcamScreenType) => {
     const maintainSessionId = mySessionId
     const mySession = session
     if (maintainSessionId) {
+      console.log('삭제')
       sendLeave(maintainSessionId)
       if (mySession) {
         mySession.disconnect()
@@ -141,16 +145,17 @@ const WebcamScreen = (props: WebcamScreenType) => {
   // 종료 버튼 함수
   const onClickEndCall = () => {
     leaveSession()
-    setWebcamVisible(false)
   }
 
-  useEffect(() => {
-    if (mySessionId !== '') {
-      console.log('mySessionId 변경됨!!!!!', mySessionId)
-      joinSession()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mySessionId])
+  const onClickCancelButton = () => setWebcamVisible(false)
+
+  // useEffect(() => {
+  //   if (mySessionId !== '') {
+  //     console.log('mySessionId 변경됨!!!!!', mySessionId)
+  //     joinSession()
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [mySessionId])
 
   // 새로고침 시 axios 보내기
   // const beforeUnLoad = (e: BeforeUnloadEvent) => {
@@ -169,27 +174,46 @@ const WebcamScreen = (props: WebcamScreenType) => {
   // }, [])
 
   return (
-    <w.Container>
-      <button type="button" onClick={onClickEndCall}>
-        종료
-      </button>
-      {session !== undefined && (
-        <w.Wrap>
+    <>
+      <w.Container>
+        <button type="button" onClick={onClickEndCall}>
+          종료
+        </button>
+
+        {session !== undefined && (
+          <w.Wrap>
+            <div>
+              {publisher !== undefined && (
+                <div>
+                  <UserVideoComponent streamManager={publisher} />
+                </div>
+              )}
+              {subscriber !== undefined && (
+                <div>
+                  <UserVideoComponent streamManager={subscriber} />
+                </div>
+              )}
+            </div>
+          </w.Wrap>
+        )}
+      </w.Container>
+      {preScreenVisible && (
+        <w.PrevContainer>
+          <w.PrevName>김올림보호소님</w.PrevName>
+          <w.PrevTitle>영상 통화 연결중...</w.PrevTitle>
+          <w.PrevSubTitle>
+            함께 소중하고 의미있는 대화를 나눠보세요. <br />
+            함께하는 이 시간이 유익하고 의미 있게 보내길 기대합니다.
+          </w.PrevSubTitle>
           <div>
-            {publisher !== undefined && (
-              <div>
-                <UserVideoComponent streamManager={publisher} />
-              </div>
-            )}
-            {subscriber !== undefined && (
-              <div>
-                <UserVideoComponent streamManager={subscriber} />
-              </div>
-            )}
+            <w.PrevCallButton onClick={joinSession}>통화 시작</w.PrevCallButton>
+            <w.PrevCancelButton onClick={onClickCancelButton}>
+              나중에
+            </w.PrevCancelButton>
           </div>
-        </w.Wrap>
+        </w.PrevContainer>
       )}
-    </w.Container>
+    </>
   )
 }
 
