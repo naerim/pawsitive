@@ -52,8 +52,8 @@ public class AdoptDogServiceImpl implements AdoptDogService {
         adoptDog.setDog(dog);
         adoptDog.setMember(userService.getMemberByUserNo(adoptionReq.getUserNo()));
         adoptDog.setName(dog.getName());
-        adoptDog.setAge(null);
-        adoptDog.setWeight(null);
+        adoptDog.setAge(dog.getAge());
+        adoptDog.setWeight(0.0);
 
         AdoptDog saved = adoptDogRepository.save(adoptDog);
         AdoptionDogRes adoptionDogRes = AdoptDogTransfer.entityToDto(saved);
