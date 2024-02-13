@@ -16,14 +16,16 @@ export const FilterContainer = styled.div`
 export const ShowFilterButton = styled.div`
   display: flex;
   justify-content: right;
-  height: 16px;
+  height: 19px;
   margin: 0 6px 6px 6px;
+  line-height: 19px;
 `
 
 export const ShowFilterButtonImg = styled.img<{ $isShow: boolean }>`
   transform: ${props => (props.$isShow ? 'rotate(180deg)' : 'rotate(0deg)')};
   transition: transform 0.3s ease;
   margin-left: 6px;
+  margin-bottom: 3px;
 `
 
 export const DogListContainerStyle = styled.div`
