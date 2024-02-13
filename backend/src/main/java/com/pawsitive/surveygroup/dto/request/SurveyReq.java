@@ -30,7 +30,7 @@ public class SurveyReq {
     @Range(min = 0, max = 4)
     private int q5;
 
-    @Size(max = 10)
+    @Size(max = 20)
     private String participant;
 
 }
