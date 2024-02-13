@@ -204,5 +204,14 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         chatRoomRepository.save(chatRoom);
     }
 
+    @Override
+    @Transactional
+    public void deleteSessionId(String sessionId) {
+        ChatRoom chatRoom = chatRoomRepository.getChatRoomEntityBySessionId(sessionId)
+            .orElseThrow(ChatRoomNotFoundException::new);
+        chatRoom.setSessionId(null);
+        chatRoomRepository.save(chatRoom);
+    }
+
 
 }

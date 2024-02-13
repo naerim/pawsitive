@@ -63,4 +63,16 @@ public class OpenviduServiceImpl implements OpenviduService {
         Connection connection = session.createConnection(properties);
         return new ChatTokenRes(connection.getToken());
     }
+
+    @Override
+    public String disconnectSessions(String sessionId)
+        throws OpenViduJavaClientException, OpenViduHttpException {
+        Session session = openvidu.getActiveSession(sessionId);
+        if (session == null) {
+            throw new InvalidRequestDataException("유효하지 않은 sessionId입니다.");
+        }
+        chatRoomService.deleteSessionId(sessionId);
+        session.close();
+        return "성공";
+    }
 }
