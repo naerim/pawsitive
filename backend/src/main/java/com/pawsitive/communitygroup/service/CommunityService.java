@@ -40,7 +40,7 @@ public interface CommunityService {
     CommunityBoard getCommunityBoardEntity(int boardNo);
 
 
-    CommunityBoard updateHit(CommunityBoard board);
+    CommunityBoard updateHit(int boardNo);
 
     /**
      * 조회수가 높은 순으로 추천 게시물을 조회합니다.
