@@ -14,6 +14,7 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { dogDetailAtom, dogLikedAtom } from '@src/stores/atoms/dog'
 import { useEffect } from 'react'
 import { userAtom } from '@src/stores/atoms/user'
+import AdoptProcessInfoComponent from '@src/components/DogDetail/AdoptProcessInfoComponent'
 
 const Container = styled.div`
   padding-bottom: 80px;
@@ -63,12 +64,14 @@ const DogDetailContainer = () => {
             dogNo={data.dogNo}
           />
           <DogAdditionalInfo note={data.note} />
+          <TipSection />
           <ShelterInfoSection
             address={data.address}
             createdAt={data.createdAt}
             userName={data.userName}
           />
-          <TipSection />
+          <AdoptProcessInfoComponent />
+
           <SameShelterDogs dogDetail={dogDetail} />
           {!isDifferentShelter && <ChatStartButton />}
         </>
