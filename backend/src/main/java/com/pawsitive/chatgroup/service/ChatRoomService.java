@@ -28,4 +28,6 @@ public interface ChatRoomService {
     String getSessionId(int chatRoomNo);
 
     void updateSessionId(int chatRoomNo, String sessionId);
+
+    void deleteSessionId(String sessionId);
 }

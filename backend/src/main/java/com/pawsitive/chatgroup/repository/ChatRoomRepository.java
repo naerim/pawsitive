@@ -13,4 +13,5 @@ public interface ChatRoomRepository
 
     Optional<ChatRoom> findChatRoomByUserNoAndDogNo(int userNo, int dogNo);
 
+    Optional<ChatRoom> getChatRoomEntityBySessionId(String sessionId);
 }
