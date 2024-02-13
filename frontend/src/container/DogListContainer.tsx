@@ -89,6 +89,7 @@ const DogListContainer = () => {
           {isFilter && <Filter />}
         </d.FilterContainer>
 
+        <MonthDogList />
         {/* eslint-disable-next-line no-nested-ternary */}
         {isLoading ? (
           <d.DogListContainerStyle>
@@ -99,18 +100,15 @@ const DogListContainer = () => {
           basicDogListParams.kind.length === 0 ? (
           <AlarmNoData allDogList={allDogList} />
         ) : (
-          <>
-            <MonthDogList />
-            <d.DogListContainerStyle>
-              {data &&
-                data.map(basicDogInfo => (
-                  <BasicDogInfoCard
-                    key={basicDogInfo.dogNo}
-                    dogInfo={basicDogInfo}
-                  />
-                ))}
-            </d.DogListContainerStyle>
-          </>
+          <d.DogListContainerStyle>
+            {data &&
+              data.map(basicDogInfo => (
+                <BasicDogInfoCard
+                  key={basicDogInfo.dogNo}
+                  dogInfo={basicDogInfo}
+                />
+              ))}
+          </d.DogListContainerStyle>
         )}
       </d.Container>
     </>

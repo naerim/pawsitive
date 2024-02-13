@@ -1,21 +1,23 @@
 import * as m from '@src/components/DogList/style/MonthDogCardStyle'
+import { MonthDogCardType } from '@src/types/dogType'
 
-const MonthDogCard = () => {
+const MonthDogCard = (props: MonthDogCardType) => {
+  const { file, name, sex, neutralized, age, kind } = props
   return (
     <m.Container>
       <m.ImgContainer>
-        <m.DogImage src="img/img_dog1.png" alt="강아지 사진" />
+        <m.DogImage src={file} alt="강아지 사진" />
       </m.ImgContainer>
       <m.TextInfoContainer>
-        <m.DogName>까미</m.DogName>
+        <m.DogName>{name}</m.DogName>
         <m.MoreDogInfo>
-          암컷
+          {sex}
           <br />
-          중성화x
+          중성화{neutralized ? 'O' : 'X'}
           <br />
-          2023년생
+          {age}살
           <br />
-          포메라니안
+          {kind}
         </m.MoreDogInfo>
       </m.TextInfoContainer>
     </m.Container>
