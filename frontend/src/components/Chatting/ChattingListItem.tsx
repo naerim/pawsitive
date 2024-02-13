@@ -1,6 +1,8 @@
 import * as c from '@src/components/Chatting/_style/ChattingListItemStyle'
 import { ChattingListItemType } from '@src/types/chatType'
 import { useNavigate } from 'react-router-dom'
+import { useAtom } from 'jotai/index'
+import { userAtom } from '@src/stores/atoms/user.ts'
 
 const ChattingListItem = (props: ChattingListItemType) => {
   const {
@@ -10,7 +12,10 @@ const ChattingListItem = (props: ChattingListItemType) => {
     shelterProfileImage,
     lastChat,
     id,
+    dogName,
+    memberName,
   } = props
+  const [user] = useAtom(userAtom)
 
   const navigate = useNavigate()
   const goChatRoom = () => {
@@ -24,7 +29,9 @@ const ChattingListItem = (props: ChattingListItemType) => {
         <img src={shelterProfileImage || '/img/img_bowl.png'} alt="" />
       </c.ImgWrap>
       <c.Right>
-        <c.Name>{name}</c.Name>
+        <c.Name>
+          {user.role === 'USER' ? name : `${memberName} - ${dogName}`}
+        </c.Name>
         <c.LastMsg>{lastChat ? lastChat.message : '-'}</c.LastMsg>
       </c.Right>
     </c.Container>
