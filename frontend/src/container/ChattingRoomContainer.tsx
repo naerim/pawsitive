@@ -13,6 +13,7 @@ import InputSection from '@src/components/ChattingRoom/InputSection'
 import ChattingRoomHeader from '@src/components/ChattingRoom/ChattingRoomHeader'
 import CreateAppointmentModal from '@src/components/ChattingRoom/CreateAppointmentModal'
 import ConfirmAppointmentModal from '@src/components/ChattingRoom/ConfirmAppointmentModal'
+import WebcamScreen from '@src/components/ChattingRoom/WebcamScreen.tsx'
 
 const ChattingRoomContainer = () => {
   const { no } = useParams()
@@ -137,6 +138,10 @@ const ChattingRoomContainer = () => {
     scrollToBottom()
   }, [messages])
 
+  // 화상통화
+  const [webcamVisible, setWebcamVisible] = useState<boolean>(false)
+  const [mySessionId, setMySessionId] = useState<string>('')
+
   return (
     <>
       <c.Container>
@@ -153,6 +158,9 @@ const ChattingRoomContainer = () => {
               onOpenConfirmAppointmentModal={() =>
                 setConfirmAppointmentModalVisible(true)
               }
+              setWebcamVisible={setWebcamVisible}
+              chatRoomNo={Number(no)}
+              setMySessionId={setMySessionId}
             />
 
             <c.MessageSection ref={scrollRef}>
@@ -191,6 +199,13 @@ const ChattingRoomContainer = () => {
           promise={data.promise}
           onClose={() => setConfirmAppointmentModalVisible(false)}
           sendAlarm={sendAppointmentNotice}
+        />
+      )}
+      {webcamVisible && (
+        <WebcamScreen
+          mySessionId={mySessionId}
+          setMySessionId={setMySessionId}
+          setWebcamVisible={setWebcamVisible}
         />
       )}
     </>

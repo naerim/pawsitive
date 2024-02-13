@@ -43,6 +43,9 @@ export type ChattingRoomInfoType = {
 export type ChattingRoomHeaderType = {
   onOpenCreateAppointmentModal: () => void
   onOpenConfirmAppointmentModal: () => void
+  setWebcamVisible: (v: boolean) => void
+  chatRoomNo: number
+  setMySessionId: (v: string) => void
 } & ChattingRoomInfoType
 
 // 채팅방 타입
