@@ -6,7 +6,7 @@ const AdoptProgressInfoContainer = () => {
     <a.Container>
       <TextHeader title="입양 단계 안내" />
       <a.StepContainer>
-        <a.StepImg src="img/img_step_speaker" />
+        <a.StepImg src="img/img_step_speaker.png" />
         <a.StepTitle>공고확인</a.StepTitle>
         <a.StepSubTitle>
           추천되는 유기견 공고를 확인해보세요. <br />
@@ -16,7 +16,7 @@ const AdoptProgressInfoContainer = () => {
         </a.StepSubTitle>
       </a.StepContainer>
       <a.StepContainer>
-        <a.StepImg src="img/img_step_survey" />
+        <a.StepImg src="img/img_step_survey.png" />
         <a.StepTitle>입양 설문 제출</a.StepTitle>
         <a.StepSubTitle>
           보호소가 입양 희망자 분에 대해서 알 수 있도록 입양 설문을
@@ -27,7 +27,7 @@ const AdoptProgressInfoContainer = () => {
         </a.StepSubTitle>
       </a.StepContainer>
       <a.StepContainer>
-        <a.StepImg src="img/img_step_talk" />
+        <a.StepImg src="img/img_step_talk.png" />
         <a.StepTitle>입양 상담 (채팅)</a.StepTitle>
         <a.StepSubTitle>
           보호소와 채팅을 통해 상담을 진행합니다. <br />
@@ -39,7 +39,7 @@ const AdoptProgressInfoContainer = () => {
         </a.StepSubTitle>
       </a.StepContainer>
       <a.StepContainer>
-        <a.StepImg src="img/img_step_heart" />
+        <a.StepImg src="img/img_step_heart.png" />
         <a.StepTitle>입양 확정</a.StepTitle>
         <a.StepSubTitle>
           유기견을 집으로 데려온 후 이름을 지어주세요. <br />
