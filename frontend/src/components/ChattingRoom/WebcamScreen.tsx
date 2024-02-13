@@ -145,6 +145,7 @@ const WebcamScreen = (props: WebcamScreenType) => {
   // 종료 버튼 함수
   const onClickEndCall = () => {
     leaveSession()
+    setWebcamVisible(false)
   }
 
   const onClickCancelButton = () => setWebcamVisible(false)
