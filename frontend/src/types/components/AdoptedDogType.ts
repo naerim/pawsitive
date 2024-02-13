@@ -19,3 +19,8 @@ export type ModData = {
   }
   adoptDogNo: number
 }
+
+export type ShelterAdoptionReqType = {
+  userNo: number
+  dogNo: number
+}
