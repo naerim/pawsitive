@@ -1,11 +1,10 @@
 import * as d from '@src/components/DogDetail/style/DogAdditionalInfoStyle'
-import { useAtom } from 'jotai/index'
-import { dogDetailAtom } from '@src/stores/atoms/dog'
+import { DogAdditionalInfoType } from '@src/types/components/DogDetailType'
 
-const DogAdditionalInfo = () => {
-  const [dogDetail] = useAtom(dogDetailAtom)
+const DogAdditionalInfo = (props: DogAdditionalInfoType) => {
+  const { note } = props
 
-  return <d.Container>{dogDetail.note}</d.Container>
+  return <d.Container>{note}</d.Container>
 }
 
 export default DogAdditionalInfo

@@ -1,11 +1,10 @@
 import * as d from '@src/components/DogDetail/style/DogFileSectionStyle'
 import { useNavigate } from 'react-router-dom'
-import { useAtom } from 'jotai'
-import { dogDetailAtom } from '@src/stores/atoms/dog'
+import { DogFileSectionType } from '@src/types/components/DogDetailType'
 
-const DogFileSection = () => {
+const DogFileSection = (props: DogFileSectionType) => {
+  const { files, name, sex, neutralized, kind, hit, age } = props
   const navigate = useNavigate()
-  const [dogDetail] = useAtom(dogDetailAtom)
   const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp']
   const videoExtensions = ['mp4', 'avi', 'mkv', 'mov', 'webm']
   const settings = {
@@ -29,7 +28,7 @@ const DogFileSection = () => {
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
 
       <d.StyledSlider {...settings}>
-        {dogDetail.files.map(file => {
+        {files.map(file => {
           // 파일 이름을 추출하기 위해 =='.'으로 분할하고 마지막 요소를 선택
           const fileName = file.split('.').pop()
           return (
@@ -60,16 +59,15 @@ const DogFileSection = () => {
         })}
       </d.StyledSlider>
       <d.SliderBottom>
-        <d.Title>{dogDetail.name}</d.Title>
+        <d.Title>{name}</d.Title>
         <d.Desc>
-          {dogDetail.sex === 'F' ? '암컷' : '수컷'} ∙ 중성화
-          {dogDetail.neutralized ? 'O' : 'X'} ∙ {dogDetail.age}(년생) ∙{' '}
-          {dogDetail.kind}
+          {sex === 'F' ? '암컷' : '수컷'} ∙ 중성화
+          {neutralized ? 'O' : 'X'} ∙ {age}(년생) ∙ {kind}
         </d.Desc>
       </d.SliderBottom>
       <d.EyeWrap>
         <img src="/icon/icon_eye.png" alt="" />
-        <span>{dogDetail.hit}</span>
+        <span>{hit}</span>
       </d.EyeWrap>
       <d.ArrowWrap onClick={goDogList} role="presentation">
         <img src="/icon/icon_white_arrow_left.png" alt="" />

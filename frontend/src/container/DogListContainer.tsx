@@ -11,6 +11,7 @@ import TextHeader from '@src/common/TextHeader'
 import { userAtom } from '@src/stores/atoms/user'
 import LoadingSkeleton from '@src/components/DogList/LoadingSkeleton'
 import AlarmNoData from '@src/components/DogList/AlarmNoData'
+import MonthDogList from '@src/components/DogList/MonthDogList'
 
 const DogListContainer = () => {
   const [basicDogListParams] = useAtom(dogListParamsAtom)
@@ -98,15 +99,18 @@ const DogListContainer = () => {
           basicDogListParams.kind.length === 0 ? (
           <AlarmNoData allDogList={allDogList} />
         ) : (
-          <d.DogListContainerStyle>
-            {data &&
-              data.map(basicDogInfo => (
-                <BasicDogInfoCard
-                  key={basicDogInfo.dogNo}
-                  dogInfo={basicDogInfo}
-                />
-              ))}
-          </d.DogListContainerStyle>
+          <>
+            <MonthDogList />
+            <d.DogListContainerStyle>
+              {data &&
+                data.map(basicDogInfo => (
+                  <BasicDogInfoCard
+                    key={basicDogInfo.dogNo}
+                    dogInfo={basicDogInfo}
+                  />
+                ))}
+            </d.DogListContainerStyle>
+          </>
         )}
       </d.Container>
     </>

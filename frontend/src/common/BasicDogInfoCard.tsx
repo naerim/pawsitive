@@ -15,7 +15,7 @@ const BasicDogInfoCard: React.FC<{ dogInfo: DogListType }> = ({ dogInfo }) => {
     }
   }, [dogInfo.file])
   const handleClick = () => {
-    navigate(`/dogs/${dogInfo.dogNo}`, { state: { dogNo: dogInfo.dogNo } })
+    navigate(`/dogs/${dogInfo.dogNo}`)
   }
 
   return (

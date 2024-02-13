@@ -57,3 +57,5 @@ export const dogListParamsAtom = atom<BasicDogListParamsType>({
   neutralized: 0,
   userNo: 0,
 })
+
+export const dogLikedAtom = atom<boolean>(false)

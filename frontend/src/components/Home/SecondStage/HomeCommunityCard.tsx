@@ -19,7 +19,7 @@ const HomeCommunityCard = () => {
         <MainColorMoveCard
           title="유기견 입양한 후기 보러가요!"
           subTitle="포지티버의 후기 확인하기"
-          url="/community "
+          url="/community/map "
         />
       </h.Wrap>
     </h.Container>

@@ -1,7 +1,7 @@
 import * as s from '@src/components/DogDetail/style/ShelterInfoSectionStyle'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { atom, useAtom } from 'jotai/index'
-import { dogDetailAtom } from '@src/stores/atoms/dog.ts'
+import { ShelterInfoSectionType } from '@src/types/components/DogDetailType'
 
 declare global {
   interface Window {
@@ -16,13 +16,13 @@ const defaultMap = new kakao.maps.Map(document.createElement('div'), {
 
 const mapAtom = atom<kakao.maps.Map>(defaultMap)
 
-const ShelterInfoSection = () => {
+const ShelterInfoSection = (props: ShelterInfoSectionType) => {
+  const { address, createdAt, userName } = props
   const mapRef = useRef<kakao.maps.Map>(null)
   const [latitudeValue, setLatitude] = useState(0)
   const [longitudeValue, setLongitude] = useState(0)
   const [mapValue, setMap] = useAtom(mapAtom)
-  const [dogDetail] = useAtom(dogDetailAtom)
-  const adressData = dogDetail.address
+  const adressData = address
   const initMap = useCallback(() => {
     // 위치가 잡히기 전에 임시로 띄우는 위치
     const container = document.getElementById('map')
@@ -38,14 +38,14 @@ const ShelterInfoSection = () => {
     })
     marker.setMap(map)
     setMap(map)
-  }, [latitudeValue, longitudeValue])
+  }, [latitudeValue, longitudeValue, setMap])
 
-  const handleAddress = (adressData: string) => {
+  const handleAddress = (adresshandleData: string) => {
     // 검색된 주소 위치 표시
     if (kakao.maps && kakao.maps.services) {
       const geocoder = new kakao.maps.services.Geocoder()
       geocoder.addressSearch(
-        adressData,
+        adresshandleData,
         (result: any[], status: kakao.maps.services.Status) => {
           if (status === kakao.maps.services.Status.OK) {
             const currentPos = new kakao.maps.LatLng(result[0].y, result[0].x)
@@ -71,14 +71,14 @@ const ShelterInfoSection = () => {
   return (
     <s.Container>
       <s.Date>
-        <b>등록일</b> {dogDetail.createdAt.split(' ')[0]}
+        <b>등록일</b> {createdAt.split(' ')[0]}
       </s.Date>
       <s.MapWrap>
         <s.Map id="map" />
       </s.MapWrap>
-      <s.Name>{dogDetail.userName}</s.Name>
+      <s.Name>{userName}</s.Name>
       <s.Address>
-        {dogDetail.address} <b>복사</b>
+        {address} <b>복사</b>
       </s.Address>
     </s.Container>
   )

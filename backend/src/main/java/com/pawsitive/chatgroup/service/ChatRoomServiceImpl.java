@@ -186,7 +186,6 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             .promise(ChatRoomDetailRes.Promise.of(chatRoom))
             .chatList(getChatHistoryByChatRoomNo(chatRoomNo))
             .build();
-
     }
 
 }

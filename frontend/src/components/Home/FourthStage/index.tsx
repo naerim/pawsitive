@@ -4,6 +4,9 @@ import DogDiary from '@src/components/Home/FourthStage/DogDiary'
 import * as t from '@src/components/style/FourthStageIndexStyle'
 import { useEffect, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
+import HomeDictionary from '@src/components/Home/SecondStage/HomeDictionary'
+import HomeRecommendDictionary from '@src/components/Home/HomeRecommendDictionary'
+import HomePopularCommunity from '@src/components/Home/HomePopularCommunity'
 
 const fadeIn = keyframes`
     from {
@@ -44,6 +47,9 @@ const Index = () => {
         <AdoptedDogDetail />
         <DogDiary />
       </t.CenterContainer>
+      <HomeRecommendDictionary />
+      <HomePopularCommunity />
+      <HomeDictionary />
     </>
   )
 }

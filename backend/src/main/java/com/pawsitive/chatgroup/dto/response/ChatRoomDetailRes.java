@@ -25,18 +25,27 @@ public class ChatRoomDetailRes {
     @AllArgsConstructor
     @Getter
     public static class Dog {
+        private int dogNo;
         private String name;
         private String sex;
         private Boolean isNeutralized;
         private int age;
         private String kind;
+        private int status;
         @Setter
         private String image;
 
         public static Dog of(com.pawsitive.doggroup.entity.Dog dog) {
-            Dog newDog = Dog.builder().name(dog.getName()).sex(dog.getSex())
-                .isNeutralized(dog.isNeutralized()).age(dog.getAge()).kind(dog.getKind())
-                .image(null).build();
+            Dog newDog = Dog.builder()
+                .dogNo(dog.getDogNo())
+                .name(dog.getName())
+                .sex(dog.getSex())
+                .isNeutralized(dog.isNeutralized())
+                .age(dog.getAge())
+                .kind(dog.getKind())
+                .status(dog.getStatus().getNo())
+                .image(null)
+                .build();
             if (!dog.getFiles().isEmpty()) {
                 newDog.setImage(dog.getFiles().get(0).getFile());
             }
