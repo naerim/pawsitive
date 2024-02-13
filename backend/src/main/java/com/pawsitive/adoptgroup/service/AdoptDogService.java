@@ -4,6 +4,7 @@ import com.pawsitive.adoptgroup.dto.request.AdoptionReq;
 import com.pawsitive.adoptgroup.dto.request.UpdateAdoptDogRes;
 import com.pawsitive.adoptgroup.dto.response.AdoptionDogRes;
 import com.pawsitive.adoptgroup.entity.AdoptDog;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * AdoptDogService 입니다.
@@ -35,10 +36,12 @@ public interface AdoptDogService {
      *
      * @param adoptDogsNo
      * @param updateAdoptDogRes
+     * @param file
      * @return
      */
 
-    AdoptionDogRes updateInformation(int adoptDogsNo, UpdateAdoptDogRes updateAdoptDogRes);
+    AdoptionDogRes updateInformation(int adoptDogsNo, UpdateAdoptDogRes updateAdoptDogRes,
+                                     MultipartFile file);
 
     AdoptDog getAdoptDogEntity(int adoptDogNo);
 }

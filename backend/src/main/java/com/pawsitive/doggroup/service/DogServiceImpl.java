@@ -2,7 +2,6 @@ package com.pawsitive.doggroup.service;
 
 
 import com.pawsitive.common.exception.NotSavedException;
-import com.pawsitive.common.util.S3BucketUtil;
 import com.pawsitive.doggroup.dogenum.DogKindEnum;
 import com.pawsitive.doggroup.dogenum.DogSexEnum;
 import com.pawsitive.doggroup.dogenum.DogStatusEnum;
@@ -54,8 +53,6 @@ public class DogServiceImpl implements DogService {
     private final UserService userService;
     private final DogFileService dogFileService;
     private final MemberDogVisitService memberDogVisitService;
-
-    private final S3BucketUtil s3BucketUtil;
 
     private final Double MATRIX_MAX_VALUE = 15.0;
 
