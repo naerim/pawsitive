@@ -35,9 +35,11 @@ export const DogButton = styled.button`
 export const Item = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 158px;
   padding: 9px 0;
   border: 1px solid #ebebeb;
+  border-radius: 10px;
   box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.1);
 
   img {
