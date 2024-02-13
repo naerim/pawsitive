@@ -116,15 +116,15 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
         if ("dogNo".equals(type)) {
             chatRooms = chatRoomRepository.getChatRoomListByDogNo(value);
-            for (ChatRoomListRes chatRoom : chatRooms) {
-                User user = userService.getUserByUserNo(chatRoom.getMemberNo());
-                chatRoom.setMemberName(user.getName());
-                chatRoom.setMemberProfileImage(user.getImage());
-            }
         } else if ("userNo".equals(type)) {
             chatRooms = chatRoomRepository.getChatRoomListByUserNo(value);
         } else {
             throw new InvalidRequestDataException("유기견 번호나 회원 번호로만 조회 가능합니다.");
+        }
+        for (ChatRoomListRes chatRoom : chatRooms) {
+            User user = userService.getUserByUserNo(chatRoom.getMemberNo());
+            chatRoom.setMemberName(user.getName());
+            chatRoom.setMemberProfileImage(user.getImage());
         }
         setLastChat(chatRooms);
 
