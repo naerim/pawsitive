@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useAtom } from 'jotai'
 import { useMutation } from '@tanstack/react-query'
 import { createDogInfoAtom, createDogStepAtom } from '@src/stores/atoms/dog'
@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 
 const CreateDogContainer = () => {
   const navigate = useNavigate()
-  const [createDogInfo, setCreateDogInfo] = useAtom(createDogInfoAtom)
+  const [createDogInfo] = useAtom(createDogInfoAtom)
   const [createDogStep, setCreateDogStep] = useAtom(createDogStepAtom)
   const [file, setFile] = useState<File[]>([])
 
@@ -42,7 +42,7 @@ const CreateDogContainer = () => {
     for (let i = 0; i < file.length; i += 1) {
       formData.append('files', file[i])
     }
-    await mutate(formData)
+    mutate(formData)
   }
 
   const renderStepComponent = () => {

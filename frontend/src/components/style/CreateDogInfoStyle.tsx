@@ -67,3 +67,14 @@ export const Button = styled.button<{ $isSelected: boolean }>`
     outline: none;
   }
 `
+
+export const Select = styled.select`
+  height: 40px;
+  border-radius: 5px;
+  padding: 6px;
+  border: 1px solid #cbcbcb;
+
+  &:focus {
+    outline: none;
+  }
+`
