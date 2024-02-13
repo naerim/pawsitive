@@ -22,9 +22,9 @@ export const createDog = async (data: FormData) => {
 }
 
 // 메인 페이지 추천 유기견
-export const fetchRecommendDogs = async (num: number) => {
+export const fetchRecommendDogs = async (useNo: number) => {
   return publicRequest
-    .get(`/dogs/recommendation?num=${num}`)
+    .get(`/dogs/recommendation?userNo=${useNo}`)
     .then(res => res.data)
 }
 

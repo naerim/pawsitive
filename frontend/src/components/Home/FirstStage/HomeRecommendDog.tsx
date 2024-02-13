@@ -1,15 +1,20 @@
-import * as h from '@src/components/style/HomeRecommendDogStyle'
-import LightColorMoveCard from '@src/common/LightColorMoveCard'
 import { useQuery } from '@tanstack/react-query'
-import { fetchRecommendDogs } from '@src/apis/dog'
-import { DogListType } from '@src/types/dogType'
 import { useNavigate } from 'react-router-dom'
+import { useAtomValue } from 'jotai/index'
+import { userAtom } from '@src/stores/atoms/user'
+import { fetchRecommendDogs } from '@src/apis/dog'
+import { RecommendDogResType } from '@src/types/dogType'
+import LightColorMoveCard from '@src/common/LightColorMoveCard'
+import * as h from '@src/components/style/HomeRecommendDogStyle'
 
 const HomeRecommendDog = () => {
+  const userValue = useAtomValue(userAtom)
+  const { userNo } = userValue
   const navigate = useNavigate()
+
   const { data, isLoading } = useQuery({
     queryKey: ['recommendDog'],
-    queryFn: () => fetchRecommendDogs(2),
+    queryFn: () => fetchRecommendDogs(userNo),
   })
 
   return (
@@ -19,22 +24,22 @@ const HomeRecommendDog = () => {
       <h.Wrap>
         {!isLoading ? (
           data &&
-          data.map((item: DogListType, index: number) => (
+          data.map((item: RecommendDogResType) => (
             <h.DogButton
               onClick={() => {
                 navigate(`/dogs/${item.dogNo}`)
               }}
-              key={index}
+              key={item.dogNo}
             >
-              <h.Item key={item.dogNo || index}>
+              <h.Item key={item.dogNo}>
                 <img src={item.file} alt="" />
-
                 <h.ItemTitle>{item.name}</h.ItemTitle>
                 <h.ItemSubTitle>
-                  {item.kind}, {item.age}살
+                  {item.sex === 'M' ? '수컷' : '암컷'} ∙ 중성화
+                  {item.neutralized ? 'O' : 'X'}
                 </h.ItemSubTitle>
                 <h.ItemSubTitle>
-                  {item.neutralized ? '중성화O' : '중성화X'}
+                  {item.age}(년생) ∙ {item.kind}
                 </h.ItemSubTitle>
               </h.Item>
             </h.DogButton>
