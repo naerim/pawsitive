@@ -60,9 +60,11 @@ public class AdoptDogServiceImpl implements AdoptDogService {
         adoptDog.setName(dog.getName());
         adoptDog.setAge(dog.getAge());
         adoptDog.setWeight(0.0);
+        adoptDog.setCreatedAt(LocalDateTime.now());
 
         AdoptDog saved = adoptDogRepository.save(adoptDog);
-        AdoptionDogRes adoptionDogRes = AdoptDogTransfer.entityToDto(saved);
+        AdoptDog adoptDogEntity = getAdoptDogEntity(saved.getAdoptDogNo());
+        AdoptionDogRes adoptionDogRes = AdoptDogTransfer.entityToDto(adoptDogEntity);
         adoptionDogRes.setAdoptedDays(getAdoptedDays(adoptDog.getCreatedAt()));
 
         return adoptionDogRes;
