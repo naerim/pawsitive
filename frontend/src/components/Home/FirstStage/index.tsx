@@ -2,6 +2,7 @@ import HomeProgressBar from '@src/components/Home/HomeProgressBar'
 import HomeStatistics from '@src/components/Home/HomeStatistics'
 import MainColorMoveCard from '@src/common/MainColorMoveCard'
 import HomeRecommendDog from '@src/components/Home/FirstStage/HomeRecommendDog'
+import HomePopularCommunity from '@src/components/Home/HomePopularCommunity'
 
 const Index = () => {
   return (
@@ -14,6 +15,7 @@ const Index = () => {
         url="/mypage/survey"
       />
       <HomeRecommendDog />
+      <HomePopularCommunity />
     </div>
   )
 }

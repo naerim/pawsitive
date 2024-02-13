@@ -2,6 +2,7 @@ import AlarmFillAdoptInfo from '@src/components/Home/ThirdStage/AlarmFillAdoptIn
 import HomeProgressBar from '@src/components/Home/HomeProgressBar'
 import styled, { keyframes } from 'styled-components'
 import { useEffect, useState } from 'react'
+import HomePopularCommunity from '@src/components/Home/HomePopularCommunity'
 
 const fadeIn = keyframes`
     from {
@@ -40,6 +41,7 @@ const Index = () => {
       )}
 
       <HomeProgressBar currentStage={3} />
+      <HomePopularCommunity />
     </div>
   )
 }

@@ -2,6 +2,7 @@ import MainColorMoveCard from '@src/common/MainColorMoveCard'
 import HomeStatistics from '@src/components/Home/HomeStatistics'
 import ShowDogCard from '@src/components/Home/DefaultStage/ShowDogCard'
 import { useEffect, useState } from 'react'
+import HomePopularCommunity from '@src/components/Home/HomePopularCommunity'
 
 const Index = () => {
   const [userRole, setUserRole] = useState('')
@@ -23,6 +24,7 @@ const Index = () => {
       )}
       <HomeStatistics />
       <ShowDogCard />
+      <HomePopularCommunity />
     </div>
   )
 }

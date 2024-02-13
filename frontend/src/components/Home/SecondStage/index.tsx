@@ -4,8 +4,10 @@ import HomeProgressBar from '@src/components/Home/HomeProgressBar'
 import HomeStatistics from '@src/components/Home/HomeStatistics'
 import HomeDictionary from '@src/components/Home/SecondStage/HomeDictionary'
 import HomeCommunityCard from '@src/components/Home/SecondStage/HomeCommunityCard'
-import RecommendChatCard from '@src/components/Home/SecondStage/RecommendChatCard' // 애니메이션 키프레임 정의
+import RecommendChatCard from '@src/components/Home/SecondStage/RecommendChatCard'
+import HomePopularCommunity from '@src/components/Home/HomePopularCommunity'
 
+// 애니메이션 키프레임 정의
 const fadeIn = keyframes`
     from {
         opacity: 0;
@@ -45,6 +47,7 @@ const Index = () => {
       <HomeDictionary />
       <HomeStatistics />
       <HomeCommunityCard />
+      <HomePopularCommunity />
     </div>
   )
 }
