@@ -287,7 +287,7 @@ const CreateForm = () => {
               </button>
               <DaumPostcode
                 onComplete={handleAddressComplete}
-                style={{ position: 'absolute', zIndex: 400 }}
+                style={{ position: 'absolute', zIndex: 10, width: 'auto' }}
               />
             </c.MapCloseButton>
           )}

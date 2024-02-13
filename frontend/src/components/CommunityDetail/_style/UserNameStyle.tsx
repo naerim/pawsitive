@@ -7,12 +7,15 @@ export const Container = styled.div`
   border-bottom: 1px solid #eaeaea;
 `
 
-export const Circle = styled.div`
+export const Image = styled.div`
   background-color: #d9d9d9;
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  padding: 15px;
+
+  img {
+    width: 40px;
+  }
 `
 export const Right = styled.div`
   margin-left: 10px;

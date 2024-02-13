@@ -35,7 +35,6 @@ const CommunityDetailContainer = () => {
           {/* TODO 여기에 단계별 이미지랑 주소 넣기 */}
           <UserName
             memberName={data.board.memberName}
-            memberStage={data.board.memberStage}
             memberAddress={data.board.memberAddress}
           />
           <CommunityContent content={data.board.content} />
