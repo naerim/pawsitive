@@ -12,7 +12,7 @@ const ImageUpload = (props: CommunityFileType) => {
     if (files) {
       const fileArray = Array.from(files, f => f as File)
       setImageFiles(fileArray)
-      for (let i = 0; i < files.length; i++) {
+      for (let i = 0; i < files.length; i += 1) {
         const currentImageUrl = URL.createObjectURL(files[i])
         imageUrlLists.push(currentImageUrl)
       }
