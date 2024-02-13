@@ -9,6 +9,8 @@ import { useAtom } from 'jotai'
 import { dogListParamsAtom } from '@src/stores/atoms/dog'
 import TextHeader from '@src/common/TextHeader'
 import { userAtom } from '@src/stores/atoms/user'
+import LoadingSkeleton from '@src/components/DogList/LoadingSkeleton'
+import AlarmNoData from '@src/components/DogList/AlarmNoData'
 
 const DogListContainer = () => {
   const [basicDogListParams] = useAtom(dogListParamsAtom)
@@ -19,6 +21,7 @@ const DogListContainer = () => {
 
   const { data, isLoading, refetch } = useQuery<DogListType[]>({
     queryKey: ['basicDogList'],
+    // eslint-disable-next-line consistent-return
     queryFn: async () => {
       if (basicDogListParams) {
         const result = await fetchBasicDogList({
@@ -70,35 +73,12 @@ const DogListContainer = () => {
     setIsFilter(!isFilter)
   }
 
-  const LoadingSkeleton = () => (
-    <>
-      {Array.from({ length: 6 }, (_, index) => (
-        <d.FakeDiv key={index} />
-      ))}
-    </>
-  )
-
-  const AlarmNoData = () => (
-    <>
-      <d.NoDataContainer>
-        <d.NoDataImg src="img/img_dog_food.png" />
-        <d.NoDataText>해당되는 유기견이 존재하지 않습니다.</d.NoDataText>
-        <d.NoDataText>전체 유기견을 보여드릴게요!</d.NoDataText>
-      </d.NoDataContainer>
-      <d.DogListContainerStyle>
-        {allDogList.map(basicDogInfo => (
-          <BasicDogInfoCard key={basicDogInfo.dogNo} dogInfo={basicDogInfo} />
-        ))}
-      </d.DogListContainerStyle>
-    </>
-  )
-
   return (
     <>
       <TextHeader title="유기견 공고 리스트" />
       <d.Container>
         <d.FilterContainer>
-          <d.ShowFilterButton type="button" onClick={showFilterHandle}>
+          <d.ShowFilterButton onClick={showFilterHandle}>
             필터링
             <d.ShowFilterButtonImg
               $isShow={isFilter}
@@ -108,25 +88,25 @@ const DogListContainer = () => {
           {isFilter && <Filter />}
         </d.FilterContainer>
 
+        {/* eslint-disable-next-line no-nested-ternary */}
         {isLoading ? (
           <d.DogListContainerStyle>
             <LoadingSkeleton />
           </d.DogListContainerStyle>
+        ) : data &&
+          data.length === 0 &&
+          basicDogListParams.kind.length === 0 ? (
+          <AlarmNoData allDogList={allDogList} />
         ) : (
-          <>
-            {data.length === 0 || basicDogListParams.kind.length === 0 ? (
-              <AlarmNoData />
-            ) : (
-              <d.DogListContainerStyle>
-                {data.map(basicDogInfo => (
-                  <BasicDogInfoCard
-                    key={basicDogInfo.dogNo}
-                    dogInfo={basicDogInfo}
-                  />
-                ))}
-              </d.DogListContainerStyle>
-            )}
-          </>
+          <d.DogListContainerStyle>
+            {data &&
+              data.map(basicDogInfo => (
+                <BasicDogInfoCard
+                  key={basicDogInfo.dogNo}
+                  dogInfo={basicDogInfo}
+                />
+              ))}
+          </d.DogListContainerStyle>
         )}
       </d.Container>
     </>
