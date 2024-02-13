@@ -63,6 +63,9 @@ export type ChattingListItemType = {
   name: string
   promiseCreatedAt: string | null
   shelterProfileImage: string | null
+  dogName: string
+  memberNo: number
+  memberName: string
 }
 
 export type CreateChatRoomParamsType = {

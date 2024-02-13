@@ -33,6 +33,9 @@ const ChattingContainer = () => {
               dogNo={item.dogNo}
               isPromiseAccepted={item.isPromiseAccepted}
               promiseCreatedAt={item.promiseCreatedAt}
+              dogName={item.dogName}
+              memberName={item.memberName}
+              memberNo={item.memberNo}
             />
           ))}
       </c.Wrap>

@@ -67,7 +67,7 @@ const CreateDogInfo = () => {
       </s.InputContainer>
       <s.InputContainer>
         <s.Title htmlFor="kind">품종</s.Title>
-        <select
+        <s.Select
           id="kind"
           value={createDogData.kind}
           onChange={handleKindSelectChange}
@@ -83,7 +83,7 @@ const CreateDogInfo = () => {
           <option value="도베르만">도베르만</option>
           <option value="리트리버">리트리버</option>
           <option value="기타">기타</option>
-        </select>
+        </s.Select>
       </s.InputContainer>
       <s.TwoInputContainer>
         <s.InputContainer>
