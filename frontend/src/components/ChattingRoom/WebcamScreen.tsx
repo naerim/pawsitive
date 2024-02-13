@@ -203,7 +203,7 @@ const WebcamScreen = (props: WebcamScreenType) => {
           <w.PrevTitle>영상 통화 연결중...</w.PrevTitle>
           <w.PrevSubTitle>
             함께 소중하고 의미있는 대화를 나눠보세요. <br />
-            함께하는 이 시간이 유익하고 의미 있게 보내길 기대합니다.
+            보호소와 개인이 함께하는 소중한 순간입니다.
           </w.PrevSubTitle>
           <div>
             <w.PrevCallButton onClick={joinSession}>통화 시작</w.PrevCallButton>
