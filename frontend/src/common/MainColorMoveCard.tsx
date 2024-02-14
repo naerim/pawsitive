@@ -3,13 +3,13 @@ import * as m from '@src/common/style/MainColorMoveCardStyle'
 import { useNavigate } from 'react-router-dom'
 
 const MainColorMoveCard = (props: MainColorMoveCardType) => {
-  const { title, subTitle, url } = props
+  const { title, subTitle, url, backgroundColor } = props
 
   const navigate = useNavigate()
   const onClick = () => navigate(url)
 
   return (
-    <m.Container onClick={onClick}>
+    <m.Container onClick={onClick} backgroundColor={backgroundColor}>
       <div>
         <m.Title>{title}</m.Title>
         <m.SubTitle>{subTitle}</m.SubTitle>
