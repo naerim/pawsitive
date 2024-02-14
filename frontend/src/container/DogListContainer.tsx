@@ -95,8 +95,7 @@ const DogListContainer = () => {
           <d.DogListContainerStyle>
             <LoadingSkeleton />
           </d.DogListContainerStyle>
-        ) : data &&
-          data.length === 0 &&
+        ) : (data && data.length === 0) ||
           basicDogListParams.kind.length === 0 ? (
           <AlarmNoData allDogList={allDogList} />
         ) : (
