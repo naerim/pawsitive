@@ -2,9 +2,12 @@ import * as b from '@src/common/style/BasicDogInfoCardStyle'
 import { DogListType } from '@src/types/dogType'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { userAtom } from '@src/stores/atoms/user'
+import { useAtomValue } from 'jotai'
 
 const BasicDogInfoCard: React.FC<{ dogInfo: DogListType }> = ({ dogInfo }) => {
   const navigate = useNavigate()
+  const user = useAtomValue(userAtom)
   const [fileName, setFileName] = useState<string | undefined>('')
   const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp']
   const videoExtensions = ['mp4', 'avi', 'mkv', 'mov', 'webm']
@@ -89,21 +92,23 @@ const BasicDogInfoCard: React.FC<{ dogInfo: DogListType }> = ({ dogInfo }) => {
       <b.DogTextInfoContainer>
         <b.DogNameAndLike>
           <b.DogName>{dogInfo.name}</b.DogName>
-          <b.DogLiked>
-            {dogInfo.userLiked ? (
-              <b.Image
-                src="/img/img_paw.png"
-                alt="/"
-                // onClick={handelPostUnLikeDog}
-              />
-            ) : (
-              <b.Image
-                src="/img/img_empty_paw.png"
-                alt="/"
-                // onClick={handelPostLikeDog}
-              />
-            )}
-          </b.DogLiked>
+          {user.role !== 'SHELTER' && (
+            <b.DogLiked>
+              {dogInfo.userLiked ? (
+                <b.Image
+                  src="/img/img_paw.png"
+                  alt="/"
+                  // onClick={handelPostUnLikeDog}
+                />
+              ) : (
+                <b.Image
+                  src="/img/img_empty_paw.png"
+                  alt="/"
+                  // onClick={handelPostLikeDog}
+                />
+              )}
+            </b.DogLiked>
+          )}
         </b.DogNameAndLike>
 
         <b.SubInfo>
