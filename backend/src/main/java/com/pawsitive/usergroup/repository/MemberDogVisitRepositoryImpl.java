@@ -5,11 +5,11 @@ import com.pawsitive.usergroup.dto.response.MemberDogVisitRes;
 import com.pawsitive.usergroup.entity.MemberDogVisit;
 import com.pawsitive.usergroup.entity.QMemberDogVisit;
 import com.querydsl.core.types.Projections;
+import java.util.List;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
-import java.util.List;
-
-public class MemberDogVisitRepositoryImpl extends QuerydslRepositorySupport implements MemberDogVisitRepositoryCustom {
+public class MemberDogVisitRepositoryImpl extends QuerydslRepositorySupport
+    implements MemberDogVisitRepositoryCustom {
 
     private static final QMemberDogVisit qMemberDogVisit = QMemberDogVisit.memberDogVisit;
 
@@ -44,6 +44,14 @@ public class MemberDogVisitRepositoryImpl extends QuerydslRepositorySupport impl
             .visitedList(visitedList)
             .count(count)
             .build();
+    }
+
+    @Override
+    public Long getMemberDogVisitedCount(int userNo) {
+        return from(qMemberDogVisit)
+            .select(qMemberDogVisit.count())
+            .where(qMemberDogVisit.member.userNo.eq(userNo))
+            .fetchOne();
     }
 
 }

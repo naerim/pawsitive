@@ -1,10 +1,7 @@
 package com.pawsitive.usergroup.service;
 
 
-import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.usergroup.dto.response.MemberDogVisitListRes;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 public interface MemberDogVisitService {
@@ -17,4 +14,6 @@ public interface MemberDogVisitService {
 
     MemberDogVisitListRes getVisitList(int userNo);
 
+    int getMemberDogVisitCount(int userNo);
+    
 }
