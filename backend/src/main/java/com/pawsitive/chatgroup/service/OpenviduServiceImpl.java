@@ -1,17 +1,19 @@
 package com.pawsitive.chatgroup.service;
 
+import com.pawsitive.chatgroup.dto.request.SessionCreateReq;
 import com.pawsitive.chatgroup.dto.response.ChatSessionRes;
 import com.pawsitive.chatgroup.dto.response.ChatTokenRes;
 import com.pawsitive.common.exception.InvalidRequestDataException;
 import io.openvidu.java.client.Connection;
 import io.openvidu.java.client.ConnectionProperties;
+import io.openvidu.java.client.ConnectionType;
 import io.openvidu.java.client.OpenVidu;
 import io.openvidu.java.client.OpenViduHttpException;
 import io.openvidu.java.client.OpenViduJavaClientException;
+import io.openvidu.java.client.OpenViduRole;
 import io.openvidu.java.client.Session;
 import io.openvidu.java.client.SessionProperties;
 import jakarta.annotation.PostConstruct;
-import java.util.Map;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,40 +41,42 @@ public class OpenviduServiceImpl implements OpenviduService {
     }
 
     @Override
-    public ChatSessionRes createSessions(Map<String, Object> params)
+    public ChatSessionRes createSessions(SessionCreateReq sessionCreateReq)
         throws OpenViduJavaClientException, OpenViduHttpException {
-        int chatRoomNo = (int) params.get("chatRoomNo");
-        String sessionId = chatRoomService.getSessionId(chatRoomNo);
+        String sessionId = chatRoomService.getSessionId(sessionCreateReq.getChatRoomNo());
         if (sessionId != null) {
             return new ChatSessionRes(sessionId);
         }
-        SessionProperties properties = SessionProperties.fromJson(params).build();
+        SessionProperties properties = new SessionProperties.Builder().build();
         Session session = openvidu.createSession(properties);
-        chatRoomService.updateSessionId(chatRoomNo, session.getSessionId());
+        chatRoomService.updateSessionId(sessionCreateReq.getChatRoomNo(), session.getSessionId());
         return new ChatSessionRes(session.getSessionId());
     }
 
     @Override
-    public ChatTokenRes getToken(String sessionId, Map<String, Object> params)
+    public ChatTokenRes getToken(String sessionId)
         throws OpenViduJavaClientException, OpenViduHttpException {
         Session session = openvidu.getActiveSession(sessionId);
         if (Objects.isNull(session)) {
             throw new InvalidRequestDataException("유효하지 않은 sessionId입니다.");
         }
-        ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
-        Connection connection = session.createConnection(properties);
+        ConnectionProperties connectionProperties = new ConnectionProperties.Builder()
+            .type(ConnectionType.WEBRTC)
+            .role(OpenViduRole.PUBLISHER)
+            .data("user_data")
+            .build();
+        Connection connection = session.createConnection(connectionProperties);
         return new ChatTokenRes(connection.getToken());
     }
 
     @Override
     public String disconnectSessions(String sessionId)
         throws OpenViduJavaClientException, OpenViduHttpException {
-        Session session = openvidu.getActiveSession(sessionId);
-        if (session == null) {
-            throw new InvalidRequestDataException("유효하지 않은 sessionId입니다.");
-        }
         chatRoomService.deleteSessionId(sessionId);
-        session.close();
+        Session session = openvidu.getActiveSession(sessionId);
+        if (session != null) {
+            session.close();
+        }
         return "성공";
     }
 }
