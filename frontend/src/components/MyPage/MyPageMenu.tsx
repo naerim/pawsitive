@@ -29,7 +29,7 @@ const MyPageMenu = () => {
         {/* </m.MenuItem> */}
 
         {user.role === 'USER' && (
-          <m.MenuItem to="/dogs">
+          <m.MenuItem to="/save-dogs-list">
             <m.MenuItemDiv>
               내가 찜한 공고 보기
               <m.RightArrow src="/icon/icon_black_arrow_right.png" />
