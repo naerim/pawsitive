@@ -1,9 +1,11 @@
 import { publicRequest } from '@src/hooks/requestMethods'
 import { BasicDogType } from '@src/types/dogType'
 
-export const fetchDogRecommend = (num: number): Promise<BasicDogType> => {
+export const fetchMonthlyDogRecommend = (
+  num: number,
+): Promise<BasicDogType[]> => {
   return publicRequest
-    .get(`/dogs/recommendation?userNo=${num}`)
+    .get(`/dogs/monthly?num=${num}`)
     .then(res => res.data)
     .catch(error => {
       throw new Error(error)
