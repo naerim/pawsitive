@@ -13,11 +13,14 @@ import com.pawsitive.doggroup.dogenum.DogStatusEnum;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.service.DogService;
+import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
 import com.pawsitive.usergroup.service.UserService;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,6 +69,12 @@ public class AdoptDogServiceImpl implements AdoptDogService {
         AdoptDog adoptDogEntity = getAdoptDogEntity(saved.getAdoptDogNo());
         AdoptionDogRes adoptionDogRes = AdoptDogTransfer.entityToDto(adoptDogEntity);
         adoptionDogRes.setAdoptedDays(getAdoptedDays(adoptDog.getCreatedAt()));
+
+        userService.updateField(UserTypeStagePatchReq.builder()
+            .userNo(adoptionReq.getUserNo())
+            .field("type")
+            .value(3)
+            .build());
 
         return adoptionDogRes;
     }

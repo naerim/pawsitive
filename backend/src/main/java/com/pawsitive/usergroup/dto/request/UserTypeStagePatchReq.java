@@ -1,6 +1,7 @@
 package com.pawsitive.usergroup.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Builder
 public class UserTypeStagePatchReq {
 
     @Schema(name = "userNo", example = "유저 PK")
