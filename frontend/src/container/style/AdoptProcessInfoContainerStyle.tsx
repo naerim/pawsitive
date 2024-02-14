@@ -58,10 +58,10 @@ export const StepTitle = styled.div`
 `
 
 export const StepSubTitle = styled.div`
-  color: #ff9232;
+  color: #000000;
   text-align: center;
   font-size: 13px;
-  font-weight: 200;
+  font-weight: 400;
   line-height: 112.28%;
   margin: 2.5%;
 `
