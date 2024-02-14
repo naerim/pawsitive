@@ -8,7 +8,7 @@ export const Container = styled.div`
 `
 
 export const StyledSlider = styled(Slider)`
-  height: 500px;
+  height: 400px;
   width: 100%;
 
   .slick-list {
