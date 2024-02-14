@@ -1,5 +1,13 @@
+import SaveDogListSection from '@src/components/SaveDog/SaveDogListSection'
+import * as s from '@src/container/style/SaveDogListContainerStyle'
+
 const SaveDogsListContainer = () => {
-  return <>관심 유기견 공고 리스트 페이지</>
+  return (
+    <s.Container>
+      <div>관심공고페이지</div>
+      <SaveDogListSection />
+    </s.Container>
+  )
 }
 
 export default SaveDogsListContainer

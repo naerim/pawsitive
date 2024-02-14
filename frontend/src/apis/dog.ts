@@ -78,3 +78,8 @@ export const fetchLikeDog = async (params: LikeDogsParamsType) => {
 export const fetchUnLikeDog = async (params: LikeDogsParamsType) => {
   return publicRequest.post('/dogs/unlike', params).then(res => res.data)
 }
+
+// 찜한 유기견 리스트 전체 조회
+export const fetchLikeDogList = async (userNo: number) => {
+  return publicRequest.get(`/dogs/like/${userNo}`).then(res => res.data)
+}
