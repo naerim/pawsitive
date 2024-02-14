@@ -46,7 +46,10 @@ const Index = () => {
       )}
       <t.CenterContainer>
         <AdoptedDogDetail />
-        <DogDiary />
+        <t.Right>
+          <DogDiary />
+          <t.Img src="/img/img_footprints.png" alt="" />
+        </t.Right>
       </t.CenterContainer>
       <HomeRecommendDictionary />
       <HomePopularCommunity />
