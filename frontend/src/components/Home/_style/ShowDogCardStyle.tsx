@@ -14,18 +14,18 @@ export const Container = styled.div`
 `
 
 export const Image = styled.img`
-  width: 140px;
-  height: 131px;
+  width: 122px;
+  height: 122px;
 `
 export const Title = styled.div`
   font-weight: 600;
-  margin-top: 40px;
-  font-size: 1.3em;
+  margin-top: 20px;
+  font-size: 1.2em;
 `
 
 export const SubTitle = styled.div`
   margin-top: 12px;
-  font-size: 1em;
+  font-size: 0.9em;
   font-weight: 500;
 `
 
@@ -34,6 +34,7 @@ export const Button = styled.button`
   border-radius: 7px;
   color: #ff9232;
   font-weight: 600;
-  padding: 11px 19px;
+  height: 40px;
+  width: 50%;
   margin-top: 30px;
 `
