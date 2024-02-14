@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
-  padding-bottom: 60px;
-`
+export const Container = styled.div``
 
 export const TopWrap = styled.div`
   display: flex;
@@ -11,7 +9,7 @@ export const TopWrap = styled.div`
 `
 
 export const Title = styled.div`
-  font-size: 1.8em;
+  font-size: 1.2em;
   margin-bottom: 15px;
   font-weight: 600;
 `

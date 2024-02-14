@@ -1,4 +1,4 @@
-import * as s from '@src/components/style/ShowDogCardStyle'
+import * as s from '@src/components/Home/_style/ShowDogCardStyle'
 import { useNavigate } from 'react-router-dom'
 import { useAtomValue } from 'jotai'
 import { userAtom } from '@src/stores/atoms/user'
