@@ -18,10 +18,13 @@ import com.pawsitive.usergroup.repository.MemberDogLikeRepository;
 import com.pawsitive.usergroup.repository.UserRepository;
 import com.pawsitive.usergroup.service.MemberDogVisitService;
 import com.pawsitive.usergroup.service.UserService;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -197,8 +200,33 @@ public class DogServiceImpl implements DogService {
 
     @Override
     public List<DogListRes> getRecommendationDogListByUserNo(Integer userNo) {
+
+        int visitedCount = memberDogVisitService.getMemberDogVisitCount(userNo);
+
+        if (visitedCount == 0) {
+            List<Integer> dogNoList = dogRepository.getEntireDogNoList();
+
+            Random random;
+
+            try {
+                random = SecureRandom.getInstanceStrong();
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+
+            List<Integer> idxList = new ArrayList<>();
+            idxList.add(random.nextInt(dogNoList.size()));
+            idxList.add(random.nextInt(dogNoList.size()));
+
+            List<DogListRes> dogListRes = dogRepository.getDogListIn(idxList);
+            setThumbnailImage(dogListRes);
+
+            return dogListRes;
+        }
+
         // MemberDogMatrix 가져오기
         List<Double> memberDogMatrix = memberDogVisitService.getMatrixAsList(userNo);
+
 
         // 전체 dog List 가져오기
         List<DogListRes> dogList = dogRepository.getRecommendationDogList();

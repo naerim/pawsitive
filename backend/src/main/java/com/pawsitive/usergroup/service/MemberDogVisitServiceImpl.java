@@ -3,7 +3,6 @@ package com.pawsitive.usergroup.service;
 import com.pawsitive.common.service.RedisService;
 import com.pawsitive.doggroup.dogenum.DogKindEnum;
 import com.pawsitive.doggroup.dogenum.DogSexEnum;
-import com.pawsitive.doggroup.dto.request.DogCreateReq;
 import com.pawsitive.doggroup.entity.Dog;
 import com.pawsitive.doggroup.repository.DogRepository;
 import com.pawsitive.usergroup.dto.response.MemberDogVisitListRes;
@@ -13,16 +12,14 @@ import com.pawsitive.usergroup.entity.MemberDogVisit;
 import com.pawsitive.usergroup.repository.MemberDogMatrixRepository;
 import com.pawsitive.usergroup.repository.MemberDogVisitRepository;
 import com.pawsitive.usergroup.repository.MemberRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service("memberDogVisitService")
 @RequiredArgsConstructor
@@ -47,7 +44,8 @@ public class MemberDogVisitServiceImpl implements MemberDogVisitService {
     @Override
     public void processVisit(int dogNo, int userNo) {
 
-        String userVisitedKey = USER_VISITED_LIST_PREFIX + userNo; // 유저 별 방문 리스트 Key 값 (prefix + 유저 고유번호)
+        String userVisitedKey =
+            USER_VISITED_LIST_PREFIX + userNo; // 유저 별 방문 리스트 Key 값 (prefix + 유저 고유번호)
         boolean haveToInsert = true;
 
         if (redisService.checkList(TODAY_VISITED_USER_KEY, userNo)) { // 해당 유저가 오늘 방문한 기록이 있으면
@@ -144,6 +142,11 @@ public class MemberDogVisitServiceImpl implements MemberDogVisitService {
     @Override
     public MemberDogVisitListRes getVisitList(int userNo) {
         return memberDogVisitRepository.getMemberDogVisitedList(userNo);
+    }
+
+    @Override
+    public int getMemberDogVisitCount(int userNo) {
+        return memberDogVisitRepository.getMemberDogVisitedCount(userNo).intValue();
     }
 
     @Scheduled(cron = "0 0 0 * * *")
