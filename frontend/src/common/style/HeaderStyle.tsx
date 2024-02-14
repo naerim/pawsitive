@@ -6,7 +6,7 @@ export const Container = styled.header`
   position: fixed;
   top: 0;
   width: 390px;
-  height: 40px;
+  height: 60px;
   z-index: 100;
   background-color: #fff;
 `
@@ -21,6 +21,8 @@ export const Wrap = styled.div`
 
 export const Logo = styled.div`
   color: #000;
+  font-weight: 600;
+  font-size: 1.2em;
 `
 
 export const MenuItem = styled(Link)`

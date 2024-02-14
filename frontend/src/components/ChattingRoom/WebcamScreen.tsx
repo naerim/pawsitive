@@ -24,7 +24,7 @@ const WebcamScreen = (props: WebcamScreenType) => {
   const [preScreenVisible, setPrevScreenVisible] = useState<boolean>(true)
 
   const sendLeave = async (sessionId: string) => {
-    const url = ` /sessions/${sessionId}/disconnections`
+    const url = `/sessions/${sessionId}/disconnections`
     return publicRequest.post(url, {})
   }
 

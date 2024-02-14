@@ -7,5 +7,5 @@ export const Wrap = styled.div`
 `
 
 export const Container = styled.div`
-  margin-top: 50px;
+  margin-top: 70px;
 `

@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <h.Container>
       <h.Wrap>
-        <h.Logo onClick={homeClick} />
+        <h.Logo onClick={homeClick}>PAWSITIVE</h.Logo>
         <div>
           <h.MenuItem to="/dictionary">펫과사전</h.MenuItem>
         </div>
