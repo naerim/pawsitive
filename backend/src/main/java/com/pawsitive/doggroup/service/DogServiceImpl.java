@@ -1,6 +1,7 @@
 package com.pawsitive.doggroup.service;
 
 
+import com.pawsitive.auth.Role;
 import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.doggroup.dogenum.DogKindEnum;
 import com.pawsitive.doggroup.dogenum.DogSexEnum;
@@ -18,6 +19,7 @@ import com.pawsitive.usergroup.repository.MemberDogLikeRepository;
 import com.pawsitive.usergroup.repository.UserRepository;
 import com.pawsitive.usergroup.service.MemberDogVisitService;
 import com.pawsitive.usergroup.service.UserService;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -126,7 +129,12 @@ public class DogServiceImpl implements DogService {
     public DogDetailRes getDogByDogNo(int dogNo, Integer userNo) {
         Dog dog = dogRepository.findByDogNo(dogNo).orElseThrow(DogNotFoundException::new);
 
-        memberDogVisitService.processVisit(dogNo, userNo);
+        User user = userRepository.findUserByUserNo(userNo).orElseThrow();
+
+        // 권한이 보호소가 아닌 일반 사용자일때만 방문 로직 처리
+        if (user.getRole().equals(Role.USER)) {
+            memberDogVisitService.processVisit(dogNo, userNo);
+        }
 
         int hit = dog.getHit() + 1;
         dog.setHit(hit);
