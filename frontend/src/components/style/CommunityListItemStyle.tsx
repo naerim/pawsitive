@@ -32,9 +32,20 @@ export const Title = styled.div`
   font-size: 1.1em;
   line-height: 1.5;
   margin: 2px 0;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  width: 85%;
+  white-space: nowrap;
 `
 
 export const Desc = styled.div`
   color: #7b7b7b;
   font-size: 0.9em;
+  line-height: 1.1;
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `

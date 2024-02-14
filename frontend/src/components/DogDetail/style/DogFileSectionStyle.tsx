@@ -48,7 +48,7 @@ export const StyledSlider = styled(Slider)`
   }
 
   .dots_custom li.slick-active button {
-    background-color: #000;
+    background-color: #ff9232;
   }
 `
 

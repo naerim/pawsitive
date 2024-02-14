@@ -31,14 +31,13 @@ const CommunityFileSection = (props: PropsType) => {
   return (
     <d.Container>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-
       <d.StyledSlider {...settings}>
         {images.map(img => (
           <div key={img}>
             <img
               src={img}
               alt={img}
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: '100%', height: '400px', objectFit: 'cover' }}
             />
           </div>
         ))}
