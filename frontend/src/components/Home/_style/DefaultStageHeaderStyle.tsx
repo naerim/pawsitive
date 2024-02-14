@@ -12,6 +12,7 @@ export const Title = styled.div`
   font-size: 1.2em;
   margin-bottom: 15px;
   font-weight: 600;
+  line-height: 1.2;
 `
 
 export const SubTitle = styled.div`
@@ -24,5 +25,5 @@ export const SubTitle = styled.div`
 export const HomeImage = styled.img`
   width: 170px;
   height: 175px;
-  transform: rotate(15deg) translate(10px, -25px);
+  transform: rotate(15deg) translate(20px, -50px);
 `
