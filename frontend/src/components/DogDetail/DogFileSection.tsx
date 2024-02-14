@@ -62,7 +62,7 @@ const DogFileSection = (props: DogFileSectionType) => {
         <d.Title>{name}</d.Title>
         <d.Desc>
           {sex === 'F' ? '암컷' : '수컷'} ∙ 중성화
-          {neutralized ? 'O' : 'X'} ∙ {age}(년생) ∙ {kind}
+          {neutralized ? 'O' : 'X'} ∙ {age}살 ∙ {kind}
         </d.Desc>
       </d.SliderBottom>
       <d.EyeWrap>

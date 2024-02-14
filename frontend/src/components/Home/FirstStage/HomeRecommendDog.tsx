@@ -39,7 +39,7 @@ const HomeRecommendDog = () => {
                   {item.neutralized ? 'O' : 'X'}
                 </h.ItemSubTitle>
                 <h.ItemSubTitle>
-                  {item.age}(년생) ∙ {item.kind}
+                  {item.age}살 ∙ {item.kind}
                 </h.ItemSubTitle>
               </h.Item>
             </h.DogButton>

@@ -111,7 +111,7 @@ const BasicDogInfoCard: React.FC<{ dogInfo: DogListType }> = ({ dogInfo }) => {
           {dogInfo.neutralized ? '0' : 'X'}
         </b.SubInfo>
         <b.SubInfo>
-          {dogInfo.age}(년생) ∙ {dogInfo.kind}
+          {dogInfo.age}살 ∙ {dogInfo.kind}
         </b.SubInfo>
       </b.DogTextInfoContainer>
     </b.Container>

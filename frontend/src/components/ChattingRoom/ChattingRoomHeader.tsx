@@ -87,8 +87,7 @@ const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
               <div className="name">{dog.name}</div>
               <div>
                 {dog.sex === 'f' ? '암컷' : '수컷'} ∙ 중성화{' '}
-                {dog.isNeutralized ? '0' : 'X'} ∙ {dog.age}
-                (년생) ∙ {dog.kind}
+                {dog.isNeutralized ? '0' : 'X'} ∙ {dog.age}살 ∙ {dog.kind}
               </div>
             </span>
           </c.InfoDetailWrap>
