@@ -10,7 +10,7 @@ const DictionaryDetail = (props: { data: DictionaryItemType }) => {
   const handlePrevStep = () => {
     navigate('/dictionary')
   }
-
+  console.log(data.content)
   const setImageSrc = (category: string) => {
     const imageUrls: Record<string, string[]> = {
       펫티켓: ['/img/img_dog_poo.png', '/img/img_bag.png'],
@@ -128,7 +128,15 @@ const DictionaryDetail = (props: { data: DictionaryItemType }) => {
                     <c.DescItem key={`description-${s}`}>{s}</c.DescItem>
                   ))}
               </c.Desc>
-              <c.Remarks>{parseContent.remarks}</c.Remarks>
+              <c.Remarks>
+                {parseContent.remarks &&
+                  parseContent.remarks
+                    .split('\n')
+                    .filter((s: string) => s.trim() !== '')
+                    .map((s: string) => (
+                      <c.DescItem key={`description-${s}`}>{s}</c.DescItem>
+                    ))}
+              </c.Remarks>
             </c.InfoContainer>
           </c.Container>
         </div>
