@@ -49,5 +49,6 @@ export const CancelButton = styled.button`
   margin-top: 10px;
   font-size: 12px;
   color: #7b7b7b;
-  background-color: transparent;
+  background-color: #f7f7f7;
+  padding: 10px;
 `
