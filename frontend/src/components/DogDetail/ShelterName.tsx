@@ -66,13 +66,13 @@ const ShelterName = (props: ShelterNameType) => {
       </s.InfoWrap>
       <s.ImageWrap>
         {userLike ? (
-          <s.Image
+          <s.LikeImage
             src="/img/img_paw.png"
             alt="/"
             onClick={handelPostUnLikeDog}
           />
         ) : (
-          <s.Image
+          <s.UnLikeImage
             src="/img/img_empty_paw.png"
             alt="/"
             onClick={handelPostLikeDog}
