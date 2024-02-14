@@ -18,6 +18,54 @@ const BasicDogInfoCard: React.FC<{ dogInfo: DogListType }> = ({ dogInfo }) => {
     navigate(`/dogs/${dogInfo.dogNo}`)
   }
 
+  // 찜 등록
+  // const [userLike, setUserLike] = useAtom(dogLikedAtom)
+  //
+  //
+  // const { mutate: likeMutate } = useMutation({
+  //   mutationKey: ['PostLikedog'],
+  //   mutationFn: fetchLikeDog,
+  //   onSuccess() {
+  //     console.log('찜 성공')
+  //     setUserLike(true)
+  //   },
+  //   onError() {
+  //     console.log('찜 실패')
+  //   },
+  // })
+  //
+  // const handelPostLikeDog = () => {
+  //   const params = {
+  //     userNo: user.userNo,
+  //     email: user.email,
+  //     dogNo: dogInfo.dogNo,
+  //   }
+  //   likeMutate(params)
+  // }
+  //
+  // // 찜 취소
+  // const { mutate: UnlikeMutate } = useMutation({
+  //   mutationKey: ['PostUnLikedog'],
+  //   mutationFn: fetchUnLikeDog,
+  //   onSuccess() {
+  //     console.log('찜 취소 성공')
+  //     setUserLike(false)
+  //   },
+  //   onError() {
+  //     console.log('찜 취소 실패')
+  //   },
+  // })
+  //
+  // const handelPostUnLikeDog = () => {
+  //   const params = {
+  //     userNo: user.userNo,
+  //     email: user.email,
+  //     dogNo: dogInfo.dogNo,
+  //   }
+  //   UnlikeMutate(params)
+  //   navigate('/dogs')
+  // }
+
   return (
     <b.Container onClick={handleClick}>
       <b.AdoptStatus $status={dogInfo.statusNo === 0 ? '공고중' : '입양완료'}>
@@ -39,7 +87,25 @@ const BasicDogInfoCard: React.FC<{ dogInfo: DogListType }> = ({ dogInfo }) => {
         )}
       </b.ImgContainer>
       <b.DogTextInfoContainer>
-        <b.DogName>{dogInfo.name}</b.DogName>
+        <b.DogNameAndLike>
+          <b.DogName>{dogInfo.name}</b.DogName>
+          <b.DogLiked>
+            {dogInfo.userLiked ? (
+              <b.Image
+                src="/img/img_paw.png"
+                alt="/"
+                // onClick={handelPostUnLikeDog}
+              />
+            ) : (
+              <b.Image
+                src="/img/img_empty_paw.png"
+                alt="/"
+                // onClick={handelPostLikeDog}
+              />
+            )}
+          </b.DogLiked>
+        </b.DogNameAndLike>
+
         <b.SubInfo>
           {dogInfo.sex === 'F' ? '암컷' : '수컷'} ∙ 중성화
           {dogInfo.neutralized ? '0' : 'X'}
