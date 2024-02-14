@@ -9,7 +9,7 @@ const MainColorMoveCard = (props: MainColorMoveCardType) => {
   const onClick = () => navigate(url)
 
   return (
-    <m.Container onClick={onClick} backgroundColor={backgroundColor}>
+    <m.Container onClick={onClick} $backgroundColor={backgroundColor}>
       <div>
         <m.Title>{title}</m.Title>
         <m.SubTitle>{subTitle}</m.SubTitle>

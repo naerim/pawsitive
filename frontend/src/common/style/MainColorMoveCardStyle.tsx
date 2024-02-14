@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 interface ContainerProps {
-  backgroundColor?: string
+  $backgroundColor?: string
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -10,7 +10,7 @@ export const Container = styled.div<ContainerProps>`
   padding: 16px 21px;
   align-items: center;
   justify-content: space-between;
-  background-color: ${props => props.backgroundColor};
+  background-color: ${props => props.$backgroundColor};
   width: 90%;
   margin: 0 auto 2% auto;
   border-radius: 12px;
