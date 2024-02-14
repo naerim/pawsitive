@@ -59,12 +59,18 @@ export const DogTextInfoContainer = styled.div`
   padding: 5% 2% 3% 4%;
 `
 
-export const DogName = styled.div`
+export const DogNameAndLike = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   font-size: 1.1em;
   font-weight: 700;
-  margin: 3% 0;
+  margin: 3% 0 0 0;
 `
 
+export const DogName = styled.div``
+
+export const DogLiked = styled.div``
 export const SubInfo = styled.div`
   width: 100%;
   display: flex;
@@ -72,4 +78,9 @@ export const SubInfo = styled.div`
   padding: 5% 2% 0 0;
   color: #818181;
   font-size: 0.8em;
+`
+
+export const Image = styled.img`
+  width: 24px;
+  height: 24px;
 `

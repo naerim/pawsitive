@@ -11,4 +11,6 @@ public interface MemberDogVisitRepositoryCustom {
 
     MemberDogVisitListRes getMemberDogVisitedList(int userNo);
 
+    Long getMemberDogVisitedCount(int userNo);
+
 }

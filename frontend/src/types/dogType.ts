@@ -28,6 +28,7 @@ export type DogListType = {
   neutralized: boolean
   sex: string
   statusNo: number
+  userLiked: boolean
 }
 
 export type BasicDogType = {
@@ -39,6 +40,7 @@ export type BasicDogType = {
   file: string
   sex: string
   neutralized: boolean
+  userLiked: boolean
 }
 
 export type BasicDogListParamsType = {

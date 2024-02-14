@@ -57,12 +57,12 @@ const CreateDogInfo = () => {
         />
       </s.InputContainer>
       <s.InputContainer>
-        <s.Title htmlFor="age">추정 출생연도</s.Title>
+        <s.Title htmlFor="age">추정 나이</s.Title>
         <s.Input
           type="text"
           value={createDogData.age !== 0 ? createDogData.age : ''}
           onChange={handleAgeChange}
-          placeholder="ex) 2023"
+          placeholder="ex) 3"
         />
       </s.InputContainer>
       <s.InputContainer>

@@ -2,6 +2,7 @@ export type MainColorMoveCardType = {
   title: string
   subTitle: string
   url: string
+  backgroundColor: string
 }
 
 export type LightColorMoveCardType = {
