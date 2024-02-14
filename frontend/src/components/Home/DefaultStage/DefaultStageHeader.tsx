@@ -8,7 +8,11 @@ const DefaultStageHeader = () => {
     <d.Container>
       <d.TopWrap>
         <div>
-          <d.Title>{user.name !== '' && `${user.name}님 `}안녕하세요!</d.Title>
+          <d.Title>
+            {user.name !== '' && `${user.name}님`}
+            <br />
+            안녕하세요!
+          </d.Title>
           <d.SubTitle>
             오늘도 귀여운 반려견들이
             <br /> 당신을 기다리고 있어요

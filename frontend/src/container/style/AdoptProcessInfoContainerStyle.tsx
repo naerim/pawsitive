@@ -51,7 +51,7 @@ export const StepImg = styled.img`
 
 export const StepTitle = styled.div`
   color: #ff9232;
-  font-size: 14px;
+  font-size: 1.1em;
   font-weight: 700;
   line-height: 112.28%;
   margin: 2.5%;
@@ -60,8 +60,8 @@ export const StepTitle = styled.div`
 export const StepSubTitle = styled.div`
   color: #000000;
   text-align: center;
-  font-size: 13px;
-  font-weight: 400;
+  font-size: 0.9em;
+  font-weight: 500;
   line-height: 112.28%;
   margin: 2.5%;
 `
