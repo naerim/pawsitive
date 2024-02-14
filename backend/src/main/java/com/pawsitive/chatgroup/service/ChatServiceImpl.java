@@ -39,7 +39,7 @@ public class ChatServiceImpl implements ChatService {
         chatRes.setUserNo(chatReq.getSenderNo());
         chatRes.setUserName(user.getName());
         chatRes.setUserImage(user.getImage());
-        chatRes.setType(chatRes.getType());
+        chatRes.setType(chatReq.getType());
         chatRes.setMessage(chatReq.getMessage());
         chatRes.setCreatedAt(savedChat.getCreatedAt());
         chatRes.setIsRead(savedChat.getIsRead());
