@@ -38,7 +38,7 @@ const CommunityFileSection = (props: PropsType) => {
             <img
               src={img}
               alt={img}
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: '100%', height: '500px', objectFit: 'cover' }}
             />
           </div>
         ))}

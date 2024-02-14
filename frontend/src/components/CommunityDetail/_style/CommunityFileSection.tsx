@@ -8,7 +8,7 @@ export const Container = styled.div`
 `
 
 export const StyledSlider = styled(Slider)`
-  height: 522px;
+  height: 500px;
   width: 100%;
 
   .slick-list {
@@ -48,7 +48,7 @@ export const StyledSlider = styled(Slider)`
   }
 
   .dots_custom li.slick-active button {
-    background-color: #000;
+    background-color: #ff9232;
   }
 `
 
