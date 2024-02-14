@@ -38,14 +38,22 @@
 @media (prefers-color-scheme: dark) {
     input {
         background-color: #fff;
+        color: #000
     }
 
     button {
         background-color: #fff;
+        color: #000
     }
 
     textarea {
         background-color: #fff;
+        color: #000
+    }
+
+    select {
+        background-color: #fff;
+        color: #000
     }
 }
 
