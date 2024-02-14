@@ -75,19 +75,29 @@ public class DogController {
             .body(dogService.getDogByDogNo(dogNo, userNo));
     }
 
+    @GetMapping("/monthly")
+    @Operation(summary = "조회수 기반 이달의 유기견 조회", description = "전달받은 페이지에 해당하는 <strong>유기견 목록</strong>을 반환한다.",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "이달의 유기견 목록을 정상적으로 반환한다.")})
+    public ResponseEntity<List<DogListRes>> getMonthlyDogList(
+        @RequestParam(required = false) Integer num) {
+
+        return ResponseEntity.status(OK).body(dogService.getMonthlyDogList(num));
+    }
+
     @GetMapping("/recommendation")
-    @Operation(summary = "추천 강아지 조회", description = "전달받은 페이지에 해당하는 <strong>유기견 목록</strong>을 반환한다.",
+    @Operation(summary = "사용자 기반 추천 강아지 조회", description = "전달받은 페이지에 해당하는 <strong>유기견 목록</strong>을 반환한다.",
         responses = {
             @ApiResponse(responseCode = "200", description = "추천 강아지 목록을 정상적으로 반환한다."),
             @ApiResponse(responseCode = "400", description = "전달받은 페이지 값에 해당하는 추천 강아지가 없음.")
         })
-    public ResponseEntity<List<DogListRes>> getRecommendationDogList(/* Authentication authentication */
+    public ResponseEntity<List<DogListRes>> getRecommendationDogListByUserNo(/* Authentication authentication */
         @RequestParam Integer userNo) {
 
 //        return ResponseEntity.status(OK).body(dogService.getRecommendationDogList(authentication));
         return ResponseEntity
             .status(OK)
-            .body(dogService.getRecommendationDogList(userNo));
+            .body(dogService.getRecommendationDogListByUserNo(userNo));
     }
 
 

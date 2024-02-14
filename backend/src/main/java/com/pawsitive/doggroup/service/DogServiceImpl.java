@@ -153,7 +153,7 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
-    public List<DogListRes> getRecommendationDogList(Authentication authentication) {
+    public List<DogListRes> getRecommendationDogListByUserNo(Authentication authentication) {
 
         if (Objects.isNull(authentication)) { // 인증 정보가 없으면 예외처리
             throw new UserNotLoginException();
@@ -184,7 +184,19 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
-    public List<DogListRes> getRecommendationDogList(Integer userNo) {
+    public List<DogListRes> getMonthlyDogList(Integer num) {
+        List<DogListRes> dogList;
+        if (Objects.isNull(num)) {
+            dogList = dogRepository.getRecommendationDogList();
+        } else {
+            dogList = dogRepository.getRecommendationDogList(num);
+        }
+        setThumbnailImage(dogList);
+        return dogList;
+    }
+
+    @Override
+    public List<DogListRes> getRecommendationDogListByUserNo(Integer userNo) {
         // MemberDogMatrix 가져오기
         List<Double> memberDogMatrix = memberDogVisitService.getMatrixAsList(userNo);
 

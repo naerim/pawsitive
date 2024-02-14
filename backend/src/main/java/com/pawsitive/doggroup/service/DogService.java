@@ -34,7 +34,7 @@ public interface DogService {
     DogDetailRes getDogByDogNo(int dogNo, Authentication authentication);
 
     DogDetailRes getDogByDogNo(int dogNo, Integer userNo);
-    
+
     Dog updateStatus(int dogNo, DogStatusEnum dogStatusEnum);
 
     /**
@@ -50,9 +50,17 @@ public interface DogService {
      *
      * @return 추천 강아지 목록
      */
-    List<DogListRes> getRecommendationDogList(Authentication authentication);
+    List<DogListRes> getRecommendationDogListByUserNo(Authentication authentication);
 
-    List<DogListRes> getRecommendationDogList(Integer userNo);
+    List<DogListRes> getRecommendationDogListByUserNo(Integer userNo);
+
+    /**
+     * 추천 강아지를 num마리 조회하는 메서드입니다.
+     *
+     * @param num 조회할 유기견 마리 수
+     * @return 추천 강아지 목록
+     */
+    List<DogListRes> getMonthlyDogList(Integer num);
 
 
     /**
