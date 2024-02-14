@@ -58,7 +58,7 @@ const AdoptedDogModModal = (props: PropsType) => {
 
   useEffect(() => {
     refetch().then(r => r)
-  }, [refetch()])
+  }, [refetch])
 
   // useQuery로 받아 온 data 값을 저장해서 input에 넣기
   useEffect(() => {
@@ -119,7 +119,7 @@ const AdoptedDogModModal = (props: PropsType) => {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    height: 480,
+    height: 500,
     borderRadius: '10px',
     bgcolor: 'background.paper',
     '&:focus': {
@@ -159,7 +159,8 @@ const AdoptedDogModModal = (props: PropsType) => {
 
     submitData.formData = formData
 
-    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     adoptedDogMod(submitData)
     updateStage({
       userNo: user.userNo,
@@ -183,13 +184,13 @@ const AdoptedDogModModal = (props: PropsType) => {
               <a.ImgContainer>
                 <a.ImgLabel htmlFor="image">
                   <a.ImgBox>
-                    {!imageViewValue ? (
+                    {imageViewValue.length === 0 ? (
                       <img className="img" src="/icon/icon_camera.png" alt="" />
                     ) : (
-                      <img
+                      <a.Img
                         alt=""
                         src={imageViewValue[0]}
-                        style={{ height: '100px', width: '100px' }}
+                        style={{ height: '100%', width: '100%' }}
                       />
                     )}
                   </a.ImgBox>
