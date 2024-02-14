@@ -26,7 +26,6 @@ const DogFileSection = (props: DogFileSectionType) => {
   return (
     <d.Container>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-
       <d.StyledSlider {...settings}>
         {files.map(file => {
           // 파일 이름을 추출하기 위해 =='.'으로 분할하고 마지막 요소를 선택
@@ -39,12 +38,20 @@ const DogFileSection = (props: DogFileSectionType) => {
                     <img
                       src={file}
                       alt={file}
-                      style={{ width: '100%', height: '100%' }}
+                      style={{
+                        width: '100%',
+                        height: '500px',
+                        objectFit: 'cover',
+                      }}
                     />
                   )}
                   {videoExtensions.includes(fileName) && (
                     <video
-                      style={{ width: '100%', height: '100%' }}
+                      style={{
+                        width: '100%',
+                        height: '500px',
+                        objectFit: 'cover',
+                      }}
                       muted
                       autoPlay
                       loop

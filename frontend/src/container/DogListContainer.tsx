@@ -76,7 +76,7 @@ const DogListContainer = () => {
 
   return (
     <>
-      <TextHeader title="유기견 공고 리스트" />
+      <TextHeader title="유기견 공고" />
       <d.Container>
         <d.FilterContainer>
           <d.ShowFilterButton onClick={showFilterHandle}>
