@@ -11,7 +11,7 @@ const BasicDogInfoCard: React.FC<{ dogInfo: DogListType }> = ({ dogInfo }) => {
   const [fileName, setFileName] = useState<string | undefined>('')
   const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp']
   const videoExtensions = ['mp4', 'avi', 'mkv', 'mov', 'webm']
-
+  console.log(dogInfo)
   useEffect(() => {
     if (dogInfo.file) {
       setFileName(dogInfo.file.split('.').pop())
