@@ -17,6 +17,7 @@ const Index = () => {
           title="아직 설문이 완료되지 않았어요!"
           subTitle="입양 질문에 답하러 가기"
           url="/mypage/survey"
+          backgroundColor="#FF9232"
         />
         <HomeRecommendDog />
         <HomePopularCommunity />
