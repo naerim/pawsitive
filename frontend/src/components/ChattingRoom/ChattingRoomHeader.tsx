@@ -24,8 +24,6 @@ const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
 
   const navigate = useNavigate()
 
-  const adopt = false
-
   const goBack = () => navigate('/chat')
 
   const { mutate } = useMutation({
@@ -107,12 +105,14 @@ const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
             {user.role === 'SHELTER' && (
               <button type="button">입양설문 보기</button>
             )}
-            {user.role === 'SHELTER' && promise.isAccepted && !adopt && (
-              <button type="button" onClick={onClickConfirmAdopt}>
-                입양확정 하기
-              </button>
-            )}
-            {adopt && <c.DoneText>입양확정</c.DoneText>}
+            {user.role === 'SHELTER' &&
+              promise.isAccepted &&
+              dog.status !== 2 && (
+                <button type="button" onClick={onClickConfirmAdopt}>
+                  입양확정 하기
+                </button>
+              )}
+            {dog.status === 2 && <c.DoneText>입양확정</c.DoneText>}
           </c.ButtonWrap>
         </c.InfoWrap>
       </c.Wrap>
