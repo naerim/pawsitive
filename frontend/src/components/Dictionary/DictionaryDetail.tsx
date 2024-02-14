@@ -10,7 +10,6 @@ const DictionaryDetail = (props: { data: DictionaryItemType }) => {
   const handlePrevStep = () => {
     navigate('/dictionary')
   }
-  console.log(data.content)
   const setImageSrc = (category: string) => {
     const imageUrls: Record<string, string[]> = {
       펫티켓: ['/img/img_dog_poo.png', '/img/img_bag.png'],
@@ -57,12 +56,13 @@ const DictionaryDetail = (props: { data: DictionaryItemType }) => {
             <c.InfoContainer>
               <c.Desc>{parseContent.description}</c.Desc>
               <c.Remarks>
-                <p>위반 시, 과태료 안내</p>
-                {
-                  parseContent.remarks
-                    .split(':')
-                    .filter((s: string) => s.trim() !== '')[1]
-                }
+                <p>과태료 안내</p>
+                {parseContent.remarks
+                  .split('\n')
+                  .filter((s: string) => s.trim() !== '')
+                  .map((p: string) => (
+                    <c.PreventItem key={`prevent-${p}`}>{p}</c.PreventItem>
+                  ))}
               </c.Remarks>
             </c.InfoContainer>
           </c.Container>
