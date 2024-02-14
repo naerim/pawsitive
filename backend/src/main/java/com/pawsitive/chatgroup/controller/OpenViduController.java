@@ -12,6 +12,7 @@ import io.openvidu.java.client.OpenViduJavaClientException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,11 +47,12 @@ public class OpenViduController {
     @PostMapping("/{sessionId}/connections")
     @Operation(summary = "화상 채팅방 토큰 얻기", description = "sessionId에 대한 화상 채팅방 토큰을 반환합니다.", responses = {
         @ApiResponse(responseCode = "200", description = "화상 채팅방 토큰 조회 성공"),})
-    public ResponseEntity<ChatTokenRes> createConnection(
-        @PathVariable("sessionId") String sessionId)
+    public ResponseEntity<ChatTokenRes> createConnection(Map<String, Object> params,
+                                                         @PathVariable("sessionId")
+                                                         String sessionId)
         throws OpenViduJavaClientException, OpenViduHttpException {
 
-        return ResponseEntity.status(OK).body(openviduService.getToken(sessionId));
+        return ResponseEntity.status(OK).body(openviduService.getToken(sessionId, params));
     }
 
     @PostMapping("/{sessionId}/disconnections")
