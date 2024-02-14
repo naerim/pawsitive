@@ -1,14 +1,18 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
+interface ContainerProps {
+  backgroundColor?: string
+}
+
+export const Container = styled.div<ContainerProps>`
   display: flex;
   cursor: pointer;
   padding: 16px 21px;
   align-items: center;
   justify-content: space-between;
-  background-color: #ff9232;
+  background-color: ${props => props.backgroundColor};
   width: 90%;
-  margin: 0 auto;
+  margin: 0 auto 2% auto;
   border-radius: 12px;
   color: #fff;
   border: 1px solid #ebebeb;
