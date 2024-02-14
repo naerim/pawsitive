@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { useAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import { useMutation } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
+import { userAtom } from '@src/stores/atoms/user'
 import { createDogInfoAtom, createDogStepAtom } from '@src/stores/atoms/dog'
 import { createDog } from '@src/apis/dog'
 import CreateDogInfo from '@src/components/CreateDog/CreateDogInfo'
@@ -8,11 +10,12 @@ import CreateDogMbti from '@src/components/CreateDog/CreateDogMbti'
 import CreateDogNote from '@src/components/CreateDog/CreateDogNote'
 import CreateDogFile from '@src/components/CreateDog/CreateDogFile'
 import * as c from '@src/container/style/CreateDogContainerStyle'
-import { useNavigate } from 'react-router-dom'
 
 const CreateDogContainer = () => {
   const navigate = useNavigate()
-  const [createDogInfo] = useAtom(createDogInfoAtom)
+  const userValue = useAtomValue(userAtom)
+  const { userNo } = userValue
+  const [createDogInfo, setCreateDogInfo] = useAtom(createDogInfoAtom)
   const [createDogStep, setCreateDogStep] = useAtom(createDogStepAtom)
   const [file, setFile] = useState<File[]>([])
 
@@ -31,6 +34,7 @@ const CreateDogContainer = () => {
   const handleCreateDog = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData()
+    setCreateDogInfo(prevData => ({ ...prevData, userNo }))
 
     formData.append(
       'req',
