@@ -40,6 +40,7 @@ export type BasicDogType = {
   file: string
   sex: string
   neutralized: boolean
+  userLiked: boolean
 }
 
 export type BasicDogListParamsType = {
