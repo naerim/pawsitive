@@ -34,20 +34,6 @@
     }
 }
 
-/* 사용자의 시스템이 라이트테마나 다크테마인지 탐지 */
-@media (prefers-color-scheme: dark) {
-    input {
-        background-color: #fff;
-    }
-
-    button {
-        background-color: #fff;
-    }
-
-    textarea {
-        background-color: #fff;
-    }
-}
 
 .card {
     padding: 2em;
