@@ -5,12 +5,14 @@ import HomeRecommendDog from '@src/components/Home/FirstStage/HomeRecommendDog'
 import HomePopularCommunity from '@src/components/Home/HomePopularCommunity'
 import FirstStageHeader from '@src/components/Home/FirstStage/FirstStageHeader'
 import * as c from '@src/components/Home/_style/CommonStageStyle'
+import OndRecommendCard from '@src/components/Home/FirstStage/OndRecommendCard'
 
 const Index = () => {
   return (
     <div>
       <FirstStageHeader />
       <c.Wrap>
+        <OndRecommendCard />
         <HomeProgressBar currentStage={1} />
         <HomeStatistics />
         <MainColorMoveCard
