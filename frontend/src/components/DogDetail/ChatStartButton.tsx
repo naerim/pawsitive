@@ -4,18 +4,19 @@ import { createChatRoom } from '@src/apis/chat'
 import { CreateChatRoomParamsType } from '@src/types/chatType'
 import { useAtom } from 'jotai/index'
 import { userAtom } from '@src/stores/atoms/user'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const ChatStartButton = () => {
-  const location = useLocation()
-  const dogNo = location.state?.dogNo
+  const { dogNo } = useParams()
+  // const location = useLocation()
+  // const dogNo = location.state?.dogNo
   const navigate = useNavigate()
   const [user] = useAtom(userAtom)
   const [createChatRoomParams, setCreateChatRoomParams] =
     useState<CreateChatRoomParamsType>()
 
   useEffect(() => {
-    setCreateChatRoomParams({ dogNo, userNo: user.userNo })
+    setCreateChatRoomParams({ dogNo: Number(dogNo), userNo: user.userNo })
   }, [dogNo, user])
 
   const handleClick = async () => {
