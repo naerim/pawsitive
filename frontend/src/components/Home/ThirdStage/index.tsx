@@ -3,6 +3,7 @@ import HomeProgressBar from '@src/components/Home/HomeProgressBar'
 import styled, { keyframes } from 'styled-components'
 import { useEffect, useState } from 'react'
 import HomePopularCommunity from '@src/components/Home/HomePopularCommunity'
+import * as c from '@src/components/Home/_style/CommonStageStyle'
 
 const fadeIn = keyframes`
     from {
@@ -33,7 +34,7 @@ const Index = () => {
   }, [])
 
   return (
-    <div>
+    <c.Container>
       {showCard && (
         <AnimatedCard>
           <AlarmFillAdoptInfo />
@@ -42,7 +43,7 @@ const Index = () => {
 
       <HomeProgressBar currentStage={3} />
       <HomePopularCommunity />
-    </div>
+    </c.Container>
   )
 }
 
