@@ -13,7 +13,7 @@ import InputSection from '@src/components/ChattingRoom/InputSection'
 import ChattingRoomHeader from '@src/components/ChattingRoom/ChattingRoomHeader'
 import CreateAppointmentModal from '@src/components/ChattingRoom/CreateAppointmentModal'
 import ConfirmAppointmentModal from '@src/components/ChattingRoom/ConfirmAppointmentModal'
-import WebcamScreen from '@src/components/ChattingRoom/WebcamScreen.tsx'
+import WebcamScreen from '@src/components/ChattingRoom/WebcamScreen'
 
 const ChattingRoomContainer = () => {
   const { no } = useParams()

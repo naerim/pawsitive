@@ -67,13 +67,10 @@ const ConfirmAppointmentModal = (props: ConfirmAppointmentModalType) => {
         <div>{promise.time}</div>
       </c.Row>
       <c.BottomButtonWrap>
-        {user.role === 'SHELTER' ? (
-          <>
-            <c.RefuseButton type="button">거절</c.RefuseButton>
-            <c.SubmitButton type="button" onClick={onClickAccept}>
-              수락
-            </c.SubmitButton>
-          </>
+        {user.role === 'SHELTER' && !promise.isAccepted ? (
+          <c.SubmitButton type="button" onClick={onClickAccept}>
+            수락
+          </c.SubmitButton>
         ) : (
           <c.SubmitButton type="button" onClick={onClose}>
             확인
