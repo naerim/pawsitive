@@ -1,17 +1,13 @@
-import * as s from '@src/components/style/ShowDogCardStyle'
+import * as s from '@src/components/Home/_style/ShowDogCardStyle'
 import { useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useAtomValue } from 'jotai'
+import { userAtom } from '@src/stores/atoms/user'
 
 const ShowDogCard = () => {
-  const [userRole, setUserRole] = useState('')
-  // 로그인 안한 상태로, 로컬스토리지 비어있으면 에러떠서 임시로 수정해두었습니다.
-  useEffect(() => {
-    if (window.localStorage.getItem('currentUser')) {
-      setUserRole(JSON.parse(window.localStorage.getItem('currentUser')).role)
-    }
-  }, [])
+  const user = useAtomValue(userAtom)
+
   const showDogCardInfo =
-    userRole === 'USER'
+    user.role !== 'SHELTER'
       ? {
           title: '세상에 귀여운 강아지는 많다!',
           subTitle: '나와 잘 맞는 강아지를 알아보세요.',
@@ -30,7 +26,7 @@ const ShowDogCard = () => {
 
   return (
     <s.Container>
-      <s.Image src="/img/img_show_dog_card.png" alt="" />
+      <s.Image src="/img/img_sleep_dog.png" alt="" />
       <s.Title>{showDogCardInfo.title}</s.Title>
       <s.SubTitle>{showDogCardInfo.subTitle}</s.SubTitle>
       <s.Button type="button" onClick={goDogList}>
