@@ -14,7 +14,7 @@ export const Column = styled.div`
 `
 export const Label = styled.label`
   font-size: 18px;
-  margin: 8px 0 9px 5px;
+  margin: 0 0 9px 5px;
 `
 
 export const Input = styled.input`
@@ -61,7 +61,6 @@ export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
-  margin-top: 10px;
 `
 
 // 이미지
@@ -72,21 +71,20 @@ export const ImgContainer = styled.div`
   padding: 20px 0;
 `
 
-export const ImgLabel = styled.label`
-  border-radius: 5px;
-`
+export const ImgLabel = styled.label``
 
 export const ImgBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid black;
-  width: 100px;
-  height: 100px;
+  border: 1px solid #cbcbcb;
+  border-radius: 5px;
+  width: 120px;
+  height: 120px;
 
   .img {
-    width: 16px;
+    width: 35px;
   }
 
   .p {
@@ -100,4 +98,11 @@ export const ImageInput = styled.input`
   opacity: 0;
   width: 0;
   height: 0;
+`
+
+export const Img = styled.img`
+  border: 1px solid #cbcbcb;
+  border-radius: 5px;
+  width: 120px;
+  height: 120px;
 `
