@@ -2,8 +2,8 @@ import * as b from '@src/common/style/BasicDogInfoCardStyle'
 import { DogListType } from '@src/types/dogType'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAtomValue } from 'jotai'
 import { userAtom } from '@src/stores/atoms/user'
+import { useAtomValue } from 'jotai'
 
 const BasicDogInfoCard: React.FC<{ dogInfo: DogListType }> = ({ dogInfo }) => {
   const navigate = useNavigate()
