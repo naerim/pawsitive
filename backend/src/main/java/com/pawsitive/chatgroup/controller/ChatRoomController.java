@@ -31,7 +31,7 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
     @GetMapping
-    @Operation(summary = "채팅방 전체 조회", description = "회원 고유번호나 유기견 번호로 채팅방을 전체 조회합니다.",
+    @Operation(summary = "채팅방 전체 조회", description = "회원 고유번호(userNo)나 유기견 번호(dogNo)로 채팅방을 전체 조회합니다.",
         responses = {
             @ApiResponse(responseCode = "200", description = "채팅 전체 조회 성공"),
         }

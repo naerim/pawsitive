@@ -6,9 +6,7 @@ import com.pawsitive.chatgroup.service.ChatService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
 import java.security.Principal;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -51,7 +49,6 @@ public class ChatController {
         }
     )
     public void sentChat(@Payload ChatCreateReq chatReq) {
-        log.info("chatReq: {}", chatReq.toString());
         ChatRes chatRes = chatService.createChat(chatReq);
         template.convertAndSend(DESTINATION + chatReq.getChatRoomNo(), chatRes);
     }
