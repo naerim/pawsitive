@@ -16,6 +16,7 @@ const HomeProgressBar = (props: ProgressBarType) => {
     <h.Container>
       <h.Top>
         <h.ImageWrap>
+          {/* eslint-disable-next-line no-nested-ternary */}
           {currentStage === 1 ? (
             <img className="one" src="/icon/icon_bone_one.png" alt="" />
           ) : currentStage === 2 ? (
@@ -25,7 +26,7 @@ const HomeProgressBar = (props: ProgressBarType) => {
               className="three"
               src="/icon/icon_bone_three.png"
               alt=""
-              style={{ width: '100%' }}
+              style={{ width: '85%' }}
             />
           )}
         </h.ImageWrap>

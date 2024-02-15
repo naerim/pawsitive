@@ -70,7 +70,7 @@ const CreateDogContainer = () => {
 
   const handlePrevStep = () => {
     if (createDogStep === 1) {
-      navigate('/dogs')
+      navigate(-1)
     } else {
       setCreateDogStep(prevStep => prevStep - 1)
     }

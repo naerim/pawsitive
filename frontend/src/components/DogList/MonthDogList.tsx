@@ -9,8 +9,6 @@ const MonthDogList = () => {
     queryFn: () => fetchMonthlyDogRecommend(3),
   })
 
-  console.log(data)
-
   return (
     <m.Container>
       <m.Title>이달의 유기견</m.Title>
