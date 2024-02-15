@@ -9,9 +9,13 @@ import { publicRequest } from '@src/hooks/requestMethods'
 import * as w from '@src/components/ChattingRoom/_style/WebcamScreenStyle'
 import { WebcamScreenType } from '@src/types/callType'
 import UserVideoComponent from '@src/components/ChattingRoom/UserVideoComponent'
+import { useAtomValue } from 'jotai'
+import { userAtom } from '@src/stores/atoms/user'
 
 const WebcamScreen = (props: WebcamScreenType) => {
-  const { mySessionId, setMySessionId, setWebcamVisible } = props
+  const { mySessionId, setMySessionId, setWebcamVisible, member, shelter } =
+    props
+  const user = useAtomValue(userAtom)
 
   const [, setOV] = useState<OpenVidu | null>(null)
   const [myUserName, setMyUserName] = useState('')
@@ -199,7 +203,9 @@ const WebcamScreen = (props: WebcamScreenType) => {
       </w.Container>
       {preScreenVisible && (
         <w.PrevContainer>
-          <w.PrevName>김올림보호소님</w.PrevName>
+          <w.PrevName>
+            {user.role === 'SHELTER' ? member.name : shelter.name}님
+          </w.PrevName>
           <w.PrevTitle>영상 통화 연결중...</w.PrevTitle>
           <w.PrevSubTitle>
             함께 소중하고 의미있는 대화를 나눠보세요. <br />

@@ -206,6 +206,8 @@ const ChattingRoomContainer = () => {
           mySessionId={mySessionId}
           setMySessionId={setMySessionId}
           setWebcamVisible={setWebcamVisible}
+          member={data.member}
+          shelter={data.shelter}
         />
       )}
     </>
