@@ -38,7 +38,6 @@ import ShelterDogsPage from '@src/pages/ShelterDogsPage'
 import AdoptProcessInfoPage from '@src/pages/AdoptProcessInfoPage'
 import FindSimilarDogPage from '@src/pages/FindSimilarDogPage'
 import FindSimilarDogResultPage from '@src/pages/FindSimilarDogResultPage'
-import FindSimilarDogRestrictPage from '@src/pages/FindSimilarDogRestrictPage'
 import { userAtom } from '@src/stores/atoms/user'
 
 // 로그인된 경우 접근할 수 있는 url
@@ -77,18 +76,10 @@ const AuthRoutes = () => (
     <Route path="/shelter/dogs" element={<ShelterDogsPage />} />
     <Route path="/adopt-process-info" element={<AdoptProcessInfoPage />} />
     <Route path="/mypage/findSimilarDog" element={<FindSimilarDogPage />} />
-    {/* {isIOSorMac ? ( */}
-    {/*  <Route */}
-    {/*    path="/mypage/findSimilarDog" */}
-    {/*    element={<FindSimilarDogRestrictPage />} */}
-    {/*  /> */}
-    {/* ) : ( */}
-    {/*  <Route path="/mypage/findSimilarDog" element={<FindSimilarDogPage />} /> */}
-    {/* )} */}
-    {/* <Route */}
-    {/*  path="/mypage/findSimilarDog/result" */}
-    {/*  element={<FindSimilarDogResultPage />} */}
-    {/* /> */}
+    <Route
+      path="/mypage/findSimilarDog/result"
+      element={<FindSimilarDogResultPage />}
+    />
   </Routes>
 )
 
@@ -113,36 +104,14 @@ const App = () => {
 
   const user = userValue.email
   // const user = true
-  const { userAgent } = navigator
-  const isIOSorMac =
-    userAgent.match(/iPhone|iPad|iPod/i) || userAgent.match(/Mac/i)
 
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyle />
       <BrowserRouter>
         <ScrollToTop />
-        {/* {user ? <AuthRoutes /> : <HomeRoutes />} */}
+        {user ? <AuthRoutes /> : <HomeRoutes />}
         {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-        <Routes>
-          {user ? (
-            <>
-              <AuthRoutes />
-              {isIOSorMac && (
-                <Route
-                  path="/mypage/findSimilarDog"
-                  element={<FindSimilarDogRestrictPage />}
-                />
-              )}
-              <Route
-                path="/mypage/findSimilarDog/result"
-                element={<FindSimilarDogResultPage />}
-              />
-            </>
-          ) : (
-            <HomeRoutes />
-          )}
-        </Routes>
       </BrowserRouter>
     </ThemeProvider>
   )
