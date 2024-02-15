@@ -24,6 +24,7 @@ import com.pawsitive.usergroup.entity.Member;
 import com.pawsitive.usergroup.entity.MemberDogMatrix;
 import com.pawsitive.usergroup.entity.User;
 import com.pawsitive.usergroup.exception.InvalidPasswordException;
+import com.pawsitive.usergroup.exception.SurveyNotFoundException;
 import com.pawsitive.usergroup.exception.UserNotFoundException;
 import com.pawsitive.usergroup.repository.AdoptionSurveyRepository;
 import com.pawsitive.usergroup.repository.MemberDogMatrixRepository;
@@ -356,7 +357,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserSurveyRes getSurvey(int userNo) {
         AdoptionSurvey survey =
-            adoptionSurveyRepository.getAdoptionSurveyByUserNo(userNo).orElseThrow();
+            adoptionSurveyRepository.getAdoptionSurveyByUserNo(userNo)
+                .orElseThrow(SurveyNotFoundException::new);
 
         return AdoptionSurveyTransfer.entityToDto(survey);
     }
