@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  padding: 29px;
+  padding: 29px 0;
 `
 
 export const SubTitle = styled.div`
@@ -9,12 +9,14 @@ export const SubTitle = styled.div`
   font-size: 1em;
   color: #7b7b7b;
   margin-top: 21px;
+  padding: 0 29px;
 `
 
 export const Title = styled.div`
   margin-top: 10px;
   font-weight: 500;
   font-size: 1.2em;
+  padding: 0 29px;
 `
 
 export const Wrap = styled.div`
