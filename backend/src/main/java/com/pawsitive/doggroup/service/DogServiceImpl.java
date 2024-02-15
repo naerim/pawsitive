@@ -202,9 +202,11 @@ public class DogServiceImpl implements DogService {
     public List<DogListRes> getRecommendationDogListByUserNo(Integer userNo) {
 
         int visitedCount = memberDogVisitService.getMemberDogVisitCount(userNo);
+        log.info("DogService : visitedCount = {}", visitedCount);
 
         if (visitedCount == 0) {
             List<Integer> dogNoList = dogRepository.getEntireDogNoList();
+            log.info("DogService : dogNoList = {}", dogNoList.toString());
 
             Random random;
 
@@ -218,7 +220,10 @@ public class DogServiceImpl implements DogService {
             idxList.add(random.nextInt(dogNoList.size()));
             idxList.add(random.nextInt(dogNoList.size()));
 
-            List<DogListRes> dogListRes = dogRepository.getDogListIn(idxList);
+            log.info("DogService : idxList = {}", idxList);
+
+            List<DogListRes> dogListRes = dogRepository.getDogListIn(
+                List.of(dogNoList.get(idxList.get(0)), dogNoList.get(idxList.get(1))));
             setThumbnailImage(dogListRes);
 
             return dogListRes;
@@ -226,7 +231,6 @@ public class DogServiceImpl implements DogService {
 
         // MemberDogMatrix 가져오기
         List<Double> memberDogMatrix = memberDogVisitService.getMatrixAsList(userNo);
-
 
         // 전체 dog List 가져오기
         List<DogListRes> dogList = dogRepository.getRecommendationDogList();
@@ -243,6 +247,56 @@ public class DogServiceImpl implements DogService {
         setThumbnailImage(recommendedDogs);
 
         return recommendedDogs;
+    }
+
+    @Override
+    public DogListRes getSingleRecommendationDog(Integer userNo) {
+        int visitedCount = memberDogVisitService.getMemberDogVisitCount(userNo);
+
+        if (visitedCount == 0) {
+            List<Integer> dogNoList = dogRepository.getEntireDogNoList();
+            int randomIdx = 0;
+            try {
+                randomIdx = SecureRandom.getInstanceStrong().nextInt(dogNoList.size());
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+
+            Dog dog = dogRepository.findByDogNo(dogNoList.get(randomIdx)).orElseThrow();
+
+            return DogListRes.builder()
+                .dogNo(dog.getDogNo())
+                .name(dog.getName())
+                .kind(dog.getKind())
+                .isNeutralized(dog.isNeutralized())
+                .age(dog.getAge())
+                .statusNo(dog.getStatus().getNo())
+                .file(dog.getFiles().get(0).getFile())
+                .sex(dog.getSex())
+                .userLiked(false)
+                .mbti(dog.getMbti())
+                .build();
+        }
+
+
+        // MemberDogMatrix 가져오기
+        List<Double> memberDogMatrix = memberDogVisitService.getMatrixAsList(userNo);
+
+        // 전체 dog List 가져오기
+        List<DogListRes> dogList = dogRepository.getRecommendationDogList();
+
+        // DogListRes를 List<Double> 타입으로 변환하기
+        List<List<Double>> dogMatrixList = new ArrayList<>();
+
+        for (DogListRes res : dogList) {
+            dogMatrixList.add(dogListResToMatrix(res));
+        }
+
+        // MSD 계산해서 최소값 2개만 가지고 있는 List를 반환하기
+        List<DogListRes> recommendedDogs = getMinMSDDogs(memberDogMatrix, dogMatrixList);
+        setThumbnailImage(recommendedDogs);
+
+        return recommendedDogs.get(0);
     }
 
     private List<DogListRes> getMinMSDDogs(List<Double> memberDogMatrix,
