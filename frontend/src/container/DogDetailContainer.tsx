@@ -42,7 +42,7 @@ const DogDetailContainer = () => {
     refetch().then(r => r)
   }, [refetch])
 
-  const isDifferentShelter =
+  const isSameShelter =
     user.role === 'SHELTER' && user.name === dogDetail.userName
 
   return (
@@ -77,7 +77,7 @@ const DogDetailContainer = () => {
           />
           <AdoptProcessInfoComponent />
           <SameShelterDogs dogDetail={dogDetail} />
-          {!isDifferentShelter && <ChatStartButton />}
+          {isSameShelter && <ChatStartButton />}
         </>
       )}
     </Container>

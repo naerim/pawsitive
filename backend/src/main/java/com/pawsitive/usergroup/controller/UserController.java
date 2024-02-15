@@ -8,22 +8,26 @@ import com.pawsitive.usergroup.dto.request.SilentRefreshReq;
 import com.pawsitive.usergroup.dto.request.UserSurveyReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
 import com.pawsitive.usergroup.dto.response.MemberDogVisitListRes;
-import com.pawsitive.usergroup.dto.response.MemberDogVisitRes;
 import com.pawsitive.usergroup.dto.response.UpdateFieldRes;
+import com.pawsitive.usergroup.dto.response.UserRes;
 import com.pawsitive.usergroup.dto.response.UserSurveyRes;
-import com.pawsitive.usergroup.entity.MemberDogVisit;
 import com.pawsitive.usergroup.service.MemberDogVisitService;
 import com.pawsitive.usergroup.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -44,19 +48,19 @@ public class UserController {
      *
      * @return OK 응답객체
      */
-    @GetMapping("/me")
-    @Operation(summary = "로그인 체크",
-        description = "현재 회원이 로그인되어 있는지 체크한다.",
+    @GetMapping("/me/{userNo}")
+    @Operation(summary = "유저 정보 반환",
+        description = "현재 로그인한 User의 정보를 반환한다.",
         tags = {"01.User"},
         responses = {
             @ApiResponse(responseCode = "200", description = "유저가 로그인 되어있음"),
             @ApiResponse(responseCode = "401", description = "로그인 되어있지 않음 (권한 없음)")
         }
     )
-    public ResponseEntity<BaseResponseBody> me() {
+    public ResponseEntity<UserRes> me(@PathVariable Integer userNo) {
         return ResponseEntity
             .status(OK)
-            .body(new BaseResponseBody(OK, "이 유저는 로그인 되어 있습니다."));
+            .body(userService.getUserResByUserNo(userNo));
     }
 
     @GetMapping("/matrix/{userNo}")

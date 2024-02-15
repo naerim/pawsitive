@@ -15,12 +15,10 @@ import com.pawsitive.doggroup.exception.DogNotFoundException;
 import com.pawsitive.doggroup.service.DogService;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
 import com.pawsitive.usergroup.service.UserService;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,7 +70,7 @@ public class AdoptDogServiceImpl implements AdoptDogService {
 
         userService.updateField(UserTypeStagePatchReq.builder()
             .userNo(adoptionReq.getUserNo())
-            .field("type")
+            .field("stage")
             .value(3)
             .build());
 

@@ -6,7 +6,7 @@ export const Container = styled.div<{ $state: string }>`
   padding: 10px 21px;
   align-items: center;
   justify-content: space-between;
-  background-color: ${props => (props.$state === '' ? '#fecc3f' : '#FF9232')};
+  background-color: ${props => (props.$state === ' ' ? '#fecc3f' : '#FF9232')};
   width: 90%;
   margin: 0 auto 2% auto;
   border-radius: 12px;
