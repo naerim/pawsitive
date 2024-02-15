@@ -1,12 +1,13 @@
 import * as t from '@src/components/DogDetail/style/TipSectionStyle'
 
-const randomNumber = Math.floor(Math.random() * 10)
-const TipSection = () => {
+const TipSection = (props: { contentNo: number; contentTitle: string }) => {
+  const { contentNo, contentTitle } = props
+
   return (
-    <t.Container>
-      <t.Card to={`/dictionary/${randomNumber}`}>
+    <t.Container to={`/dictionary/${contentNo}`}>
+      <t.Card>
         <t.Bold>잠깐!</t.Bold>
-        <t.Title>심장사상충이 무엇인가요?</t.Title>
+        <t.Title>{contentTitle}에 대해 알아봐요!</t.Title>
       </t.Card>
       <img src="/icon/icon_orange_arrow_right.png" alt="" />
     </t.Container>
