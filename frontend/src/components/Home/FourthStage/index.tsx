@@ -52,8 +52,8 @@ const Index = () => {
         </t.Right>
       </t.CenterContainer>
       <HomeRecommendDictionary />
-      <HomePopularCommunity />
       <HomeDictionary />
+      <HomePopularCommunity />
     </c.Container>
   )
 }
