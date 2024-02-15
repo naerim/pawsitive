@@ -28,26 +28,30 @@ const FindSimilarDog = () => {
   const [started, setStarted] = useState<boolean>(false) // start 전/후의 화면 구성을 위해
 
   const labels: string[] = ['말티즈', '비숑', '치와와', '푸들', '리트리버']
+  // 차트에 그려지는 확률 배열
   const [chartData, setChartData] = useState<number[]>([])
+  // stop 후 최종 결과 객체 배열
   const [resultData, setResultData] = useState<
     { label: string; probability: number }[]
   >([])
   const [check, setCheck] = useState<boolean>(false)
 
-  // 페이지 이동 버튼
   const goBack = () => navigate('/mypage')
   const handleNextButtonClick = () => {
     navigate('/mypage/findSimilarDog/result', { state: { resultData } })
   }
-
-  console.log(resultData)
-  console.log(chartData)
 
   async function predict() {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     const prediction = await model.predict(webcam.canvas)
     setChartData(prediction.map(item => item.probability))
+
+    const updatedResultData = prediction.map((item, index) => ({
+      label: labels[index],
+      probability: Math.round(item.probability * 100),
+    }))
+    setResultData(updatedResultData)
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     for (let i = 0; i < maxPredictions; i += 1) {
@@ -70,11 +74,6 @@ const FindSimilarDog = () => {
       webcam.stop()
       webcam = null
     }
-    const updatedResultData = chartData.map((item, index) => ({
-      label: labels[index],
-      probability: Math.round(item * 100),
-    }))
-    setResultData(updatedResultData)
   }
 
   const onClickCamera = () => {
@@ -125,6 +124,7 @@ const FindSimilarDog = () => {
       ? 'rgba(255, 146, 50, 0.8)'
       : 'rgba(241, 242, 246, 0.8)',
   )
+
   const data = {
     labels,
     datasets: [
@@ -208,8 +208,9 @@ const FindSimilarDog = () => {
       ) : (
         <f.PrevWrap>
           <f.PrevImg src="/img/img_main_house.png" alt="" />
-          <f.PrevTitle>나와 가장 닮은 강아지는?</f.PrevTitle>
-          <f.PrevDesc>얼굴로 보는 인공지능 강아지상 테스트</f.PrevDesc>
+          <f.PrevTitle>나는 어떤 강아지상일까?</f.PrevTitle>
+          <f.PrevDesc>얼굴로 인식하는 인공지능 강아지상 테스트</f.PrevDesc>
+          <f.Span>시작 후, 카메라 로딩에 다소 시간이 걸릴 수도 있어요!</f.Span>
           <f.StartButton
             type="button"
             onClick={() => {
