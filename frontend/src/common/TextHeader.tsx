@@ -8,12 +8,11 @@ const TextHeader = (props: { title: string }) => {
   const [user] = useAtom(userAtom)
   const navigate = useNavigate()
 
-  const handleButtonClick = () => {
-    navigate('/new/dog')
-  }
-
   const handlePrevStep = () => {
     navigate('/')
+  }
+  const handleButtonClick = () => {
+    navigate('/new/dog')
   }
 
   return (
