@@ -89,15 +89,25 @@ public class DogController {
     @Operation(summary = "사용자 기반 추천 강아지 조회", description = "전달받은 페이지에 해당하는 <strong>유기견 목록</strong>을 반환한다.",
         responses = {
             @ApiResponse(responseCode = "200", description = "추천 강아지 목록을 정상적으로 반환한다."),
-            @ApiResponse(responseCode = "400", description = "전달받은 페이지 값에 해당하는 추천 강아지가 없음.")
+            @ApiResponse(responseCode = "400", description = "전달받은 값에 해당하는 추천 강아지가 없음.")
         })
     public ResponseEntity<List<DogListRes>> getRecommendationDogListByUserNo(/* Authentication authentication, */
         @RequestParam Integer userNo) {
-
-//        return ResponseEntity.status(OK).body(dogService.getRecommendationDogList(authentication));
         return ResponseEntity
             .status(OK)
             .body(dogService.getRecommendationDogListByUserNo(userNo));
+    }
+
+    @GetMapping("/single-recommendation")
+    @Operation(summary = "사용자 기반 추천 강아지 조회 (1마리)", description = "전달받은 페이지에 해당하는 <strong>유기견 목록</strong>을 반환한다.",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "추천 강아지를 정상적으로 반환한다."),
+            @ApiResponse(responseCode = "400", description = "전달받은 값에 해당하는 추천 강아지가 없음.")
+        })
+    public ResponseEntity<DogListRes> getSingleRecommendationDog(@RequestParam Integer userNo) {
+        return ResponseEntity
+            .status(OK)
+            .body(dogService.getSingleRecommendationDog(userNo));
     }
 
 

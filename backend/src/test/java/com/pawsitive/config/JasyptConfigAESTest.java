@@ -28,7 +28,6 @@ class JasyptConfigAESTest {
         String redisDatabase = "3";
         String redisPassword = "gkrkddPdl12!@";
 
-
         System.out.println("mysqlUrl: " + jasyptEncoding(mysqlUrl));
         System.out.println("mysqlUsername: " + jasyptEncoding(mysqlUsername));
         System.out.println("mysqlPassword: " + jasyptEncoding(mysqlPassword));

@@ -54,6 +54,8 @@ public interface DogService {
 
     List<DogListRes> getRecommendationDogListByUserNo(Integer userNo);
 
+    DogListRes getSingleRecommendationDog(Integer userNo);
+
     /**
      * 추천 강아지를 num마리 조회하는 메서드입니다.
      *
