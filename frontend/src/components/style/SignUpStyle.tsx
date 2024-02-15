@@ -46,7 +46,7 @@ export const RoleButton = styled.button<{ selected: boolean }>`
 export const TwoInputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 20px;
 `
 export const ThreeInputContainer = styled.div`
   display: flex;
@@ -73,15 +73,16 @@ export const Input = styled.input`
 `
 
 export const CheckButton = styled.button`
+  width: 100px;
   background-color: #ffffff;
   border: 1px solid #cbcbcb;
   border-radius: 15px;
-  font-size: 10px;
+  font-size: 0.7em;
   margin-bottom: 3px;
 `
 
 export const ErrorText = styled.div`
-  margin-top: 10px;
+  margin-top: 4px;
   font-size: 13px;
   color: #ff9232;
 `
