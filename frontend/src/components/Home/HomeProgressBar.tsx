@@ -18,8 +18,15 @@ const HomeProgressBar = (props: ProgressBarType) => {
         <h.ImageWrap>
           {currentStage === 1 ? (
             <img className="one" src="/icon/icon_bone_one.png" alt="" />
-          ) : (
+          ) : currentStage === 2 ? (
             <img className="two" src="/icon/icon_bone_two.png" alt="" />
+          ) : (
+            <img
+              className="three"
+              src="/icon/icon_bone_three.png"
+              alt=""
+              style={{ width: '100%' }}
+            />
           )}
         </h.ImageWrap>
         <h.TopRightWrap>

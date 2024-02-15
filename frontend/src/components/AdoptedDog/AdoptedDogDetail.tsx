@@ -52,7 +52,7 @@ const AdoptedDogDetail = () => {
                   <a.DogName>{data.name}</a.DogName>
                   <a.Together>{message}</a.Together>
                 </a.TogetherContainer>
-                <a.Day> {data.adoptedDays}일</a.Day>
+                <a.Day> {data.adoptedDays + 1}일</a.Day>
               </a.TextContainer>
             </a.FrontCard>
 
