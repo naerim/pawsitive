@@ -41,27 +41,6 @@ import FindSimilarDogResultPage from '@src/pages/FindSimilarDogResultPage'
 import FindSimilarDogRestrictPage from '@src/pages/FindSimilarDogRestrictPage'
 import { userAtom } from '@src/stores/atoms/user'
 
-// 사용자 에이전트 문자열 가져오기
-const { userAgent } = navigator
-
-// 특정한 문자열을 검색하여 기기를 확인할 수 있습니다.
-if (userAgent.match(/Android/i)) {
-  console.log('Android 기기로 접속했습니다.')
-} else if (userAgent.match(/iPhone|iPad|iPod/i)) {
-  console.log('iOS 기기로 접속했습니다.')
-} else if (userAgent.match(/Windows/i)) {
-  console.log('Windows 기기로 접속했습니다.')
-} else if (userAgent.match(/Mac/i)) {
-  console.log('Mac 기기로 접속했습니다.')
-} else {
-  console.log('기타 기기 또는 브라우저로 접속했습니다.')
-}
-
-const isIOSorMac = userAgent.match(/iPhone|iPad|iPod|Mac/i)
-if (isIOSorMac) {
-  console.log('접근 ?')
-}
-
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
   <Routes>
@@ -98,18 +77,18 @@ const AuthRoutes = () => (
     <Route path="/shelter/dogs" element={<ShelterDogsPage />} />
     <Route path="/adopt-process-info" element={<AdoptProcessInfoPage />} />
     <Route path="/mypage/findSimilarDog" element={<FindSimilarDogPage />} />
-    {isIOSorMac ? (
-      <Route
-        path="/mypage/findSimilarDog"
-        element={<FindSimilarDogRestrictPage />}
-      />
-    ) : (
-      <Route path="/mypage/findSimilarDog" element={<FindSimilarDogPage />} />
-    )}
-    <Route
-      path="/mypage/findSimilarDog/result"
-      element={<FindSimilarDogResultPage />}
-    />
+    {/* {isIOSorMac ? ( */}
+    {/*  <Route */}
+    {/*    path="/mypage/findSimilarDog" */}
+    {/*    element={<FindSimilarDogRestrictPage />} */}
+    {/*  /> */}
+    {/* ) : ( */}
+    {/*  <Route path="/mypage/findSimilarDog" element={<FindSimilarDogPage />} /> */}
+    {/* )} */}
+    {/* <Route */}
+    {/*  path="/mypage/findSimilarDog/result" */}
+    {/*  element={<FindSimilarDogResultPage />} */}
+    {/* /> */}
   </Routes>
 )
 
@@ -134,14 +113,36 @@ const App = () => {
 
   const user = userValue.email
   // const user = true
+  const { userAgent } = navigator
+  const isIOSorMac =
+    userAgent.match(/iPhone|iPad|iPod/i) || userAgent.match(/Mac/i)
 
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyle />
       <BrowserRouter>
         <ScrollToTop />
-        {user ? <AuthRoutes /> : <HomeRoutes />}
+        {/* {user ? <AuthRoutes /> : <HomeRoutes />} */}
         {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+        <Routes>
+          {user ? (
+            <>
+              <AuthRoutes />
+              {isIOSorMac && (
+                <Route
+                  path="/mypage/findSimilarDog"
+                  element={<FindSimilarDogRestrictPage />}
+                />
+              )}
+              <Route
+                path="/mypage/findSimilarDog/result"
+                element={<FindSimilarDogResultPage />}
+              />
+            </>
+          ) : (
+            <HomeRoutes />
+          )}
+        </Routes>
       </BrowserRouter>
     </ThemeProvider>
   )
