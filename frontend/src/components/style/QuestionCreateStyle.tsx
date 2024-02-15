@@ -3,8 +3,9 @@ import styled from 'styled-components'
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 90px;
   text-align: center;
+  justify-content: center;
+  height: 100%;
 `
 
 export const Form = styled.form`
@@ -50,8 +51,8 @@ export const Answer = styled.input`
 
 export const Button = styled.button`
   width: 100%;
-  height: 50px;
-  background-color: #bebebe;
+  height: 40px;
+  background-color: #ff9232;
   border-radius: 5px;
   color: #ffffff;
   font-size: 14px;

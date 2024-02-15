@@ -4,9 +4,9 @@ export const Container = styled.div`
   width: 90%;
   display: flex;
   flex-direction: column;
-  gap: 200px;
   padding: 15px;
-  margin: 40px auto;
+  margin: 0 auto;
+  height: 100vh;
 `
 
 export const TopContainer = styled.div`
@@ -17,6 +17,7 @@ export const TopContainer = styled.div`
   font-size: 15px;
   font-weight: 500;
   position: relative;
+  height: 80px;
 `
 
 export const BackButtonWrap = styled.div`
