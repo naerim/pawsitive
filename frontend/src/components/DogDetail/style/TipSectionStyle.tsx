@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-export const Container = styled.div`
+export const Container = styled(Link)`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -16,7 +16,7 @@ export const Container = styled.div`
   }
 `
 
-export const Card = styled(Link)``
+export const Card = styled.div``
 export const Bold = styled.div`
   color: #ff9232;
   font-weight: 600;
