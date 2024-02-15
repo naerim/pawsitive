@@ -18,18 +18,18 @@ const Filter = () => {
 
   const [basicDogListParams, setBasicDogListParams] = useAtom(dogListParamsAtom)
 
-  const handleGenderChange = value => {
+  const handleGenderChange = (value: number) => {
     setBasicDogListParams({ ...basicDogListParams, sex: value })
   }
 
-  const handleNeuteredChange = value => {
+  const handleNeuteredChange = (value: number) => {
     setBasicDogListParams({
       ...basicDogListParams,
       neutralized: value,
     })
   }
 
-  const handleKindChange = value => {
+  const handleKindChange = (value: { kind: string; checked: boolean }) => {
     const selectedKinds = value.checked
       ? [...basicDogListParams.kind, value.kind]
       : basicDogListParams.kind.filter(kind => kind !== value.kind)

@@ -42,8 +42,8 @@ const DogDetailContainer = () => {
     refetch().then(r => r)
   }, [refetch])
 
-  const isSameShelter =
-    user.role === 'SHELTER' && user.name === dogDetail.userName
+  const isNotButtonShow =
+    user.role === 'SHELTER' && user.name !== dogDetail.userName
 
   return (
     <Container>
@@ -77,7 +77,7 @@ const DogDetailContainer = () => {
           />
           <AdoptProcessInfoComponent />
           <SameShelterDogs dogDetail={dogDetail} />
-          {isSameShelter && <ChatStartButton />}
+          {!isNotButtonShow && <ChatStartButton />}
         </>
       )}
     </Container>
