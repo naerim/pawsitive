@@ -5,6 +5,7 @@ import com.pawsitive.contentgroup.exception.ContentNotFoundException;
 import com.pawsitive.contentgroup.repository.ContentRepository;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,7 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
+    @Cacheable(value = "contentList", key = "'contentNo:'+#contentNo")
     public ContentDetailRes getContent(int contentNo) {
         return contentRepository.getContentByContentNo(contentNo)
             .orElseThrow(ContentNotFoundException::new);
