@@ -26,3 +26,23 @@ export const PlusButton = styled.div`
   padding: 3% 0 3% 3%;
   cursor: pointer;
 `
+
+export const BackButtonWrap = styled.div`
+  cursor: pointer;
+
+  img {
+    width: 9px;
+    height: 15px;
+  }
+`
+
+export const Span = styled.div`
+  width: 9px;
+  height: 10px;
+`
+
+export const Title = styled.div`
+  text-align: center;
+  font-size: 1em;
+  font-weight: 500;
+`
