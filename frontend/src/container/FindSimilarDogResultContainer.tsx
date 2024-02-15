@@ -10,6 +10,11 @@ const FindSimilarDogResultContainer = () => {
   const handleButtonClick = () => {
     navigate('/mypage/findSimilarDog')
   }
+
+  const handleGoHome = () => {
+    navigate('/')
+  }
+
   return (
     <r.Container>
       <r.Wrap>
@@ -21,7 +26,9 @@ const FindSimilarDogResultContainer = () => {
           <button type="button" onClick={handleButtonClick}>
             재촬영하기
           </button>
-          <button type="button">공유하기</button>
+          <button type="button" onClick={handleGoHome}>
+            홈으로 가기
+          </button>
         </r.ButtonWrap>
       </r.Wrap>
     </r.Container>

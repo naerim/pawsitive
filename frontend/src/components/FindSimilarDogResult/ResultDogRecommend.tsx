@@ -43,7 +43,7 @@ const ResultDogRecommend = () => {
               onClick={() => handleGoDogDetail(item.dogNo)}
             >
               {item.file && item.file.length > 0 && (
-                <img src={item.file[0]} alt="" />
+                <img src={item.file} alt="" />
               )}
               <r.ItemTitle>{item.name}</r.ItemTitle>
               <r.ItemSubTitle>
