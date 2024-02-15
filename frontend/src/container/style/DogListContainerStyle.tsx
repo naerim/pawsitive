@@ -61,7 +61,7 @@ export const NoDataContainer = styled.div`
   background: #fff3e9;
   border-radius: 10px;
   padding: 5%;
-  margin-bottom: 3%;
+  margin: 3% 0;
 `
 
 export const NoDataImg = styled.img`
