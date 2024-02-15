@@ -112,11 +112,12 @@ export const ProgressBarValue = styled.div<ProgressBarValueProps>`
 `
 
 export const Bottom = styled.div`
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8em;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8em;
+  font-weight: 500;
 
-    .right {
-        font-weight: 300;
-
+  .right {
+    font-weight: 500;
+  }
 `

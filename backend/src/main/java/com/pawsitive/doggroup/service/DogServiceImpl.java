@@ -1,11 +1,13 @@
 package com.pawsitive.doggroup.service;
 
 
+import com.pawsitive.auth.Role;
 import com.pawsitive.common.exception.NotSavedException;
 import com.pawsitive.doggroup.dogenum.DogKindEnum;
 import com.pawsitive.doggroup.dogenum.DogSexEnum;
 import com.pawsitive.doggroup.dogenum.DogStatusEnum;
 import com.pawsitive.doggroup.dto.request.DogCreateReq;
+import com.pawsitive.doggroup.dto.response.DogContentRes;
 import com.pawsitive.doggroup.dto.response.DogDetailRes;
 import com.pawsitive.doggroup.dto.response.DogListRes;
 import com.pawsitive.doggroup.entity.Dog;
@@ -56,6 +58,7 @@ public class DogServiceImpl implements DogService {
     private final UserService userService;
     private final DogFileService dogFileService;
     private final MemberDogVisitService memberDogVisitService;
+    private final DogContentService dogContentService;
 
     private final Double MATRIX_MAX_VALUE = 15.0;
 
@@ -109,8 +112,8 @@ public class DogServiceImpl implements DogService {
         // 조회수 저장 반영
         dogRepository.save(dog);
 
-        DogDetailRes res = DogTransfer.entityToDto(dog);
-
+        DogContentRes content = dogContentService.getDogContent(dogNo);
+        DogDetailRes res = DogTransfer.entityToDto(dog, content);
         // 좋아요 여부 갱신
         if (!Objects.isNull(userNo) &&
             !Objects.isNull(memberDogLikeRepository.getUserDogLiked(dogNo, userNo))) {
@@ -124,16 +127,26 @@ public class DogServiceImpl implements DogService {
     @Transactional
     @Override
     public DogDetailRes getDogByDogNo(int dogNo, Integer userNo) {
-        Dog dog = dogRepository.findByDogNo(dogNo).orElseThrow(DogNotFoundException::new);
+        Dog dog = dogRepository
+            .findByDogNo(dogNo)
+            .orElseThrow(DogNotFoundException::new);
 
-        memberDogVisitService.processVisit(dogNo, userNo);
+        User user = userRepository
+            .findUserByUserNo(userNo)
+            .orElseThrow();
+
+        // 권한이 보호소가 아닌 일반 사용자일때만 방문 로직 처리
+        if (user.getRole().equals(Role.USER)) {
+            memberDogVisitService.processVisit(dogNo, userNo);
+        }
 
         int hit = dog.getHit() + 1;
         dog.setHit(hit);
 
         dogRepository.save(dog);
 
-        DogDetailRes res = DogTransfer.entityToDto(dog);
+        DogContentRes content = dogContentService.getDogContent(dogNo);
+        DogDetailRes res = DogTransfer.entityToDto(dog, content);
 
         if (!Objects.isNull(memberDogLikeRepository.getUserDogLiked(dogNo, userNo))) {
             res.setUserLiked(true);

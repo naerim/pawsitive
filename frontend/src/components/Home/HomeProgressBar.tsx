@@ -24,7 +24,7 @@ const HomeProgressBar = (props: ProgressBarType) => {
         </h.ImageWrap>
         <h.TopRightWrap>
           <h.PawsitiveInfoWrap>
-            <div className="title">예비 포지티버</div>
+            <div className="title">{currentStage !== 3 && '예비 '}포지티버</div>
             <div
               className="stage"
               onClick={handleClick}
@@ -42,7 +42,9 @@ const HomeProgressBar = (props: ProgressBarType) => {
         <h.ProgressBarValue value={33 * currentStage} />
       </h.ProgressBarWrapper>
       <h.Bottom>
-        <div className="left">다음 단계까지 기다리는 중</div>
+        <div className="left">
+          {currentStage === 3 ? '입양완료' : '다음 단계까지 기다리는 중'}
+        </div>
         <div className="right">{currentStage}/3</div>
       </h.Bottom>
     </h.Container>

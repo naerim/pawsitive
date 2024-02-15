@@ -10,15 +10,19 @@ const DictionaryDetail = (props: { data: DictionaryItemType }) => {
   const handlePrevStep = () => {
     navigate('/dictionary')
   }
-
   const setImageSrc = (category: string) => {
     const imageUrls: Record<string, string[]> = {
       펫티켓: ['/img/img_dog_poo.png', '/img/img_bag.png'],
-      질병정보: ['/img/img_popular_community.png', '/img/img_lope.png'],
+      질병정보: [
+        '/img/img_popular_community.png',
+        '/img/img_lope.png',
+        '/img/img_dog_food.png',
+      ],
       행동교육: [
         '/img/img_cage.png',
         '/img/img_dog_medication.png',
         '/img/img_bottle.png',
+        'img/img_bone_bowl.png',
       ],
       애견상식: [
         '/img/img_bowl.png',
@@ -57,12 +61,13 @@ const DictionaryDetail = (props: { data: DictionaryItemType }) => {
             <c.InfoContainer>
               <c.Desc>{parseContent.description}</c.Desc>
               <c.Remarks>
-                <p>위반 시, 과태료 안내</p>
-                {
-                  parseContent.remarks
-                    .split(':')
-                    .filter((s: string) => s.trim() !== '')[1]
-                }
+                <p>과태료 안내</p>
+                {parseContent.remarks
+                  .split('\n')
+                  .filter((s: string) => s.trim() !== '')
+                  .map((p: string) => (
+                    <c.PreventItem key={`prevent-${p}`}>{p}</c.PreventItem>
+                  ))}
               </c.Remarks>
             </c.InfoContainer>
           </c.Container>
@@ -128,7 +133,15 @@ const DictionaryDetail = (props: { data: DictionaryItemType }) => {
                     <c.DescItem key={`description-${s}`}>{s}</c.DescItem>
                   ))}
               </c.Desc>
-              <c.Remarks>{parseContent.remarks}</c.Remarks>
+              <c.Remarks>
+                {parseContent.remarks &&
+                  parseContent.remarks
+                    .split('\n')
+                    .filter((s: string) => s.trim() !== '')
+                    .map((s: string) => (
+                      <c.DescItem key={`description-${s}`}>{s}</c.DescItem>
+                    ))}
+              </c.Remarks>
             </c.InfoContainer>
           </c.Container>
         </div>

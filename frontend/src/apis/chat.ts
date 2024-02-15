@@ -10,7 +10,7 @@ export const fetchChatRooms = async (userNo: number) => {
 
 // 채팅방 생성
 export const createChatRoom = async (
-  chatRoomParams: CreateChatRoomParamsType,
+  chatRoomParams: CreateChatRoomParamsType | undefined,
 ) => {
   console.log(chatRoomParams)
   return publicRequest.post(`/chatrooms`, chatRoomParams).then(res => res.data)

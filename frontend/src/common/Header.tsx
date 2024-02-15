@@ -14,9 +14,11 @@ const Header = () => {
   return (
     <h.Container>
       <h.Wrap>
-        <h.Logo onClick={homeClick} />
+        <h.Logo onClick={homeClick}>PAWSITIVE</h.Logo>
         <div>
-          <h.MenuItem to="/dictionary">펫과사전</h.MenuItem>
+          <h.MenuItem to="/dictionary">
+            <img src="/icon/icon_dictionary.png" alt="" />
+          </h.MenuItem>
         </div>
       </h.Wrap>
     </h.Container>

@@ -29,9 +29,9 @@ const MyPageMenu = () => {
         {/* </m.MenuItem> */}
 
         {user.role === 'USER' && (
-          <m.MenuItem to="/dogs">
+          <m.MenuItem to="/save-dogs-list">
             <m.MenuItemDiv>
-              찜한 공고 보러가기
+              내가 찜한 공고 보기
               <m.RightArrow src="/icon/icon_black_arrow_right.png" />
             </m.MenuItemDiv>
           </m.MenuItem>
@@ -40,7 +40,7 @@ const MyPageMenu = () => {
         {user.role === 'USER' && user.stage < 2 && (
           <m.MenuItem to="/mypage/survey">
             <m.MenuItemDiv>
-              입양설문 하러가기
+              입양 설문 작성하기
               <m.RightArrow src="/icon/icon_black_arrow_right.png" />
             </m.MenuItemDiv>
           </m.MenuItem>
@@ -49,7 +49,7 @@ const MyPageMenu = () => {
         {user.role === 'USER' && user.stage > 1 && (
           <m.MenuItem to={`/mypage/survey/detail/${user.userNo}`}>
             <m.MenuItemDiv>
-              작성한 입양설문 보기
+              작성한 입양 설문 보기
               <m.RightArrow src="/icon/icon_black_arrow_right.png" />
             </m.MenuItemDiv>
           </m.MenuItem>
@@ -66,7 +66,7 @@ const MyPageMenu = () => {
         {/* 공통 */}
         <m.MenuItem to="/mypage/findSimilarDog">
           <m.MenuItemDiv>
-            나와 닮은꼴 강아지 찾기
+            나와 닮은꼴 강아지 테스트
             <m.RightArrow src="/icon/icon_black_arrow_right.png" />
           </m.MenuItemDiv>
         </m.MenuItem>

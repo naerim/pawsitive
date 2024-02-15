@@ -7,6 +7,7 @@ import styled, { keyframes } from 'styled-components'
 import HomeDictionary from '@src/components/Home/SecondStage/HomeDictionary'
 import HomeRecommendDictionary from '@src/components/Home/HomeRecommendDictionary'
 import HomePopularCommunity from '@src/components/Home/HomePopularCommunity'
+import * as c from '@src/components/Home/_style/CommonStageStyle'
 
 const fadeIn = keyframes`
     from {
@@ -37,7 +38,7 @@ const Index = () => {
   }, [])
 
   return (
-    <>
+    <c.Container>
       {showCard && (
         <AnimatedCard>
           <DailyQuestion />
@@ -45,12 +46,15 @@ const Index = () => {
       )}
       <t.CenterContainer>
         <AdoptedDogDetail />
-        <DogDiary />
+        <t.Right>
+          <DogDiary />
+          <t.Img src="/img/img_footprints.png" alt="" />
+        </t.Right>
       </t.CenterContainer>
       <HomeRecommendDictionary />
       <HomePopularCommunity />
       <HomeDictionary />
-    </>
+    </c.Container>
   )
 }
 

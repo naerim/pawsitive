@@ -64,21 +64,23 @@ const ShelterName = (props: ShelterNameType) => {
           <s.Address>{address}</s.Address>
         </s.Right>
       </s.InfoWrap>
-      <s.ImageWrap>
-        {userLike ? (
-          <s.Image
-            src="/img/img_paw.png"
-            alt="/"
-            onClick={handelPostUnLikeDog}
-          />
-        ) : (
-          <s.Image
-            src="/img/img_empty_paw.png"
-            alt="/"
-            onClick={handelPostLikeDog}
-          />
-        )}
-      </s.ImageWrap>
+      {user.role !== 'SHELTER' && (
+        <s.ImageWrap>
+          {userLike ? (
+            <s.LikeImage
+              src="/img/img_paw.png"
+              alt="/"
+              onClick={handelPostUnLikeDog}
+            />
+          ) : (
+            <s.UnLikeImage
+              src="/img/img_empty_paw.png"
+              alt="/"
+              onClick={handelPostLikeDog}
+            />
+          )}
+        </s.ImageWrap>
+      )}
     </s.Container>
   )
 }

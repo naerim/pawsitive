@@ -8,7 +8,7 @@ import { registerShelterAdoption } from '@src/apis/adoptDog'
 import { publicRequest } from '@src/hooks/requestMethods'
 
 const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
-  const [user, setUser] = useAtom(userAtom)
+  const [user] = useAtom(userAtom)
 
   const {
     dog,
@@ -30,7 +30,6 @@ const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
     mutationKey: ['registerShelterAdoption'],
     mutationFn: registerShelterAdoption,
     onSuccess: () => {
-      setUser(currentUser => ({ ...currentUser, stage: 3 }))
       window.location.reload()
     },
     onError: error => console.error('보호소의 입양확정 실패 : ', error),
@@ -85,8 +84,7 @@ const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
               <div className="name">{dog.name}</div>
               <div>
                 {dog.sex === 'f' ? '암컷' : '수컷'} ∙ 중성화{' '}
-                {dog.isNeutralized ? '0' : 'X'} ∙ {dog.age}
-                (년생) ∙ {dog.kind}
+                {dog.isNeutralized ? '0' : 'X'} ∙ {dog.age}살 ∙ {dog.kind}
               </div>
             </span>
           </c.InfoDetailWrap>

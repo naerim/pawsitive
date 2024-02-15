@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 export const Container = styled.div`
   display: flex;
@@ -37,7 +37,28 @@ export const Address = styled.div`
 
 export const ImageWrap = styled.div``
 
-export const Image = styled.img`
+const StampAnimation = keyframes`
+    0% {
+        transform: scale(1);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(10);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+`
+
+export const UnLikeImage = styled.img`
   width: 28px;
   height: 28px;
+`
+
+export const LikeImage = styled.img`
+  width: 28px;
+  height: 28px;
+  animation: ${StampAnimation} 1s ease-in-out;
 `

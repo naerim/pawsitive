@@ -6,6 +6,7 @@ import HomeDictionary from '@src/components/Home/SecondStage/HomeDictionary'
 import HomeCommunityCard from '@src/components/Home/SecondStage/HomeCommunityCard'
 import RecommendChatCard from '@src/components/Home/SecondStage/RecommendChatCard'
 import HomePopularCommunity from '@src/components/Home/HomePopularCommunity'
+import * as c from '@src/components/Home/_style/CommonStageStyle' // 애니메이션 키프레임 정의
 
 // 애니메이션 키프레임 정의
 const fadeIn = keyframes`
@@ -37,18 +38,19 @@ const Index = () => {
   }, [])
 
   return (
-    <div>
+    <c.Container>
+      <HomeProgressBar currentStage={2} />
+      <HomeStatistics />
       {showCard && (
         <AnimatedCard>
           <RecommendChatCard />
         </AnimatedCard>
       )}
-      <HomeProgressBar currentStage={2} />
       <HomeDictionary />
-      <HomeStatistics />
+
       <HomeCommunityCard />
       <HomePopularCommunity />
-    </div>
+    </c.Container>
   )
 }
 

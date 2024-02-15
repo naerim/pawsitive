@@ -76,7 +76,7 @@ const DogListContainer = () => {
 
   return (
     <>
-      <TextHeader title="유기견 공고 리스트" />
+      <TextHeader title="유기견 공고" />
       <d.Container>
         <d.FilterContainer>
           <d.ShowFilterButton onClick={showFilterHandle}>
@@ -95,8 +95,7 @@ const DogListContainer = () => {
           <d.DogListContainerStyle>
             <LoadingSkeleton />
           </d.DogListContainerStyle>
-        ) : data &&
-          data.length === 0 &&
+        ) : (data && data.length === 0) ||
           basicDogListParams.kind.length === 0 ? (
           <AlarmNoData allDogList={allDogList} />
         ) : (
