@@ -8,7 +8,7 @@ const DictionaryDetail = (props: { data: DictionaryItemType }) => {
   const navigate = useNavigate()
 
   const handlePrevStep = () => {
-    navigate('/dictionary')
+    navigate(-1)
   }
   const setImageSrc = (category: string) => {
     const imageUrls: Record<string, string[]> = {
