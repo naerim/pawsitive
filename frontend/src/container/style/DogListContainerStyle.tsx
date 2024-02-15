@@ -3,14 +3,13 @@ import styled from 'styled-components'
 export const Container = styled.div`
   width: 100%;
   margin-top: 60px;
-  padding: 0 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
 `
 
 export const FilterContainer = styled.div`
-  width: 100%;
+  width: 90%;
 `
 
 export const ShowFilterButton = styled.div`
@@ -19,6 +18,7 @@ export const ShowFilterButton = styled.div`
   height: 19px;
   margin: 0 6px 6px 6px;
   line-height: 19px;
+  font-size: 0.9em;
 `
 
 export const ShowFilterButtonImg = styled.img<{ $isShow: boolean }>`
@@ -29,7 +29,7 @@ export const ShowFilterButtonImg = styled.img<{ $isShow: boolean }>`
 `
 
 export const DogListContainerStyle = styled.div`
-  width: 100%;
+  width: 90%;
   margin: 0 auto 70px auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(48%, 1fr));

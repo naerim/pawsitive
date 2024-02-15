@@ -21,10 +21,11 @@ export const Wrap = styled.div`
 `
 
 export const PlusButton = styled.div`
-  font-size: 14px;
+  font-size: 0.9em;
   font-weight: 400;
   padding: 3% 0 3% 3%;
   cursor: pointer;
+  color: #ff9232;
 `
 
 export const BackButtonWrap = styled.div`

@@ -4,7 +4,6 @@ import { DogListType } from '@src/types/dogType'
 import BasicDogInfoCard from '@src/common/BasicDogInfoCard'
 import { useQuery } from '@tanstack/react-query'
 import { fetchBasicDogList } from '@src/apis/dog'
-import Filter from '@src/components/DogList/Filter'
 import { useAtom } from 'jotai'
 import { dogListParamsAtom } from '@src/stores/atoms/dog'
 import TextHeader from '@src/common/TextHeader'
@@ -12,6 +11,7 @@ import { userAtom } from '@src/stores/atoms/user'
 import LoadingSkeleton from '@src/components/DogList/LoadingSkeleton'
 import AlarmNoData from '@src/components/DogList/AlarmNoData'
 import MonthDogList from '@src/components/DogList/MonthDogList'
+import Filter from '@src/components/DogList/Filter.tsx'
 
 const DogListContainer = () => {
   const [basicDogListParams] = useAtom(dogListParamsAtom)
@@ -78,6 +78,7 @@ const DogListContainer = () => {
     <>
       <TextHeader title="유기견 공고" />
       <d.Container>
+        <MonthDogList />
         <d.FilterContainer>
           <d.ShowFilterButton onClick={showFilterHandle}>
             필터링
@@ -88,8 +89,6 @@ const DogListContainer = () => {
           </d.ShowFilterButton>
           {isFilter && <Filter />}
         </d.FilterContainer>
-
-        <MonthDogList />
         {/* eslint-disable-next-line no-nested-ternary */}
         {isLoading ? (
           <d.DogListContainerStyle>

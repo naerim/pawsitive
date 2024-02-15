@@ -10,16 +10,16 @@ const MonthDogCard = (props: MonthDogCardType) => {
           <m.DogImage src={file} alt="강아지 사진" />
         </m.ImgContainer>
         <m.TextInfoContainer>
-          <m.DogName>{name}</m.DogName>
-          <m.MoreDogInfo>
-            {sex === 'm' ? '수컷' : '암컷'}
-            <br />
-            중성화{neutralized ? 'O' : 'X'}
-            <br />
-            {age}살
-            <br />
-            {kind}
-          </m.MoreDogInfo>
+          <span>NEW!</span>
+          <m.DogInfoWrap>
+            <m.DogName>{name}</m.DogName>
+            <m.DogInfo>
+              {sex === 'm' ? '수컷' : '암컷'} ∙ 중성화{neutralized ? 'O' : 'X'}
+            </m.DogInfo>
+            <m.DogInfo>
+              {kind} ∙ {age}살
+            </m.DogInfo>
+          </m.DogInfoWrap>
         </m.TextInfoContainer>
       </m.Container>
     </m.CardLink>

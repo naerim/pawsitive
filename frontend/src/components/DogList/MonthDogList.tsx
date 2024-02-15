@@ -9,25 +9,29 @@ const MonthDogList = () => {
     queryFn: () => fetchMonthlyDogRecommend(3),
   })
 
+  console.log(data)
+
   return (
     <m.Container>
       <m.Title>이달의 유기견</m.Title>
-      <m.CardList>
-        {!isLoading &&
-          data &&
-          data.map(item => (
-            <MonthDogCard
-              key={item.dogNo}
-              dogNo={item.dogNo}
-              file={item.file}
-              name={item.name}
-              sex={item.sex}
-              neutralized={item.neutralized}
-              age={item.age}
-              kind={item.kind}
-            />
-          ))}
-      </m.CardList>
+      <m.Wrap>
+        <m.CardList>
+          {!isLoading &&
+            data &&
+            data.map(item => (
+              <MonthDogCard
+                key={item.dogNo}
+                dogNo={item.dogNo}
+                file={item.file}
+                name={item.name}
+                sex={item.sex}
+                neutralized={item.neutralized}
+                age={item.age}
+                kind={item.kind}
+              />
+            ))}
+        </m.CardList>
+      </m.Wrap>
     </m.Container>
   )
 }
