@@ -6,13 +6,11 @@ import { GlobalStyle } from '@src/style/GlobalStyles'
 import HomePage from '@src/pages/HomePage'
 import LoginPage from '@src/pages/LoginPage'
 import SignUpPage from '@src/pages/SignUpPage'
-import MeetingPage from '@src/pages/MeetingPage'
-import BroadcastPage from '@src/pages/BroadcastPage'
 import MyPage from '@src/pages/MyPage'
 import SettingPage from '@src/pages/SettingPage'
 import ProfilePage from '@src/pages/ProfilePage'
 import NotFoundPage from '@src/pages/NotFoundPage'
-import { useAtomValue } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import { themeAtom } from '@src/stores/atoms/theme'
 import DogDetailPage from '@src/pages/DogDetailPage'
 import CreateDogPage from '@src/pages/CreateDogPage'
@@ -39,8 +37,8 @@ import AboutSameDogChatListPage from '@src/pages/AboutSameDogChatListPage'
 import ScrollToTop from '@src/hooks/ScrollToTop'
 import AdoptionSurveyDetailPage from '@src/pages/AdoptionSurveyDetailPage'
 import ShelterDogsPage from '@src/pages/ShelterDogsPage'
-import AdoptProcessInfoPage from '@src/pages/AdoptProcessInfoPage.tsx'
-// import { userAtom } from '@src/stores/atoms/user'
+import AdoptProcessInfoPage from '@src/pages/AdoptProcessInfoPage'
+import { userAtom } from '@src/stores/atoms/user'
 
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
@@ -82,32 +80,30 @@ const AuthRoutes = () => (
     <Route path="/questions/:questionNo" element={<QuestionDetailPage />} />
     <Route path="/shelter/dogs" element={<ShelterDogsPage />} />
     <Route path="/adopt-process-info" element={<AdoptProcessInfoPage />} />
-    {/* 임시로 넣을게요~~~ */}
-    <Route path="/signUp" element={<SignUpPage />} />
   </Routes>
 )
 
 // 로그인안된 경우 접근할 수 있는  url
 const HomeRoutes = () => (
   <Routes>
+    <Route path="*" element={<LoginPage />} />
     <Route path="/" element={<HomePage />} />
     <Route path="/login" element={<LoginPage />} />
-    <Route path="/openvidu" element={<MeetingPage />} />
-    <Route path="/broadcast" element={<BroadcastPage />} />
     <Route path="/signUp" element={<SignUpPage />} />
-    <Route path="*" element={<NotFoundPage />} />
+    <Route path="/community" element={<CommunityInfoPage />} />
+    <Route path="/community/map" element={<CommunityMapPage />} />
+    <Route path="/dictionary" element={<DictionaryListPage />} />
     <Route path="/dogs" element={<DogListPage />} />
-    <Route path="/dogs/:dogNo" element={<DogDetailPage />} />
-    <Route path="/adopt-progress-info" element={<AdoptProcessInfoPage />} />
+    <Route path="/adopt-process-info" element={<AdoptProcessInfoPage />} />
   </Routes>
 )
 
 const App = () => {
   const theme = useAtomValue(themeAtom)
-  // const [userValue] = useAtom(userAtom)
+  const [userValue] = useAtom(userAtom)
 
-  // const user = userValue.email
-  const user = true
+  const user = userValue.email
+  // const user = true
 
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
