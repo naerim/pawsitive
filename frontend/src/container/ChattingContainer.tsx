@@ -19,7 +19,9 @@ const ChattingContainer = () => {
     <c.Container>
       <TextHeader title="채팅" />
       <c.Wrap>
-        {!isLoading &&
+        {!isLoading && data && data.length === 0 ? (
+          <div>진행중인 채팅방이 없습니다.</div>
+        ) : (
           data &&
           data.map(item => (
             <ChattingListItem
@@ -37,7 +39,8 @@ const ChattingContainer = () => {
               memberName={item.memberName}
               memberNo={item.memberNo}
             />
-          ))}
+          ))
+        )}
       </c.Wrap>
     </c.Container>
   )
