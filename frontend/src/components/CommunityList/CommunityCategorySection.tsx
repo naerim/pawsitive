@@ -14,7 +14,7 @@ const CommunityCategorySection = (props: CommunityCategoryType) => {
         <span>지식쌓개</span>
       </c.Item>
       <c.Item $select={category === 2} onClick={() => setCategory(2)}>
-        <img src="/icon/icon_footprint.png" alt="" />
+        <img src="/icon/icon_megaphone.png" alt="" />
         <span>자랑하개</span>
       </c.Item>
       <c.Item $select={category === 3} onClick={() => setCategory(3)}>

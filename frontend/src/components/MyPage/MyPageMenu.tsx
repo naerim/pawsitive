@@ -10,7 +10,10 @@ const MyPageMenu = () => {
     <m.Container>
       <m.Header>
         <m.word>
-          <m.Role>{user.role === 'USER' ? '포지티버' : '보호소'}</m.Role>
+          <m.Role>
+            {user.role === 'USER' && '포지티버'}
+            {user.role === 'SHELTER' && '보호소'}
+          </m.Role>
           <m.Name>
             {user.name && user.role === 'USER'
               ? `${user.name}님`
@@ -85,12 +88,6 @@ const MyPageMenu = () => {
         <br />
         <br />
         <br />
-        <m.MenuItem to="/login">
-          <m.MenuItemDiv>
-            로그인(임시)
-            <m.RightArrow src="/icon/icon_black_arrow_right.png" />
-          </m.MenuItemDiv>
-        </m.MenuItem>
       </m.Body>
     </m.Container>
   )

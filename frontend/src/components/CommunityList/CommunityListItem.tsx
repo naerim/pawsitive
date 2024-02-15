@@ -14,7 +14,7 @@ const CommunityCard = (props: CommunityProps) => {
       case '지식쌓개':
         return '/img/img_dog_food.png'
       case '자랑하개':
-        return '/img/img_dog_house.png'
+        return '/icon/icon_megaphone.png'
       case '영양있개':
         return '/img/img_bone_bowl.png'
       case '쇼핑하개':

@@ -45,6 +45,8 @@ const DogDetailContainer = () => {
   const isNotButtonShow =
     user.role === 'SHELTER' && user.name !== dogDetail.userName
 
+  const isAdopted = dogDetail.statusNo !== 0
+
   return (
     <Container>
       {!isLoading && data && (
@@ -77,7 +79,7 @@ const DogDetailContainer = () => {
           />
           <AdoptProcessInfoComponent />
           <SameShelterDogs dogDetail={dogDetail} />
-          {!isNotButtonShow && <ChatStartButton />}
+          {!isNotButtonShow && !isAdopted && <ChatStartButton />}
         </>
       )}
     </Container>

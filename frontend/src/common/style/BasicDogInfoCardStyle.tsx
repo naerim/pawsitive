@@ -46,7 +46,7 @@ export const AdoptStatus = styled.div<AdoptStatusProps>`
   top: 6%;
   left: 8%;
   ${props =>
-    props.$status === ' 공고중'
+    props.$status === '입양완료'
       ? `background-color: #5B5B5B;
   color: #EAEAEA;`
       : ` background-color: #ff9232;

@@ -26,7 +26,7 @@ const CommunityFileSection = (props: PropsType) => {
     dotsClass: 'dots_custom',
   }
 
-  const goCommunityList = () => navigate('/community')
+  const goCommunityList = () => navigate(-1)
 
   return (
     <d.Container>
