@@ -27,6 +27,11 @@ export const fetchRecommendDogs = async (useNo: number) => {
     .get(`/dogs/recommendation?userNo=${useNo}`)
     .then(res => res.data)
 }
+export const fetchRecommendDogCard = async (useNo: number) => {
+  return publicRequest
+    .get(`/dogs/single-recommendation?userNo=${useNo}`)
+    .then(res => res.data)
+}
 
 // 유기견 리스트 조회
 export const fetchBasicDogList = async (
