@@ -25,7 +25,6 @@ import CommunityMapPage from '@src/pages/CommunityMapPage'
 import CommunityDetailPage from '@src/pages/CommunityDetailPage'
 import CommunityCreatePage from '@src/pages/CommunityCreatePage'
 import AdoptionSurveyDonePage from '@src/pages/AdoptionSurveyDonePage'
-import FindSimilarDogResultPage from '@src/pages/FindSimilarDogResultPage'
 import AdoptedDogDetailPage from '@src/pages/AdoptedDogDetailPage'
 import SaveDogsListPage from '@src/pages/SaveDogsListPage'
 import QuestionCreatePage from '@src/pages/QuestionCreatePage'
@@ -38,7 +37,26 @@ import ScrollToTop from '@src/hooks/ScrollToTop'
 import AdoptionSurveyDetailPage from '@src/pages/AdoptionSurveyDetailPage'
 import ShelterDogsPage from '@src/pages/ShelterDogsPage'
 import AdoptProcessInfoPage from '@src/pages/AdoptProcessInfoPage'
+import FindSimilarDogRestrictPage from '@src/pages/FindSimilarDogRestrictPage'
 import { userAtom } from '@src/stores/atoms/user'
+
+// 사용자 에이전트 문자열 가져오기
+const { userAgent } = navigator
+
+// 특정한 문자열을 검색하여 기기를 확인할 수 있습니다.
+if (userAgent.match(/Android/i)) {
+  console.log('Android 기기로 접속했습니다.')
+} else if (userAgent.match(/iPhone|iPad|iPod/i)) {
+  console.log('iOS 기기로 접속했습니다.')
+} else if (userAgent.match(/Windows/i)) {
+  console.log('Windows 기기로 접속했습니다.')
+} else if (userAgent.match(/Mac/i)) {
+  console.log('Mac 기기로 접속했습니다.')
+} else {
+  console.log('기타 기기 또는 브라우저로 접속했습니다.')
+}
+
+const isIOSorMac = userAgent.match(/iPhone|iPad|iPod|Mac/i)
 
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
@@ -54,11 +72,6 @@ const AuthRoutes = () => (
     <Route path="/community/:contentNo" element={<CommunityDetailPage />} />
     <Route path="/community/create" element={<CommunityCreatePage />} />
     <Route path="/new/dog" element={<CreateDogPage />} />
-    <Route path="/mypage/findSimilarDog" element={<FindSimilarDogPage />} />
-    <Route
-      path="/mypage/findSimilarDog/result"
-      element={<FindSimilarDogResultPage />}
-    />
     <Route path="/dogs" element={<DogListPage />} />
     <Route path="/dogs/:dogNo" element={<DogDetailPage />} />
     <Route path="/mypage/survey" element={<AdoptionSurveyPage />} />
@@ -80,6 +93,15 @@ const AuthRoutes = () => (
     <Route path="/questions/:questionNo" element={<QuestionDetailPage />} />
     <Route path="/shelter/dogs" element={<ShelterDogsPage />} />
     <Route path="/adopt-process-info" element={<AdoptProcessInfoPage />} />
+    <Route path="/mypage/findSimilarDog" element={<FindSimilarDogPage />} />
+    {isIOSorMac ? (
+      <Route
+        path="/mypage/findSimilarDog"
+        element={<FindSimilarDogRestrictPage />}
+      />
+    ) : (
+      <Route path="/mypage/findSimilarDog" element={<FindSimilarDogPage />} />
+    )}
   </Routes>
 )
 
