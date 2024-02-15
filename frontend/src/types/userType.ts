@@ -97,3 +97,16 @@ export type UpdateUserStageReqType = {
   field: string
   value: number
 }
+
+export type UserInformationType = {
+  userNo: number
+  email: string
+  name: string
+  password: string
+  role: string
+  address: string
+  birth: string
+  gender: string
+  type: number
+  stage: number
+}

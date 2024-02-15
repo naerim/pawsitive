@@ -5,6 +5,7 @@ import {
   JwtTokenType,
   LoginUserType,
   UpdateUserStageReqType,
+  UserInformationType,
 } from '@src/types/userType'
 import { onSilentRefresh } from '@src/apis/silentRefresh'
 
@@ -103,4 +104,15 @@ export const fetchLogout = async (email: string) => {
 // 유저 stage 수정
 export const updateUserStage = async (data: UpdateUserStageReqType) => {
   return publicRequest.post('/users/update', data).then(res => res.data)
+}
+
+export const getUserInformation = async (
+  userNo: number,
+): Promise<UserInformationType> => {
+  return publicRequest
+    .get(`/users/me/${userNo}`)
+    .then(res => res.data)
+    .catch(error => {
+      throw new Error(error)
+    })
 }
