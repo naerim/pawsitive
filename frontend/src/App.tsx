@@ -14,7 +14,6 @@ import { useAtom, useAtomValue } from 'jotai'
 import { themeAtom } from '@src/stores/atoms/theme'
 import DogDetailPage from '@src/pages/DogDetailPage'
 import CreateDogPage from '@src/pages/CreateDogPage'
-import FindSimilarDogPage from '@src/pages/FindSimilarDogPage'
 import AdoptionSurveyPage from '@src/pages/AdoptionSurveyPage'
 import ConfirmPawsitivePage from '@src/pages/ConfirmPawsitivePage'
 import DictionaryListPage from '@src/pages/DictionaryListPage'
@@ -37,6 +36,8 @@ import ScrollToTop from '@src/hooks/ScrollToTop'
 import AdoptionSurveyDetailPage from '@src/pages/AdoptionSurveyDetailPage'
 import ShelterDogsPage from '@src/pages/ShelterDogsPage'
 import AdoptProcessInfoPage from '@src/pages/AdoptProcessInfoPage'
+import FindSimilarDogPage from '@src/pages/FindSimilarDogPage'
+import FindSimilarDogResultPage from '@src/pages/FindSimilarDogResultPage'
 import FindSimilarDogRestrictPage from '@src/pages/FindSimilarDogRestrictPage'
 import { userAtom } from '@src/stores/atoms/user'
 
@@ -102,6 +103,10 @@ const AuthRoutes = () => (
     ) : (
       <Route path="/mypage/findSimilarDog" element={<FindSimilarDogPage />} />
     )}
+    <Route
+      path="/mypage/findsimilarDog/result"
+      element={<FindSimilarDogResultPage />}
+    />
   </Routes>
 )
 
