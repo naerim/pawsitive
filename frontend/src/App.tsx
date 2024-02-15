@@ -58,6 +58,9 @@ if (userAgent.match(/Android/i)) {
 }
 
 const isIOSorMac = userAgent.match(/iPhone|iPad|iPod|Mac/i)
+if (isIOSorMac) {
+  console.log('접근 ?')
+}
 
 // 로그인된 경우 접근할 수 있는 url
 const AuthRoutes = () => (
@@ -104,7 +107,7 @@ const AuthRoutes = () => (
       <Route path="/mypage/findSimilarDog" element={<FindSimilarDogPage />} />
     )}
     <Route
-      path="/mypage/findsimilarDog/result"
+      path="/mypage/findSimilarDog/result"
       element={<FindSimilarDogResultPage />}
     />
   </Routes>
