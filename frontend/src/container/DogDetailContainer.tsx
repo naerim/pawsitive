@@ -3,7 +3,6 @@ import DogFileSection from '@src/components/DogDetail/DogFileSection'
 import ShelterName from '@src/components/DogDetail/ShelterName'
 import DogAdditionalInfo from '@src/components/DogDetail/DogAdditionalInfo'
 import ChatStartButton from '@src/components/DogDetail/ChatStartButton'
-import TipSection from '@src/components/DogDetail/TipSection'
 import ShelterInfoSection from '@src/components/DogDetail/ShelterInfoSection'
 import SameShelterDogs from '@src/components/DogDetail/SameShelterDogs'
 import { useParams } from 'react-router-dom'
@@ -15,6 +14,7 @@ import { dogDetailAtom, dogLikedAtom } from '@src/stores/atoms/dog'
 import { useEffect } from 'react'
 import { userAtom } from '@src/stores/atoms/user'
 import AdoptProcessInfoComponent from '@src/components/DogDetail/AdoptProcessInfoComponent'
+import TipSection from '@src/components/DogDetail/TipSection'
 
 const Container = styled.div`
   padding-bottom: 80px;
@@ -42,7 +42,7 @@ const DogDetailContainer = () => {
     refetch().then(r => r)
   }, [refetch])
 
-  const isDifferentShelter =
+  const isSameShelter =
     user.role === 'SHELTER' && user.name === dogDetail.userName
 
   return (
@@ -64,16 +64,20 @@ const DogDetailContainer = () => {
             dogNo={data.dogNo}
           />
           <DogAdditionalInfo note={data.note} />
-          <TipSection />
+          {!!data.contentNo && data.contentTitle && (
+            <TipSection
+              contentNo={data.contentNo}
+              contentTitle={data.contentTitle}
+            />
+          )}
           <ShelterInfoSection
             address={data.address}
             createdAt={data.createdAt}
             userName={data.userName}
           />
           <AdoptProcessInfoComponent />
-
           <SameShelterDogs dogDetail={dogDetail} />
-          {!isDifferentShelter && <ChatStartButton />}
+          {isSameShelter && <ChatStartButton />}
         </>
       )}
     </Container>

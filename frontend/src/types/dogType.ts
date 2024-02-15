@@ -17,6 +17,8 @@ export type DogType = {
   neutralized: boolean
   address: string
   userLiked: boolean
+  contentNo: number
+  contentTitle: string
 }
 
 export type DogListType = {

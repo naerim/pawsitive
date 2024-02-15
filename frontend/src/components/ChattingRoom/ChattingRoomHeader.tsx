@@ -56,6 +56,10 @@ const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
     })
   }
 
+  const onOpenUserAdoptSurvey = () => {
+    navigate(`/mypage/survey/detail/${member.userNo}`)
+  }
+
   return (
     <c.Container>
       <c.Wrap>
@@ -101,7 +105,9 @@ const ChattingRoomHeader = (props: ChattingRoomHeaderType) => {
               )
             )}
             {user.role === 'SHELTER' && (
-              <button type="button">입양설문 보기</button>
+              <button type="button" onClick={onOpenUserAdoptSurvey}>
+                입양설문 보기
+              </button>
             )}
             {user.role === 'SHELTER' &&
               promise.isAccepted &&
