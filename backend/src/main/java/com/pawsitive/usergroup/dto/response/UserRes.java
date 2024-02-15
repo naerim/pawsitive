@@ -1,29 +1,32 @@
 package com.pawsitive.usergroup.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * 회원 본인 정보 조회 API ([GET] /api/v1/users/me) 요청에 대한 응답값 정의.
- */
 @Getter
 @Setter
-@Schema(description = "UserResponse")
+@Builder
+@AllArgsConstructor
 public class UserRes {
 
-    @Schema(name = "ID")
-    @JsonProperty(value = "user_id")
-    String userId;
+    private int userNo;
 
-    @Schema(name = "부서")
-    private String department;
+    private String email;
 
-    @Schema(name = "직책")
-    private String position;
-
-    @Schema(name = "이름")
     private String name;
-    
+
+    private String address;
+
+    private String role;
+
+    private String birth;
+
+    private char gender;
+
+    private int type;
+
+    private int stage;
+
 }

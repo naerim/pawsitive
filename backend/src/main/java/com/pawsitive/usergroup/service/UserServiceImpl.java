@@ -16,8 +16,8 @@ import com.pawsitive.usergroup.dto.request.UserSurveyReq;
 import com.pawsitive.usergroup.dto.request.UserTypeStagePatchReq;
 import com.pawsitive.usergroup.dto.response.EmailVerificationRes;
 import com.pawsitive.usergroup.dto.response.UpdateFieldRes;
-import com.pawsitive.usergroup.dto.response.UserJoinRes;
 import com.pawsitive.usergroup.dto.response.UserLoginRes;
+import com.pawsitive.usergroup.dto.response.UserRes;
 import com.pawsitive.usergroup.dto.response.UserSurveyRes;
 import com.pawsitive.usergroup.entity.AdoptionSurvey;
 import com.pawsitive.usergroup.entity.Member;
@@ -30,6 +30,7 @@ import com.pawsitive.usergroup.repository.MemberDogMatrixRepository;
 import com.pawsitive.usergroup.repository.MemberRepository;
 import com.pawsitive.usergroup.repository.UserRepository;
 import com.pawsitive.usergroup.transfer.AdoptionSurveyTransfer;
+import com.pawsitive.usergroup.transfer.UserTransfer;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.Duration;
@@ -151,7 +152,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserJoinRes joinUser(UserJoinPostReq userJoinPostReq) throws IllegalArgumentException {
+    public UserRes joinUser(UserJoinPostReq userJoinPostReq) throws IllegalArgumentException {
 
         // 이미 등록된 유저라면 예외 던지기
         if (userRepository.findUserByEmail(userJoinPostReq.getEmail()).isPresent()) {
@@ -181,12 +182,12 @@ public class UserServiceImpl implements UserService {
                 .type(userJoinPostReq.getType())
                 .gender(userJoinPostReq.getGender())
                 .build());
-            
+
             // 회원가입 시 행렬평균 테이블도 같이 생성해서 추가하기
             memberDogMatrixRepository.save(
                 MemberDogMatrix.builder().userNo(user.getUserNo()).build());
 
-            return UserJoinRes.builder()
+            return UserRes.builder()
                 .userNo(user.getUserNo())
                 .email(user.getEmail())
                 .name(user.getName())
@@ -208,12 +209,7 @@ public class UserServiceImpl implements UserService {
                 .role(Role.valueOf(userJoinPostReq.getRole()))
                 .build());
 
-            return UserJoinRes.builder()
-                .email(user.getEmail())
-                .name(user.getName())
-                .address(user.getAddress())
-                .role(user.getRole().getTitle())
-                .build();
+            return UserTransfer.entityToDto(user);
         }
 
         throw new NotSavedException();
@@ -223,6 +219,18 @@ public class UserServiceImpl implements UserService {
     public User getUserByUserNo(int userNo) {
         return userRepository.findUserByUserNo(userNo)
             .orElseThrow(UserNotFoundException::new);
+    }
+
+    @Override
+    public UserRes getUserResByUserNo(int userNo) {
+        User user = userRepository.findUserByUserNo(userNo).orElseThrow();
+
+        if (user.getRole().equals(Role.USER)) {
+            Member member = memberRepository.findMemberByUserNo(userNo).orElseThrow();
+            return UserTransfer.entityToDto(member);
+        }
+
+        return UserTransfer.entityToDto(user);
     }
 
     @Override
