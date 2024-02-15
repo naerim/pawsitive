@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  background: #fff3e9;
+  background-color: #f7f7f7;
+  padding: 20px 0;
 `
 
 export const Title = styled.div`
@@ -41,7 +42,8 @@ export const StepImg = styled.img`
 
 export const StepTitle = styled.div`
   height: 20%;
-  color: #ff9232;
+  //color: #ff9232;
+  color: #000000;
   font-size: 10px;
   font-weight: 500;
   margin-top: 5px;
