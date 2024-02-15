@@ -3,9 +3,9 @@ import styled from 'styled-components'
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 80px;
-  margin: 20px auto 0;
-  padding: 20px;
+  margin: 0 auto;
+  width: 90%;
+  height: 100vh;
 `
 
 export const TopContainer = styled.div`
@@ -16,7 +16,7 @@ export const TopContainer = styled.div`
   font-size: 15px;
   font-weight: 500;
   position: relative;
-  margin: 0 10px;
+  height: 80px;
 `
 
 export const BackButtonWrap = styled.div`
