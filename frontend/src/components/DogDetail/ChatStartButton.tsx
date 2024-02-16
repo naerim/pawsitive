@@ -30,11 +30,22 @@ const ChatStartButton = () => {
     }
   }
 
+  const goSurvey = () => {
+    navigate('/mypage/survey')
+  }
   return (
     <a.Container>
-      <a.Button type="button" onClick={handleClick}>
-        {user.role === 'SHELTER' ? '진행중인 채팅방 보기' : '보호소와 채팅하기'}
-      </a.Button>
+      {user.role === 'USER' && user.stage < 2 ? (
+        <a.Button type="button" onClick={goSurvey}>
+          입양설문 작성하러 가기
+        </a.Button>
+      ) : (
+        <a.Button type="button" onClick={handleClick}>
+          {user.role === 'SHELTER'
+            ? '진행중인 채팅방 보기'
+            : '보호소와 채팅하기'}
+        </a.Button>
+      )}
     </a.Container>
   )
 }
