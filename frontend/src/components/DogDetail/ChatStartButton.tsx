@@ -33,7 +33,6 @@ const ChatStartButton = () => {
   const goSurvey = () => {
     navigate('/mypage/survey')
   }
-  console.log(user)
   return (
     <a.Container>
       {user.role === 'USER' && user.stage < 2 ? (
