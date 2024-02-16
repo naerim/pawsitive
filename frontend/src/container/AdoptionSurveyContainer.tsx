@@ -192,6 +192,10 @@ const AdoptionSurveyContainer = () => {
     }
   }
 
+  const goSkip = () => {
+    setSurveyStep(21)
+  }
+
   return (
     <c.Container>
       <c.BackButtonContainer>
@@ -212,6 +216,7 @@ const AdoptionSurveyContainer = () => {
             />
           </c.BackButton>
         )}
+        <c.SkipButton onClick={goSkip}>시연을 위한 Skip Button</c.SkipButton>
       </c.BackButtonContainer>
       <SurveyProgress step={surveyStep} />
       <c.Step>{surveyStep} / 21</c.Step>

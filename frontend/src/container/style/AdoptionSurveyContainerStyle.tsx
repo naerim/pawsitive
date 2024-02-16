@@ -15,6 +15,16 @@ export const BackButtonContainer = styled.div`
   }
 `
 
+export const SkipButton = styled.div`
+  background-color: #f59021;
+  border-radius: 5px;
+  padding: 10px 8px;
+  color: white;
+  font-weight: 400;
+  font-size: 12px;
+  margin-left: 180px;
+`
+
 export const BackButton = styled.div`
   background-color: white;
   border: none;
