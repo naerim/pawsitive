@@ -37,6 +37,28 @@ const AdoptionSurveyContainer = () => {
   const navigate = useNavigate()
   const [surveyData, setSurveyData] = useAtom(surveyDataAtom)
 
+  const dummyData = {
+    userNo: user.userNo,
+    accommodationType: '아파트',
+    carer: '본인',
+    reason: '반려견이 귀여워서',
+    familyType: '부부와 자녀',
+    familyIntroduce: '가족',
+    familyAdd: 'true',
+    familyAgree: 'true',
+    aloneTime: '8',
+    temporaryResidence: '집',
+    raiseHistory: '없어요',
+    raiseTerm: '없었어요',
+    petRoute: '기타',
+    petSociability: 'false',
+    raiseNoReason: '키우는 방법을 잘 몰라서',
+    personality: 'false',
+    training: '유튜브 교육',
+    hospital: '집 근처 병원',
+    expenditure: '전액 부담 가능',
+    foreverResponsibility: 'true',
+  }
   const { mutate: surveySubmitMutate } = useMutation({
     mutationKey: ['surveySubmit'],
     mutationFn: (Data: SurveyFormType) => fetchSurveySubmit(Data),
@@ -72,7 +94,8 @@ const AdoptionSurveyContainer = () => {
   }
 
   const goDone = () => {
-    surveySubmitMutate(surveyData)
+    // surveySubmitMutate(surveyData)
+    surveySubmitMutate(dummyData)
     updateStageMutate({
       userNo: user.userNo,
       field: 'stage',
